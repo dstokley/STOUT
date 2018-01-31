@@ -9,7 +9,6 @@
 #include "systemhaltexception.h"
 #include "datahandler.h"
 #include "microcontroller.h"
-#include "controls/heatercontrol.h"
 
 namespace RADIANCE {
 
