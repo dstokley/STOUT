@@ -3,8 +3,10 @@
 // the Braswell processor and implements these actuations. This control is
 // interrupt driven to allow it to interrupt the humidity sensor readings at any
 // point.
+
+// *NEEED TO FIGURE OUT SERIAL COMM B/T ARDUINO AND UDOO*
+
 #include <math.h>             // Math function library
-#include <EEPROM.h>           // EEPROM library
 
 // Define pins for convienence
 // Horizontal linear actuator
@@ -21,6 +23,8 @@
 // Vertical encoder
 #define CH1_y 10              // Vertical encoder channel 1
 #define CH2_y 11              // Vertical encoder channel 2
+// Digital interrupt pin
+#define INT 12
 
 // Declare variables for actuation use
 float step_x;                // Required horizontal actuation distance [m]
@@ -41,8 +45,25 @@ int ch1laststate_y;
 int counter_x = 0;
 int counter_y = 0;
 
+// Humidity sensor variables
+int analogPin = 0;    // Humidity sensor connected to analog pin 0
+int val;          // Variable to store bin values
+float voltage;    // Variable to store voltage
+float RH;           // Relative humidity
+unsigned long previousMillis = 0; // Time of last update
+const long interval = 1000; // Measurement interval [ms]
+
+// Set up pins
 void setup()
 {
+  // Set up serial connection with UDOO
+  Serial.begin(115200);
+
+  // Set up interrupts
+  pinmode(INT, INPUT);      // Set interrupt pin to an input
+  // Attach interrupt to ISR
+  attachInterrupt(digitalPintoInterrupt(INT), controlsISR, CHANGE);
+
   // Set all relevant digital pins to outputs for motor control
   // Horizontal actuator motor driver
   pinmode(EN_x, OUTPUT);
@@ -65,193 +86,216 @@ void setup()
   ch1laststate_x = digitalRead(CH1_x);
   ch1laststate_y = digitalRead(CH1_y);
 
+  // Enable interrupts
+  interrupts();
+
 }
 
-// Retrieve actuation values from global variables
-// step_x = globalvar1;
-// step_y = globalvar2;
-
-// Calculate necessary numbers of steps and dirction for hoizontal and vertical
-// actuations
-// Horizontal linear actuator
-if (step_x > 0)
+// Loop function which takes and transmits humidity sensor data at 1 Hz
+void loop()
 {
-  DIR_x = 1;                  // Positive actuation
-}
-else
-{
-  DIR_x = 0;                  // Negative actuation
-}
+  unsigned long currentMillis = millis(); // Read current time
 
-stepact_x = (int)ceil(step_x/step_size);          // Actual integer of required steps
-stepnum_x = (int)ceil(fabs(step_x)/step_size);    // Positive integer of required steps
-remsteps_x = stepnum_x;                           // Extra variable for decrementing
-
-// Vertical linear actuator
-if (step_y > 0)
-{
-  DIR_y = 1;                  // Positive actuation
-}
-else
-{
-  DIR_y = 0;                  // Negative actuation
-}
-
-stepact_y = (int)ceil(step_y/step_size);          // Actual integer of required steps
-stepnum_y = (int)ceil(fabs(step_y)/step_size);    // Integer of required steps
-remsteps_y = stepnum_y;                           // Extra variable for decrementing
-
-// Actuate both motors simultaneously
-// Stay in this loop until all actuations are completed
-while(remsteps_x != 0 || remsteps_y != 0)
-{
-  // Actuations are required for both motors
-  if (remsteps_x != 0 && remsteps_y != 0)
+  // Check if it has been 1 second since last measurement
+  if (currentMillis - previousMillis >= interval)
   {
-    // Trigger one step foward for each actuator
-    digitalWrite(STP_x, HIGH);
-    digitalWrite(STP_y, HIGH);
+    val = analogRead(analogPin);            // Read input pin voltage
+    voltage = (float)3.3*(val/1024);        // Conversion to voltage [V]
+    RH = (float)0.0062*(voltage/5 - 0.16);  // Conversion to % relative humidity
+    previousMillis = currentMillis;         // Reset time stamp
+    // Send RH to Braswell via serial
 
-    // Checking encoders
-    ch1state_x = digitalRead(CH1_x);    // Current value on ch1 of horizontal encoder
-    if(ch1state_x != ch1laststate_x)
-    {
-      if (digitalRead(CH2_x) != ch1state_x)
-      {
-        counter_x++;                    // Increment x encoder counter
-      }
-      else
-      {
-        counter_x--;                    // Decrement x encoder counter
-      }
-    }
-    ch1laststate_x = ch1state_x;        // Save current value of encoder
+  }
+}
 
-    ch1state_y = digitalRead(CH1_y);    // Current value on ch1 of vertical encoder
-    if(ch1state_y != ch1laststate_y)
-    {
-      if (digitalRead(CH2_y) != ch1state_y)
-      {
-        counter_y++;                    // Increment y encoder counter
-      }
-      else
-      {
-        counter_y--;                    // Decrement y encoder counter
-      }
-    }
-    ch1laststate_y = ch1state_y;        // Save current value of encoder
 
-    // Reset to allow for more actuations
-    digitalWrite(STP_x, LOW);
-    digitalWrite(STP_y, LOW);
+void controlsISR()
+{
+  // Read incoming serial data & save in step_x and step_y
 
-    // Subtract from number of steps
-    remsteps_x--;
-    remsteps_y--;
+
+  // Calculate necessary numbers of steps and dirction for hoizontal and vertical
+  // actuations
+  // Horizontal linear actuator
+  if (step_x > 0)
+  {
+    DIR_x = 1;                  // Positive actuation
+  }
+  else
+  {
+    DIR_x = 0;                  // Negative actuation
   }
 
-  // Actuations are only required for the horizontal motor
-  else if (remsteps_x != 0 && remsteps_y == 0)
+  stepact_x = (int)ceil(step_x/step_size);          // Actual integer of required steps
+  stepnum_x = (int)ceil(fabs(step_x)/step_size);    // Positive integer of required steps
+  remsteps_x = stepnum_x;                           // Extra variable for decrementing
+
+  // Vertical linear actuator
+  if (step_y > 0)
   {
-    // Trigger one step foward for horizontal actuator
-    digitalWrite(STP_x, HIGH);
-
-    // Checking horizontal encoder
-    ch1state_x = digitalRead(CH1_x);    // Current value on ch1 of horizontal encoder
-    if (ch1state_x != ch1laststate_x)
-    {
-      if (digitalRead(CH2_x) != ch1state_x)
-      {
-        counter_x++;                    // Increment x encoder counter
-      }
-      else
-      {
-        counter_x--;                    // Decrement x encoder counter
-      }
-    }
-    ch1laststate_x = ch1state_x;        // Save current value of encoder
-
-    // Reset to allow for more actuations
-    digitalWrite(STP_x, LOW);
-
-    // Subtract from number of steps
-    remsteps_x--;
+    DIR_y = 1;                  // Positive actuation
+  }
+  else
+  {
+    DIR_y = 0;                  // Negative actuation
   }
 
-  // Actuations are only required for the vertical motor
-  else if (remsteps_x == 0 && remsteps_y != 0)
+  stepact_y = (int)ceil(step_y/step_size);          // Actual integer of required steps
+  stepnum_y = (int)ceil(fabs(step_y)/step_size);    // Integer of required steps
+  remsteps_y = stepnum_y;                           // Extra variable for decrementing
+
+  // Actuate both motors simultaneously
+  // Stay in this loop until all actuations are completed
+  while(remsteps_x != 0 || remsteps_y != 0)
   {
-    // Trigger one step foward for vertical actuator
-    digitalWrite(STP_y, HIGH);
-
-    ch1state_y = digitalRead(CH1_y);    // Current value on ch1 of vertical encoder
-    if(ch1state_y != ch1laststate_y)
+    // Actuations are required for both motors
+    if (remsteps_x != 0 && remsteps_y != 0)
     {
-      if (digitalRead(CH2_y) != ch1state_y)
-      {
-        counter_y++;                    // Increment y encoder counter
-      }
-      else
-      {
-        counter_y--;                    // Decrement y encoder counter
-      }
-    }
-    ch1laststate_y = ch1state_y;        // Save current value of encoder
+      // Trigger one step foward for each actuator
+      digitalWrite(STP_x, HIGH);
+      digitalWrite(STP_y, HIGH);
 
-    // Reset to allow for more actuations
-    digitalWrite(STP_y, LOW);
-
-    // Subtract from number of steps
-    remsteps_y--;
-  }
-
-  // Check if required actuations were carried out by looking at encoder values when
-  // remaining steps for horizontal and vertical actuation are both 0
-  else if (remsteps_x == 0 && remsteps_y == 0)
-  {
-    // Check for correct horizontal actuation
-    if (counter_x != stepact_x)
-    {
-      if (abs(counter_x) > abs(stepact_x))
+      // Checking encoders
+      ch1state_x = digitalRead(CH1_x);    // Current value on ch1 of horizontal encoder
+      if(ch1state_x != ch1laststate_x)
       {
-        switch (DIR_x)
+        if (digitalRead(CH2_x) != ch1state_x)
         {
-          case 0:
-            DIR_x = 1;
-            break;
-          case 1:
-            DIR_x = 0;
-            break;
+          counter_x++;                    // Increment x encoder counter
         }
-        remsteps_x = abs(counter_x - stepact_x);
-      }
-      else if (abs(counter_x) < abs(stepact_x))
-      {
-        remsteps_x = abs(counter_x - stepact_x);
-      }
-    }
-    // Check for correct vertical actuation
-    else if (counter_y != stepact_y)
-    {
-      if (abs(counter_y) > abs(stepact_y))
-      {
-        switch (DIR_y)
+        else
         {
-          case 0:
-            DIR_y = 1;
-            break;
-          case 1:
-            DIR_y = 0;
-            break;
+          counter_x--;                    // Decrement x encoder counter
         }
-        remsteps_y = abs(counter_y - stepact_y);
       }
-      else if (abs(counter_y) < abs(stepact_y))
+      ch1laststate_x = ch1state_x;        // Save current value of encoder
+
+      ch1state_y = digitalRead(CH1_y);    // Current value on ch1 of vertical encoder
+      if(ch1state_y != ch1laststate_y)
       {
-        remsteps_y = abs(counter_y - stepact_y);
+        if (digitalRead(CH2_y) != ch1state_y)
+        {
+          counter_y++;                    // Increment y encoder counter
+        }
+        else
+        {
+          counter_y--;                    // Decrement y encoder counter
+        }
+      }
+      ch1laststate_y = ch1state_y;        // Save current value of encoder
+
+      // Reset to allow for more actuations
+      digitalWrite(STP_x, LOW);
+      digitalWrite(STP_y, LOW);
+
+      // Subtract from number of steps
+      remsteps_x--;
+      remsteps_y--;
+    }
+
+    // Actuations are only required for the horizontal motor
+    else if (remsteps_x != 0 && remsteps_y == 0)
+    {
+      // Trigger one step foward for horizontal actuator
+      digitalWrite(STP_x, HIGH);
+
+      // Checking horizontal encoder
+      ch1state_x = digitalRead(CH1_x);    // Current value on ch1 of horizontal encoder
+      if (ch1state_x != ch1laststate_x)
+      {
+        if (digitalRead(CH2_x) != ch1state_x)
+        {
+          counter_x++;                    // Increment x encoder counter
+        }
+        else
+        {
+          counter_x--;                    // Decrement x encoder counter
+        }
+      }
+      ch1laststate_x = ch1state_x;        // Save current value of encoder
+
+      // Reset to allow for more actuations
+      digitalWrite(STP_x, LOW);
+
+      // Subtract from number of steps
+      remsteps_x--;
+    }
+
+    // Actuations are only required for the vertical motor
+    else if (remsteps_x == 0 && remsteps_y != 0)
+    {
+      // Trigger one step foward for vertical actuator
+      digitalWrite(STP_y, HIGH);
+
+      ch1state_y = digitalRead(CH1_y);    // Current value on ch1 of vertical encoder
+      if(ch1state_y != ch1laststate_y)
+      {
+        if (digitalRead(CH2_y) != ch1state_y)
+        {
+          counter_y++;                    // Increment y encoder counter
+        }
+        else
+        {
+          counter_y--;                    // Decrement y encoder counter
+        }
+      }
+      ch1laststate_y = ch1state_y;        // Save current value of encoder
+
+      // Reset to allow for more actuations
+      digitalWrite(STP_y, LOW);
+
+      // Subtract from number of steps
+      remsteps_y--;
+    }
+
+    // Check if required actuations were carried out by looking at encoder values when
+    // remaining steps for horizontal and vertical actuation are both 0
+    else if (remsteps_x == 0 && remsteps_y == 0)
+    {
+      // Check for correct horizontal actuation
+      if (counter_x != stepact_x)
+      {
+        if (abs(counter_x) > abs(stepact_x))
+        {
+          switch (DIR_x)
+          {
+            case 0:
+              DIR_x = 1;
+              break;
+            case 1:
+              DIR_x = 0;
+              break;
+          }
+          remsteps_x = abs(counter_x - stepact_x);
+        }
+        else if (abs(counter_x) < abs(stepact_x))
+        {
+          remsteps_x = abs(counter_x - stepact_x);
+        }
+      }
+      // Check for correct vertical actuation
+      else if (counter_y != stepact_y)
+      {
+        if (abs(counter_y) > abs(stepact_y))
+        {
+          switch (DIR_y)
+          {
+            case 0:
+              DIR_y = 1;
+              break;
+            case 1:
+              DIR_y = 0;
+              break;
+          }
+          remsteps_y = abs(counter_y - stepact_y);
+        }
+        else if (abs(counter_y) < abs(stepact_y))
+        {
+          remsteps_y = abs(counter_y - stepact_y);
+        }
       }
     }
   }
-}
+  // Send done signal to UDOO (serial)
 
-// Save counter_x and counter_y to EEPROM for tracking throughout flight
+}
