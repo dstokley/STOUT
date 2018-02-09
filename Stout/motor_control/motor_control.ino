@@ -4,8 +4,6 @@
 // interrupt driven to allow it to interrupt the humidity sensor readings at any
 // point.
 
-// *NEEED TO FIGURE OUT SERIAL COMM B/T ARDUINO AND UDOO*
-
 #include <math.h>             // Math function library
 
 // Define pins for convienence
@@ -23,12 +21,12 @@
 // Vertical encoder
 #define CH1_y 10              // Vertical encoder channel 1
 #define CH2_y 11              // Vertical encoder channel 2
-// Digital interrupt pin
-#define INT 12
+// Digital interrupt pins
+#define INT 12               // If motor actuations are completed (transmit)
 
 // Declare variables for actuation use
-float step_x;                // Required horizontal actuation distance [m]
-float step_y;                // Required vertical actuation distance [m]
+float step_x = 0;            // Required horizontal actuation distance [m]
+float step_y = 0;            // Required vertical actuation distance [m]
 float step_size = 1.5e-6;    // Step size of actuators [m]
 int stepact_x;               // Number of horizontal steps & direction (+/-)
 int stepact_y;               //  Number of vertical steps & direction (+/-)
@@ -77,7 +75,8 @@ void setup()
   pinMode(STP_x, OUTPUT);
   pinMode(DIR_x, OUTPUT);
 
-  //resetEDPins();              // Reset all pins to their default values
+  // GPIO pin for signaling actuations are completed
+  pinmode(INT, OUTPUT)
 
   // Set all relevant digital pins to inputs for encoder readings
   pinMode(CH1_x, INPUT);      // Horizontal encoder
@@ -106,7 +105,10 @@ void loop()
   voltage = (float)3.3*(val/1024);        // Conversion to voltage [V]
   RH = (float)0.0062*(voltage/5 - 0.16);  // Conversion to % relative humidity
   previousMillis = currentMillis;         // Reset time stamp
+
   // Send RH to Braswell via serial
+  byte * b = (byte *) &RH;                // Create byte pointer for RH
+  Serial.write(b, 4);                     // Send all 4 bytes to UDOO
 
   }
 }
@@ -115,12 +117,24 @@ void loop()
 void controlsISR()
 {
   // Read incoming serial data & save in step_x and step_y
+  for (int i=0; i<4; i++)
+  {
+    byte temp_var;                           // Save current byte
+    temp_var = Serial.read()
+    step_x = (step_x << 8) | temp_var;      // Convert from 4 bytes to 1 float
+  }
 
+  for (int i=0; i<4; i++)
+  {
+    byte temp_var;                           // Save current byte
+    temp_var = Serial.read()
+    step_y = (step_y << 8) | temp_var;      // Convert from 4 bytes to 1 float
+  }
 
   // Calculate necessary numbers of steps and dirction for hoizontal and vertical
   // actuations
   // Horizontal linear actuator
-  if (step_x > 0)
+  if (step_x > 0.0)
   {
     digitalWrite(DIR_x, HIGH);                  // Positive actuation
   }
@@ -134,7 +148,7 @@ void controlsISR()
   remsteps_x = stepnum_x;                           // Extra variable for decrementing
 
   // Vertical linear actuator
-  if (step_y > 0)
+  if (step_y > 0.0)
   {
     digitalWrite(DIR_y,HIGH);                  // Positive actuation
   }
@@ -153,7 +167,7 @@ void controlsISR()
   // Enable movement for both actuators
   digitalWrite(EN_x, LOW);
   digitalWrite(EN_y, LOW);
-  
+
   while(remsteps_x != 0 || remsteps_y != 0)
   {
     // Actuations are required for both motors
@@ -300,7 +314,12 @@ void controlsISR()
    // Disable movement for both actuators
   digitalWrite(EN_x, HIGH);
   digitalWrite(EN_y, HIGH);
-  
-  // Send done signal to UDOO (serial)
 
+  // Send done signal to UDOO (GPIO state change)
+  // Only send this signal if the current GPIO state is 0
+  if (digitalRead(INT) == 0)
+  {
+    // Change state of output
+    digitalWrite(INT, !digtalRead(INT));
+  }
 }
