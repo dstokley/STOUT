@@ -1,16 +1,29 @@
 /*
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -23,6 +36,7 @@
 #include <libdvbv5/dvb-file.h>
 #include <libdvbv5/dvb-v5-std.h>
 
+<<<<<<< HEAD
 #define PTABLE(a) .table = a, .size=ARRAY_SIZE(a)
 
 /*
@@ -33,6 +47,16 @@ static const char *channel_parse_modulation[] = {
 	[APSK_32] =  "32APSK",
 	[DQPSK] =    "DQPSK",
 	[PSK_8] =    "8PSK",
+=======
+/*
+ * Standard channel.conf format for DVB-T, DVB-C, DVB-S and ATSC
+ */
+static const char *channel_parse_modulation[] = {
+	[APSK_16] =  "APSK16",
+	[APSK_32] =  "APSK32",
+	[DQPSK] =    "DQPSK",
+	[PSK_8] =    "PSK8",
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	[QAM_16] =   "QAM16",
 	[QAM_32] =   "QAM32",
 	[QAM_64] =   "QAM64",
@@ -106,6 +130,7 @@ static const char *channel_parse_polarization[] = {
 	[POLARIZATION_R] = "R",
 };
 
+<<<<<<< HEAD
 static const char *channel_parse_rolloff[] = {
 	[ROLLOFF_20] = "20",
 	[ROLLOFF_25] = "25",
@@ -114,11 +139,18 @@ static const char *channel_parse_rolloff[] = {
 };
 
 static const struct dvb_parse_table sys_atsc_table[] = {
+=======
+static const struct parse_table sys_atsc_table[] = {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ DTV_FREQUENCY, NULL, 0 },
 	{ DTV_MODULATION, PTABLE(channel_parse_modulation) },
 };
 
+<<<<<<< HEAD
 static const struct dvb_parse_table sys_dvbc_table[] = {
+=======
+static const struct parse_table sys_dvbc_table[] = {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ DTV_FREQUENCY, NULL, 0 },
 	{ DTV_SYMBOL_RATE, NULL, 0 },
 	{ DTV_INNER_FEC, PTABLE(channel_parse_code_rate) },
@@ -126,13 +158,18 @@ static const struct dvb_parse_table sys_dvbc_table[] = {
 };
 
 /* Note: On DVB-S, frequency is divided by 1000 */
+<<<<<<< HEAD
 static const struct dvb_parse_table sys_dvbs_table[] = {
+=======
+static const struct parse_table sys_dvbs_table[] = {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ DTV_FREQUENCY, NULL, 0 },
 	{ DTV_POLARIZATION, PTABLE(channel_parse_polarization) },
 	{ DTV_SYMBOL_RATE, NULL, 0 },
 	{ DTV_INNER_FEC, PTABLE(channel_parse_code_rate) },
 };
 
+<<<<<<< HEAD
 static const struct dvb_parse_table sys_dvbs2_table[] = {
 	{ DTV_FREQUENCY, NULL, 0 },
 	{ DTV_POLARIZATION, PTABLE(channel_parse_polarization) },
@@ -157,6 +194,9 @@ static const struct dvb_parse_table sys_dvbt_table[] = {
 };
 
 static const struct dvb_parse_table sys_dvbt2_table[] = {
+=======
+static const struct parse_table sys_dvbt_table[] = {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ DTV_FREQUENCY, NULL, 0 },
 	{ DTV_BANDWIDTH_HZ, PTABLE(channel_parse_bandwidth) },
 	{ DTV_CODE_RATE_HP, PTABLE(channel_parse_code_rate) },
@@ -165,12 +205,20 @@ static const struct dvb_parse_table sys_dvbt2_table[] = {
 	{ DTV_TRANSMISSION_MODE, PTABLE(channel_parse_trans_mode) },
 	{ DTV_GUARD_INTERVAL, PTABLE(channel_parse_guard_interval) },
 	{ DTV_HIERARCHY, PTABLE(channel_parse_hierarchy) },
+<<<<<<< HEAD
 	{ DTV_STREAM_ID, NULL, 0, 0, 1, -1 },
 };
 
 const struct dvb_parse_file channel_file_format = {
 	.has_delsys_id = 1,
 	.delimiter = " \n\t",
+=======
+};
+
+const struct parse_file channel_file_format = {
+	.has_delsys_id = 1,
+	.delimiter = " \n",
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	.formats = {
 		{
 			.id		= "A",
@@ -185,18 +233,24 @@ const struct dvb_parse_file channel_file_format = {
 			.delsys		= SYS_DVBS,
 			PTABLE(sys_dvbs_table),
 		}, {
+<<<<<<< HEAD
 			.id		= "S2",
 			.delsys		= SYS_DVBS2,
 			PTABLE(sys_dvbs2_table),
 		}, {
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			.id		= "T",
 			.delsys		= SYS_DVBT,
 			PTABLE(sys_dvbt_table),
 		}, {
+<<<<<<< HEAD
 			.id		= "T2",
 			.delsys		= SYS_DVBT2,
 			PTABLE(sys_dvbt2_table),
 		}, {
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			NULL, 0, NULL, 0,
 		}
 	}

@@ -1,16 +1,29 @@
 /*
  * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -36,12 +49,16 @@ int isdbt_desc_delivery_init(struct dvb_v5_fe_parms *parms,
 
 	bswap16(d->bitfield);
 
+<<<<<<< HEAD
 	if (d->length < len) {
 		dvb_perror("Truncated isdbt_desc_terrestrial_delivery_system_descriptor");
 		d->num_freqs = 0;
 	} else {
 		d->num_freqs = (d->length - len)/ sizeof(uint16_t);
 	}
+=======
+	d->num_freqs = d->length / sizeof(uint16_t);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (!d->num_freqs)
 		return 0;
 	d->frequency = malloc(d->num_freqs * sizeof(*d->frequency));
@@ -101,7 +118,11 @@ void isdbt_desc_delivery_print(struct dvb_v5_fe_parms *parms, const struct dvb_d
 	dvb_loginfo("|           area code         %d", d->area_code);
 
 	for (i = 0; i < d->num_freqs; i++) {
+<<<<<<< HEAD
 		dvb_loginfo("|           frequency[%d]      %.4f MHz", i, d->frequency[i]/1000000.);
+=======
+		dvb_loginfo("|           frequency[%d]      %u Hz", i, d->frequency[i]);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 }
 

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 if WITH_DYN_LIBV4L
+=======
+if WITH_LIBV4L
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 lib_LTLIBRARIES = libv4l1.la
 include_HEADERS = ../include/libv4l1.h ../include/libv4l1-videodev.h
 pkgconfig_DATA = libv4l1.pc
@@ -7,7 +11,11 @@ if WITH_V4L_WRAPPERS
 libv4l1priv_LTLIBRARIES = v4l1compat.la
 
 install-exec-hook:
+<<<<<<< HEAD
 	$(mkdir_p) $(DESTDIR)/$(libdir)
+=======
+	$(MKDIR_P) $(DESTDIR)/$(libdir)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	(cd $(DESTDIR)/$(libdir) && rm -f v4l1compat.so && $(LN_S) $(libv4l1subdir)/v4l1compat.so v4l1compat.so)
 
 endif

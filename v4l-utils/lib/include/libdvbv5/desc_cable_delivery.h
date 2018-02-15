@@ -1,17 +1,33 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2011-2014 - Mauro Carvalho Chehab
  * Copyright (c) 2012 - Andre Roth <neolynx@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
+ * Copyright (c) 2012 - Andre Roth <neolynx@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -19,6 +35,7 @@
  * Described at ETSI EN 300 468 V1.11.1 (2010-04)
  */
 
+<<<<<<< HEAD
 /**
  * @file desc_cable_delivery.h
  * @ingroup descriptors
@@ -35,11 +52,14 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifndef _CABLE_DELIVERY_H
 #define _CABLE_DELIVERY_H
 
 #include <libdvbv5/descriptors.h>
 
+<<<<<<< HEAD
 /**
  * @struct dvb_desc_cable_delivery
  * @ingroup descriptors
@@ -58,6 +78,10 @@ struct dvb_desc_cable_delivery {
 	uint8_t type;
 	uint8_t length;
 	struct dvb_desc *next;
+=======
+struct dvb_desc_cable_delivery {
+	DVB_DESC_HEADER();
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	uint32_t frequency;
 	union {
@@ -83,6 +107,7 @@ struct dvb_v5_fe_parms;
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses the service location descriptor
  * @ingroup descriptors
@@ -122,6 +147,12 @@ extern const unsigned dvbc_modulation_table[];
  * @brief converts from the descriptor's FEC into enum fe_code_rate,
  *	  as defined by DVBv5 API.
  */
+=======
+int dvb_desc_cable_delivery_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, struct dvb_desc *desc);
+void dvb_desc_cable_delivery_print(struct dvb_v5_fe_parms *parms, const struct dvb_desc *desc);
+
+extern const unsigned dvbc_modulation_table[];
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 extern const unsigned dvbc_fec_table[];
 
 

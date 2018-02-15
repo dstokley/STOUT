@@ -24,10 +24,15 @@
 #include <linux/videodev2.h>
 #include "../../lib/include/libv4l2.h"
 #include <argp.h>
+<<<<<<< HEAD
 #include <pthread.h>
 
 #define CLEAR_P(x,s) memset((x), 0, s)
 #define CLEAR(x) CLEAR_P(&(x), sizeof(x))
+=======
+
+#define CLEAR(x) memset(&(x), 0, sizeof(x))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 struct buffer {
 	void   *start;
@@ -43,12 +48,17 @@ static void xioctl(int fh, unsigned long int request, void *arg)
 	} while (r == -1 && ((errno == EINTR) || (errno == EAGAIN)));
 
 	if (r == -1) {
+<<<<<<< HEAD
 		fprintf(stderr, "%s(%lu): error %d, %s\n", __func__,
 			_IOC_NR(request), errno, strerror(errno));
+=======
+		fprintf(stderr, "error %d, %s\n", errno, strerror(errno));
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		exit(EXIT_FAILURE);
 	}
 }
 
+<<<<<<< HEAD
 /* Used by the multi thread capture version */
 struct buffer_queue {
 	struct v4l2_buffer *buffers;
@@ -236,11 +246,16 @@ static int capture_loop (int fd, struct buffer *buffers, struct v4l2_format fmt,
 
 static int capture(char *dev_name, int x_res, int y_res, int n_frames,
 		   char *out_dir, int block, int threads, int sleep_ms)
+=======
+static int capture(char *dev_name, int x_res, int y_res, int n_frames,
+		   char *out_dir)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	struct v4l2_format		fmt;
 	struct v4l2_buffer		buf;
 	struct v4l2_requestbuffers	req;
 	enum v4l2_buf_type		type;
+<<<<<<< HEAD
 	int				fd = -1;
 	unsigned int			i, n_buffers;
 	struct buffer			*buffers;
@@ -249,6 +264,17 @@ static int capture(char *dev_name, int x_res, int y_res, int n_frames,
 		fd = v4l2_open(dev_name, O_RDWR, 0);
 	else
 		fd = v4l2_open(dev_name, O_RDWR | O_NONBLOCK, 0);
+=======
+	fd_set				fds;
+	struct timeval			tv;
+	int				r, fd = -1;
+	unsigned int			i, n_buffers;
+	char				out_name[25 + strlen(out_dir)];
+	FILE				*fout;
+	struct buffer			*buffers;
+
+	fd = v4l2_open(dev_name, O_RDWR | O_NONBLOCK, 0);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (fd < 0) {
 		perror("Cannot open device");
 		exit(EXIT_FAILURE);
@@ -306,11 +332,48 @@ static int capture(char *dev_name, int x_res, int y_res, int n_frames,
 	type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
 	xioctl(fd, VIDIOC_STREAMON, &type);
+<<<<<<< HEAD
 	if (threads)
 		capture_threads(fd, buffers, 2, fmt, n_frames, out_dir,
 				sleep_ms);
 	else
 		capture_loop(fd, buffers, fmt, n_frames, out_dir);
+=======
+	for (i = 0; i < n_frames; i++) {
+		do {
+			FD_ZERO(&fds);
+			FD_SET(fd, &fds);
+
+			/* Timeout. */
+			tv.tv_sec = 2;
+			tv.tv_usec = 0;
+
+			r = select(fd + 1, &fds, NULL, NULL, &tv);
+		} while ((r == -1 && (errno == EINTR)));
+		if (r == -1) {
+			perror("select");
+			return errno;
+		}
+
+		CLEAR(buf);
+		buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+		buf.memory = V4L2_MEMORY_MMAP;
+		xioctl(fd, VIDIOC_DQBUF, &buf);
+
+		sprintf(out_name, "%s/out%03d.ppm", out_dir, i);
+		fout = fopen(out_name, "w");
+		if (!fout) {
+			perror("Cannot open image");
+			exit(EXIT_FAILURE);
+		}
+		fprintf(fout, "P6\n%d %d 255\n",
+			fmt.fmt.pix.width, fmt.fmt.pix.height);
+		fwrite(buffers[buf.index].start, buf.bytesused, 1, fout);
+		fclose(fout);
+
+		xioctl(fd, VIDIOC_QBUF, &buf);
+	}
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	xioctl(fd, VIDIOC_STREAMOFF, &type);
@@ -337,9 +400,12 @@ static const struct argp_option options[] = {
 	{"xres",	'x',	"XRES",		0,	"horizontal resolution", 0},
 	{"yres",	'y',	"YRES",		0,	"vertical resolution", 0},
 	{"n-frames",	'n',	"NFRAMES",	0,	"number of frames to capture", 0},
+<<<<<<< HEAD
 	{"thread-enable", 't',	"THREADS",	0,	"if different threads should capture and save", 0},
 	{"blockmode-enable", 'b', "BLOCKMODE",	0,	"if blocking mode should be used", 0},
 	{"sleep-time",	's',	"SLEEP",	0,	"how long should the consumer thread sleep to simulate the processing of a buffer (in ms)"},
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ 0, 0, 0, 0, 0, 0 }
 };
 
@@ -349,9 +415,12 @@ static char	*out_dir = ".";
 static int	x_res = 640;
 static int	y_res = 480;
 static int	n_frames = 20;
+<<<<<<< HEAD
 static int	threads = 0;
 static int	block = 0;
 static int	sleep_ms = 0;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 static error_t parse_opt(int k, char *arg, struct argp_state *state)
 {
@@ -379,6 +448,7 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 		if (val)
 			n_frames = val;
 		break;
+<<<<<<< HEAD
 	case 't':
 		threads = 1;
 		break;
@@ -390,6 +460,8 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 		if (val)
 			sleep_ms = val;
 		break;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	default:
 		return ARGP_ERR_UNKNOWN;
 	}
@@ -407,6 +479,10 @@ int main(int argc, char **argv)
 {
 	argp_parse(&argp, argc, argv, 0, 0, 0);
 
+<<<<<<< HEAD
 	return capture(dev_name, x_res, y_res, n_frames, out_dir, block,
 		       threads, sleep_ms);
+=======
+	return capture(dev_name, x_res, y_res, n_frames, out_dir);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }

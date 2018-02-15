@@ -8,4 +8,8 @@ Icon=qv4l2
 Terminal=false
 Type=Application
 Categories=AudioVideo;
+<<<<<<< HEAD
 Keywords=video;grabber;V4L;
+=======
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2

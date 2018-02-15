@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 /*
     Public ivtv API header
     Copyright (C) 2003-2004  Kevin Thayer <nufan_wfk at yahoo.com>
@@ -22,7 +25,10 @@
 #ifndef __LINUX_IVTV_H__
 #define __LINUX_IVTV_H__
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <stdint.h>
 #include <sys/types.h>
 #include <linux/videodev2.h>
@@ -51,9 +57,15 @@
 struct ivtv_dma_frame {
 	enum v4l2_buf_type type; /* V4L2_BUF_TYPE_VIDEO_OUTPUT */
 	uint32_t pixelformat;	 /* 0 == same as destination */
+<<<<<<< HEAD
 	void *y_source;   /* if NULL and type == V4L2_BUF_TYPE_VIDEO_OUTPUT,
 				    then just switch to user DMA YUV output mode */
 	void *uv_source;  /* Unused for RGB pixelformats */
+=======
+	void  *y_source;   /* if NULL and type == V4L2_BUF_TYPE_VIDEO_OUTPUT,
+				    then just switch to user DMA YUV output mode */
+	void  *uv_source;  /* Unused for RGB pixelformats */
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	struct v4l2_rect src;
 	struct v4l2_rect dst;
 	uint32_t src_width;

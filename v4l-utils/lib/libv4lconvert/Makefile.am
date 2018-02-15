@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 if WITH_DYN_LIBV4L
 lib_LTLIBRARIES = libv4lconvert.la
 if HAVE_LIBV4LCONVERT_HELPERS
 libv4lconvertpriv_PROGRAMS = ov511-decomp ov518-decomp
 endif
+=======
+if WITH_LIBV4L
+lib_LTLIBRARIES = libv4lconvert.la
+libv4lconvertpriv_PROGRAMS = ov511-decomp ov518-decomp
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 include_HEADERS = ../include/libv4lconvert.h
 pkgconfig_DATA = libv4lconvert.pc
 LIBV4LCONVERT_VERSION = -version-info 0
@@ -18,14 +24,21 @@ libv4lconvert_la_SOURCES = \
   control/libv4lcontrol.c control/libv4lcontrol.h control/libv4lcontrol-priv.h \
   processing/libv4lprocessing.c processing/whitebalance.c processing/autogain.c \
   processing/gamma.c processing/libv4lprocessing.h processing/libv4lprocessing-priv.h \
+<<<<<<< HEAD
   helper-funcs.h libv4lconvert-priv.h libv4lsyscall-priv.h \
+=======
+  helper.c helper-funcs.h libv4lconvert-priv.h libv4lsyscall-priv.h \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
   tinyjpeg.h tinyjpeg-internal.h
 if HAVE_JPEG
 libv4lconvert_la_SOURCES += jpeg_memsrcdest.c jpeg_memsrcdest.h
 endif
+<<<<<<< HEAD
 if HAVE_LIBV4LCONVERT_HELPERS
 libv4lconvert_la_SOURCES += helper.c
 endif
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 libv4lconvert_la_CPPFLAGS = $(CFLAG_VISIBILITY) $(ENFORCE_LIBV4L_STATIC)
 libv4lconvert_la_LDFLAGS = $(LIBV4LCONVERT_VERSION) -lrt -lm $(JPEG_LIBS) $(ENFORCE_LIBV4L_STATIC)
 
@@ -33,4 +46,7 @@ ov511_decomp_SOURCES = ov511-decomp.c
 
 ov518_decomp_SOURCES = ov518-decomp.c
 
+<<<<<<< HEAD
 EXTRA_DIST = Android.mk
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2

@@ -31,6 +31,10 @@
    be adjusted! */
 #define V4L2_MAX_NO_FRAMES 32
 #define V4L2_DEFAULT_NREADBUFFERS 4
+<<<<<<< HEAD
+=======
+#define V4L2_FRAME_BUF_SIZE (4096 * 4096)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #define V4L2_IGNORE_FIRST_FRAME_ERRORS 3
 #define V4L2_DEFAULT_FPS 30
 
@@ -76,7 +80,10 @@ struct v4l2_dev_info {
 	int flags;
 	int open_count;
 	int gone; /* Set to 1 when a device is detached (ENODEV encountered) */
+<<<<<<< HEAD
 	long page_size;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	/* actual format of the cam */
 	struct v4l2_format src_fmt;
 	/* fmt as seen by the application (iow after conversion) */
@@ -88,13 +95,19 @@ struct v4l2_dev_info {
 	int first_frame;
 	struct v4lconvert_data *convert;
 	unsigned char *convert_mmap_buf;
+<<<<<<< HEAD
 	size_t convert_mmap_buf_size;
 	size_t convert_mmap_frame_size;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	/* Frame bookkeeping is only done when in read or mmap-conversion mode */
 	unsigned char *frame_pointers[V4L2_MAX_NO_FRAMES];
 	int frame_sizes[V4L2_MAX_NO_FRAMES];
 	int frame_queued; /* 1 status bit per frame */
+<<<<<<< HEAD
 	int frame_info_generation;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	/* mapping tracking of our fake (converting mmap) frame buffers */
 	unsigned char frame_map_count[V4L2_MAX_NO_FRAMES];
 	/* buffer when doing conversion and using read() for read() */
@@ -107,11 +120,15 @@ struct v4l2_dev_info {
 };
 
 /* From v4l2-plugin.c */
+<<<<<<< HEAD
 #if defined(HAVE_V4L_PLUGINS)
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 void v4l2_plugin_init(int fd, void **plugin_lib_ret, void **plugin_priv_ret,
 		      const struct libv4l_dev_ops **dev_ops_ret);
 void v4l2_plugin_cleanup(void *plugin_lib, void *plugin_priv,
 			 const struct libv4l_dev_ops *dev_ops);
+<<<<<<< HEAD
 #else
 static inline void v4l2_plugin_init(int fd, void **plugin_lib_ret, void **plugin_priv_ret,
 				    const struct libv4l_dev_ops **dev_ops_ret)
@@ -125,6 +142,8 @@ static inline void v4l2_plugin_cleanup(void *plugin_lib, void *plugin_priv,
 {
 }
 #endif /* WITH_V4L_PLUGINS */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 /* From log.c */
 extern const char *v4l2_ioctls[];

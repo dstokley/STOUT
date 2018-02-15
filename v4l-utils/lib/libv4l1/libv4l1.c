@@ -58,11 +58,15 @@
 #include <sys/types.h>
 #include <sys/mman.h>
 #include "../libv4lconvert/libv4lsyscall-priv.h"
+<<<<<<< HEAD
 #if defined(__OpenBSD__)
 #include <sys/videoio.h>
 #else
 #include <linux/videodev2.h>
 #endif
+=======
+#include <linux/videodev2.h>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <libv4l2.h>
 #include "libv4l1.h"
 #include "libv4l1-priv.h"

@@ -2,16 +2,29 @@
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  * Copyright (c) 2012 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -28,7 +41,11 @@ int dvb_desc_event_short_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 	uint8_t len;        /* the length of the string in the input data */
 	uint8_t len1, len2; /* the lenght of the output strings */
 
+<<<<<<< HEAD
 	/*dvb_hexdump(parms, "event short desc: ", buf - 2, desc->length + 2);*/
+=======
+	/*hexdump(parms, "event short desc: ", buf - 2, desc->length + 2);*/
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	event->language[0] = buf[0];
 	event->language[1] = buf[1];
@@ -41,7 +58,11 @@ int dvb_desc_event_short_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 	len = buf[0];
 	buf++;
 	len1 = len;
+<<<<<<< HEAD
 	dvb_parse_string(parms, &event->name, &event->name_emph, buf, len1);
+=======
+	parse_string(parms, &event->name, &event->name_emph, buf, len1, default_charset, output_charset);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	buf += len;
 
 	event->text = NULL;
@@ -49,7 +70,11 @@ int dvb_desc_event_short_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 	len = buf[0];
 	len2 = len;
 	buf++;
+<<<<<<< HEAD
 	dvb_parse_string(parms, &event->text, &event->text_emph, buf, len2);
+=======
+	parse_string(parms, &event->text, &event->text_emph, buf, len2, default_charset, output_charset);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	buf += len;
 	return 0;
 }

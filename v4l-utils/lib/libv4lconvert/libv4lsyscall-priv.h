@@ -36,14 +36,22 @@
 
 #ifdef linux
 #include <sys/time.h>
+<<<<<<< HEAD
 #include <sys/syscall.h>
+=======
+#include <syscall.h>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <linux/types.h>
 #include <linux/ioctl.h>
 /* On 32 bits archs we always use mmap2, on 64 bits archs there is no mmap2 */
 #ifdef __NR_mmap2
+<<<<<<< HEAD
 #if !defined(SYS_mmap2)
 #define	SYS_mmap2 __NR_mmap2
 #endif
+=======
+#define	SYS_mmap2 __NR_mmap2
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #define	MMAP2_PAGE_SHIFT 12
 #else
 #define	SYS_mmap2 SYS_mmap
@@ -61,6 +69,7 @@
 #define	_IOC_SIZE(cmd) IOCPARM_LEN(cmd)
 #define	MAP_ANONYMOUS MAP_ANON
 #define	MMAP2_PAGE_SHIFT 0
+<<<<<<< HEAD
 #endif
 
 #if defined(__OpenBSD__)
@@ -70,6 +79,9 @@
 #define	_IOC_NR(cmd) ((cmd) & 0xFF)
 #define	_IOC_TYPE(cmd) IOCGROUP(cmd)
 #define	MMAP2_PAGE_SHIFT 0
+=======
+typedef off_t __off_t;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #endif
 
 #undef SYS_OPEN
@@ -101,6 +113,7 @@
 #if defined(__FreeBSD__)
 #define SYS_MMAP(addr, len, prot, flags, fd, off) \
 	__syscall(SYS_mmap, (void *)(addr), (size_t)(len), \
+<<<<<<< HEAD
 			(int)(prot), (int)(flags), (int)(fd), (off_t)(off))
 #elif defined(__FreeBSD_kernel__)
 #define SYS_MMAP(addr, len, prot, flags, fd, off) \
@@ -115,6 +128,17 @@ register_t __syscall(quad_t, ...);
 #define SYS_MMAP(addr, len, prot, flags, fd, off) \
 	syscall(SYS_mmap2, (void *)(addr), (size_t)(len), \
 			(int)(prot), (int)(flags), (int)(fd), (off_t)((off) >> MMAP2_PAGE_SHIFT))
+=======
+			(int)(prot), (int)(flags), (int)(fd), (__off_t)(off))
+#elif defined(__FreeBSD_kernel__)
+#define SYS_MMAP(addr, len, prot, flags, fd, off) \
+	syscall(SYS_mmap, (void *)(addr), (size_t)(len), \
+			(int)(prot), (int)(flags), (int)(fd), (__off_t)(off))
+#else
+#define SYS_MMAP(addr, len, prot, flags, fd, off) \
+	syscall(SYS_mmap2, (void *)(addr), (size_t)(len), \
+			(int)(prot), (int)(flags), (int)(fd), (__off_t)((off) >> MMAP2_PAGE_SHIFT))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #endif
 
 #define SYS_MUNMAP(addr, len) \

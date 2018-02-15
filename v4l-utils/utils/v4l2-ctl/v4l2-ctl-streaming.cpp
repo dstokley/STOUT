@@ -6,9 +6,12 @@
 #include <getopt.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+<<<<<<< HEAD
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <fcntl.h>
 #include <ctype.h>
 #include <errno.h>
@@ -19,6 +22,7 @@
 #include <math.h>
 
 #include "v4l2-ctl.h"
+<<<<<<< HEAD
 #include "v4l-stream.h"
 
 extern "C" {
@@ -61,6 +65,17 @@ static int host_fd_out = -1;
 static struct tpg_data tpg;
 static unsigned output_field = V4L2_FIELD_NONE;
 static bool output_field_alt;
+=======
+
+static unsigned stream_count;
+static unsigned stream_skip;
+static unsigned stream_pat;
+static bool stream_loop;
+static unsigned reqbufs_count_cap = 3;
+static unsigned reqbufs_count_out = 3;
+static char *file_cap;
+static char *file_out;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 static void *test_mmap(void *start, size_t length, int prot, int flags,
 		int fd, int64_t offset)
@@ -84,6 +99,7 @@ void streaming_usage(void)
 	       "                     skipped buffers as is passed by --stream-skip.\n"
 	       "  --stream-skip=<count>\n"
 	       "                     skip the first <count> buffers. The default is 0.\n"
+<<<<<<< HEAD
 	       "  --stream-sleep=<count>\n"
 	       "                     sleep for 1 second every <count> buffers. If <count> is 0,\n"
 	       "                     then sleep forever right after streaming starts. The default\n"
@@ -94,6 +110,11 @@ void streaming_usage(void)
 	       "                     and the --silent option is turned on automatically.\n"
 	       "  --stream-to-host=<hostname[:port]> stream to this host. The default port is %d.\n"
 #endif
+=======
+	       "  --stream-to=<file> stream to this file. The default is to discard the\n"
+	       "                     data. If <file> is '-', then the data is written to stdout\n"
+	       "                     and the --silent option is turned on automatically.\n"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	       "  --stream-poll      use non-blocking mode and select() to stream.\n"
 	       "  --stream-mmap=<count>\n"
 	       "                     capture video using mmap() [VIDIOC_(D)QBUF]\n"
@@ -105,6 +126,7 @@ void streaming_usage(void)
 	       "                     Requires a corresponding --stream-out-mmap option.\n"
 	       "  --stream-from=<file> stream from this file. The default is to generate a pattern.\n"
 	       "                     If <file> is '-', then the data is read from stdin.\n"
+<<<<<<< HEAD
 	       "  --stream-from-host=<hostname[:port]> stream from this host. The default port is %d.\n"
 	       "  --stream-no-query  Do not query and set the DV timings or standard before streaming.\n"
 	       "  --stream-loop      loop when the end of the file we are streaming from is reached.\n"
@@ -148,6 +170,21 @@ void streaming_usage(void)
 	       "                     output video using dmabuf [VIDIOC_(D)QBUF]\n"
 	       "                     Requires a corresponding --stream-mmap option.\n"
 	       "  --list-patterns    list available patterns for use with --stream-pattern.\n"
+=======
+	       "  --stream-loop      loop when the end of the file we are streaming from is reached.\n"
+	       "                     The default is to stop.\n"
+	       "  --stream-pattern=<count>\n"
+	       "                     choose output pattern. The default is 0.\n"
+	       "  --stream-out-mmap=<count>\n"
+	       "                     output video using mmap() [VIDIOC_(D)QBUF]\n"
+	       "                     count: the number of buffers to allocate. The default is 3.\n"
+	       "  --stream-out-user=<count>\n"
+	       "                     output video using user pointers [VIDIOC_(D)QBUF]\n"
+	       "                     count: the number of buffers to allocate. The default is 3.\n"
+	       "  --stream-out-dmabuf\n"
+	       "                     output video using dmabuf [VIDIOC_(D)QBUF]\n"
+	       "                     Requires a corresponding --stream-mmap option.\n"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	       "  --list-buffers     list all video buffers [VIDIOC_QUERYBUF]\n"
 	       "  --list-buffers-out list all video output buffers [VIDIOC_QUERYBUF]\n"
 	       "  --list-buffers-vbi list all VBI buffers [VIDIOC_QUERYBUF]\n"
@@ -159,6 +196,7 @@ void streaming_usage(void)
 	       "                     list all sliced VBI output buffers [VIDIOC_QUERYBUF]\n"
 	       "  --list-buffers-sdr\n"
 	       "                     list all SDR RX buffers [VIDIOC_QUERYBUF]\n"
+<<<<<<< HEAD
 	       "  --list-buffers-sdr-out\n"
 	       "                     list all SDR TX buffers [VIDIOC_QUERYBUF]\n"
 	       "  --list-buffers-meta\n"
@@ -167,6 +205,9 @@ void streaming_usage(void)
 		V4L_STREAM_PORT,
 #endif
 	       	V4L_STREAM_PORT);
+=======
+	       );
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 static void setTimeStamp(struct v4l2_buffer &buf)
@@ -180,6 +221,7 @@ static void setTimeStamp(struct v4l2_buffer &buf)
 	buf.timestamp.tv_usec = ts.tv_nsec / 1000;
 }
 
+<<<<<<< HEAD
 static __u32 read_u32(FILE *f)
 {
 	__u32 v;
@@ -194,6 +236,8 @@ static void write_u32(FILE *f, __u32 v)
 	fwrite(&v, 1, sizeof(v), f);
 }
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 static const flag_def flags_def[] = {
 	{ V4L2_BUF_FLAG_MAPPED, "mapped" },
 	{ V4L2_BUF_FLAG_QUEUED, "queued" },
@@ -206,7 +250,10 @@ static const flag_def flags_def[] = {
 	{ V4L2_BUF_FLAG_PREPARED, "prepared" },
 	{ V4L2_BUF_FLAG_NO_CACHE_INVALIDATE, "no-cache-invalidate" },
 	{ V4L2_BUF_FLAG_NO_CACHE_CLEAN, "no-cache-clean" },
+<<<<<<< HEAD
 	{ V4L2_BUF_FLAG_LAST, "last" },
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ 0, NULL }
 };
 
@@ -321,9 +368,12 @@ static void list_buffers(int fd, unsigned buftype)
 
 void streaming_cmd(int ch, char *optarg)
 {
+<<<<<<< HEAD
 	unsigned i;
 	int speed;
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	switch (ch) {
 	case OptStreamCount:
 		stream_count = strtoul(optarg, 0L, 0);
@@ -331,6 +381,7 @@ void streaming_cmd(int ch, char *optarg)
 	case OptStreamSkip:
 		stream_skip = strtoul(optarg, 0L, 0);
 		break;
+<<<<<<< HEAD
 	case OptStreamSleep:
 		stream_sleep = strtol(optarg, 0L, 0);
 		break;
@@ -407,12 +458,20 @@ void streaming_cmd(int ch, char *optarg)
 			stream_out_perc_fill = 100;
 		if (stream_out_perc_fill < 1)
 			stream_out_perc_fill = 1;
+=======
+	case OptStreamLoop:
+		stream_loop = true;
+		break;
+	case OptStreamPattern:
+		stream_pat = strtoul(optarg, 0L, 0);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		break;
 	case OptStreamTo:
 		file_cap = optarg;
 		if (!strcmp(file_cap, "-"))
 			options[OptSilent] = true;
 		break;
+<<<<<<< HEAD
 	case OptStreamToHost:
 		host_cap = optarg;
 		break;
@@ -422,6 +481,11 @@ void streaming_cmd(int ch, char *optarg)
 	case OptStreamFromHost:
 		host_out = optarg;
 		break;
+=======
+	case OptStreamFrom:
+		file_out = optarg;
+		break;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	case OptStreamMmap:
 	case OptStreamUser:
 		if (optarg) {
@@ -447,10 +511,13 @@ public:
 	{
 		if (capabilities & V4L2_CAP_SDR_CAPTURE)
 			type = V4L2_BUF_TYPE_SDR_CAPTURE;
+<<<<<<< HEAD
 		else if (capabilities & V4L2_CAP_SDR_OUTPUT)
 			type = V4L2_BUF_TYPE_SDR_OUTPUT;
 		else if (capabilities & V4L2_CAP_META_CAPTURE)
 			type = V4L2_BUF_TYPE_META_CAPTURE;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		else
 			type = is_output ? vidout_buftype : vidcap_buftype;
 		if (is_output) {
@@ -494,7 +561,10 @@ public:
 	struct v4l2_plane planes[VIDEO_MAX_FRAME][VIDEO_MAX_PLANES];
 	void *bufs[VIDEO_MAX_FRAME][VIDEO_MAX_PLANES];
 	int fds[VIDEO_MAX_FRAME][VIDEO_MAX_PLANES];
+<<<<<<< HEAD
 	unsigned bpl[VIDEO_MAX_PLANES];
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	int reqbufs(int fd, unsigned buf_count)
 	{
@@ -552,6 +622,7 @@ public:
 
 static bool fill_buffer_from_file(buffers &b, unsigned idx, FILE *fin)
 {
+<<<<<<< HEAD
 	if (host_fd_out >= 0) {
 		for (;;) {
 			unsigned packet = read_u32(fin);
@@ -622,6 +693,8 @@ static bool fill_buffer_from_file(buffers &b, unsigned idx, FILE *fin)
 		}
 		return true;
 	}
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	for (unsigned j = 0; j < b.num_planes; j++) {
 		void *buf = b.bufs[idx][j];
 		struct v4l2_plane &p = b.planes[idx][j];
@@ -724,6 +797,7 @@ static int do_setup_cap_buffers(int fd, buffers &b)
 
 static int do_setup_out_buffers(int fd, buffers &b, FILE *fin, bool qbuf)
 {
+<<<<<<< HEAD
 	tpg_pixel_aspect aspect = TPG_PIXEL_ASPECT_SQUARE;
 	struct v4l2_format fmt;
 	u32 field;
@@ -815,6 +889,14 @@ static int do_setup_out_buffers(int fd, buffers &b, FILE *fin, bool qbuf)
 	if (can_fill && ((V4L2_FIELD_HAS_T_OR_B(field) && (stream_count & 1)) ||
 			 !tpg_pattern_is_static(&tpg)))
 		stream_out_refresh = true;
+=======
+	struct v4l2_format fmt;
+	memset(&fmt, 0, sizeof(fmt));
+	fmt.type = b.type;
+	doioctl(fd, VIDIOC_G_FMT, &fmt);
+
+	bool can_fill = precalculate_bars(fmt.fmt.pix.pixelformat, stream_pat);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	for (unsigned i = 0; i < b.bcount; i++) {
 		struct v4l2_plane planes[VIDEO_MAX_PLANES];
@@ -832,6 +914,7 @@ static int do_setup_out_buffers(int fd, buffers &b, FILE *fin, bool qbuf)
 		if (doioctl(fd, VIDIOC_QUERYBUF, &buf))
 			return -1;
 
+<<<<<<< HEAD
 		buf.field = field;
 		tpg_s_field(&tpg, field, output_field_alt);
 		if (output_field_alt) {
@@ -841,6 +924,8 @@ static int do_setup_out_buffers(int fd, buffers &b, FILE *fin, bool qbuf)
 				field = V4L2_FIELD_TOP;
 		}
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (b.is_mplane) {
 			for (unsigned j = 0; j < b.num_planes; j++) {
 				struct v4l2_plane &p = b.planes[i][j];
@@ -870,9 +955,14 @@ static int do_setup_out_buffers(int fd, buffers &b, FILE *fin, bool qbuf)
 					b.bufs[i][j] = calloc(1, p.length);
 					planes[j].m.userptr = (unsigned long)b.bufs[i][j];
 				}
+<<<<<<< HEAD
 				if (can_fill)
 					tpg_fillbuffer(&tpg, stream_out_std, j, (u8 *)b.bufs[i][j]);
 			}
+=======
+			}
+			// TODO fill_buffer_mp(bufs[i], &fmt.fmt.pix_mp);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (fin)
 				fill_buffer_from_file(b, buf.index, fin);
 		}
@@ -903,18 +993,27 @@ static int do_setup_out_buffers(int fd, buffers &b, FILE *fin, bool qbuf)
 			}
 			if (!fin || !fill_buffer_from_file(b, buf.index, fin))
 				if (can_fill)
+<<<<<<< HEAD
 					tpg_fillbuffer(&tpg, stream_out_std, 0, (u8 *)b.bufs[i][0]);
+=======
+					fill_buffer(b.bufs[i][0], &fmt.fmt.pix);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		}
 		if (qbuf) {
 			if (V4L2_TYPE_IS_OUTPUT(buf.type))
 				setTimeStamp(buf);
 			if (doioctl(fd, VIDIOC_QBUF, &buf))
 				return -1;
+<<<<<<< HEAD
 			tpg_update_mv_count(&tpg, V4L2_FIELD_HAS_T_OR_B(field));
 		}
 	}
 	if (qbuf)
 		output_field = field;
+=======
+		}
+	}
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	return 0;
 }
 
@@ -930,18 +1029,28 @@ static void do_release_buffers(buffers &b)
 				test_munmap(b.bufs[i][j], b.planes[i][j].length);
 		}
 	}
+<<<<<<< HEAD
 	tpg_free(&tpg);
 }
 
 static int do_handle_cap(int fd, buffers &b, FILE *fout, int *index,
 			 unsigned &count, struct timespec &ts_last)
+=======
+}
+
+static int do_handle_cap(int fd, buffers &b, FILE *fout, int *index,
+			 unsigned &count, unsigned &last, struct timeval &tv_last)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	char ch = '<';
 	int ret;
 	struct v4l2_plane planes[VIDEO_MAX_PLANES];
 	struct v4l2_buffer buf;
 	bool ignore_count_skip = false;
+<<<<<<< HEAD
 	static time_t last_sec;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	memset(&buf, 0, sizeof(buf));
 	memset(planes, 0, sizeof(planes));
@@ -976,6 +1085,7 @@ static int do_handle_cap(int fd, buffers &b, FILE *fout, int *index,
 		test_ioctl(fd, VIDIOC_QBUF, &buf);
 	}
 	if (fout && (!stream_skip || ignore_count_skip) && !(buf.flags & V4L2_BUF_FLAG_ERROR)) {
+<<<<<<< HEAD
 		unsigned rle_size[VIDEO_MAX_PLANES];
 
 		if (host_fd_cap >= 0) {
@@ -1001,6 +1111,10 @@ static int do_handle_cap(int fd, buffers &b, FILE *fout, int *index,
 		}
 		for (unsigned j = 0; j < b.num_planes; j++) {
 			__u32 used = b.is_mplane ? planes[j].bytesused : buf.bytesused;
+=======
+		for (unsigned j = 0; j < b.num_planes; j++) {
+			unsigned used = b.is_mplane ? planes[j].bytesused : buf.bytesused;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			unsigned offset = b.is_mplane ? planes[j].data_offset : 0;
 			unsigned sz;
 
@@ -1011,19 +1125,25 @@ static int do_handle_cap(int fd, buffers &b, FILE *fout, int *index,
 				offset = 0;
 			}
 			used -= offset;
+<<<<<<< HEAD
 			if (host_fd_cap >= 0) {
 				write_u32(fout, V4L_STREAM_PACKET_FRAME_VIDEO_SIZE_PLANE_HDR);
 				write_u32(fout, used);
 				write_u32(fout, rle_size[j]);
 				used = rle_size[j];
 			}
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			sz = fwrite((char *)b.bufs[buf.index][j] + offset, 1, used, fout);
 
 			if (sz != used)
 				fprintf(stderr, "%u != %u\n", sz, used);
 		}
+<<<<<<< HEAD
 		if (host_fd_cap >= 0)
 			fflush(fout);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 	if (buf.flags & V4L2_BUF_FLAG_KEYFRAME)
 		ch = 'K';
@@ -1044,6 +1164,7 @@ static int do_handle_cap(int fd, buffers &b, FILE *fout, int *index,
 	}
 
 	if (count == 0) {
+<<<<<<< HEAD
 		clock_gettime(CLOCK_MONOTONIC, &ts_last);
 		last_sec = 0;
 	} else {
@@ -1066,6 +1187,20 @@ static int do_handle_cap(int fd, buffers &b, FILE *fout, int *index,
 				fprintf(stderr, " %d%% compression", 100 - rle_perc / rle_perc_count);
 			rle_perc_count = rle_perc = 0;
 			fprintf(stderr, "\n");
+=======
+		gettimeofday(&tv_last, NULL);
+	} else {
+		struct timeval tv_cur, res;
+
+		gettimeofday(&tv_cur, NULL);
+		timersub(&tv_cur, &tv_last, &res);
+		if (res.tv_sec) {
+			unsigned fps = (100 * (count - last)) /
+				(res.tv_sec * 100 + res.tv_usec / 10000);
+			last = count;
+			tv_last = tv_cur;
+			fprintf(stderr, " %d fps\n", fps);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		}
 	}
 	count++;
@@ -1077,8 +1212,11 @@ static int do_handle_cap(int fd, buffers &b, FILE *fout, int *index,
 		stream_skip--;
 		return 0;
 	}
+<<<<<<< HEAD
 	if (stream_sleep > 0 && count % stream_sleep == 0)
 		sleep(1);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (stream_count == 0)
 		return 0;
 	if (--stream_count == 0)
@@ -1088,9 +1226,14 @@ static int do_handle_cap(int fd, buffers &b, FILE *fout, int *index,
 }
 
 static int do_handle_out(int fd, buffers &b, FILE *fin, struct v4l2_buffer *cap,
+<<<<<<< HEAD
 			 unsigned &count, struct timespec &ts_last)
 {
 	static time_t last_sec;
+=======
+			 unsigned &count, unsigned &last, struct timeval &tv_last)
+{
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	struct v4l2_plane planes[VIDEO_MAX_PLANES];
 	struct v4l2_buffer buf;
 	int ret;
@@ -1145,6 +1288,7 @@ static int do_handle_out(int fd, buffers &b, FILE *fin, struct v4l2_buffer *cap,
 		fprintf(stderr, "%s: failed: %s\n", "VIDIOC_DQBUF", strerror(errno));
 		return -1;
 	}
+<<<<<<< HEAD
 	buf.field = output_field;
 	tpg_s_field(&tpg, output_field, output_field_alt);
 	if (output_field_alt) {
@@ -1168,16 +1312,26 @@ static int do_handle_out(int fd, buffers &b, FILE *fin, struct v4l2_buffer *cap,
 	if (V4L2_TYPE_IS_OUTPUT(buf.type))
 		setTimeStamp(buf);
 
+=======
+	if (fin && !fill_buffer_from_file(b, buf.index, fin))
+		return -1;
+	if (V4L2_TYPE_IS_OUTPUT(buf.type))
+		setTimeStamp(buf);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (test_ioctl(fd, VIDIOC_QBUF, &buf)) {
 		fprintf(stderr, "%s: failed: %s\n", "VIDIOC_QBUF", strerror(errno));
 		return -1;
 	}
+<<<<<<< HEAD
 	tpg_update_mv_count(&tpg, V4L2_FIELD_HAS_T_OR_B(output_field));
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	fprintf(stderr, ">");
 	fflush(stderr);
 
 	if (count == 0) {
+<<<<<<< HEAD
 		clock_gettime(CLOCK_MONOTONIC, &ts_last);
 		last_sec = 0;
 	} else {
@@ -1201,6 +1355,23 @@ static int do_handle_out(int fd, buffers &b, FILE *fin, struct v4l2_buffer *cap,
 	count++;
 	if (stream_sleep > 0 && count % stream_sleep == 0)
 		sleep(1);
+=======
+		gettimeofday(&tv_last, NULL);
+	} else {
+		struct timeval tv_cur, res;
+
+		gettimeofday(&tv_cur, NULL);
+		timersub(&tv_cur, &tv_last, &res);
+		if (res.tv_sec) {
+			unsigned fps = (100 * (count - last)) /
+				(res.tv_sec * 100 + res.tv_usec / 10000);
+			last = count;
+			tv_last = tv_cur;
+			fprintf(stderr, " %d fps\n", fps);
+		}
+	}
+	count++;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (stream_count == 0)
 		return 0;
 	if (--stream_count == 0)
@@ -1254,10 +1425,16 @@ static void streaming_set_cap(int fd)
 	int fd_flags = fcntl(fd, F_GETFL);
 	buffers b(false);
 	bool use_poll = options[OptStreamPoll];
+<<<<<<< HEAD
 	unsigned count;
 	struct timespec ts_last;
 	bool eos;
 	bool source_change;
+=======
+	unsigned count = 0, last = 0;
+	struct timeval tv_last;
+	bool eos = false;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	FILE *fout = NULL;
 
 	if (!(capabilities & (V4L2_CAP_VIDEO_CAPTURE |
@@ -1275,6 +1452,7 @@ static void streaming_set_cap(int fd)
 	memset(&sub, 0, sizeof(sub));
 	sub.type = V4L2_EVENT_EOS;
 	ioctl(fd, VIDIOC_SUBSCRIBE_EVENT, &sub);
+<<<<<<< HEAD
 	if (use_poll) {
 		sub.type = V4L2_EVENT_SOURCE_CHANGE;
 		ioctl(fd, VIDIOC_SUBSCRIBE_EVENT, &sub);
@@ -1303,12 +1481,15 @@ recover:
 			}
 		}
 	}
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	if (file_cap) {
 		if (!strcmp(file_cap, "-"))
 			fout = stdout;
 		else
 			fout = fopen(file_cap, "w+");
+<<<<<<< HEAD
 	} else if (host_cap) {
 		char *p = strchr(host_cap, ':');
 		struct sockaddr_in serv_addr;
@@ -1377,6 +1558,8 @@ recover:
 			b.bpl[i] = rle_calc_bpl(cfmt.g_bytesperline(i), cfmt.g_pixelformat());
 		}
 		fflush(fout);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 
 	if (b.reqbufs(fd, reqbufs_count_cap))
@@ -1388,6 +1571,7 @@ recover:
 	if (doioctl(fd, VIDIOC_STREAMON, &b.type))
 		goto done;
 
+<<<<<<< HEAD
 	while (stream_sleep == 0)
 		sleep(100);
 
@@ -1395,6 +1579,12 @@ recover:
 		fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
 
 	while (!eos && !source_change) {
+=======
+	if (use_poll)
+		fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
+
+	while (!eos) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		fd_set read_fds;
 		fd_set exception_fds;
 		struct timeval tv = { use_poll ? 2 : 0, 0 };
@@ -1422,6 +1612,7 @@ recover:
 			struct v4l2_event ev;
 
 			while (!ioctl(fd, VIDIOC_DQEVENT, &ev)) {
+<<<<<<< HEAD
 				switch (ev.type) {
 				case V4L2_EVENT_SOURCE_CHANGE:
 					source_change = true;
@@ -1431,12 +1622,22 @@ recover:
 					eos = true;
 					break;
 				}
+=======
+				if (ev.type != V4L2_EVENT_EOS)
+					continue;
+				eos = true;
+				break;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			}
 		}
 
 		if (FD_ISSET(fd, &read_fds)) {
 			r  = do_handle_cap(fd, b, fout, NULL,
+<<<<<<< HEAD
 					   count, ts_last);
+=======
+					   count, last, tv_last);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (r == -1)
 				break;
 		}
@@ -1447,6 +1648,7 @@ recover:
 	fprintf(stderr, "\n");
 
 	do_release_buffers(b);
+<<<<<<< HEAD
 	if (source_change && !stream_no_query)
 		goto recover;
 
@@ -1456,6 +1658,12 @@ done:
 			write_u32(fout, V4L_STREAM_PACKET_END);
 		fclose(fout);
 	}
+=======
+
+done:
+	if (fout && fout != stdout)
+		fclose(fout);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 static void streaming_set_out(int fd)
@@ -1463,13 +1671,21 @@ static void streaming_set_out(int fd)
 	buffers b(true);
 	int fd_flags = fcntl(fd, F_GETFL);
 	bool use_poll = options[OptStreamPoll];
+<<<<<<< HEAD
 	unsigned count = 0;
 	struct timespec ts_last;
+=======
+	unsigned count = 0, last = 0;
+	struct timeval tv_last;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	FILE *fin = NULL;
 
 	if (!(capabilities & (V4L2_CAP_VIDEO_OUTPUT |
 			      V4L2_CAP_VIDEO_OUTPUT_MPLANE |
+<<<<<<< HEAD
 			      V4L2_CAP_SDR_OUTPUT |
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			      V4L2_CAP_VIDEO_M2M |
 			      V4L2_CAP_VIDEO_M2M_MPLANE))) {
 		fprintf(stderr, "unsupported stream type\n");
@@ -1485,6 +1701,7 @@ static void streaming_set_out(int fd)
 			fin = stdin;
 		else
 			fin = fopen(file_out, "r");
+<<<<<<< HEAD
 	} else if (host_out) {
 		char *p = strchr(host_out, ':');
 		int listen_fd;
@@ -1592,6 +1809,8 @@ static void streaming_set_out(int fd)
 			fprintf(stderr, "failed to set new format\n");
 			goto done;
 		}
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 
 	if (b.reqbufs(fd, reqbufs_count_out))
@@ -1603,9 +1822,12 @@ static void streaming_set_out(int fd)
 	if (doioctl(fd, VIDIOC_STREAMON, &b.type))
 		goto done;
 
+<<<<<<< HEAD
 	while (stream_sleep == 0)
 		sleep(100);
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (use_poll)
 		fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
 
@@ -1639,7 +1861,11 @@ static void streaming_set_out(int fd)
 			}
 		}
 		r = do_handle_out(fd, b, fin, NULL,
+<<<<<<< HEAD
 				   count, ts_last);
+=======
+				   count, last, tv_last);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (r == -1)
 			break;
 
@@ -1672,7 +1898,12 @@ static void streaming_set_m2m(int fd)
 	buffers in(false);
 	buffers out(true);
 	unsigned count[2] = { 0, 0 };
+<<<<<<< HEAD
 	struct timespec ts_last[2];
+=======
+	unsigned last[2] = { 0, 0 };
+	struct timeval tv_last[2];
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	FILE *file[2] = {NULL, NULL};
 	fd_set fds[3];
 	fd_set *rd_fds = &fds[0]; /* for capture */
@@ -1688,11 +1919,14 @@ static void streaming_set_m2m(int fd)
 		fprintf(stderr, "--stream-dmabuf or --stream-out-dmabuf not supported for m2m devices\n");
 		return;
 	}
+<<<<<<< HEAD
 	if (options[OptStreamToHost] || options[OptStreamFromHost]) {
 		/* Too lazy to implement this */
 		fprintf(stderr, "--stream-to-host or --stream-from-host not supported for m2m devices\n");
 		return;
 	}
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	struct v4l2_event_subscription sub;
 
@@ -1726,9 +1960,12 @@ static void streaming_set_m2m(int fd)
 	    doioctl(fd, VIDIOC_STREAMON, &out.type))
 		goto done;
 
+<<<<<<< HEAD
 	while (stream_sleep == 0)
 		sleep(100);
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (use_poll)
 		fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
 
@@ -1769,7 +2006,11 @@ static void streaming_set_m2m(int fd)
 
 		if (rd_fds && FD_ISSET(fd, rd_fds)) {
 			r  = do_handle_cap(fd, in, file[CAP], NULL,
+<<<<<<< HEAD
 					   count[CAP], ts_last[CAP]);
+=======
+					   count[CAP], last[CAP], tv_last[CAP]);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (r < 0) {
 				rd_fds = NULL;
 				ex_fds = NULL;
@@ -1779,7 +2020,11 @@ static void streaming_set_m2m(int fd)
 
 		if (wr_fds && FD_ISSET(fd, wr_fds)) {
 			r  = do_handle_out(fd, out, file[OUT], NULL,
+<<<<<<< HEAD
 					   count[OUT], ts_last[OUT]);
+=======
+					   count[OUT], last[OUT], tv_last[OUT]);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (r < 0)  {
 				wr_fds = NULL;
 
@@ -1830,7 +2075,12 @@ static void streaming_set_cap2out(int fd, int out_fd)
 	buffers in(false);
 	buffers out(true);
 	unsigned count[2] = { 0, 0 };
+<<<<<<< HEAD
 	struct timespec ts_last[2];
+=======
+	unsigned last[2] = { 0, 0 };
+	struct timeval tv_last[2];
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	FILE *file[2] = {NULL, NULL};
 	fd_set fds;
 	unsigned cnt = 0;
@@ -1908,9 +2158,12 @@ static void streaming_set_cap2out(int fd, int out_fd)
 	    doioctl(out_fd, VIDIOC_STREAMON, &out.type))
 		goto done;
 
+<<<<<<< HEAD
 	while (stream_sleep == 0)
 		sleep(100);
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (use_poll)
 		fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
 
@@ -1940,7 +2193,11 @@ static void streaming_set_cap2out(int fd, int out_fd)
 			int index = -1;
 
 			r = do_handle_cap(fd, in, file[CAP], &index,
+<<<<<<< HEAD
 					   count[CAP], ts_last[CAP]);
+=======
+					   count[CAP], last[CAP], tv_last[CAP]);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (r)
 				fprintf(stderr, "handle cap %d\n", r);
 			if (!r) {
@@ -1958,7 +2215,11 @@ static void streaming_set_cap2out(int fd, int out_fd)
 				if (test_ioctl(fd, VIDIOC_QUERYBUF, &buf))
 					break;
 				r = do_handle_out(out_fd, out, file[OUT], &buf,
+<<<<<<< HEAD
 					   count[OUT], ts_last[OUT]);
+=======
+					   count[OUT], last[OUT], tv_last[OUT]);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			}
 			if (r)
 				fprintf(stderr, "handle out %d\n", r);
@@ -1996,7 +2257,10 @@ void streaming_set(int fd, int out_fd)
 	if (out_fd < 0) {
 		out_fd = fd;
 		out_capabilities = capabilities;
+<<<<<<< HEAD
 		out_priv_magic = priv_magic;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 
 	if (do_cap > 1) {
@@ -2052,6 +2316,7 @@ void streaming_list(int fd, int out_fd)
 	if (options[OptListBuffersSdr]) {
 		list_buffers(fd, V4L2_BUF_TYPE_SDR_CAPTURE);
 	}
+<<<<<<< HEAD
 
 	if (options[OptListBuffersSdrOut]) {
 		list_buffers(fd, V4L2_BUF_TYPE_SDR_OUTPUT);
@@ -2066,4 +2331,6 @@ void streaming_list(int fd, int out_fd)
 		for (unsigned i = 0; tpg_pattern_strings[i]; i++)
 			printf("\t%2d: %s\n", i, tpg_pattern_strings[i]);
 	}
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }

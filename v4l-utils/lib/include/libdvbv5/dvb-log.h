@@ -1,17 +1,33 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2011-2014 - Mauro Carvalho Chehab
  * Copyright (c) 2012 - Andre Roth <neolynx@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
+ * Copyright (c) 2012 - Andre Roth <neolynx@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -23,6 +39,7 @@
 
 #include <syslog.h>
 
+<<<<<<< HEAD
 /**
  * @file dvb-log.h
  * @ingroup ancillary
@@ -105,6 +122,31 @@ dvb_logfunc_priv dvb_get_log_priv(struct dvb_v5_fe_parms *, void **);
  * @param level		level of the message, as defined at syslog.h
  * @param fmt		format string (same as format string on sprintf)
  */
+=======
+typedef void (*dvb_logfunc)(int level, const char *fmt, ...) __attribute__ (( format( printf, 2, 3 )));
+
+#define dvb_log(fmt, arg...) do {\
+	parms->logfunc(LOG_INFO, fmt, ##arg); \
+} while (0)
+#define dvb_logerr(fmt, arg...) do {\
+	parms->logfunc(LOG_ERR, fmt, ##arg); \
+} while (0)
+#define dvb_logdbg(fmt, arg...) do {\
+	parms->logfunc(LOG_DEBUG, fmt, ##arg); \
+} while (0)
+#define dvb_logwarn(fmt, arg...) do {\
+	parms->logfunc(LOG_WARNING, fmt, ##arg); \
+} while (0)
+#define dvb_loginfo(fmt, arg...) do {\
+	parms->logfunc(LOG_NOTICE, fmt, ##arg); \
+} while (0)
+
+
+#define dvb_perror(msg) do {\
+	parms->logfunc(LOG_ERR, "%s: %s", msg, strerror(errno)); \
+} while (0)
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 void dvb_default_log(int level, const char *fmt, ...) __attribute__ (( format( printf, 2, 3 )));
 
 #endif

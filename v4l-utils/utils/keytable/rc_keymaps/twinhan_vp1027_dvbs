@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # table twinhan_vp1027_dvbs, type: NEC
+=======
+# table twinhan_vp1027_dvbs, type: UNKNOWN
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 0x16 KEY_POWER2
 0x17 KEY_FAVORITES
 0x0f KEY_TEXT

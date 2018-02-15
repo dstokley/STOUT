@@ -1,5 +1,8 @@
 *~
+<<<<<<< HEAD
 *.1
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 *.o
 *.lo
 *.la
@@ -27,6 +30,7 @@ autom4te.cache
 build-aux
 libtool
 stamp-h1
+<<<<<<< HEAD
 ABOUT-NLS
 lib/include/dvb-frontend.h
 lib/include/libdvbv5/libdvb-version.h
@@ -61,3 +65,7 @@ v4l-utils-po/en@quot.header
 v4l-utils-po/insert-header.sin
 v4l-utils-po/quot.sed
 v4l-utils-po/remove-potcdate.sin
+=======
+po
+ABOUT-NLS
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2

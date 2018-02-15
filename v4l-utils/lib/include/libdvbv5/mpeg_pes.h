@@ -1,16 +1,31 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2013-2014 - Andre Roth <neolynx@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * Copyright (c) 2013 - Andre Roth <neolynx@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -20,6 +35,7 @@
 #ifndef _MPEG_PES_H
 #define _MPEG_PES_H
 
+<<<<<<< HEAD
 /**
  * @file mpeg_pes.h
  * @ingroup dvb_table
@@ -80,6 +96,12 @@
 #define DVB_MPEG_PES  0x00001
 
 #define DVB_MPEG_PES_AUDIO  0xc0 ... 0xcf
+=======
+#include <stdint.h>
+#include <unistd.h> /* ssize_t */
+
+#define DVB_MPEG_PES  0x00001
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #define DVB_MPEG_PES_VIDEO  0xe0 ... 0xef
 
 #define DVB_MPEG_STREAM_MAP       0xBC
@@ -91,6 +113,7 @@
 #define DVB_MPEG_STREAM_DSMCC     0x7A
 #define DVB_MPEG_STREAM_H222E     0xF8
 
+<<<<<<< HEAD
 /**
  * @struct ts_t
  * @brief MPEG PES timestamp structure, used for dts and pts
@@ -105,6 +128,8 @@
  * @param one2		1 bit	Should be 1
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct ts_t {
 	uint8_t  one:1;
 	uint8_t  bits30:3;
@@ -127,6 +152,7 @@ struct ts_t {
 	} __attribute__((packed));
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @struct dvb_mpeg_pes_optional
  * @brief MPEG PES optional header
@@ -149,6 +175,8 @@ struct ts_t {
  * @param pts				64 bit	PES PTS timestamp
  * @param dts				64 bit	PES DTS timestamp
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_mpeg_pes_optional {
 	union {
 		uint16_t bitfield;
@@ -173,6 +201,7 @@ struct dvb_mpeg_pes_optional {
 	uint64_t dts;
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @struct dvb_mpeg_pes
  * @brief MPEG PES data structure
@@ -183,6 +212,8 @@ struct dvb_mpeg_pes_optional {
  * @param length	16 bits	PES packet length
  * @param optional	Pointer to optional PES header
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_mpeg_pes {
 	union {
 		uint32_t bitfield;
@@ -201,6 +232,7 @@ struct dvb_v5_fe_parms;
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initialize a struct dvb_mpeg_pes from buffer
  * @ingroup dvb_table
@@ -240,6 +272,11 @@ void dvb_mpeg_pes_free(struct dvb_mpeg_pes *pes);
  * This function prints the fields of struct dvb_mpeg_pes
  */
 void dvb_mpeg_pes_print (struct dvb_v5_fe_parms *parms, struct dvb_mpeg_pes *pes);
+=======
+ssize_t dvb_mpeg_pes_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, uint8_t *table);
+void dvb_mpeg_pes_free(struct dvb_mpeg_pes *ts);
+void dvb_mpeg_pes_print(struct dvb_v5_fe_parms *parms, struct dvb_mpeg_pes *ts);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #ifdef __cplusplus
 }

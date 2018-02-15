@@ -53,9 +53,13 @@ static const flag_def in_status_def[] = {
 	{ V4L2_IN_ST_NO_COLOR,    "no color" },
 	{ V4L2_IN_ST_HFLIP,       "hflip" },
 	{ V4L2_IN_ST_VFLIP,       "vflip" },
+<<<<<<< HEAD
 	{ V4L2_IN_ST_NO_H_LOCK,   "no hsync lock" },
 	{ V4L2_IN_ST_NO_V_LOCK,   "no vsync lock" },
 	{ V4L2_IN_ST_NO_STD_LOCK, "no standard format lock" },
+=======
+	{ V4L2_IN_ST_NO_H_LOCK,   "no hsync lock." },
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ V4L2_IN_ST_COLOR_KILL,  "color kill" },
 	{ V4L2_IN_ST_NO_SYNC,     "no sync lock" },
 	{ V4L2_IN_ST_NO_EQU,      "no equalizer lock" },
@@ -71,6 +75,7 @@ static std::string status2s(__u32 status)
 	return status ? flags2s(status, in_status_def) : "ok";
 }
 
+<<<<<<< HEAD
 static const char *inputtype2s(__u32 type)
 {
 	switch (type) {
@@ -104,6 +109,12 @@ static const flag_def input_cap_def[] = {
 	{ V4L2_IN_CAP_DV_TIMINGS, "DV timings" },
 	{ V4L2_IN_CAP_STD, "SDTV standards" },
 	{ V4L2_IN_CAP_NATIVE_SIZE, "Native Size" },
+=======
+
+static const flag_def input_cap_def[] = {
+	{V4L2_IN_CAP_DV_TIMINGS, "DV timings" },
+	{V4L2_IN_CAP_STD, "SDTV standards" },
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ 0, NULL }
 };
 
@@ -113,9 +124,14 @@ static std::string input_cap2s(__u32 capabilities)
 }
 
 static const flag_def output_cap_def[] = {
+<<<<<<< HEAD
 	{ V4L2_OUT_CAP_DV_TIMINGS, "DV timings" },
 	{ V4L2_OUT_CAP_STD, "SDTV standards" },
 	{ V4L2_OUT_CAP_NATIVE_SIZE, "Native Size" },
+=======
+	{V4L2_OUT_CAP_DV_TIMINGS, "DV timings" },
+	{V4L2_OUT_CAP_STD, "SDTV standards" },
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ 0, NULL }
 };
 
@@ -151,9 +167,13 @@ void io_set(int fd)
 			printf("Video input set to %d", input);
 			vin.index = input;
 			if (test_ioctl(fd, VIDIOC_ENUMINPUT, &vin) >= 0)
+<<<<<<< HEAD
 				printf(" (%s: %s, %s)", vin.name,
 				       inputtype2s(vin.type),
 				       status2s(vin.status).c_str());
+=======
+				printf(" (%s: %s)", vin.name, status2s(vin.status).c_str());
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			printf("\n");
 		}
 	}
@@ -224,7 +244,11 @@ void io_list(int fd)
 				printf("\n");
 			printf("\tInput       : %d\n", vin.index);
 			printf("\tName        : %s\n", vin.name);
+<<<<<<< HEAD
 			printf("\tType        : 0x%08X (%s)\n", vin.type, inputtype2s(vin.type));
+=======
+			printf("\tType        : 0x%08X\n", vin.type);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			printf("\tAudioset    : 0x%08X\n", vin.audioset);
 			printf("\tTuner       : 0x%08X\n", vin.tuner);
 			printf("\tStandard    : 0x%016llX (%s)\n", (unsigned long long)vin.std,
@@ -245,7 +269,11 @@ void io_list(int fd)
 				printf("\n");
 			printf("\tOutput      : %d\n", vout.index);
 			printf("\tName        : %s\n", vout.name);
+<<<<<<< HEAD
 			printf("\tType        : 0x%08X (%s)\n", vout.type, outputtype2s(vout.type));
+=======
+			printf("\tType        : 0x%08X\n", vout.type);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			printf("\tAudioset    : 0x%08X\n", vout.audioset);
 			printf("\tStandard    : 0x%016llX (%s)\n", (unsigned long long)vout.std,
 					std2s(vout.std).c_str());

@@ -24,12 +24,15 @@
 #define _LARGEFILE_SOURCE 1
 #define _LARGEFILE64_SOURCE 1
 
+<<<<<<< HEAD
 /*
  * Use a buffer big enough for 1 second of data.
  * When all pids are recorded, assume a bit rate of 58 million bits/s
  */
 #define DVB_BUF_SIZE	7500000
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,6 +42,7 @@
 #include <signal.h>
 #include <argp.h>
 #include <sys/time.h>
+<<<<<<< HEAD
 #include <time.h>
 
 #include <config.h>
@@ -62,6 +66,16 @@
 #include "libdvbv5/dvb-scan.h"
 #include "libdvbv5/header.h"
 #include "libdvbv5/countries.h"
+=======
+
+#include <config.h>
+
+#include <linux/dvb/dmx.h>
+#include "libdvbv5/dvb-file.h"
+#include "libdvbv5/dvb-demux.h"
+#include "libdvbv5/dvb-scan.h"
+#include "libdvbv5/header.h"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #define CHANNEL_FILE	"channels.conf"
 #define PROGRAM_NAME	"dvbv5-zap"
@@ -70,6 +84,7 @@ const char *argp_program_version = PROGRAM_NAME " version " V4L_UTILS_VERSION;
 const char *argp_program_bug_address = "Mauro Carvalho Chehab <m.chehab@samsung.com>";
 
 struct arguments {
+<<<<<<< HEAD
 	char *confname, *lnb_name, *output, *demux_dev, *dvr_dev, *dvr_fname;
 	char *filename, *dvr_pipe;
 	unsigned adapter, frontend, demux, get_detected, get_nit;
@@ -81,12 +96,25 @@ struct arguments {
 	unsigned traffic_monitor, low_traffic, non_human, port;
 	char *search, *server;
 	const char *cc;
+=======
+	char *confname, *lnb_name, *output, *demux_dev, *dvr_dev;
+	char *filename;
+	unsigned adapter, frontend, demux, get_detected, get_nit;
+	int force_dvbv3, lna, lnb, sat_number;
+	unsigned diseqc_wait, silent, verbose, frontend_only, freq_bpf;
+	unsigned timeout, dvr, rec_psi, exit_after_tuning;
+	unsigned n_apid, n_vpid, all_pids;
+	enum file_formats input_format, output_format;
+	unsigned traffic_monitor, low_traffic;
+	char *search;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	/* Used by status print */
 	unsigned n_status_lines;
 };
 
 static const struct argp_option options[] = {
+<<<<<<< HEAD
 	{"adapter",	'a', N_("adapter#"),		0, N_("use given adapter (default 0)"), 0},
 	{"audio_pid",	'A', N_("audio_pid#"),		0, N_("audio pid program to use (default 0)"), 0},
 	{"channels",	'c', N_("file"),		0, N_("read channels list from 'file'"), 0},
@@ -118,6 +146,32 @@ static const struct argp_option options[] = {
 	{"help",        '?', 0,				0, N_("Give this help list"), -1},
 	{"usage",	-3,  0,				0, N_("Give a short usage message")},
 	{"version",	-4,  0,				0, N_("Print program version"), -1},
+=======
+	{"dvbv3",	'3', NULL,			0, "Use DVBv3 only", 0},
+	{"adapter",	'a', "adapter#",		0, "use given adapter (default 0)", 0},
+	{"audio_pid",	'A', "audio_pid#",		0, "audio pid program to use (default 0)", 0},
+	{"channels",	'c', "file",			0, "read channels list from 'file'", 0},
+	{"demux",	'd', "demux#",			0, "use given demux (default 0)", 0},
+	{"frontend",	'f', "frontend#",		0, "use given frontend (default 0)", 0},
+	{"input-format", 'I',	"format",		0, "Input format: ZAP, CHANNEL, DVBV5 (default: DVBV5)", 0},
+	{"lna",		'w', "LNA (0, 1, -1)",		0, "enable/disable/auto LNA power", 0},
+	{"lnbf",	'l', "LNBf_type",		0, "type of LNBf to use. 'help' lists the available ones", 0},
+	{"search",	'L', "string",			0, "search/look for a string inside the traffic", 0},
+	{"monitor",	'm', NULL,			0, "monitors de DVB traffic", 0},
+	{"output",	'o', "file",			0, "output filename (use -o - for stdout)", 0},
+	{"pat",		'p', NULL,			0, "add pat and pmt to TS recording (implies -r)", 0},
+	{"all-pids",	'P', NULL,			0, "don't filter any pids. Instead, outputs all of them", 0 },
+	{"record",	'r', NULL,			0, "set up /dev/dvb/adapterX/dvr0 for TS recording", 0},
+	{"silence",	's', NULL,			0, "increases silence (can be used more than once)", 0},
+	{"sat_number",	'S', "satellite_number",	0, "satellite number. If not specified, disable DISEqC", 0},
+	{"timeout",	't', "seconds",			0, "timeout for zapping and for recording", 0},
+	{"freq_bpf",	'U', "frequency",		0, "SCR/Unicable band-pass filter frequency to use, in kHz", 0},
+	{"verbose",	'v', NULL,			0, "verbose debug messages (can be used more than once)", 0},
+	{"video_pid",	'V', "video_pid#",		0, "video pid program to use (default 0)", 0},
+	{"wait",	'W', "time",			0, "adds additional wait time for DISEqC command completion", 0},
+	{"exit",	'x', NULL,			0, "exit after tuning", 0},
+	{"low_traffic",	'X', NULL,			0, "also shows DVB traffic with less then 1 packet per second", 0},
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ 0, 0, 0, 0, 0, 0 }
 };
 
@@ -125,14 +179,22 @@ static int timeout_flag = 0;
 
 #define ERROR(x...)                                                     \
 	do {                                                            \
+<<<<<<< HEAD
 		fprintf(stderr, _("ERROR: "));                             \
+=======
+		fprintf(stderr, "ERROR: ");                             \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		fprintf(stderr, x);                                     \
 		fprintf(stderr, "\n");                                 \
 	} while (0)
 
 #define PERROR(x...)                                                    \
 	do {                                                            \
+<<<<<<< HEAD
 		fprintf(stderr, _("ERROR: "));                             \
+=======
+		fprintf(stderr, "ERROR: ");                             \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		fprintf(stderr, x);                                     \
 		fprintf(stderr, " (%s)\n", strerror(errno));		\
 	} while (0)
@@ -162,7 +224,10 @@ static int parse(struct arguments *args,
 		sys = SYS_ATSC;
 		break;
 	case SYS_ISDBT:
+<<<<<<< HEAD
 	case SYS_DTMB:
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		sys = SYS_DVBT;
 		break;
 	default:
@@ -199,12 +264,20 @@ static int parse(struct arguments *args,
 	 * This way, a file in "channel" format can be used instead of a zap file.
 	 * It is also easier to use it for testing purposes.
 	 */
+<<<<<<< HEAD
 	if (!entry && (!args->dvr && !args->rec_psi)) {
+=======
+	if (!entry && (args->traffic_monitor || args->all_pids || args->exit_after_tuning)) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		uint32_t f, freq = atoi(channel);
 		if (freq) {
 			for (entry = dvb_file->first_entry; entry != NULL;
 			entry = entry->next) {
+<<<<<<< HEAD
 				dvb_retrieve_entry_prop(entry, DTV_FREQUENCY, &f);
+=======
+				retrieve_entry_prop(entry, DTV_FREQUENCY, &f);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				if (f == freq)
 					break;
 			}
@@ -218,6 +291,7 @@ static int parse(struct arguments *args,
 		return -3;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * Both the DVBv5 format and the command line parameters may
 	 * specify the LNBf. If both have the definition, use the one
@@ -228,15 +302,24 @@ static int parse(struct arguments *args,
 		int lnb = dvb_sat_search_lnb(entry->lnb);
 		if (lnb == -1) {
 			ERROR("unknown LNB %s\n", entry->lnb);
+=======
+	if (entry->lnb) {
+		int lnb = dvb_sat_search_lnb(entry->lnb);
+		if (lnb == -1) {
+			PERROR("unknown LNB %s\n", entry->lnb);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			dvb_file_free(dvb_file);
 			return -1;
 		}
 		parms->lnb = dvb_sat_get_lnb(lnb);
 	}
 
+<<<<<<< HEAD
 	if (parms->sat_number < 0 && entry->sat_number >= 0)
 		parms->sat_number = entry->sat_number;
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (entry->video_pid) {
 		if (args->n_vpid < entry->video_pid_len)
 			*vpid = entry->video_pid[args->n_vpid];
@@ -256,7 +339,11 @@ static int parse(struct arguments *args,
 				type = entry->other_el_pid[i].type;
 				if (i)
 					fprintf(stderr, "\n");
+<<<<<<< HEAD
 				fprintf(stderr, _("service has pid type %02x: "), type);
+=======
+				fprintf(stderr, "service has pid type %02x: ", type);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			}
 			fprintf(stderr, " %d", entry->other_el_pid[i].pid);
 		}
@@ -265,7 +352,11 @@ static int parse(struct arguments *args,
 	*sid = entry->service_id;
 
         /* First of all, set the delivery system */
+<<<<<<< HEAD
 	dvb_retrieve_entry_prop(entry, DTV_DELIVERY_SYSTEM, &sys);
+=======
+	retrieve_entry_prop(entry, DTV_DELIVERY_SYSTEM, &sys);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	dvb_set_compat_delivery_system(parms, sys);
 
 	/* Copy data into parms */
@@ -320,15 +411,26 @@ static int setup_frontend(struct arguments *args,
 	if (args->silent < 2) {
 		rc = dvb_fe_retrieve_parm(parms, DTV_FREQUENCY, &freq);
 		if (rc < 0) {
+<<<<<<< HEAD
 			ERROR("can't get the frequency");
 			return -1;
 		}
 		fprintf(stderr, _("tuning to %i Hz\n"), freq);
+=======
+			PERROR("can't get the frequency");
+			return -1;
+		}
+		fprintf(stderr, "tuning to %i Hz\n", freq);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 
 	rc = dvb_fe_set_parms(parms);
 	if (rc < 0) {
+<<<<<<< HEAD
 		ERROR("dvb_fe_set_parms failed");
+=======
+		PERROR("dvb_fe_set_parms failed");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return -1;
 	}
 
@@ -349,6 +451,7 @@ static void do_timeout(int x)
 	}
 }
 
+<<<<<<< HEAD
 static int print_non_human_stats(FILE *fd, struct dvb_v5_fe_parms *parms)
 {
 	int rc;
@@ -383,6 +486,8 @@ static int print_non_human_stats(FILE *fd, struct dvb_v5_fe_parms *parms)
 	return 0;
 }
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 static int print_frontend_stats(FILE *fd,
 				struct arguments *args,
 				struct dvb_v5_fe_parms *parms)
@@ -391,9 +496,12 @@ static int print_frontend_stats(FILE *fd,
 	int rc, i, len, show;
 	uint32_t status = 0;
 
+<<<<<<< HEAD
 	if (args->non_human)
 		return print_non_human_stats(fd, parms);
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	/* Move cursor up and cleans down */
 	if (isatty(fileno(fd)) && args->n_status_lines)
 		fprintf(fd, "\r\x1b[%dA\x1b[J", args->n_status_lines);
@@ -402,7 +510,11 @@ static int print_frontend_stats(FILE *fd,
 
 	rc = dvb_fe_get_stats(parms);
 	if (rc) {
+<<<<<<< HEAD
 		ERROR("dvb_fe_get_stats failed");
+=======
+		PERROR("dvb_fe_get_stats failed");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return -1;
 	}
 
@@ -413,6 +525,7 @@ static int print_frontend_stats(FILE *fd,
 	for (i = 0; i < MAX_DTV_STATS; i++) {
 		show = 1;
 
+<<<<<<< HEAD
 		dvb_fe_snprintf_stat(parms, DTV_QUALITY, _("Quality"),
 				     i, &p, &len, &show);
 
@@ -432,6 +545,27 @@ static int print_frontend_stats(FILE *fd,
 				     i,  &p, &len, &show);
 
 		dvb_fe_snprintf_stat(parms, DTV_PER, _("PER"),
+=======
+		dvb_fe_snprintf_stat(parms, DTV_QUALITY, "Quality",
+				     i, &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_STAT_SIGNAL_STRENGTH, "Signal",
+				     i, &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_STAT_CNR, "C/N",
+				     i, &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_STAT_ERROR_BLOCK_COUNT, "UCB",
+				     i,  &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_BER, "postBER",
+				     i,  &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_PRE_BER, "preBER",
+				     i,  &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_PER, "PER",
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				     i,  &p, &len, &show);
 
 		if (p != buf) {
@@ -465,7 +599,11 @@ static int check_frontend(struct arguments *args,
 	do {
 		rc = dvb_fe_get_stats(parms);
 		if (rc) {
+<<<<<<< HEAD
 			ERROR("dvb_fe_get_stats failed");
+=======
+			PERROR("dvb_fe_get_stats failed");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			usleep(1000000);
 			continue;
 		}
@@ -484,6 +622,7 @@ static int check_frontend(struct arguments *args,
 	return status & FE_HAS_LOCK;
 }
 
+<<<<<<< HEAD
 static void get_show_stats(FILE *fp, struct arguments *args,
 			   struct dvb_v5_fe_parms *parms,
 			   int loop)
@@ -564,16 +703,41 @@ static void copy_to_file(struct dvb_open_descriptor *in_fd, int out_fd,
 
 		if (write(out_fd, buf, r) < 0) {
 			PERROR(_("Write failed"));
+=======
+#define BUFLEN (188 * 256)
+static void copy_to_file(int in_fd, int out_fd, int timeout, int silent)
+{
+	char buf[BUFLEN];
+	int r;
+	long long int rc = 0LL;
+	while (timeout_flag == 0) {
+		r = read(in_fd, buf, BUFLEN);
+		if (r < 0) {
+			if (errno == EOVERFLOW) {
+				fprintf(stderr, "buffer overrun\n");
+				continue;
+			}
+			PERROR("Read failed");
+			break;
+		}
+		if (write(out_fd, buf, r) < 0) {
+			PERROR("Write failed");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			break;
 		}
 		rc += r;
 	}
 	if (silent < 2) {
+<<<<<<< HEAD
 		if (timeout)
 			fprintf(stderr, _("received %lld bytes (%lld Kbytes/sec)\n"), rc,
 				rc / (1024 * timeout));
 		else
 			fprintf(stderr, _("received %lld bytes\n"), rc);
+=======
+		fprintf(stderr, "copied %lld bytes (%lld Kbytes/sec)\n", rc,
+			rc / (1024 * timeout));
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 }
 
@@ -595,7 +759,11 @@ static error_t parse_opt(int k, char *optarg, struct argp_state *state)
 		args->timeout = strtoul(optarg, NULL, 0);
 		break;
 	case 'I':
+<<<<<<< HEAD
 		args->input_format = dvb_parse_format(optarg);
+=======
+		args->input_format = parse_format(optarg);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		break;
 	case 'o':
 		args->filename = strdup(optarg);
@@ -656,6 +824,7 @@ static error_t parse_opt(int k, char *optarg, struct argp_state *state)
 	case 'P':
 		args->all_pids++;
 		break;
+<<<<<<< HEAD
 	case 'm':
 		args->traffic_monitor = 1;
 		break;
@@ -664,10 +833,21 @@ static error_t parse_opt(int k, char *optarg, struct argp_state *state)
 		break;
 	case 'X':
 		args->low_traffic = atoi(optarg);
+=======
+	case '3':
+		args->force_dvbv3 = 1;
+		break;
+	case 'm':
+		args->traffic_monitor = 1;
+		break;
+	case 'X':
+		args->low_traffic = 1;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		break;
 	case 'L':
 		args->search = strdup(optarg);
 		break;
+<<<<<<< HEAD
 	case 'C':
 		args->cc = strndup(optarg, 2);
 		break;
@@ -692,6 +872,8 @@ static error_t parse_opt(int k, char *optarg, struct argp_state *state)
 	case -3:
 		argp_state_help(state, state->out_stream, ARGP_HELP_USAGE);
 		exit(0);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	default:
 		return ARGP_ERR_UNKNOWN;
 	};
@@ -700,6 +882,7 @@ static error_t parse_opt(int k, char *optarg, struct argp_state *state)
 
 #define BSIZE 188
 
+<<<<<<< HEAD
 int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 		       int out_fd, int timeout)
 {
@@ -710,12 +893,22 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 	int packets = 0, first = 1;
 	struct timeval startt;
 	struct dvb_v5_fe_parms *parms = dvb->fe_parms;
+=======
+int do_traffic_monitor(struct arguments *args,
+		    struct dvb_v5_fe_parms *parms)
+{
+	int fd, dvr_fd;
+	long long unsigned pidt[0x2001], wait;
+	int packets = 0;
+	struct timeval startt;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	memset(pidt, 0, sizeof(pidt));
 
 	args->exit_after_tuning = 1;
 	check_frontend(args, parms);
 
+<<<<<<< HEAD
 	dvr_fd = dvb_dev_open(dvb, args->dvr_dev, O_RDONLY);
 	if (!dvr_fd)
 		return -1;
@@ -726,15 +919,35 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 	fd = dvb_dev_open(dvb, args->demux_dev, O_RDWR);
 	if (!fd) {
 		dvb_dev_close(dvr_fd);
+=======
+	if ((dvr_fd = open(args->dvr_dev, O_RDONLY)) < 0) {
+		PERROR("failed opening '%s'", args->dvr_dev);
+		return -1;
+	}
+
+	if (ioctl(dvr_fd, DMX_SET_BUFFER_SIZE, 1024 * 1024) == -1)
+		perror("DMX_SET_BUFFER_SIZE failed");
+
+	if ((fd = open(args->demux_dev, O_RDWR)) < 0) {
+		PERROR("failed opening '%s'", args->demux_dev);
+		close(dvr_fd);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return -1;
 	}
 
 	if (args->silent < 2)
+<<<<<<< HEAD
 		fprintf(stderr, _("  dvb_set_pesfilter to 0x2000\n"));
 	if (dvb_dev_dmx_set_pesfilter(fd, 0x2000, DMX_PES_OTHER,
 				      DMX_OUT_TS_TAP, 0) < 0) {
 		dvb_dev_close(dvr_fd);
 		dvb_dev_close(fd);
+=======
+		fprintf(stderr, "  dvb_set_pesfilter to 0x2000\n");
+	if (dvb_set_pesfilter(fd, 0x2000, DMX_PES_OTHER,
+			      DMX_OUT_TS_TAP, 0) < 0) {
+		PERROR("couldn't set filter");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return -1;
 	}
 
@@ -750,14 +963,20 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 		if (timeout_flag)
 			break;
 
+<<<<<<< HEAD
 		if ((r = dvb_dev_read(dvr_fd, buffer, BSIZE)) <= 0) {
 			if (r == -EOVERFLOW) {
+=======
+		if ((r = read(dvr_fd, buffer, BSIZE)) <= 0) {
+			if (errno == EOVERFLOW) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				struct timeval now;
 				int diff;
 				gettimeofday(&now, 0);
 				diff =
 				    (now.tv_sec - startt.tv_sec) * 1000 +
 				    (now.tv_usec - startt.tv_usec) / 1000;
+<<<<<<< HEAD
 				fprintf(stderr, _("%.2fs: buffer overrun\n"), diff / 1000.);
 				continue;
 			}
@@ -785,11 +1004,24 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 		}
 		if (r != BSIZE) {
 			fprintf(stderr, _("dvbtraffic: only read %zd bytes\n"), r);
+=======
+				fprintf(stderr, "%.2fs: buffer overrun\n", diff / 1000.);
+				continue;
+			}
+			perror("read");
+			break;
+		}
+		if (r != BSIZE) {
+			fprintf(stderr, "dvbtraffic: only read %zd bytes\n", r);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			break;
 		}
 
 		if (h->sync_byte != 0x47) {
+<<<<<<< HEAD
 			fprintf(stderr, _("dvbtraffic: invalid sync byte. Discarding %zd bytes\n"), r);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			continue;
 		}
 
@@ -798,11 +1030,16 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 #if 0
 		/*
 		 * ITU-T Rec. H.222.0 decoders shall discard Transport Stream
+<<<<<<< HEAD
 		 * packets with the adaptation_field_control field set to
 		 * a value of '00' (invalid). Packets with a value of '01'
 		 * are NULL packets. Yet, as those are actually part of the
 		 * stream, we won't be discarding, as we want to take them into
 		 * account for traffic estimation purposes.
+=======
+		 * packets with theadaptation_field_control field set to
+		 * a value of '00'.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		 */
 		if (h->adaptation_field_control == 0)
 			continue;
@@ -810,6 +1047,7 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 		ok = 1;
 		pid = h->pid;
 
+<<<<<<< HEAD
 		if (pid > 0x1fff) {
 			fprintf(stderr, _("dvbtraffic: invalid pid: 0x%04x\n"), pid);
 			pid = 0x1fff;
@@ -859,6 +1097,8 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 				pid_cont[pid] = h->continuity_counter;
 		}
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (args->search) {
 			int i, sl = strlen(args->search);
 			ok = 0;
@@ -880,7 +1120,10 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 		if (!(packets & 0xFF)) {
 			struct timeval now;
 			int diff;
+<<<<<<< HEAD
 			unsigned long long other_pidt = 0, other_err_cnt = 0;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			gettimeofday(&now, 0);
 			diff =
 			    (now.tv_sec - startt.tv_sec) * 1000 +
@@ -890,6 +1133,7 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 			                printf("\x1b[1H\x1b[2J");
 
 				args->n_status_lines = 0;
+<<<<<<< HEAD
 				printf(_(" PID           FREQ         SPEED       TOTAL\n"));
 				int _pid = 0;
 				for (_pid = 0; _pid < 0x2000; _pid++) {
@@ -900,10 +1144,20 @@ int do_traffic_monitor(struct arguments *args, struct dvb_device *dvb,
 							continue;
 						}
 						printf("%5d %9.2f p/s %8.1f Kbps ",
+=======
+				printf(" PID          FREQ         SPEED       TOTAL\n");
+				int _pid = 0;
+				for (_pid = 0; _pid < 0x2000; _pid++) {
+					if (pidt[_pid]) {
+						if (!args->low_traffic && (pidt[_pid] * 1000. / diff) < 1)
+							continue;
+						printf("%04x %9.2f p/s %8.1f Kbps ",
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 						     _pid,
 						     pidt[_pid] * 1000. / diff,
 						     pidt[_pid] * 1000. / diff * 8 * 188 / 1024);
 						if (pidt[_pid] * 188 / 1024)
+<<<<<<< HEAD
 							printf("%8llu KB", (pidt[_pid] * 188 + 512) / 1024);
 						else
 							printf(" %8llu B", pidt[_pid] * 188);
@@ -955,6 +1209,28 @@ static void set_signals(struct arguments *args)
 	}
 }
 
+=======
+							printf("%8llu KB\n", pidt[_pid] * 188 / 1024);
+						else
+							printf(" %8llu B\n", pidt[_pid] * 188);
+					}
+				}
+				/* 0x2000 is the total traffic */
+				printf("TOT %10.2f p/s %8.1f Kbps %8llu KB\n",
+				     pidt[_pid] * 1000. / diff,
+				     pidt[_pid] * 1000. / diff * 8 * 188 / 1024,
+				     pidt[_pid] * 188 / 1024);
+				printf("\n\n");
+				print_frontend_stats(stdout, args, parms);
+				wait += 1000;
+			}
+		}
+	}
+	close (fd);
+	return 0;
+}
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 int main(int argc, char **argv)
 {
 	struct arguments args;
@@ -963,6 +1239,7 @@ int main(int argc, char **argv)
 	int lnb = -1, idx = -1;
 	int vpid = -1, apid = -1, sid = -1;
 	int pmtpid = 0;
+<<<<<<< HEAD
 	struct dvb_open_descriptor *pat_fd = NULL, *pmt_fd = NULL;
 	struct dvb_open_descriptor *sid_fd = NULL, *dvr_fd = NULL;
 	struct dvb_open_descriptor *audio_fd = NULL, *video_fd = NULL;
@@ -985,10 +1262,26 @@ int main(int argc, char **argv)
 	textdomain (PACKAGE);
 #endif
 
+=======
+	int pat_fd = -1, pmt_fd = -1;
+	int audio_fd = -1, video_fd = -1;
+	int dvr_fd = -1, file_fd = -1;
+	int err = -1;
+	int r;
+	struct dvb_v5_fe_parms *parms = NULL;
+	const struct argp argp = {
+		.options = options,
+		.parser = parse_opt,
+		.doc = "DVB zap utility",
+		.args_doc = "<channel name> [or <frequency> if in monitor mode]",
+	};
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	memset(&args, 0, sizeof(args));
 	args.sat_number = -1;
 	args.lna = LNA_AUTO;
 	args.input_format = FILE_DVBV5;
+<<<<<<< HEAD
 	args.dvr_pipe = "/tmp/dvr-pipe";
 	args.low_traffic = 1;
 
@@ -996,6 +1289,10 @@ int main(int argc, char **argv)
 		argp_help(&argp, stderr, ARGP_HELP_SHORT_USAGE, PROGRAM_NAME);
 		return -1;
 	}
+=======
+
+	argp_parse(&argp, argc, argv, 0, &idx, &args);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	if (idx < argc)
 		channel = argv[idx];
@@ -1006,13 +1303,21 @@ int main(int argc, char **argv)
 	}
 
 	if (args.input_format == FILE_UNKNOWN) {
+<<<<<<< HEAD
 		ERROR("Please specify a valid format\n");
+=======
+		fprintf(stderr, "ERROR: Please specify a valid format\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		argp_help(&argp, stderr, ARGP_HELP_STD_HELP, PROGRAM_NAME);
 		return -1;
 	}
 
 	if (!args.traffic_monitor && args.search) {
+<<<<<<< HEAD
 		ERROR("search string can be used only on monitor mode\n");
+=======
+		fprintf(stderr, "ERROR: search string can be used only on monitor mode\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		argp_help(&argp, stderr, ARGP_HELP_STD_HELP, PROGRAM_NAME);
 		return -1;
 	}
@@ -1020,6 +1325,7 @@ int main(int argc, char **argv)
 	if (args.lnb_name) {
 		lnb = dvb_sat_search_lnb(args.lnb_name);
 		if (lnb < 0) {
+<<<<<<< HEAD
 			printf(_("Please select one of the LNBf's below:\n"));
 			dvb_print_all_lnb();
 			exit(1);
@@ -1063,6 +1369,33 @@ int main(int argc, char **argv)
 
 	if (args.silent < 2)
 		fprintf(stderr, _("using demux '%s'\n"), args.demux_dev);
+=======
+			printf("Please select one of the LNBf's below:\n");
+			print_all_lnb();
+			exit(1);
+		} else {
+			printf("Using LNBf ");
+			print_lnb(lnb);
+		}
+	}
+
+	r = asprintf(&args.demux_dev,
+		 "/dev/dvb/adapter%i/demux%i", args.adapter, args.demux);
+	if (r < 0) {
+		fprintf(stderr, "asprintf error\n");
+		return -1;
+	}
+
+	r = asprintf(&args.dvr_dev,
+		 "/dev/dvb/adapter%i/dvr%i", args.adapter, args.demux);
+	if (r < 0) {
+		fprintf(stderr, "asprintf error\n");
+		return -1;
+	}
+
+	if (args.silent < 2)
+		fprintf(stderr, "using demux '%s'\n", args.demux_dev);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	if (!args.confname) {
 		if (!homedir)
@@ -1075,6 +1408,7 @@ int main(int argc, char **argv)
 				homedir, CHANNEL_FILE);
 		}
 	}
+<<<<<<< HEAD
 	fprintf(stderr, _("reading channels from file '%s'\n"), args.confname);
 
 	dvb_dev = dvb_dev_seek_by_adapter(dvb, args.adapter, args.frontend,
@@ -1088,14 +1422,28 @@ int main(int argc, char **argv)
 		parms->lnb = dvb_sat_get_lnb(lnb);
 	if (args.sat_number >= 0)
 		parms->sat_number = args.sat_number;
+=======
+	fprintf(stderr, "reading channels from file '%s'\n", args.confname);
+
+	parms = dvb_fe_open(args.adapter, args.frontend, args.verbose, args.force_dvbv3);
+	if (!parms)
+		goto err;
+	if (lnb)
+		parms->lnb = dvb_sat_get_lnb(lnb);
+	if (args.sat_number > 0)
+		parms->sat_number = args.sat_number % 3;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	parms->diseqc_wait = args.diseqc_wait;
 	parms->freq_bpf = args.freq_bpf;
 	parms->lna = args.lna;
 
+<<<<<<< HEAD
 	r = dvb_fe_set_default_country(parms, args.cc);
 	if (r < 0)
 		fprintf(stderr, _("Failed to set the country code:%s\n"), args.cc);
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (parse(&args, parms, channel, &vpid, &apid, &sid))
 		goto err;
 
@@ -1103,13 +1451,17 @@ int main(int argc, char **argv)
 		goto err;
 
 	if (args.exit_after_tuning) {
+<<<<<<< HEAD
 		set_signals(&args);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		err = 0;
 		check_frontend(&args, parms);
 		goto err;
 	}
 
 	if (args.traffic_monitor) {
+<<<<<<< HEAD
 		if (args.filename) {
 			file_fd = open(args.filename,
 #ifdef O_LARGEFILE
@@ -1124,11 +1476,22 @@ int main(int argc, char **argv)
 		}
 		set_signals(&args);
 		err = do_traffic_monitor(&args, dvb, file_fd, args.timeout);
+=======
+		signal(SIGTERM, do_timeout);
+		signal(SIGINT, do_timeout);
+		if (args.timeout > 0) {
+			signal(SIGINT, do_timeout);
+			alarm(args.timeout);
+		}
+
+		err = do_traffic_monitor(&args, parms);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		goto err;
 	}
 
 	if (args.rec_psi) {
 		if (sid < 0) {
+<<<<<<< HEAD
 			fprintf(stderr, _("Service id 0x%04x was not specified at the file\n"),
 				sid);
 			goto err;
@@ -1154,16 +1517,42 @@ int main(int argc, char **argv)
 			goto err;
 		}
 		if (dvb_dev_dmx_set_pesfilter(pat_fd, 0, DMX_PES_OTHER,
+=======
+			fprintf(stderr, "Service id 0x%04x was not specified at the file\n",
+				sid);
+			goto err;
+		}
+		pmtpid = get_pmt_pid(args.demux_dev, sid);
+		if (pmtpid <= 0) {
+			fprintf(stderr, "couldn't find pmt-pid for sid %04x\n",
+				sid);
+			goto err;
+		}
+
+		if ((pat_fd = open(args.demux_dev, O_RDWR)) < 0) {
+			perror("opening pat demux failed");
+			goto err;
+		}
+		if (dvb_set_pesfilter(pat_fd, 0, DMX_PES_OTHER,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				args.dvr ? DMX_OUT_TS_TAP : DMX_OUT_DECODER,
 				args.dvr ? 64 * 1024 : 0) < 0)
 			goto err;
 
+<<<<<<< HEAD
 		pmt_fd = dvb_dev_open(dvb, args.demux_dev, O_RDWR);
 		if (!pmt_fd) {
 			ERROR("opening pmt demux failed");
 			goto err;
 		}
 		if (dvb_dev_dmx_set_pesfilter(pmt_fd, pmtpid, DMX_PES_OTHER,
+=======
+		if ((pmt_fd = open(args.demux_dev, O_RDWR)) < 0) {
+			perror("opening pmt demux failed");
+			goto err;
+		}
+		if (dvb_set_pesfilter(pmt_fd, pmtpid, DMX_PES_OTHER,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				args.dvr ? DMX_OUT_TS_TAP : DMX_OUT_DECODER,
 				args.dvr ? 64 * 1024 : 0) < 0)
 			goto err;
@@ -1176,6 +1565,7 @@ int main(int argc, char **argv)
 	if (vpid >= 0) {
 		if (args.silent < 2) {
 			if (vpid == 0x2000)
+<<<<<<< HEAD
 				fprintf(stderr, _("pass all PID's to TS\n"));
 			else
 				fprintf(stderr, _("video pid %d\n"), vpid);
@@ -1183,10 +1573,19 @@ int main(int argc, char **argv)
 		video_fd = dvb_dev_open(dvb, args.demux_dev, O_RDWR);
 		if (!video_fd) {
 			ERROR("failed opening '%s'", args.demux_dev);
+=======
+				fprintf(stderr, "pass all PID's to TS\n");
+			else
+				fprintf(stderr, "video pid %d\n", vpid);
+		}
+		if ((video_fd = open(args.demux_dev, O_RDWR)) < 0) {
+			PERROR("failed opening '%s'", args.demux_dev);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			goto err;
 		}
 
 		if (args.silent < 2)
+<<<<<<< HEAD
 			fprintf(stderr, _("  dvb_set_pesfilter %d\n"), vpid);
 
 		fprintf(stderr, _("dvb_dev_set_bufsize: buffer set to %d\n"), DVB_BUF_SIZE);
@@ -1198,6 +1597,17 @@ int main(int argc, char **argv)
 				goto err;
 		} else {
 			if (dvb_dev_dmx_set_pesfilter(video_fd, vpid, DMX_PES_VIDEO,
+=======
+			fprintf(stderr, "  dvb_set_pesfilter %d\n", vpid);
+		if (vpid == 0x2000) {
+			if (ioctl(video_fd, DMX_SET_BUFFER_SIZE, 1024 * 1024) == -1)
+				perror("DMX_SET_BUFFER_SIZE failed");
+			if (dvb_set_pesfilter(video_fd, vpid, DMX_PES_OTHER,
+					      DMX_OUT_TS_TAP, 0) < 0)
+				goto err;
+		} else {
+			if (dvb_set_pesfilter(video_fd, vpid, DMX_PES_VIDEO,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				args.dvr ? DMX_OUT_TS_TAP : DMX_OUT_DECODER,
 				args.dvr ? 64 * 1024 : 0) < 0)
 				goto err;
@@ -1206,6 +1616,7 @@ int main(int argc, char **argv)
 
 	if (apid > 0) {
 		if (args.silent < 2)
+<<<<<<< HEAD
 			fprintf(stderr, _("audio pid %d\n"), apid);
 		audio_fd = dvb_dev_open(dvb, args.demux_dev, O_RDWR);
 		if (!audio_fd) {
@@ -1215,16 +1626,39 @@ int main(int argc, char **argv)
 		if (args.silent < 2)
 			fprintf(stderr, _("  dvb_set_pesfilter %d\n"), apid);
 		if (dvb_dev_dmx_set_pesfilter(audio_fd, apid, DMX_PES_AUDIO,
+=======
+			fprintf(stderr, "audio pid %d\n", apid);
+		if ((audio_fd = open(args.demux_dev, O_RDWR)) < 0) {
+			PERROR("failed opening '%s'", args.demux_dev);
+			goto err;
+		}
+		if (args.silent < 2)
+			fprintf(stderr, "  dvb_set_pesfilter %d\n", apid);
+		if (dvb_set_pesfilter(audio_fd, apid, DMX_PES_AUDIO,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				args.dvr ? DMX_OUT_TS_TAP : DMX_OUT_DECODER,
 				args.dvr ? 64 * 1024 : 0) < 0)
 			goto err;
 	}
 
+<<<<<<< HEAD
 	set_signals(&args);
 
 	if (!check_frontend(&args, parms)) {
 		err = 1;
 		fprintf(stderr, _("frontend doesn't lock\n"));
+=======
+	signal(SIGALRM, do_timeout);
+	signal(SIGTERM, do_timeout);
+	if (args.timeout > 0) {
+		signal(SIGINT, do_timeout);
+		alarm(args.timeout);
+	}
+
+	if (!check_frontend(&args, parms)) {
+		err = 1;
+		fprintf(stderr, "frontend doesn't lock\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		goto err;
 	}
 
@@ -1240,7 +1674,11 @@ int main(int argc, char **argv)
 					 O_WRONLY | O_CREAT,
 					 0644);
 				if (file_fd < 0) {
+<<<<<<< HEAD
 					PERROR(_("open of '%s' failed"),
+=======
+					PERROR("open of '%s' failed",
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 					       args.filename);
 					return -1;
 				}
@@ -1248,6 +1686,7 @@ int main(int argc, char **argv)
 		}
 
 		if (args.silent < 2)
+<<<<<<< HEAD
 			get_show_stats(stderr, &args, parms, 0);
 
 		if (file_fd >= 0) {
@@ -1312,13 +1751,56 @@ int main(int argc, char **argv)
 			get_show_stats(stderr, &args, parms, 1);
 			usleep(1000000);
 		}
+=======
+			print_frontend_stats(stderr, &args, parms);
+
+		if (file_fd >= 0) {
+			if ((dvr_fd = open(args.dvr_dev, O_RDONLY)) < 0) {
+				PERROR("failed opening '%s'", args.dvr_dev);
+				goto err;
+			}
+			if (!timeout_flag)
+				fprintf(stderr, "Record to file '%s' started\n", args.filename);
+			copy_to_file(dvr_fd, file_fd, args.timeout, args.silent);
+		} else {
+			if (!timeout_flag)
+				fprintf(stderr, "DVR interface '%s' can now be opened\n", args.dvr_dev);
+			while (timeout_flag == 0)
+				sleep(1);
+		}
+		if (args.silent < 2)
+			print_frontend_stats(stderr, &args, parms);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 	err = 0;
 
 err:
+<<<<<<< HEAD
 	if (args.confname)
 		free(args.confname);
 	dvb_dev_free(dvb);
+=======
+	if (file_fd > 0)
+		close(file_fd);
+	if (dvr_fd > 0)
+		close(dvr_fd);
+	if (pat_fd > 0)
+		close(pat_fd);
+	if (pmt_fd > 0)
+		close(pmt_fd);
+	if (audio_fd > 0)
+		close(audio_fd);
+	if (video_fd > 0)
+		close(video_fd);
+	if (parms)
+		dvb_fe_close(parms);
+	if (args.confname)
+		free(args.confname);
+	if (args.demux_dev)
+		free(args.demux_dev);
+	if (args.dvr_dev)
+		free(args.dvr_dev);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	return err;
 }

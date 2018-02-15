@@ -7,5 +7,10 @@ sliced-vbi-test
 stress-buffer
 v4l2gl
 v4l2grab
+<<<<<<< HEAD
 mc_nextgen_test
 sdlcam
+=======
+v4lgrab
+vbi-test
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2

@@ -1,16 +1,31 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2013-2014 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -18,6 +33,7 @@
  * Described on ARIB STD-B10 as Terrestrial delivery system descriptor
  */
 
+<<<<<<< HEAD
 /**
  * @file desc_isdbt_delivery.h
  * @ingroup descriptors
@@ -33,11 +49,14 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifndef _ISDBT_DELIVERY_H
 #define _ISDBT_DELIVERY_H
 
 #include <libdvbv5/descriptors.h>
 
+<<<<<<< HEAD
 /**
  * @struct isdbt_desc_terrestrial_delivery_system
  * @ingroup descriptors
@@ -58,6 +77,10 @@ struct isdbt_desc_terrestrial_delivery_system {
 	uint8_t type;
 	uint8_t length;
 	struct dvb_desc *next;
+=======
+struct isdbt_desc_terrestrial_delivery_system {
+	DVB_DESC_HEADER();
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	uint32_t *frequency;
 	unsigned num_freqs;
@@ -78,6 +101,7 @@ struct dvb_v5_fe_parms;
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses the ISDB-T terrestrial delivery system
  * 	  descriptor
@@ -125,6 +149,13 @@ extern const uint32_t isdbt_interval[];
 /**
  * Converts an ISDB-T mode into a string
  */
+=======
+int isdbt_desc_delivery_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf, struct dvb_desc *desc);
+void isdbt_desc_delivery_print(struct dvb_v5_fe_parms *parms, const struct dvb_desc *desc);
+void isdbt_desc_delivery_free(struct dvb_desc *desc);
+
+extern const uint32_t isdbt_interval[];
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 extern const uint32_t isdbt_mode[];
 
 #ifdef __cplusplus

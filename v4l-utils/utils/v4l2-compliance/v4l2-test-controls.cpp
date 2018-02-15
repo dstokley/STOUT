@@ -32,7 +32,11 @@
 #include <vector>
 #include "v4l2-compliance.h"
 
+<<<<<<< HEAD
 static int checkQCtrl(struct node *node, struct test_query_ext_ctrl &qctrl)
+=======
+static int checkQCtrl(struct node *node, struct test_queryctrl &qctrl)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	struct v4l2_querymenu qmenu;
 	__u32 fl = qctrl.flags;
@@ -41,7 +45,11 @@ static int checkQCtrl(struct node *node, struct test_query_ext_ctrl &qctrl)
 	int i;
 
 	qctrl.menu_mask = 0;
+<<<<<<< HEAD
 	if (check_string(qctrl.name, sizeof(qctrl.name)))
+=======
+	if (check_ustring(qctrl.name, sizeof(qctrl.name)))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return fail("invalid name\n");
 	info("checking v4l2_queryctrl of control '%s' (0x%08x)\n", qctrl.name, qctrl.id);
 	if (qctrl.id & V4L2_CTRL_FLAG_NEXT_CTRL)
@@ -63,12 +71,19 @@ static int checkQCtrl(struct node *node, struct test_query_ext_ctrl &qctrl)
 	case V4L2_CTRL_TYPE_MENU:
 	case V4L2_CTRL_TYPE_INTEGER_MENU:
 		if (qctrl.step != 1)
+<<<<<<< HEAD
 			return fail("invalid step value %lld\n", qctrl.step);
+=======
+			return fail("invalid step value %d\n", qctrl.step);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (qctrl.minimum < 0)
 			return fail("min < 0\n");
 		/* fall through */
 	case V4L2_CTRL_TYPE_INTEGER:
+<<<<<<< HEAD
 	case V4L2_CTRL_TYPE_INTEGER64:
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (qctrl.default_value < qctrl.minimum ||
 		    qctrl.default_value > qctrl.maximum)
 			return fail("def < min || def > max\n");
@@ -80,8 +95,12 @@ static int checkQCtrl(struct node *node, struct test_query_ext_ctrl &qctrl)
 			return fail("step == 0\n");
 		if (qctrl.step < 0)
 			return fail("step < 0\n");
+<<<<<<< HEAD
 		if ((unsigned)qctrl.step > (unsigned)(qctrl.maximum - qctrl.minimum) &&
 		    qctrl.maximum != qctrl.minimum)
+=======
+		if ((unsigned)qctrl.step > (unsigned)(qctrl.maximum - qctrl.minimum))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			return fail("step > max - min\n");
 		if ((qctrl.maximum - qctrl.minimum) % qctrl.step) {
 			// This really should be a fail, but there are so few
@@ -101,13 +120,20 @@ static int checkQCtrl(struct node *node, struct test_query_ext_ctrl &qctrl)
 			return fail("default_value is out of range for a bitmask control\n");
 		break;
 	case V4L2_CTRL_TYPE_CTRL_CLASS:
+<<<<<<< HEAD
+=======
+	case V4L2_CTRL_TYPE_INTEGER64:
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	case V4L2_CTRL_TYPE_BUTTON:
 		if (qctrl.minimum || qctrl.maximum || qctrl.step || qctrl.default_value)
 			return fail("non-zero min/max/step/def\n");
 		break;
 	default:
+<<<<<<< HEAD
 		if (qctrl.type >= V4L2_CTRL_COMPOUND_TYPES)
 			break;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return fail("unknown control type\n");
 	}
 	if (qctrl.type == V4L2_CTRL_TYPE_STRING && qctrl.default_value)
@@ -144,7 +170,11 @@ static int checkQCtrl(struct node *node, struct test_query_ext_ctrl &qctrl)
 		qmenu.id = qctrl.id;
 		qmenu.index = qctrl.minimum;
 		ret = doioctl(node, VIDIOC_QUERYMENU, &qmenu);
+<<<<<<< HEAD
 		if (ret != EINVAL && ret != ENOTTY)
+=======
+		if (ret != EINVAL)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			return fail("can do querymenu on a non-menu control\n");
 		return 0;
 	}
@@ -178,6 +208,7 @@ static int checkQCtrl(struct node *node, struct test_query_ext_ctrl &qctrl)
 	return 0;
 }
 
+<<<<<<< HEAD
 int testQueryExtControls(struct node *node)
 {
 	struct test_query_ext_ctrl qctrl;
@@ -185,6 +216,14 @@ int testQueryExtControls(struct node *node)
 	int result = 0;
 	int ret;
 	__u32 which = 0;
+=======
+int testQueryControls(struct node *node)
+{
+	struct test_queryctrl qctrl;
+	__u32 id = 0;
+	int ret;
+	__u32 ctrl_class = 0;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	bool found_ctrl_class = false;
 	unsigned user_controls = 0;
 	unsigned priv_user_controls = 0;
@@ -194,12 +233,21 @@ int testQueryExtControls(struct node *node)
 
 	for (;;) {
 		memset(&qctrl, 0xff, sizeof(qctrl));
+<<<<<<< HEAD
 		qctrl.id = id | V4L2_CTRL_FLAG_NEXT_CTRL | V4L2_CTRL_FLAG_NEXT_COMPOUND;
 		ret = doioctl(node, VIDIOC_QUERY_EXT_CTRL, &qctrl);
 		if (ret == ENOTTY)
 			return ret;
 		if (ret && ret != EINVAL)
 			return fail("invalid query_ext_ctrl return code (%d)\n", ret);
+=======
+		qctrl.id = id | V4L2_CTRL_FLAG_NEXT_CTRL;
+		ret = doioctl(node, VIDIOC_QUERYCTRL, &qctrl);
+		if (ret == ENOTTY)
+			return ret;
+		if (ret && ret != EINVAL)
+			return fail("invalid queryctrl return code (%d)\n", ret);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (ret)
 			break;
 		if (checkQCtrl(node, qctrl))
@@ -209,12 +257,21 @@ int testQueryExtControls(struct node *node)
 		id = qctrl.id;
 		if (id >= V4L2_CID_PRIVATE_BASE)
 			return fail("no V4L2_CID_PRIVATE_BASE allowed\n");
+<<<<<<< HEAD
 		if (V4L2_CTRL_ID2WHICH(id) != which) {
 			if (which && !found_ctrl_class)
 				result = fail("missing control class for class %08x\n", which);
 			if (which && !class_count)
 				return fail("no controls in class %08x\n", which);
 			which = V4L2_CTRL_ID2WHICH(id);
+=======
+		if (V4L2_CTRL_ID2CLASS(id) != ctrl_class) {
+			if (ctrl_class && !found_ctrl_class)
+				return fail("missing control class for class %08x\n", ctrl_class);
+			if (ctrl_class && !class_count)
+				return fail("no controls in class %08x\n", ctrl_class);
+			ctrl_class = V4L2_CTRL_ID2CLASS(id);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			found_ctrl_class = false;
 			class_count = 0;
 		}
@@ -224,8 +281,12 @@ int testQueryExtControls(struct node *node)
 			class_count++;
 		}
 
+<<<<<<< HEAD
 		if (which == V4L2_CTRL_CLASS_USER &&
 		    (qctrl.type < V4L2_CTRL_COMPOUND_TYPES) &&
+=======
+		if (ctrl_class == V4L2_CTRL_CLASS_USER &&
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		    qctrl.type != V4L2_CTRL_TYPE_INTEGER64 &&
 		    qctrl.type != V4L2_CTRL_TYPE_STRING &&
 		    qctrl.type != V4L2_CTRL_TYPE_CTRL_CLASS) {
@@ -234,6 +295,7 @@ int testQueryExtControls(struct node *node)
 			else if (id < V4L2_CID_LASTP1)
 				user_controls_check++;
 		}
+<<<<<<< HEAD
 		if (V4L2_CTRL_DRIVER_PRIV(id)) {
 			node->priv_controls++;
 			if (qctrl.type >= V4L2_CTRL_COMPOUND_TYPES)
@@ -251,13 +313,31 @@ int testQueryExtControls(struct node *node)
 		result = fail("missing control class for class %08x\n", which);
 	if (which && !class_count)
 		return fail("no controls in class %08x\n", which);
+=======
+		if (V4L2_CTRL_DRIVER_PRIV(id))
+			node->priv_controls++;
+		else
+			node->std_controls++;
+		node->controls.push_back(qctrl);
+	}
+	if (ctrl_class && !found_ctrl_class)
+		return fail("missing control class for class %08x\n", ctrl_class);
+	if (ctrl_class && !class_count)
+		return fail("no controls in class %08x\n", ctrl_class);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	for (id = V4L2_CID_BASE; id < V4L2_CID_LASTP1; id++) {
 		memset(&qctrl, 0xff, sizeof(qctrl));
 		qctrl.id = id;
+<<<<<<< HEAD
 		ret = doioctl(node, VIDIOC_QUERY_EXT_CTRL, &qctrl);
 		if (ret && ret != EINVAL)
 			return fail("invalid query_ext_ctrl return code (%d)\n", ret);
+=======
+		ret = doioctl(node, VIDIOC_QUERYCTRL, &qctrl);
+		if (ret && ret != EINVAL)
+			return fail("invalid queryctrl return code (%d)\n", ret);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (ret)
 			continue;
 		if (qctrl.id != id)
@@ -271,9 +351,15 @@ int testQueryExtControls(struct node *node)
 	for (id = V4L2_CID_PRIVATE_BASE; ; id++) {
 		memset(&qctrl, 0xff, sizeof(qctrl));
 		qctrl.id = id;
+<<<<<<< HEAD
 		ret = doioctl(node, VIDIOC_QUERY_EXT_CTRL, &qctrl);
 		if (ret && ret != EINVAL)
 			return fail("invalid query_ext_ctrl return code (%d)\n", ret);
+=======
+		ret = doioctl(node, VIDIOC_QUERYCTRL, &qctrl);
+		if (ret && ret != EINVAL)
+			return fail("invalid queryctrl return code (%d)\n", ret);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (ret)
 			break;
 		if (qctrl.id != id)
@@ -292,6 +378,7 @@ int testQueryExtControls(struct node *node)
 	if (priv_user_controls != priv_user_controls_check)
 		return fail("expected %d private controls, got %d\n",
 			priv_user_controls_check, priv_user_controls);
+<<<<<<< HEAD
 	return result;
 }
 
@@ -348,6 +435,12 @@ int testQueryControls(struct node *node)
 }
 
 static int checkSimpleCtrl(struct v4l2_control &ctrl, struct test_query_ext_ctrl &qctrl)
+=======
+	return 0;
+}
+
+static int checkSimpleCtrl(struct v4l2_control &ctrl, struct test_queryctrl &qctrl)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	if (ctrl.id != qctrl.id)
 		return fail("control id mismatch\n");
@@ -367,7 +460,11 @@ static int checkSimpleCtrl(struct v4l2_control &ctrl, struct test_query_ext_ctrl
 		}
 		break;
 	case V4L2_CTRL_TYPE_BITMASK:
+<<<<<<< HEAD
 		if ((__u32)ctrl.value & ~qctrl.maximum)
+=======
+		if (ctrl.value & ~qctrl.maximum)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			return fail("returned control value out of range\n");
 		break;
 	case V4L2_CTRL_TYPE_BUTTON:
@@ -380,12 +477,17 @@ static int checkSimpleCtrl(struct v4l2_control &ctrl, struct test_query_ext_ctrl
 
 int testSimpleControls(struct node *node)
 {
+<<<<<<< HEAD
 	qctrl_map::iterator iter;
+=======
+	qctrl_list::iterator iter;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	struct v4l2_control ctrl;
 	int ret;
 	int i;
 
 	for (iter = node->controls.begin(); iter != node->controls.end(); ++iter) {
+<<<<<<< HEAD
 		test_query_ext_ctrl &qctrl = iter->second;
 
 		if (qctrl.type >= V4L2_CTRL_COMPOUND_TYPES)
@@ -404,17 +506,38 @@ int testSimpleControls(struct node *node)
 			// This call will crash on kernels <= 2.6.37 for control classes due to
 			// a bug in v4l2-ctrls.c. So skip this on those kernels.
 			if (kernel_version < 38 && qctrl.type == V4L2_CTRL_TYPE_CTRL_CLASS)
+=======
+		info("checking control '%s' (0x%08x)\n", iter->name, iter->id);
+		ctrl.id = iter->id;
+		if (iter->type == V4L2_CTRL_TYPE_INTEGER64 ||
+		    iter->type == V4L2_CTRL_TYPE_STRING ||
+		    iter->type == V4L2_CTRL_TYPE_CTRL_CLASS) {
+			ret = doioctl(node, VIDIOC_G_CTRL, &ctrl);
+			if (ret != EINVAL &&
+			    !((iter->flags & V4L2_CTRL_FLAG_WRITE_ONLY) && ret == EACCES))
+				return fail("g_ctrl allowed for unsupported type\n");
+			ctrl.id = iter->id;
+			ctrl.value = 0;
+			// This call will crash on kernels <= 2.6.37 for control classes due to
+			// a bug in v4l2-ctrls.c. So skip this on those kernels.
+			if (kernel_version < 38 && iter->type == V4L2_CTRL_TYPE_CTRL_CLASS)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				ret = EACCES;
 			else
 				ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
 			if (ret != EINVAL &&
+<<<<<<< HEAD
 			    !((qctrl.flags & V4L2_CTRL_FLAG_READ_ONLY) && ret == EACCES))
+=======
+			    !((iter->flags & V4L2_CTRL_FLAG_READ_ONLY) && ret == EACCES))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				return fail("s_ctrl allowed for unsupported type\n");
 			continue;
 		}
 
 		// Get the current value
 		ret = doioctl(node, VIDIOC_G_CTRL, &ctrl);
+<<<<<<< HEAD
 		if ((qctrl.flags & V4L2_CTRL_FLAG_WRITE_ONLY)) {
 			if (ret != EACCES)
 				return fail("g_ctrl did not check the write-only flag\n");
@@ -428,6 +551,21 @@ int testSimpleControls(struct node *node)
 		// Try to set the current value (or the default value for write only controls)
 		ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
 		if (qctrl.flags & V4L2_CTRL_FLAG_READ_ONLY) {
+=======
+		if ((iter->flags & V4L2_CTRL_FLAG_WRITE_ONLY)) {
+			if (ret != EACCES)
+				return fail("g_ctrl did not check the write-only flag\n");
+			ctrl.id = iter->id;
+			ctrl.value = iter->default_value;
+		} else if (ret)
+			return fail("g_ctrl returned an error (%d)\n", ret);
+		else if (checkSimpleCtrl(ctrl, *iter))
+			return fail("invalid control %08x\n", iter->id);
+		
+		// Try to set the current value (or the default value for write only controls)
+		ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
+		if (iter->flags & V4L2_CTRL_FLAG_READ_ONLY) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (ret != EACCES)
 				return fail("s_ctrl did not check the read-only flag\n");
 		} else if (ret == EIO) {
@@ -438,6 +576,7 @@ int testSimpleControls(struct node *node)
 		}
 		if (ret)
 			continue;
+<<<<<<< HEAD
 		if (checkSimpleCtrl(ctrl, qctrl))
 			return fail("s_ctrl returned invalid control contents (%08x)\n", qctrl.id);
 
@@ -475,16 +614,62 @@ int testSimpleControls(struct node *node)
 
 		if (qctrl.type == V4L2_CTRL_TYPE_MENU || qctrl.type == V4L2_CTRL_TYPE_INTEGER_MENU) {
 			int max = qctrl.maximum;
+=======
+		if (checkSimpleCtrl(ctrl, *iter))
+			return fail("s_ctrl returned invalid control contents (%08x)\n", iter->id);
+
+		// Try to set value 'minimum - 1'
+		if ((unsigned)iter->minimum != 0x80000000) {
+			ctrl.id = iter->id;
+			ctrl.value = iter->minimum - 1;
+			ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
+			if (ret && ret != ERANGE)
+				return fail("invalid minimum range check\n");
+			if (!ret && checkSimpleCtrl(ctrl, *iter))
+				return fail("invalid control %08x\n", iter->id);
+		}
+		// Try to set value 'maximum + 1'
+		if ((unsigned)iter->maximum != 0x7fffffff) {
+			ctrl.id = iter->id;
+			ctrl.value = iter->maximum + 1;
+			ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
+			if (ret && ret != ERANGE)
+				return fail("invalid maximum range check\n");
+			if (!ret && checkSimpleCtrl(ctrl, *iter))
+				return fail("invalid control %08x\n", iter->id);
+		}
+		// Try to set non-step value
+		if (iter->step > 1 && iter->maximum > iter->minimum) {
+			ctrl.id = iter->id;
+			ctrl.value = iter->minimum + 1;
+			ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
+			if (ret == ERANGE)
+				warn("%s: returns ERANGE for in-range, but non-step-multiple value\n",
+						iter->name);
+			else if (ret)
+				return fail("returns error for in-range, but non-step-multiple value\n");
+		}
+
+		if (iter->type == V4L2_CTRL_TYPE_MENU || iter->type == V4L2_CTRL_TYPE_INTEGER_MENU) {
+			int max = iter->maximum;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 			/* Currently menu_mask is a 64-bit value, so we can't reliably
 			 * test for menu item > 63. */
 			if (max > 63)
 				max = 63;
 			// check menu items
+<<<<<<< HEAD
 			for (i = qctrl.minimum; i <= max; i++) {
 				bool valid = qctrl.menu_mask & (1ULL << i);
 
 				ctrl.id = qctrl.id; 
+=======
+			for (i = iter->minimum; i <= max; i++) {
+				bool valid = iter->menu_mask & (1ULL << i);
+
+				ctrl.id = iter->id; 
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				ctrl.value = i;
 				ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
 				if (valid && ret)
@@ -496,6 +681,7 @@ int testSimpleControls(struct node *node)
 			}
 		} else {
 			// at least min, max and default values should work
+<<<<<<< HEAD
 			ctrl.id = qctrl.id; 
 			ctrl.value = qctrl.minimum;
 			ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
@@ -508,6 +694,20 @@ int testSimpleControls(struct node *node)
 			ctrl.value = qctrl.default_value;
 			ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
 			if (ret && ret != EIO)
+=======
+			ctrl.id = iter->id; 
+			ctrl.value = iter->minimum;
+			ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
+			if (ret)
+				return fail("could not set minimum value\n");
+			ctrl.value = iter->maximum;
+			ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
+			if (ret)
+				return fail("could not set maximum value\n");
+			ctrl.value = iter->default_value;
+			ret = doioctl(node, VIDIOC_S_CTRL, &ctrl);
+			if (ret)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				return fail("could not set default value\n");
 		}
 	}
@@ -525,7 +725,11 @@ int testSimpleControls(struct node *node)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int checkExtendedCtrl(struct v4l2_ext_control &ctrl, struct test_query_ext_ctrl &qctrl)
+=======
+static int checkExtendedCtrl(struct v4l2_ext_control &ctrl, struct test_queryctrl &qctrl)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	int len;
 
@@ -533,7 +737,10 @@ static int checkExtendedCtrl(struct v4l2_ext_control &ctrl, struct test_query_ex
 		return fail("control id mismatch\n");
 	switch (qctrl.type) {
 	case V4L2_CTRL_TYPE_INTEGER:
+<<<<<<< HEAD
 	case V4L2_CTRL_TYPE_INTEGER64:
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	case V4L2_CTRL_TYPE_BOOLEAN:
 	case V4L2_CTRL_TYPE_MENU:
 	case V4L2_CTRL_TYPE_INTEGER_MENU:
@@ -548,7 +755,11 @@ static int checkExtendedCtrl(struct v4l2_ext_control &ctrl, struct test_query_ex
 		}
 		break;
 	case V4L2_CTRL_TYPE_BITMASK:
+<<<<<<< HEAD
 		if ((__u32)ctrl.value & ~qctrl.maximum)
+=======
+		if (ctrl.value & ~qctrl.maximum)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			return fail("returned control value out of range\n");
 		break;
 	case V4L2_CTRL_TYPE_BUTTON:
@@ -570,12 +781,20 @@ static int checkExtendedCtrl(struct v4l2_ext_control &ctrl, struct test_query_ex
 
 int testExtendedControls(struct node *node)
 {
+<<<<<<< HEAD
 	qctrl_map::iterator iter;
+=======
+	qctrl_list::iterator iter;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	struct v4l2_ext_controls ctrls;
 	std::vector<struct v4l2_ext_control> total_vec;
 	std::vector<struct v4l2_ext_control> class_vec;
 	struct v4l2_ext_control ctrl;
+<<<<<<< HEAD
 	__u32 which = 0;
+=======
+	__u32 ctrl_class = 0;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	bool multiple_classes = false;
 	int ret;
 
@@ -585,8 +804,15 @@ int testExtendedControls(struct node *node)
 		return ret;
 	if (ret)
 		return fail("g_ext_ctrls does not support count == 0\n");
+<<<<<<< HEAD
 	if (ctrls.which)
 		return fail("field which changed\n");
+=======
+	if (node->controls.empty())
+		return fail("g_ext_ctrls worked even when no controls are present\n");
+	if (ctrls.ctrl_class)
+		return fail("field ctrl_class changed\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (ctrls.count)
 		return fail("field count changed\n");
 	if (check_0(ctrls.reserved, sizeof(ctrls.reserved)))
@@ -598,34 +824,56 @@ int testExtendedControls(struct node *node)
 		return ret;
 	if (ret)
 		return fail("try_ext_ctrls does not support count == 0\n");
+<<<<<<< HEAD
 	if (ctrls.which)
 		return fail("field which changed\n");
+=======
+	if (node->controls.empty())
+		return fail("try_ext_ctrls worked even when no controls are present\n");
+	if (ctrls.ctrl_class)
+		return fail("field ctrl_class changed\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (ctrls.count)
 		return fail("field count changed\n");
 	if (check_0(ctrls.reserved, sizeof(ctrls.reserved)))
 		return fail("reserved not zeroed\n");
 
 	for (iter = node->controls.begin(); iter != node->controls.end(); ++iter) {
+<<<<<<< HEAD
 		test_query_ext_ctrl &qctrl = iter->second;
 
 		info("checking extended control '%s' (0x%08x)\n", qctrl.name, qctrl.id);
 		ctrl.id = qctrl.id;
 		ctrl.size = 0;
 		ctrl.ptr = NULL;
+=======
+		info("checking extended control '%s' (0x%08x)\n", iter->name, iter->id);
+		ctrl.id = iter->id;
+		ctrl.size = 0;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		ctrl.reserved2[0] = 0;
 		ctrls.count = 1;
 
 		// Either should work, so try both semi-randomly
+<<<<<<< HEAD
 		ctrls.which = (ctrl.id & 1) ? 0 : V4L2_CTRL_ID2WHICH(ctrl.id);
+=======
+		ctrls.ctrl_class = (ctrl.id & 1) ? 0 : V4L2_CTRL_ID2CLASS(ctrl.id);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		ctrls.controls = &ctrl;
 
 		// Get the current value
 		ret = doioctl(node, VIDIOC_G_EXT_CTRLS, &ctrls);
+<<<<<<< HEAD
 		if ((qctrl.flags & V4L2_CTRL_FLAG_WRITE_ONLY)) {
+=======
+		if ((iter->flags & V4L2_CTRL_FLAG_WRITE_ONLY)) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (ret != EACCES)
 				return fail("g_ext_ctrls did not check the write-only flag\n");
 			if (ctrls.error_idx != ctrls.count)
 				return fail("invalid error index write only control\n");
+<<<<<<< HEAD
 			ctrl.id = qctrl.id;
 			ctrl.value = qctrl.default_value;
 		} else {
@@ -636,6 +884,18 @@ int testExtendedControls(struct node *node)
 					return fail("invalid error index string control\n");
 				fail_on_test(ctrl.size != qctrl.elem_size * qctrl.elems);
 				ctrl.string = new char[ctrl.size];
+=======
+			ctrl.id = iter->id;
+			ctrl.value = iter->default_value;
+		} else {
+			if (ret != ENOSPC && iter->type == V4L2_CTRL_TYPE_STRING)
+				return fail("did not check against size\n");
+			if (ret == ENOSPC && iter->type == V4L2_CTRL_TYPE_STRING) {
+				if (ctrls.error_idx != 0)
+					return fail("invalid error index string control\n");
+				ctrl.string = new char[iter->maximum + 1];
+				ctrl.size = iter->maximum + 1;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				ret = doioctl(node, VIDIOC_G_EXT_CTRLS, &ctrls);
 			}
 			if (ret == EIO) {
@@ -644,13 +904,22 @@ int testExtendedControls(struct node *node)
 			}
 			if (ret)
 				return fail("g_ext_ctrls returned an error (%d)\n", ret);
+<<<<<<< HEAD
 			if (checkExtendedCtrl(ctrl, qctrl))
 				return fail("invalid control %08x\n", qctrl.id);
+=======
+			if (checkExtendedCtrl(ctrl, *iter))
+				return fail("invalid control %08x\n", iter->id);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		}
 		
 		// Try the current value (or the default value for write only controls)
 		ret = doioctl(node, VIDIOC_TRY_EXT_CTRLS, &ctrls);
+<<<<<<< HEAD
 		if (qctrl.flags & V4L2_CTRL_FLAG_READ_ONLY) {
+=======
+		if (iter->flags & V4L2_CTRL_FLAG_READ_ONLY) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (ret != EACCES)
 				return fail("try_ext_ctrls did not check the read-only flag\n");
 			if (ctrls.error_idx != 0)
@@ -661,7 +930,11 @@ int testExtendedControls(struct node *node)
 		
 		// Try to set the current value (or the default value for write only controls)
 		ret = doioctl(node, VIDIOC_S_EXT_CTRLS, &ctrls);
+<<<<<<< HEAD
 		if (qctrl.flags & V4L2_CTRL_FLAG_READ_ONLY) {
+=======
+		if (iter->flags & V4L2_CTRL_FLAG_READ_ONLY) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (ret != EACCES)
 				return fail("s_ext_ctrls did not check the read-only flag\n");
 			if (ctrls.error_idx != ctrls.count)
@@ -674,25 +947,41 @@ int testExtendedControls(struct node *node)
 			if (ret)
 				return fail("s_ext_ctrls returned an error (%d)\n", ret);
 		
+<<<<<<< HEAD
 			if (checkExtendedCtrl(ctrl, qctrl))
 				return fail("s_ext_ctrls returned invalid control contents (%08x)\n", qctrl.id);
 		}
 		if (qctrl.type == V4L2_CTRL_TYPE_STRING)
+=======
+			if (checkExtendedCtrl(ctrl, *iter))
+				return fail("s_ext_ctrls returned invalid control contents (%08x)\n", iter->id);
+		}
+		if (iter->type == V4L2_CTRL_TYPE_STRING)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			delete [] ctrl.string;
 		ctrl.string = NULL;
 	}
 
+<<<<<<< HEAD
 	ctrls.which = 0;
 	ctrls.count = 1;
 	ctrls.controls = &ctrl;
+=======
+	ctrls.ctrl_class = 0;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ctrl.id = 0;
 	ctrl.size = 0;
 	ret = doioctl(node, VIDIOC_G_EXT_CTRLS, &ctrls);
 	if (ret != EINVAL)
 		return fail("g_ext_ctrls accepted invalid control ID\n");
+<<<<<<< HEAD
 	fail_on_test(ctrls.error_idx > ctrls.count);
 	if (ctrls.error_idx != ctrls.count)
 		warn("g_ext_ctrls(0) invalid error_idx %u\n", ctrls.error_idx);
+=======
+	if (ctrls.error_idx != ctrls.count)
+		return fail("g_ext_ctrls(0) invalid error_idx %u\n", ctrls.error_idx);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ctrl.id = 0;
 	ctrl.size = 0;
 	ctrl.value = 0;
@@ -708,6 +997,7 @@ int testExtendedControls(struct node *node)
 		return fail("s_ext_ctrls(0) invalid error_idx %u\n", ctrls.error_idx);
 
 	for (iter = node->controls.begin(); iter != node->controls.end(); ++iter) {
+<<<<<<< HEAD
 		test_query_ext_ctrl &qctrl = iter->second;
 		struct v4l2_ext_control ctrl;
 
@@ -723,6 +1013,22 @@ int testExtendedControls(struct node *node)
 		if (!which)
 			which = V4L2_CTRL_ID2WHICH(ctrl.id);
 		else if (which != V4L2_CTRL_ID2WHICH(ctrl.id))
+=======
+		struct v4l2_ext_control ctrl;
+
+		if (iter->flags & (V4L2_CTRL_FLAG_READ_ONLY | V4L2_CTRL_FLAG_WRITE_ONLY))
+			continue;
+		ctrl.id = iter->id;
+		ctrl.size = 0;
+		if (iter->type == V4L2_CTRL_TYPE_STRING) {
+			ctrl.size = iter->maximum + 1;
+			ctrl.string = new char[ctrl.size];
+		}
+		ctrl.reserved2[0] = 0;
+		if (!ctrl_class)
+			ctrl_class = V4L2_CTRL_ID2CLASS(ctrl.id);
+		else if (ctrl_class != V4L2_CTRL_ID2CLASS(ctrl.id))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			multiple_classes = true;
 		total_vec.push_back(ctrl);
 	}
@@ -743,17 +1049,25 @@ int testExtendedControls(struct node *node)
 	if (ret)
 		return fail("could not set all controls\n");
 
+<<<<<<< HEAD
 	if (!which)
 		return 0;
 
 	ctrls.which = which;
+=======
+	ctrls.ctrl_class = ctrl_class;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ret = doioctl(node, VIDIOC_G_EXT_CTRLS, &ctrls);
 	if (ret && !multiple_classes)
 		return fail("could not get all controls of a specific class\n");
 	if (ret != EINVAL && multiple_classes)
 		return fail("should get EINVAL when getting mixed-class controls\n");
 	if (multiple_classes && ctrls.error_idx != ctrls.count)
+<<<<<<< HEAD
 		warn("error_idx should be equal to count\n");
+=======
+		return fail("error_idx should be equal to count\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ret = doioctl(node, VIDIOC_TRY_EXT_CTRLS, &ctrls);
 	if (ret && !multiple_classes)
 		return fail("could not try all controls of a specific class\n");
@@ -771,6 +1085,7 @@ int testExtendedControls(struct node *node)
 	if (ret != EINVAL && multiple_classes)
 		return fail("should get EINVAL when setting mixed-class controls\n");
 	if (multiple_classes && ctrls.error_idx != ctrls.count)
+<<<<<<< HEAD
 		warn("error_idx should be equal to count\n");
 	return 0;
 }
@@ -781,12 +1096,24 @@ int testEvents(struct node *node)
 
 	for (iter = node->controls.begin(); iter != node->controls.end(); ++iter) {
 		test_query_ext_ctrl &qctrl = iter->second;
+=======
+		return fail("error_idx should be equal to count\n");
+	return 0;
+}
+
+int testControlEvents(struct node *node)
+{
+	qctrl_list::iterator iter;
+
+	for (iter = node->controls.begin(); iter != node->controls.end(); ++iter) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		struct v4l2_event_subscription sub = { 0 };
 		struct v4l2_event ev;
 		struct timeval timeout = { 0, 100 };
 		fd_set set;
 		int ret;
 
+<<<<<<< HEAD
 		info("checking control event '%s' (0x%08x)\n", qctrl.name, qctrl.id);
 		sub.type = V4L2_EVENT_CTRL;
 		sub.id = qctrl.id;
@@ -803,16 +1130,40 @@ int testEvents(struct node *node)
 				return fail("failed to find event for control '%s'\n", qctrl.name);
 		} else if (qctrl.type == V4L2_CTRL_TYPE_CTRL_CLASS) {
 			return fail("found event for control class '%s'\n", qctrl.name);
+=======
+		info("checking control event '%s' (0x%08x)\n", iter->name, iter->id);
+		sub.type = V4L2_EVENT_CTRL;
+		sub.id = iter->id;
+		sub.flags = V4L2_EVENT_SUB_FL_SEND_INITIAL;
+		ret = doioctl(node, VIDIOC_SUBSCRIBE_EVENT, &sub);
+		if (ret)
+			return fail("subscribe event for control '%s' failed\n", iter->name);
+		//if (iter->type == V4L2_CTRL_TYPE_CTRL_CLASS)
+		FD_ZERO(&set);
+		FD_SET(node->vfd.fd, &set);
+		ret = select(node->vfd.fd + 1, NULL, NULL, &set, &timeout);
+		if (ret == 0) {
+			if (iter->type != V4L2_CTRL_TYPE_CTRL_CLASS)
+				return fail("failed to find event for control '%s'\n", iter->name);
+		} else if (iter->type == V4L2_CTRL_TYPE_CTRL_CLASS) {
+			return fail("found event for control class '%s'\n", iter->name);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		}
 		if (ret) {
 			ret = doioctl(node, VIDIOC_DQEVENT, &ev);
 			if (ret)
+<<<<<<< HEAD
 				return fail("couldn't get event for control '%s'\n", qctrl.name);
 			if (ev.type != V4L2_EVENT_CTRL || ev.id != qctrl.id)
+=======
+				return fail("couldn't get event for control '%s'\n", iter->name);
+			if (ev.type != V4L2_EVENT_CTRL || ev.id != iter->id)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				return fail("dequeued wrong event\n");
 		}
 		ret = doioctl(node, VIDIOC_UNSUBSCRIBE_EVENT, &sub);
 		if (ret)
+<<<<<<< HEAD
 			return fail("unsubscribe event for control '%s' failed\n", qctrl.name);
 	}
 	if (node->cur_io_caps & V4L2_IN_CAP_DV_TIMINGS) {
@@ -838,6 +1189,10 @@ int testEvents(struct node *node)
 		}
 	}
 
+=======
+			return fail("unsubscribe event for control '%s' failed\n", iter->name);
+	}
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (node->controls.empty())
 		return ENOTTY;
 	return 0;

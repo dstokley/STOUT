@@ -2,22 +2,36 @@
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  * Copyright (c) 2012 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
 
+<<<<<<< HEAD
 /**
  * @file pat.h
  * @ingroup dvb_table
@@ -36,6 +50,8 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifndef _PAT_H
 #define _PAT_H
 
@@ -44,6 +60,7 @@
 
 #include <libdvbv5/header.h>
 
+<<<<<<< HEAD
 /**
  * @def DVB_TABLE_PAT
  *	@brief PAT table ID
@@ -74,6 +91,11 @@
  * Everything after dvb_table_pat_program::next (including it) won't be bit-mapped
  * to the data parsed from the MPEG TS. So, metadata are added there.
  */
+=======
+#define DVB_TABLE_PAT      0x00
+#define DVB_TABLE_PAT_PID  0x0000
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_table_pat_program {
 	uint16_t service_id;
 	union {
@@ -86,6 +108,7 @@ struct dvb_table_pat_program {
 	struct dvb_table_pat_program *next;
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @struct dvb_table_pat
  * @brief MPEG-TS PAT table
@@ -105,12 +128,15 @@ struct dvb_table_pat_program {
  * Everything after dvb_table_pat_program::program (including it) won't be bit-mapped
  * to the data parsed from the MPEG TS. So, metadata are added there.
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_table_pat {
 	struct dvb_table_header header;
 	uint16_t programs;
 	struct dvb_table_pat_program *program;
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @brief Macro used to find programs on a PAT table
  * @ingroup dvb_table
@@ -121,6 +147,10 @@ struct dvb_table_pat {
 #define dvb_pat_program_foreach(_pgm, _pat) \
 	if (_pat && _pat->program) \
 		for (struct dvb_table_pat_program *_pgm = _pat->program; _pgm; _pgm = _pgm->next) \
+=======
+#define dvb_pat_program_foreach(_pgm, _pat) \
+	for (struct dvb_table_pat_program *_pgm = _pat->program; _pgm; _pgm = _pgm->next) \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 struct dvb_v5_fe_parms;
 
@@ -128,6 +158,7 @@ struct dvb_v5_fe_parms;
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses PAT table
  * @ingroup dvb_table
@@ -164,6 +195,11 @@ void dvb_table_pat_free(struct dvb_table_pat *table);
  */
 void dvb_table_pat_print(struct dvb_v5_fe_parms *parms,
 			 struct dvb_table_pat *table);
+=======
+ssize_t dvb_table_pat_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, struct dvb_table_pat **table);
+void dvb_table_pat_free(struct dvb_table_pat *pat);
+void dvb_table_pat_print(struct dvb_v5_fe_parms *parms, struct dvb_table_pat *t);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #ifdef __cplusplus
 }

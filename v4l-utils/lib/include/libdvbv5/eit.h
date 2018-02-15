@@ -2,22 +2,36 @@
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  * Copyright (c) 2012 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
 
+<<<<<<< HEAD
 /**
  * @file eit.h
  * @ingroup dvb_table
@@ -37,6 +51,8 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifndef _EIT_H
 #define _EIT_H
 
@@ -46,6 +62,7 @@
 
 #include <libdvbv5/header.h>
 
+<<<<<<< HEAD
 /**
  * @def DVB_TABLE_EIT
  *	@brief DVB EIT table ID for the actual TS
@@ -102,6 +119,16 @@
  * be bit-mapped to the data parsed from the MPEG TS. So, metadata are added
  * there.
  */
+=======
+#define DVB_TABLE_EIT        0x4E
+#define DVB_TABLE_EIT_OTHER  0x4F
+
+#define DVB_TABLE_EIT_SCHEDULE 0x50       /* - 0x5F */
+#define DVB_TABLE_EIT_SCHEDULE_OTHER 0x60 /* - 0x6F */
+
+#define DVB_TABLE_EIT_PID  0x12
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_table_eit_event {
 	uint16_t event_id;
 	union {
@@ -124,6 +151,7 @@ struct dvb_table_eit_event {
 	uint16_t service_id;
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @struct dvb_table_eit
  * @brief DVB EIT table
@@ -143,6 +171,8 @@ struct dvb_table_eit_event {
  * be bit-mapped to the data parsed from the MPEG TS. So, metadata are added
  * there.
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_table_eit {
 	struct dvb_table_header header;
 	uint16_t transport_id;
@@ -152,6 +182,7 @@ struct dvb_table_eit {
 	struct dvb_table_eit_event *event;
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @brief Macro used to find event on a DVB EIT table
  * @ingroup dvb_table
@@ -166,12 +197,20 @@ struct dvb_table_eit {
 struct dvb_v5_fe_parms;
 
 /** @brief Converts a running_status field into string */
+=======
+#define dvb_eit_event_foreach(_event, _eit) \
+	for( struct dvb_table_eit_event *_event = _eit->event; _event; _event = _event->next ) \
+
+struct dvb_v5_fe_parms;
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 extern const char *dvb_eit_running_status_name[8];
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses EIT table
  * @ingroup dvb_table
@@ -217,6 +256,11 @@ void dvb_table_eit_print(struct dvb_v5_fe_parms *parms,
  * @param tm		pointer to struct tm where the converted timestamp will
  *			be stored.
  */
+=======
+ssize_t dvb_table_eit_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, struct dvb_table_eit **table);
+void dvb_table_eit_free(struct dvb_table_eit *eit);
+void dvb_table_eit_print(struct dvb_v5_fe_parms *parms, struct dvb_table_eit *eit);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 void dvb_time(const uint8_t data[5], struct tm *tm);
 
 #ifdef __cplusplus

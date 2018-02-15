@@ -25,8 +25,11 @@
 #include <QWidget>
 #include <QShortcut>
 #include <QLabel>
+<<<<<<< HEAD
 #include <QPushButton>
 #include <QMenu>
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 enum CropMethod {
 	// Crop Height
@@ -41,6 +44,7 @@ enum CropMethod {
 	QV4L2_CROP_P43,
 };
 
+<<<<<<< HEAD
 struct frame {
 	__u32 format;
 	QSize size;        // int   frameHeight; int   frameWidth;
@@ -56,11 +60,14 @@ struct crop {              // cropInfo
 
 class ApplicationWindow;
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 class CaptureWin : public QWidget
 {
 	Q_OBJECT
 
 public:
+<<<<<<< HEAD
 	CaptureWin(ApplicationWindow *aw);
 	~CaptureWin();
 
@@ -78,6 +85,15 @@ public:
 	void makeFullScreen(bool);
 	QAction *m_exitFullScreen;
 	QAction *m_enterFullScreen;
+=======
+	CaptureWin();
+	~CaptureWin();
+
+	void resize(int minw, int minh);
+	void enableScaling(bool enable);
+	void setPixelAspectRatio(double ratio);
+	void setCropMethod(CropMethod crop);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	/**
 	 * @brief Set a frame into the capture window.
@@ -91,8 +107,13 @@ public:
 	 * @param data The frame data.
 	 * @param info A string containing capture information.
 	 */
+<<<<<<< HEAD
 	void setFrame(int width, int height, __u32 format,
 		      unsigned char *data, unsigned char *data2, unsigned char *data3);
+=======
+	virtual void setFrame(int width, int height, __u32 format,
+			      unsigned char *data, unsigned char *data2, const QString &info) = 0;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	/**
 	 * @brief Called when the capture stream is stopped.
@@ -130,6 +151,7 @@ public:
 	static QSize scaleFrameSize(QSize window, QSize frame);
 
 	/**
+<<<<<<< HEAD
 	 * @brief Crop size
 	 *
 	 * Reduces size width or height according to m_cropMethod
@@ -162,6 +184,48 @@ protected:
 
 	/**
 	 * @brief Get the amount of space outside the video frame.
+=======
+	 * @brief Get the number of pixels to crop.
+	 *
+	 * When cropping is applied this gives the number of pixels to
+	 * remove from top and bottom. To get total multiply the return
+	 * value by 2.
+	 *
+	 * @param width Frame width
+	 * @param height Frame height
+	 * @return The pixels to remove when cropping height
+	 *
+	 * @note The width and height must be original frame size
+	 *       to ensure that the cropping is done correctly.
+	 */
+	static int cropHeight(int width, int height);
+	static int cropWidth(int width, int height);
+
+	/**
+	 * @brief Get the frame width when aspect ratio is applied if ratio > 1.
+	 *
+	 * @param width The original frame width.
+	 * @return The width with aspect ratio correction (scaling must be enabled).
+	 */
+	static int actualFrameWidth(int width);
+
+	/**
+	 * @brief Get the frame height when aspect ratio is applied if ratio < 1.
+	 *
+	 * @param width The original frame width.
+	 * @return The width with aspect ratio correction (scaling must be enabled).
+	 */
+	static int actualFrameHeight(int height);
+
+public slots:
+	void resetSize();
+
+protected:
+	void closeEvent(QCloseEvent *event);
+
+	/**
+	 * @brief Get the amout of space outside the video frame.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	 *
 	 * The margins are that of the window that encloses the displaying
 	 * video frame. The sizes are total in both width and height.
@@ -179,6 +243,7 @@ protected:
 	void buildWindow(QWidget *videoSurface);
 
 	/**
+<<<<<<< HEAD
 	 * @brief Calculate source size after pixel aspect scaling and cropping
 	 *
 	 */
@@ -201,6 +266,13 @@ protected:
 	 * @note Must be implemented by derived render dependent classes.
 	 */
 	virtual void setRenderFrame() = 0;
+=======
+	 * @brief A label that can is used to display capture information.
+	 *
+	 * @note This must be set in the derived class' setFrame() function.
+	 */
+	QLabel m_information;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	/**
 	 * @brief Determines if scaling is to be applied to video frame.
@@ -211,14 +283,22 @@ signals:
 	void close();
 
 private:
+<<<<<<< HEAD
 	ApplicationWindow *m_appWin;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	static double m_pixelAspectRatio;
 	static CropMethod m_cropMethod;
 	QShortcut *m_hotkeyClose;
 	QShortcut *m_hotkeyScaleReset;
+<<<<<<< HEAD
 	QShortcut *m_hotkeyExitFullscreen;
 	QShortcut *m_hotkeyToggleFullscreen;
 	QVBoxLayout *m_vboxLayout;
 	unsigned m_vboxSpacing;
+=======
+	int m_curWidth;
+	int m_curHeight;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 };
 #endif

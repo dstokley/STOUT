@@ -19,6 +19,7 @@
  */
 
 #include "libdvbv5/dvb-file.h"
+<<<<<<< HEAD
 #include "libdvbv5/dvb-dev.h"
 #include <config.h>
 #include <argp.h>
@@ -38,12 +39,19 @@
 #endif
 
 # define N_(string) string
+=======
+#include <config.h>
+#include <argp.h>
+#include <stdlib.h>
+#include <stdio.h>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #define PROGRAM_NAME	"dvb-fe-tool"
 
 const char *argp_program_version = PROGRAM_NAME " version " V4L_UTILS_VERSION;
 const char *argp_program_bug_address = "Mauro Carvalho Chehab <m.chehab@samsung.com>";
 
+<<<<<<< HEAD
 static const char doc[] = N_(
 	"\nA DVB frontend tool using API version 5\n"
 	"\nOn the options below, the arguments are:\n"
@@ -70,6 +78,21 @@ static const struct argp_option options[] = {
 	{"help",        '?',	0,		0,	N_("Give this help list"), -1},
 	{"usage",	-3,	0,		0,	N_("Give a short usage message")},
 	{"version",	'V',	0,		0,	N_("Print program version"), -1},
+=======
+static const char doc[] = "\nA DVB frontend tool using API version 5\n"
+	"\nOn the options bellow, the arguments are:\n"
+	"  ADAPTER      - the dvb adapter to control\n"
+	"  FRONTEND     - the dvb frontend to control";
+
+static const struct argp_option options[] = {
+	{"verbose",	'v',	0,		0,	"enables debug messages", 0},
+	{"adapter",	'a',	"ADAPTER",	0,	"dvb adapter", 0},
+	{"frontend",	'f',	"FRONTEND",	0,	"dvb frontend", 0},
+	{"set-delsys",	'd',	"PARAMS",	0,	"set delivery system", 0},
+	{"set",		's',	"PARAMS",	0,	"set frontend", 0},
+	{"get",		'g',	0,		0,	"get frontend", 0},
+	{"dvbv3",	'3',	0,		0,	"Use DVBv3 only", 0},
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ 0, 0, 0, 0, 0, 0 }
 };
 
@@ -77,6 +100,7 @@ static int adapter = 0;
 static int frontend = 0;
 static unsigned get = 0;
 static char *set_params = NULL;
+<<<<<<< HEAD
 static char *server = NULL;
 static unsigned port = 0;
 static int verbose = 0;
@@ -108,6 +132,11 @@ static void do_timeout(int x)
 		fprintf(stderr, "\n");                                 \
 	} while (0)
 
+=======
+static int verbose = 1;		/* FIXME */
+static int dvbv3 = 0;
+static int delsys = 0;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 static error_t parse_opt(int k, char *arg, struct argp_state *state)
 {
@@ -119,6 +148,7 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 		frontend = atoi(arg);
 		break;
 	case 'd':
+<<<<<<< HEAD
 		delsys = dvb_parse_delsys(arg);
 		if (delsys < 0)
 			return ARGP_ERR_UNKNOWN;
@@ -146,10 +176,25 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 		break;
 	case 'T':
 		port = atoi(arg);
+=======
+		delsys = parse_delsys(arg);
+		if (delsys < 0)
+			return ARGP_ERR_UNKNOWN;
+		break;
+	case 's':
+		set_params = arg;
+		break;
+	case 'g':
+		get++;
+		break;
+	case '3':
+		dvbv3++;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		break;
 	case 'v':
 		verbose	++;
 		break;
+<<<<<<< HEAD
 	case 'c':
 		count = atoi(arg);
 		break;
@@ -165,6 +210,8 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 	case -3:
 		argp_state_help(state, state->out_stream, ARGP_HELP_USAGE);
 		exit(0);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	default:
 		return ARGP_ERR_UNKNOWN;
 	}
@@ -177,6 +224,7 @@ static struct argp argp = {
 	.doc = doc,
 };
 
+<<<<<<< HEAD
 static int print_frontend_stats(FILE *fd,
 				struct dvb_v5_fe_parms *parms)
 {
@@ -372,6 +420,22 @@ int main(int argc, char *argv[])
 			delivery_system_name[delsys]);
 		dvb_set_sys(parms, delsys);
 		goto ret;
+=======
+int main(int argc, char *argv[])
+{
+	struct dvb_v5_fe_parms *parms;
+
+	argp_parse(&argp, argc, argv, 0, 0, 0);
+
+	parms = dvb_fe_open(adapter, frontend, verbose, dvbv3);
+	if (!parms)
+		return -1;
+
+	if (delsys) {
+		printf("Changing delivery system to: %s\n",
+			delivery_system_name[delsys]);
+		dvb_set_sys(parms, delsys);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 
 #if 0
@@ -383,11 +447,15 @@ int main(int argc, char *argv[])
 		dvb_fe_prt_parms(parms);
 	}
 
+<<<<<<< HEAD
 	if (femon)
 		get_show_stats(parms);
 
 ret:
 	dvb_dev_free(dvb);
+=======
+	dvb_fe_close(parms);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	return 0;
 }

@@ -3,14 +3,21 @@
 	<file>exit.png</file>
 	<file>fileopen.png</file>
 	<file>fileclose.png</file>
+<<<<<<< HEAD
 	<file>start.png</file>
 	<file>step.png</file>
+=======
+	<file>record.png</file>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	<file>snapshot.png</file>
 	<file>saveraw.png</file>
 	<file>video-television.png</file>
 	<file>qv4l2.png</file>
+<<<<<<< HEAD
 	<file>enterbutt.png</file>
 	<file>fullscreen.png</file>
 	<file>fullscreenexit.png</file>
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
     </qresource>
 </RCC>

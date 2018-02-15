@@ -3,6 +3,7 @@ lib_LTLIBRARIES = libdvbv5.la
 
 otherincludedir = $(includedir)/libdvbv5
 otherinclude_HEADERS = \
+<<<<<<< HEAD
 	../include/libdvbv5/libdvb-version.h \
 	../include/libdvbv5/dvb-demux.h \
 	../include/libdvbv5/dvb-v5-std.h \
@@ -10,6 +11,12 @@ otherinclude_HEADERS = \
 	../include/libdvbv5/countries.h \
 	../include/libdvbv5/crc32.h \
 	../include/libdvbv5/dvb-dev.h \
+=======
+	../include/libdvbv5/dvb-demux.h \
+	../include/libdvbv5/dvb-v5-std.h \
+	../include/libdvbv5/dvb-file.h \
+	../include/libdvbv5/crc32.h \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	../include/libdvbv5/dvb-frontend.h \
 	../include/libdvbv5/dvb-fe.h \
 	../include/libdvbv5/dvb-sat.h \
@@ -27,6 +34,10 @@ otherinclude_HEADERS = \
 	../include/libdvbv5/desc_t2_delivery.h \
 	../include/libdvbv5/desc_service.h \
 	../include/libdvbv5/desc_frequency_list.h \
+<<<<<<< HEAD
+=======
+	../include/libdvbv5/desc_service_list.h \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	../include/libdvbv5/desc_event_short.h \
 	../include/libdvbv5/desc_event_extended.h \
 	../include/libdvbv5/desc_atsc_service_location.h \
@@ -36,6 +47,10 @@ otherinclude_HEADERS = \
 	../include/libdvbv5/desc_logical_channel.h \
 	../include/libdvbv5/desc_ts_info.h \
 	../include/libdvbv5/desc_partial_reception.h \
+<<<<<<< HEAD
+=======
+	../include/libdvbv5/desc_service_location.h \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	../include/libdvbv5/desc_ca.h \
 	../include/libdvbv5/desc_ca_identifier.h \
 	../include/libdvbv5/nit.h \
@@ -57,6 +72,7 @@ noinst_LTLIBRARIES = libdvbv5.la
 endif
 
 libdvbv5_la_SOURCES = \
+<<<<<<< HEAD
         compat-soname.c \
 	crc32.c \
 	countries.c \
@@ -73,6 +89,15 @@ libdvbv5_la_SOURCES = \
 	dvb-dev-priv.h   \
 	dvb-fe.c	 \
 	dvb-fe-priv.h    \
+=======
+	crc32.c \
+	dvb-legacy-channel-format.c \
+	dvb-zap-format.c \
+	dvb-v5.c	 \
+	parse_string.c	 \
+	dvb-demux.c	 \
+	dvb-fe.c	 \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	dvb-log.c	 \
 	dvb-file.c	 \
 	dvb-v5-std.c	 \
@@ -100,6 +125,10 @@ libdvbv5_la_SOURCES = \
 	descriptors/desc_t2_delivery.c		\
 	descriptors/desc_service.c		\
 	descriptors/desc_frequency_list.c	\
+<<<<<<< HEAD
+=======
+	descriptors/desc_service_list.c		\
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	descriptors/desc_event_short.c		\
 	descriptors/desc_event_extended.c	\
 	descriptors/desc_atsc_service_location.c \
@@ -109,6 +138,7 @@ libdvbv5_la_SOURCES = \
 	descriptors/desc_logical_channel.c	\
 	descriptors/desc_ts_info.c		\
 	descriptors/desc_partial_reception.c	\
+<<<<<<< HEAD
 	descriptors/desc_ca.c			\
 	descriptors/desc_ca_identifier.c
 
@@ -119,9 +149,21 @@ endif
 
 libdvbv5_la_CPPFLAGS = -I../.. $(ENFORCE_LIBDVBV5_STATIC) $(LIBUDEV_CFLAGS) $(PTHREAD_CFLAGS)
 libdvbv5_la_LDFLAGS = $(LIBDVBV5_VERSION) $(ENFORCE_LIBDVBV5_STATIC) $(LIBUDEV_LIBS) -lm -lrt
+=======
+	descriptors/desc_service_location.c	\
+	descriptors/desc_ca.c			\
+	descriptors/desc_ca_identifier.c
+
+libdvbv5_la_CPPFLAGS = -I../.. $(ENFORCE_LIBDVBV5_STATIC)
+libdvbv5_la_LDFLAGS = $(LIBDVBV5_VERSION) $(ENFORCE_LIBDVBV5_STATIC) -lm
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 libdvbv5_la_LIBADD = $(LTLIBICONV)
 
 EXTRA_DIST = README gen_dvb_structs.pl
 
 sync-with-kernel:
+<<<<<<< HEAD
 	./gen_dvb_structs.pl $(KERNEL_DIR)/usr/include/
+=======
+	./gen_dvb_structs.pl $(KERNEL_DIR)/include/
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2

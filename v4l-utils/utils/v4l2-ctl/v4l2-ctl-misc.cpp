@@ -29,10 +29,15 @@ void misc_usage(void)
 	       "  --wait-for-event=<event>\n"
 	       "                     wait for an event [VIDIOC_DQEVENT]\n"
 	       "                     <event> is the event number or one of:\n"
+<<<<<<< HEAD
 	       "                     eos, vsync, ctrl=<id>, frame_sync, source_change=<pad>,\n"
 	       "                     motion_det\n"
 	       "                     where <id> is the name of the control\n"
 	       "                     and where <pad> is the index of the pad or input\n"
+=======
+	       "                     eos, vsync, ctrl=<id>, frame_sync\n"
+	       "                     where <id> is the name of the control\n"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	       "  --poll-for-event=<event>\n"
 	       "                     poll for an event [VIDIOC_DQEVENT]\n"
 	       "                     see --wait-for-event for possible events\n"

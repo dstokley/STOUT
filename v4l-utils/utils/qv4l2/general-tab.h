@@ -24,14 +24,22 @@
 #include <config.h>
 
 #include <QSpinBox>
+<<<<<<< HEAD
 #include <QCheckBox>
 #include <QDoubleSpinBox>
 #include <QStackedWidget>
+=======
+#include <QDoubleSpinBox>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <sys/time.h>
 #include <linux/videodev2.h>
 #include <map>
 
 #include "qv4l2.h"
+<<<<<<< HEAD
+=======
+#include "v4l2-api.h"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include "capture-win.h"
 
 #ifdef HAVE_ALSA
@@ -45,15 +53,25 @@ extern "C" {
 class QComboBox;
 class QCheckBox;
 class QSpinBox;
+<<<<<<< HEAD
 class QToolButton;
 class QSlider;
 
 class GeneralTab: public QGridLayout
+=======
+class QPushButton;
+
+class GeneralTab: public QGridLayout, public v4l2
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	Q_OBJECT
 
 public:
+<<<<<<< HEAD
 	GeneralTab(const QString &device, cv4l_fd *fd, int n, QWidget *parent = 0);
+=======
+	GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent = 0);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	virtual ~GeneralTab() {}
 
 	CapMethod capMethod();
@@ -72,6 +90,7 @@ public:
 	bool isVbi() const { return m_isVbi; }
 	bool isSlicedVbi() const;
 	bool isPlanar() const { return m_isPlanar; }
+<<<<<<< HEAD
 	bool isSDTV() const { return m_isSDTV; }
 	__u32 usePrio() const
 	{
@@ -91,12 +110,31 @@ public:
 	QComboBox *m_tpgComboXferFunc;
 	QComboBox *m_tpgComboYCbCrEnc;
 	QComboBox *m_tpgComboQuantRange;
+=======
+	__u32 bufType() const { return m_buftype; }
+	inline bool reqbufs_mmap(v4l2_requestbuffers &reqbuf, int count = 0) {
+		return v4l2::reqbufs_mmap(reqbuf, m_buftype, count);
+	}
+	inline bool reqbufs_user(v4l2_requestbuffers &reqbuf, int count = 0) {
+		return v4l2::reqbufs_user(reqbuf, m_buftype, count);
+	}
+	inline bool streamon() { return v4l2::streamon(m_buftype); }
+	inline bool streamoff() { return v4l2::streamoff(m_buftype); }
+	void setHaveBuffers(bool haveBuffers);
+
+public slots:
+	void showAllAudioDevices(bool use);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 signals:
 	void audioDeviceChanged();
 	void pixelAspectRatioChanged();
+<<<<<<< HEAD
 	void croppingChanged();
 	void clearBuffers();
+=======
+	void cropChanged();
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 private slots:
 	void inputChanged(int);
@@ -116,7 +154,11 @@ private slots:
 	void stereoModeChanged();
 	void rdsModeChanged();
 	void vidCapFormatChanged(int);
+<<<<<<< HEAD
 	void vidFieldChanged(int);
+=======
+	void vidCapFieldChanged(int);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	void frameWidthChanged();
 	void frameHeightChanged();
 	void frameSizeChanged(int);
@@ -125,6 +167,7 @@ private slots:
 	void vbiMethodsChanged(int);
 	void changeAudioDevice();
 	void changePixelAspectRatio();
+<<<<<<< HEAD
 	void cropChanged();
 	void composeChanged();
 	void colorspaceChanged(int);
@@ -141,6 +184,10 @@ private:
 	void fixWidth();
 	void updateGUIInput(__u32);
 	void updateGUIOutput(__u32);
+=======
+
+private:
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	void updateVideoInput();
 	void updateVideoOutput();
 	void updateAudioInput();
@@ -152,6 +199,7 @@ private:
 	void updateFreq();
 	void updateFreqChannel();
 	void updateFreqRf();
+<<<<<<< HEAD
 	void updateColorspace();
 	void clearColorspace(cv4l_fmt &fmt);
 	void updateVidCapFormat();
@@ -179,6 +227,24 @@ private:
 	void addWidget(QWidget *w, Qt::Alignment align = Qt::AlignLeft);
 	void addTitle(const QString &titlename);
 	void addLabel(const QString &text, Qt::Alignment align = Qt::AlignLeft)
+=======
+	void updateVidCapFormat();
+	void updateVidCapFields();
+	void updateFrameSize();
+	void updateFrameInterval();
+	void updateVidOutFormat();
+	int addAudioDevice(void *hint, int deviceNum);
+	bool filterAudioInDevice(QString &deviceName);
+	bool filterAudioOutDevice(QString &deviceName);
+	bool createAudioDeviceList();
+#ifdef HAVE_ALSA
+	int matchAudioDevice();
+	int checkMatchAudioDevice(void *md, const char *vid, const enum device_type type);
+#endif
+
+	void addWidget(QWidget *w, Qt::Alignment align = Qt::AlignLeft);
+	void addLabel(const QString &text, Qt::Alignment align = Qt::AlignRight)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{
 		addWidget(new QLabel(text, parentWidget()), align);
 	}
@@ -190,6 +256,7 @@ private:
 	{
 		g_mw->error(error);
 	}
+<<<<<<< HEAD
 	virtual void error(int error)
 	{
 		g_mw->error(error);
@@ -309,6 +376,19 @@ private:
 	bool m_isPlanar;
 	bool m_haveBuffers;
 	bool m_discreteSizes;
+=======
+
+	int m_row;
+	int m_col;
+	int m_cols;
+	bool m_isRadio;
+	bool m_isSDR;
+	bool m_isVbi;
+	double m_freqFac;
+	double m_freqRfFac;
+	bool m_isPlanar;
+	__u32 m_buftype;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	__u32 m_audioModes[5];
 	QString m_device;
 	struct v4l2_tuner m_tuner;
@@ -321,6 +401,7 @@ private:
 	bool m_has_interval;
 	int m_audioDeviceBufferSize;
 	static bool m_fullAudioName;
+<<<<<<< HEAD
 	std::map<int, QString> m_audioInDeviceMap;
 	std::map<int, QString> m_audioOutDeviceMap;
 
@@ -329,11 +410,18 @@ private:
 	QStackedWidget *m_stackedStandards;
 	QStackedWidget *m_stackedFrameSettings;
 	QStackedWidget *m_stackedFrequency;
+=======
+	std::map<QString, QString> m_audioInDeviceMap;
+	std::map<QString, QString> m_audioOutDeviceMap;
+
+	// General tab
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	QComboBox *m_videoInput;
 	QComboBox *m_videoOutput;
 	QComboBox *m_audioInput;
 	QComboBox *m_audioOutput;
 	QComboBox *m_tvStandard;
+<<<<<<< HEAD
 	QToolButton *m_qryStandard;
 	QComboBox *m_videoTimings;
 	QComboBox *m_pixelAspectRatio;
@@ -343,6 +431,13 @@ private:
 	QComboBox *m_quantRange;
 	QComboBox *m_cropping;
 	QToolButton *m_qryTimings;
+=======
+	QPushButton *m_qryStandard;
+	QComboBox *m_videoTimings;
+	QComboBox *m_pixelAspectRatio;
+	QComboBox *m_crop;
+	QPushButton *m_qryTimings;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	QDoubleSpinBox *m_freq;
 	QComboBox *m_freqTable;
 	QComboBox *m_freqChannel;
@@ -351,15 +446,22 @@ private:
 	QDoubleSpinBox *m_freqRf;
 	QCheckBox *m_stereoMode;
 	QCheckBox *m_rdsMode;
+<<<<<<< HEAD
 	QToolButton *m_detectSubchans;
 	QComboBox *m_vidCapFormats;
 	QComboBox *m_vidFields;
+=======
+	QPushButton *m_detectSubchans;
+	QComboBox *m_vidCapFormats;
+	QComboBox *m_vidCapFields;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	QComboBox *m_frameSize;
 	QSpinBox *m_frameWidth;
 	QSpinBox *m_frameHeight;
 	QComboBox *m_frameInterval;
 	QComboBox *m_vidOutFormats;
 	QComboBox *m_capMethods;
+<<<<<<< HEAD
 	QSpinBox *m_numBuffers;
 	QCheckBox *m_recordPrio;
 	QComboBox *m_vbiMethods;
@@ -373,6 +475,11 @@ private:
 	QSlider *m_composeLeft;
 	QSlider *m_composeHeight;
 	QSlider *m_composeTop;
+=======
+	QComboBox *m_vbiMethods;
+	QComboBox *m_audioInDevice;
+	QComboBox *m_audioOutDevice;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 };
 
 #endif

@@ -1,22 +1,41 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2011-2014 - Mauro Carvalho Chehab
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * These routines were originally written as part of the dvb-apps, as:
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * These routines were written as part of the dvb-apps, as:
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *	util functions for various ?zap implementations
  *
  *	Copyright (C) 2001 Johannes Stezenbach (js@convergence.de)
  *	for convergence integrated media
  *
  *	Originally licensed as GPLv2 or upper
+<<<<<<< HEAD
  */
 
 /**
@@ -30,6 +49,13 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+ *
+ * All subsequent changes are under GPLv2 only and are:
+ *	Copyright (c) 2011-2012 - Mauro Carvalho Chehab
+ *
+ */
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifndef _DVB_DEMUX_H
 #define _DVB_DEMUX_H
 
@@ -39,6 +65,7 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Opens a DVB demux in read/write mode
  * @ingroup demux
@@ -127,12 +154,22 @@ int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
  * @return Retuns zero on success, -1 otherwise.
  *
  */
+=======
+int dvb_dmx_open(int adapter, int demux);
+void dvb_dmx_close(int dmx_fd);
+void dvb_dmx_stop(int dmx_fd);
+
+int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
+		      dmx_output_t output, int buffersize);
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
 			   unsigned char *filter,
 			   unsigned char *mask,
 			   unsigned char *mode,
 			   unsigned int flags);
 
+<<<<<<< HEAD
 /**
  * @brief read the contents of the MPEG-TS PAT table, seeking for
  *		      	an specific service ID
@@ -149,6 +186,9 @@ int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
  * @warning This function currently assumes that the PAT fits into one session.
  */
 int dvb_get_pmt_pid(int dmxfd, int sid);
+=======
+int get_pmt_pid(const char *dmxdev, int sid);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #ifdef __cplusplus
 }

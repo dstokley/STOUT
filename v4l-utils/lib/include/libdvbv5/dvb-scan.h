@@ -1,16 +1,31 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2011-2014 - Mauro Carvalho Chehab
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -20,6 +35,7 @@
 
 #include <stdint.h>
 #include <linux/dvb/dmx.h>
+<<<<<<< HEAD
 #include <libdvbv5/descriptors.h>
 #include <libdvbv5/dvb-sat.h>
 
@@ -33,6 +49,12 @@
  * @par Bug Report
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
+=======
+
+#include <libdvbv5/descriptors.h>
+
+#include <libdvbv5/dvb-sat.h>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 /* According with ISO/IEC 13818-1:2007 */
 
@@ -44,6 +66,7 @@ extern "C" {
 
 struct dvb_entry;
 
+<<<<<<< HEAD
 /**
  * @struct dvb_v5_descriptors_program
  * @brief Associates PMT with PAT tables
@@ -52,11 +75,14 @@ struct dvb_entry;
  * @param pat_pgm	pointer for PAT descriptor
  * @param pmt	pointer for PMT descriptor
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_v5_descriptors_program {
 	struct dvb_table_pat_program *pat_pgm;
 	struct dvb_table_pmt *pmt;
 };
 
+<<<<<<< HEAD
 /**
  * @struct dvb_v5_descriptors
  * @brief Contains the descriptors needed to scan the Service ID and other relevant info at a MPEG-TS Digital TV stream
@@ -85,6 +111,10 @@ struct dvb_v5_descriptors_program {
  * allocated via dvb_scan_alloc_handler_table() or via dvb_get_ts_tables().
  */
 struct dvb_v5_descriptors {
+=======
+struct dvb_v5_descriptors {
+	int verbose;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	uint32_t delivery_system;
 
 	struct dvb_entry *entry;
@@ -97,6 +127,7 @@ struct dvb_v5_descriptors {
 	struct dvb_table_sdt *sdt;
 
 	unsigned num_program;
+<<<<<<< HEAD
 
 	struct dvb_table_nit **other_nits;
 	unsigned num_other_nits;
@@ -119,6 +150,10 @@ struct dvb_v5_descriptors {
  * @param priv		Internal structure used inside the DVB core. shouldn't
  *			be touched externally.
  */
+=======
+};
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_table_filter {
 	/* Input data */
 	unsigned char tid;
@@ -135,6 +170,7 @@ struct dvb_table_filter {
 	 */
 	void *priv;
 };
+<<<<<<< HEAD
 /**
  * @brief deallocates all data associated with a table filter
  * @ingroup frontend_scan
@@ -174,6 +210,27 @@ void dvb_table_filter_free(struct dvb_table_filter *sect);
  * struct dvb_table_pat *pat;
  * int r = dvb_read_section( parms, dmx_fd, DVB_TABLE_PAT, DVB_TABLE_PAT_PID,
  *			    (void **) &pat, 5 );
+=======
+
+void dvb_table_filter_free(struct dvb_table_filter *sect);
+
+/* Read DVB table sections
+ *
+ * The following functions can be used to read DVB table sections by
+ * specifying a table ID and a program ID. Optionally a transport
+ * stream ID can be specified as well. The function will read on the
+ * specified demux and return when reading is done or an error has
+ * occurred. If table is not NULL after the call, it has to be freed
+ * with the apropriate free table function (even if an error has
+ * occurred).
+ *
+ * Returns 0 on success or a negative error code.
+ *
+ * Example usage:
+ *
+ * struct dvb_table_pat *pat;
+ * int r = dvb_read_section( parms, dmx_fd, DVB_TABLE_PAT, DVB_TABLE_PAT_PID, (void **) &pat, 5 );
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * if (r < 0)
  *	dvb_logerr("error reading PAT table");
  * else {
@@ -181,6 +238,7 @@ void dvb_table_filter_free(struct dvb_table_filter *sect);
  * }
  * if (pat)
  *	dvb_table_pat_free( pat );
+<<<<<<< HEAD
  * @endcode
  */
 int dvb_read_section(struct dvb_v5_fe_parms *parms, int dmx_fd,
@@ -222,10 +280,22 @@ int dvb_read_section(struct dvb_v5_fe_parms *parms, int dmx_fd,
  * This is a variant of dvb_read_section() that uses a struct dvb_table_filter
  * to specify the filter to use.
  */
+=======
+ *
+ */
+
+int dvb_read_section(struct dvb_v5_fe_parms *parms, int dmx_fd, unsigned char tid, uint16_t pid, void **table,
+		unsigned timeout);
+
+int dvb_read_section_with_id(struct dvb_v5_fe_parms *parms, int dmx_fd, unsigned char tid, uint16_t pid, int ts_id, void **table,
+		unsigned timeout);
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 int dvb_read_sections(struct dvb_v5_fe_parms *parms, int dmx_fd,
 			     struct dvb_table_filter *sect,
 			     unsigned timeout);
 
+<<<<<<< HEAD
 /**
  * @brief allocates a struct dvb_v5_descriptors
  * @ingroup frontend_scan
@@ -265,10 +335,18 @@ void dvb_scan_free_handler_table(struct dvb_v5_descriptors *dvb_scan_handler);
  * On sucess, it returns a pointer to a struct dvb_v5_descriptors, that can
  * either be used to tune into a service or to be stored inside a file.
  */
+=======
+struct dvb_v5_descriptors *dvb_scan_alloc_handler_table(uint32_t delivery_system,
+						       int verbose);
+
+void dvb_scan_free_handler_table(struct dvb_v5_descriptors *dvb_scan_handler);
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_v5_descriptors *dvb_get_ts_tables(struct dvb_v5_fe_parms *parms, int dmx_fd,
 					  uint32_t delivery_system,
 					  unsigned other_nit,
 					  unsigned timeout_multiply);
+<<<<<<< HEAD
 
 /**
  * @brief frees a struct dvb_v5_descriptors
@@ -337,6 +415,12 @@ typedef int (check_frontend_t)(void *args, struct dvb_v5_fe_parms *parms);
  * }
  * @endcode
  */
+=======
+void dvb_free_ts_tables(struct dvb_v5_descriptors *dvb_desc);
+
+typedef int (check_frontend_t)(void *args, struct dvb_v5_fe_parms *parms);
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_v5_descriptors *dvb_scan_transponder(struct dvb_v5_fe_parms *parms,
 						struct dvb_entry *entry,
 						int dmx_fd,
@@ -345,6 +429,7 @@ struct dvb_v5_descriptors *dvb_scan_transponder(struct dvb_v5_fe_parms *parms,
 						unsigned other_nit,
 						unsigned timeout_multiply);
 
+<<<<<<< HEAD
 
 /**
  * @brief Add new transponders to a dvb_file
@@ -402,6 +487,12 @@ int dvb_estimate_freq_shift(struct dvb_v5_fe_parms *parms);
 
 int dvb_new_freq_is_needed(struct dvb_entry *entry, struct dvb_entry *last_entry,
 			   uint32_t freq, enum dvb_sat_polarization pol, int shift);
+=======
+int estimate_freq_shift(struct dvb_v5_fe_parms *parms);
+
+int new_freq_is_needed(struct dvb_entry *entry, struct dvb_entry *last_entry,
+		       uint32_t freq, enum dvb_sat_polarization pol, int shift);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 struct dvb_entry *dvb_scan_add_entry(struct dvb_v5_fe_parms *parms,
 				     struct dvb_entry *first_entry,
@@ -409,6 +500,7 @@ struct dvb_entry *dvb_scan_add_entry(struct dvb_v5_fe_parms *parms,
 			             uint32_t freq, uint32_t shift,
 			             enum dvb_sat_polarization pol);
 
+<<<<<<< HEAD
 int dvb_new_entry_is_needed(struct dvb_entry *entry,
 			    struct dvb_entry *last_entry,
 			    uint32_t freq, int shift,
@@ -420,12 +512,22 @@ struct dvb_entry *dvb_scan_add_entry_ex(struct dvb_v5_fe_parms *parms,
 					uint32_t freq, uint32_t shift,
 					enum dvb_sat_polarization pol,
 					uint32_t stream_id);
+=======
+void dvb_add_scaned_transponders(struct dvb_v5_fe_parms *parms,
+				 struct dvb_v5_descriptors *dvb_scan_handler,
+				 struct dvb_entry *first_entry,
+				 struct dvb_entry *entry);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 void dvb_update_transponders(struct dvb_v5_fe_parms *parms,
 			     struct dvb_v5_descriptors *dvb_scan_handler,
 			     struct dvb_entry *first_entry,
 			     struct dvb_entry *entry);
+<<<<<<< HEAD
 #endif
+=======
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #ifdef __cplusplus
 }

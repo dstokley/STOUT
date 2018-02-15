@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # table imon_mce, type: RC6
+=======
+# table imon_mce, type: RC6_MCE
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 0x800ff415 KEY_REWIND
 0x800ff414 KEY_FASTFORWARD
 0x800ff41b KEY_PREVIOUS

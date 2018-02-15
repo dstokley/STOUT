@@ -22,11 +22,15 @@
 #define __LIBV4LPROCESSING_H
 
 #include "../libv4lsyscall-priv.h"
+<<<<<<< HEAD
 #if defined(__OpenBSD__)
 #include <sys/videoio.h>
 #else
 #include <linux/videodev2.h>
 #endif
+=======
+#include <linux/videodev2.h>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 struct v4lprocessing_data;
 struct v4lcontrol_data;

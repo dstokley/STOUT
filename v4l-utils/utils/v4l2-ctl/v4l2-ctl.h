@@ -50,7 +50,10 @@ enum Option {
 	OptSetOutput = 'o',
 	OptGetParm = 'P',
 	OptSetParm = 'p',
+<<<<<<< HEAD
 	OptSubset = 'r',
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	OptGetStandard = 'S',
 	OptSetStandard = 's',
 	OptGetTuner = 'T',
@@ -64,6 +67,7 @@ enum Option {
 	OptGetVbiFormat,
 	OptGetVbiOutFormat,
 	OptGetSdrFormat,
+<<<<<<< HEAD
 	OptGetSdrOutFormat,
 	OptGetVideoOutFormat,
 	OptGetMetaFormat,
@@ -75,16 +79,31 @@ enum Option {
 	OptSetSdrOutFormat,
 	OptSetVideoOutFormat,
 	OptSetMetaFormat,
+=======
+	OptGetVideoOutFormat,
+	OptSetSlicedVbiOutFormat,
+	OptSetOverlayFormat,
+	//OptSetVbiFormat, TODO
+	//OptSetVbiOutFormat, TODO
+	OptSetSdrFormat,
+	OptSetVideoOutFormat,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	OptTryVideoOutFormat,
 	OptTrySlicedVbiOutFormat,
 	OptTrySlicedVbiFormat,
 	OptTryVideoFormat,
 	OptTryOverlayFormat,
+<<<<<<< HEAD
 	OptTryVbiFormat,
 	OptTryVbiOutFormat,
 	OptTrySdrFormat,
 	OptTrySdrOutFormat,
 	OptTryMetaFormat,
+=======
+	//OptTryVbiFormat, TODO
+	//OptTryVbiOutFormat, TODO
+	OptTrySdrFormat,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	OptAll,
 	OptListStandards,
 	OptListFormats,
@@ -94,9 +113,13 @@ enum Option {
 	OptListFrameIntervals,
 	OptListOverlayFormats,
 	OptListSdrFormats,
+<<<<<<< HEAD
 	OptListSdrOutFormats,
 	OptListOutFormats,
 	OptListMetaFormats,
+=======
+	OptListOutFormats,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	OptListOutFields,
 	OptClearClips,
 	OptClearBitmap,
@@ -155,8 +178,11 @@ enum Option {
 	OptSetEdid,
 	OptClearEdid,
 	OptGetEdid,
+<<<<<<< HEAD
 	OptInfoEdid,
 	OptFixEdidChecksums,
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	OptFreqSeek,
 	OptEncoderCmd,
 	OptTryEncoderCmd,
@@ -170,6 +196,7 @@ enum Option {
 	OptListBuffersVbiOut,
 	OptListBuffersSlicedVbiOut,
 	OptListBuffersSdr,
+<<<<<<< HEAD
 	OptListBuffersSdrOut,
 	OptListBuffersMeta,
 	OptStreamCount,
@@ -180,10 +207,18 @@ enum Option {
 	OptStreamNoQuery,
 	OptStreamTo,
 	OptStreamToHost,
+=======
+	OptStreamCount,
+	OptStreamSkip,
+	OptStreamLoop,
+	OptStreamPoll,
+	OptStreamTo,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	OptStreamMmap,
 	OptStreamUser,
 	OptStreamDmaBuf,
 	OptStreamFrom,
+<<<<<<< HEAD
 	OptStreamFromHost,
 	OptStreamOutPattern,
 	OptStreamOutSquare,
@@ -202,6 +237,12 @@ enum Option {
 	OptStreamOutUser,
 	OptStreamOutDmaBuf,
 	OptListPatterns,
+=======
+	OptStreamPattern,
+	OptStreamOutMmap,
+	OptStreamOutUser,
+	OptStreamOutDmaBuf,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	OptHelpTuner,
 	OptHelpIO,
 	OptHelpStds,
@@ -210,20 +251,30 @@ enum Option {
 	OptHelpOverlay,
 	OptHelpVbi,
 	OptHelpSdr,
+<<<<<<< HEAD
 	OptHelpMeta,
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	OptHelpSelection,
 	OptHelpMisc,
 	OptHelpStreaming,
 	OptHelpEdid,
 	OptHelpAll,
+<<<<<<< HEAD
 	OptLast = 512
+=======
+	OptLast = 256
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 };
 
 extern char options[OptLast];
 extern unsigned capabilities;
 extern unsigned out_capabilities;
+<<<<<<< HEAD
 extern unsigned priv_magic;
 extern unsigned out_priv_magic;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 extern bool is_multiplanar;
 extern __u32 vidcap_buftype;
 extern __u32 vidout_buftype;
@@ -244,11 +295,15 @@ typedef struct {
 #define FmtTop			(1L<<6)
 #define FmtField		(1L<<7)
 #define FmtColorspace		(1L<<8)
+<<<<<<< HEAD
 #define FmtYCbCr		(1L<<9)
 #define FmtQuantization		(1L<<10)
 #define FmtFlags		(1L<<11)
 #define FmtBytesPerLine		(1L<<12)
 #define FmtXferFunc		(1L<<13)
+=======
+#define FmtBytesPerLine		(1L<<9)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 // v4l2-ctl.cpp
 int doioctl_name(int fd, unsigned long int request, void *parm, const char *name);
@@ -265,8 +320,12 @@ std::string field2s(int val);
 void print_v4lstd(v4l2_std_id std);
 __u32 parse_field(const char *s);
 int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
+<<<<<<< HEAD
 	      __u32 &field, __u32 &colorspace, __u32 &xfer, __u32 &ycbcr,
 	      __u32 &quantization, __u32 &flags, __u32 *bytesperline);
+=======
+	      __u32 &field, __u32 &colorspace, __u32 *bytesperline);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 __u32 find_pixel_format(int fd, unsigned index, bool output, bool mplane);
 void printfmt(const struct v4l2_format &vfmt);
 void print_video_formats(int fd, __u32 type);
@@ -338,6 +397,7 @@ void sdr_set(int fd);
 void sdr_get(int fd);
 void sdr_list(int fd);
 
+<<<<<<< HEAD
 // v4l2-ctl-meta.cpp
 void meta_usage(void);
 void meta_cmd(int ch, char *optarg);
@@ -345,6 +405,8 @@ void meta_set(int fd);
 void meta_get(int fd);
 void meta_list(int fd);
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 // v4l2-ctl-selection.cpp
 void selection_usage(void);
 void selection_cmd(int ch, char *optarg);
@@ -365,12 +427,20 @@ void streaming_cmd(int ch, char *optarg);
 void streaming_set(int fd, int out_fd);
 void streaming_list(int fd, int out_fd);
 
+<<<<<<< HEAD
+=======
+// v4l2-ctl-test-patterns.cpp
+void fill_buffer(void *buffer, struct v4l2_pix_format *pix);
+bool precalculate_bars(__u32 pixfmt, unsigned pattern);
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 // v4l2-ctl-edid.cpp
 void edid_usage(void);
 void edid_cmd(int ch, char *optarg);
 void edid_set(int fd);
 void edid_get(int fd);
 
+<<<<<<< HEAD
 /* v4l2-ctl-modes.cpp */
 bool calc_cvt_modeline(int image_width, int image_height,
 		       int refresh_rate, int reduced_blanking,
@@ -380,4 +450,6 @@ bool calc_cvt_modeline(int image_width, int image_height,
 bool calc_gtf_modeline(int image_width, int image_height,
 		       int refresh_rate, bool reduced_blanking,
 		       bool interlaced, struct v4l2_bt_timings *gtf);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #endif

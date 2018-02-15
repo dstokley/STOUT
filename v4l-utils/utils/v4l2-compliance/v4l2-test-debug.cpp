@@ -37,7 +37,11 @@
 int testRegister(struct node *node)
 {
 	struct v4l2_dbg_register reg;
+<<<<<<< HEAD
 	struct v4l2_dbg_chip_info chip = { 0 };
+=======
+	struct v4l2_dbg_chip_info chip;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	int ret;
 	int uid = getuid();
 

@@ -45,12 +45,18 @@ static const __u32 buftype2cap[] = {
 	V4L2_CAP_VIDEO_CAPTURE_MPLANE | V4L2_CAP_VIDEO_M2M_MPLANE,
 	V4L2_CAP_VIDEO_OUTPUT_MPLANE | V4L2_CAP_VIDEO_M2M_MPLANE,
 	V4L2_CAP_SDR_CAPTURE,
+<<<<<<< HEAD
 	V4L2_CAP_SDR_OUTPUT,
 	V4L2_CAP_META_CAPTURE,
 };
 
 static int testEnumFrameIntervals(struct node *node, __u32 pixfmt,
 				  __u32 w, __u32 h, __u32 type)
+=======
+};
+
+static int testEnumFrameIntervals(struct node *node, __u32 pixfmt, __u32 w, __u32 h, bool valid)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	struct v4l2_frmivalenum frmival;
 	struct v4l2_frmival_stepwise *sw = &frmival.stepwise;
@@ -69,7 +75,11 @@ static int testEnumFrameIntervals(struct node *node, __u32 pixfmt,
 		if (ret == ENOTTY)
 			return ret;
 		if (f == 0 && ret == EINVAL) {
+<<<<<<< HEAD
 			if (type == V4L2_FRMSIZE_TYPE_DISCRETE)
+=======
+			if (valid)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				warn("found framesize %dx%d, but no frame intervals\n", w, h);
 			return ENOTTY;
 		}
@@ -119,12 +129,19 @@ static int testEnumFrameIntervals(struct node *node, __u32 pixfmt,
 		}
 
 		f++;
+<<<<<<< HEAD
 		node->has_frmintervals = true;
 	}
 	if (type == 0)
 		return fail("found frame intervals for invalid size %dx%d\n", w, h);
 	info("found %d frameintervals for pixel format %08x (%s) and size %dx%d\n",
 	     f, pixfmt, fcc2s(pixfmt).c_str(), w, h);
+=======
+	}
+	if (!valid)
+		return fail("found frame intervals for invalid size %dx%d\n", w, h);
+	info("found %d frameintervals for pixel format %08x and size %dx%d\n", f, pixfmt, w, h);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	return 0;
 }
 
@@ -133,9 +150,13 @@ static int testEnumFrameSizes(struct node *node, __u32 pixfmt)
 	struct v4l2_frmsizeenum frmsize;
 	struct v4l2_frmsize_stepwise *sw = &frmsize.stepwise;
 	bool found_stepwise = false;
+<<<<<<< HEAD
 	__u64 cookie;
 	unsigned f = 0;
 	unsigned count = 0;
+=======
+	unsigned f = 0;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	int ret;
 
 	for (;;) {
@@ -164,6 +185,7 @@ static int testEnumFrameSizes(struct node *node, __u32 pixfmt)
 			if (found_stepwise)
 				return fail("mixing discrete and stepwise is not allowed\n");
 			ret = testEnumFrameIntervals(node, pixfmt,
+<<<<<<< HEAD
 					frmsize.discrete.width, frmsize.discrete.height, frmsize.type);
 			if (ret && ret != ENOTTY)
 				return ret;
@@ -178,6 +200,15 @@ static int testEnumFrameSizes(struct node *node, __u32 pixfmt)
 				 frmsize.discrete.height;
 			node->frmsizes.insert(cookie);
 			count++;
+=======
+					frmsize.discrete.width, frmsize.discrete.height, true);
+			if (ret && ret != ENOTTY)
+				return ret;
+			ret = testEnumFrameIntervals(node, pixfmt,
+					frmsize.discrete.width + 1, frmsize.discrete.height, false);
+			if (ret && ret != ENOTTY)
+				return ret;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			break;
 		case V4L2_FRMSIZE_TYPE_CONTINUOUS:
 			if (frmsize.stepwise.step_width != 1 || frmsize.stepwise.step_height != 1)
@@ -195,6 +226,7 @@ static int testEnumFrameSizes(struct node *node, __u32 pixfmt)
 			    sw->step_height > sw->max_height - sw->min_height)
 				return fail("step > max - min for width or height\n");
 			ret = testEnumFrameIntervals(node, pixfmt,
+<<<<<<< HEAD
 					sw->min_width, sw->min_height, frmsize.type);
 			if (ret && ret != ENOTTY)
 				return ret;
@@ -208,6 +240,21 @@ static int testEnumFrameSizes(struct node *node, __u32 pixfmt)
 				return ret;
 			ret = testEnumFrameIntervals(node, pixfmt,
 					sw->max_width, sw->max_height + 1, 0);
+=======
+					sw->min_width, sw->min_height, true);
+			if (ret && ret != ENOTTY)
+				return ret;
+			ret = testEnumFrameIntervals(node, pixfmt,
+					sw->max_width, sw->max_height, true);
+			if (ret && ret != ENOTTY)
+				return ret;
+			ret = testEnumFrameIntervals(node, pixfmt,
+					sw->min_width - 1, sw->min_height, false);
+			if (ret && ret != ENOTTY)
+				return ret;
+			ret = testEnumFrameIntervals(node, pixfmt,
+					sw->max_width, sw->max_height + 1, false);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			if (ret && ret != ENOTTY)
 				return ret;
 			break;
@@ -217,15 +264,23 @@ static int testEnumFrameSizes(struct node *node, __u32 pixfmt)
 
 		f++;
 	}
+<<<<<<< HEAD
 	node->frmsizes_count[pixfmt] = count;
 	info("found %d framesizes for pixel format %08x (%s)\n",
 	     f, pixfmt, fcc2s(pixfmt).c_str());
+=======
+	info("found %d framesizes for pixel format %08x\n", f, pixfmt);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	return 0;
 }
 
 static int testEnumFormatsType(struct node *node, unsigned type)
 {
+<<<<<<< HEAD
 	pixfmt_map &map = node->buftype_pixfmts[type];
+=======
+	pixfmt_set &set = node->buftype_pixfmts[type];
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	struct v4l2_fmtdesc fmtdesc;
 	unsigned f = 0;
 	int ret;
@@ -256,13 +311,18 @@ static int testEnumFormatsType(struct node *node, unsigned type)
 			return fail("fmtdesc.description not set\n");
 		if (!fmtdesc.pixelformat)
 			return fail("fmtdesc.pixelformat not set\n");
+<<<<<<< HEAD
 		if (node->g_direct() && (fmtdesc.flags & V4L2_FMT_FLAG_EMULATED))
+=======
+		if (!wrapper && (fmtdesc.flags & V4L2_FMT_FLAG_EMULATED))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			return fail("drivers must never set the emulated flag\n");
 		if (fmtdesc.flags & ~(V4L2_FMT_FLAG_COMPRESSED | V4L2_FMT_FLAG_EMULATED))
 			return fail("unknown flag %08x returned\n", fmtdesc.flags);
 		ret = testEnumFrameSizes(node, fmtdesc.pixelformat);
 		if (ret && ret != ENOTTY)
 			return ret;
+<<<<<<< HEAD
 		f++;
 		if (type == V4L2_BUF_TYPE_PRIVATE)
 			continue;
@@ -272,6 +332,18 @@ static int testEnumFormatsType(struct node *node, unsigned type)
 			return fail("duplicate format %08x (%s)\n",
 				    fmtdesc.pixelformat, fcc2s(fmtdesc.pixelformat).c_str());
 		map[fmtdesc.pixelformat] = fmtdesc.flags;
+=======
+		if (ret == 0 && !(node->caps & (V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_VIDEO_CAPTURE_MPLANE)))
+			return fail("found framesizes when no video capture is supported\n");
+		f++;
+		if (type == V4L2_BUF_TYPE_PRIVATE)
+			continue;
+		// Update array in v4l2-compliance.h if new buffer types are added
+		assert(type <= V4L2_BUF_TYPE_SDR_CAPTURE);
+		if (set.find(fmtdesc.pixelformat) != set.end())
+			return fail("duplicate format %08x\n", fmtdesc.pixelformat);
+		set.insert(fmtdesc.pixelformat);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 	info("found %d formats for buftype %d\n", f, type);
 	return 0;
@@ -283,7 +355,11 @@ int testEnumFormats(struct node *node)
 	unsigned type;
 	int ret;
 
+<<<<<<< HEAD
 	for (type = 0; type <= V4L2_BUF_TYPE_LAST; type++) {
+=======
+	for (type = 0; type <= V4L2_BUF_TYPE_SDR_CAPTURE; type++) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		ret = testEnumFormatsType(node, type);
 		if (ret && ret != ENOTTY)
 			return ret;
@@ -296,12 +372,19 @@ int testEnumFormats(struct node *node)
 		case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
 		case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
 		case V4L2_BUF_TYPE_SDR_CAPTURE:
+<<<<<<< HEAD
 		case V4L2_BUF_TYPE_SDR_OUTPUT:
 		case V4L2_BUF_TYPE_META_CAPTURE:
 			if (ret && (node->g_caps() & buftype2cap[type]))
 				return fail("%s cap set, but no %s formats defined\n",
 						buftype2s(type).c_str(), buftype2s(type).c_str());
 			if (!ret && !(node->g_caps() & buftype2cap[type]))
+=======
+			if (ret && (node->caps & buftype2cap[type]))
+				return fail("%s cap set, but no %s formats defined\n",
+						buftype2s(type).c_str(), buftype2s(type).c_str());
+			if (!ret && !(node->caps & buftype2cap[type]))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				return fail("%s cap not set, but %s formats defined\n",
 						buftype2s(type).c_str(), buftype2s(type).c_str());
 			break;
@@ -319,12 +402,17 @@ int testEnumFormats(struct node *node)
 	ret = testEnumFrameSizes(node, 0x20202020);
 	if (ret != ENOTTY)
 		return fail("Accepted framesize for invalid format\n");
+<<<<<<< HEAD
 	ret = testEnumFrameIntervals(node, 0x20202020, 640, 480, 0);
+=======
+	ret = testEnumFrameIntervals(node, 0x20202020, 640, 480, false);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (ret != ENOTTY)
 		return fail("Accepted frameinterval for invalid format\n");
 	return supported ? 0 : ENOTTY;
 }
 
+<<<<<<< HEAD
 static int testColorspace(__u32 pixelformat, __u32 colorspace, __u32 ycbcr_enc, __u32 quantization)
 {
 	fail_on_test(!colorspace);
@@ -342,6 +430,12 @@ static int testColorspace(__u32 pixelformat, __u32 colorspace, __u32 ycbcr_enc, 
 int testFBuf(struct node *node)
 {
 	struct v4l2_framebuffer fbuf;
+=======
+int testFBuf(struct node *node)
+{
+	struct v4l2_framebuffer fbuf;
+	struct v4l2_pix_format &fmt = fbuf.fmt;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	__u32 caps;
 	__u32 flags;
 	int ret;
@@ -349,15 +443,24 @@ int testFBuf(struct node *node)
 	memset(&fbuf, 0xff, sizeof(fbuf));
 	fbuf.fmt.priv = 0;
 	ret = doioctl(node, VIDIOC_G_FBUF, &fbuf);
+<<<<<<< HEAD
 	fail_on_test(ret == 0 && !(node->g_caps() & (V4L2_CAP_VIDEO_OVERLAY | V4L2_CAP_VIDEO_OUTPUT_OVERLAY)));
 	fail_on_test(ret == ENOTTY && (node->g_caps() & (V4L2_CAP_VIDEO_OVERLAY | V4L2_CAP_VIDEO_OUTPUT_OVERLAY)));
+=======
+	fail_on_test(ret == 0 && !(node->caps & (V4L2_CAP_VIDEO_OVERLAY | V4L2_CAP_VIDEO_OUTPUT_OVERLAY)));
+	fail_on_test(ret == ENOTTY && (node->caps & (V4L2_CAP_VIDEO_OVERLAY | V4L2_CAP_VIDEO_OUTPUT_OVERLAY)));
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (ret == ENOTTY)
 		return ret;
 	if (ret && ret != EINVAL)
 		return fail("expected EINVAL, but got %d when getting framebuffer format\n", ret);
 	node->fbuf_caps = caps = fbuf.capability;
 	flags = fbuf.flags;
+<<<<<<< HEAD
 	if (node->g_caps() & V4L2_CAP_VIDEO_OUTPUT_OVERLAY)
+=======
+	if (node->caps & V4L2_CAP_VIDEO_OUTPUT_OVERLAY)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		fail_on_test(!fbuf.base);
 	if (flags & V4L2_FBUF_FLAG_CHROMAKEY)
 		fail_on_test(!(caps & V4L2_FBUF_CAP_CHROMAKEY));
@@ -369,6 +472,7 @@ int testFBuf(struct node *node)
 		fail_on_test(!(caps & V4L2_FBUF_CAP_LOCAL_INV_ALPHA));
 	if (flags & V4L2_FBUF_FLAG_SRC_CHROMAKEY)
 		fail_on_test(!(caps & V4L2_FBUF_CAP_SRC_CHROMAKEY));
+<<<<<<< HEAD
 	fail_on_test(!fbuf.fmt.width || !fbuf.fmt.height);
 	if (fbuf.fmt.priv)
 		warn("fbuf.fmt.priv is non-zero\n");
@@ -381,6 +485,20 @@ int testFBuf(struct node *node)
 	fail_on_test(fbuf.fmt.bytesperline && fbuf.fmt.bytesperline < fbuf.fmt.width);
 	fail_on_test(fbuf.fmt.sizeimage && fbuf.fmt.sizeimage < fbuf.fmt.bytesperline * fbuf.fmt.height);
 	fail_on_test(testColorspace(fbuf.fmt.pixelformat, fbuf.fmt.colorspace, 0, 0));
+=======
+	fail_on_test(!fmt.width || !fmt.height);
+	if (fmt.priv)
+		warn("fbuf.fmt.priv is non-zero\n");
+	/* Not yet: unclear what EXTERNOVERLAY means in a output overlay context
+	if (caps & V4L2_FBUF_CAP_EXTERNOVERLAY) {
+		fail_on_test(fmt.bytesperline);
+		fail_on_test(fmt.sizeimage);
+		fail_on_test(fbuf.base);
+	}*/
+	fail_on_test(fmt.bytesperline && fmt.bytesperline < fmt.width);
+	fail_on_test(fmt.sizeimage && fmt.sizeimage < fmt.bytesperline * fmt.height);
+	fail_on_test(!fmt.colorspace);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	return 0;
 }
 
@@ -401,15 +519,23 @@ static void createInvalidFmt(struct v4l2_format &fmt, struct v4l2_clip &clip, un
 
 static int testFormatsType(struct node *node, int ret,  unsigned type, struct v4l2_format &fmt, bool have_clip = false)
 {
+<<<<<<< HEAD
 	pixfmt_map &map = node->buftype_pixfmts[type];
 	pixfmt_map *map_splane;
+=======
+	pixfmt_set &set = node->buftype_pixfmts[type];
+	pixfmt_set *set_splane;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	struct v4l2_pix_format &pix = fmt.fmt.pix;
 	struct v4l2_pix_format_mplane &pix_mp = fmt.fmt.pix_mp;
 	struct v4l2_window &win = fmt.fmt.win;
 	struct v4l2_vbi_format &vbi = fmt.fmt.vbi;
 	struct v4l2_sliced_vbi_format &sliced = fmt.fmt.sliced;
 	struct v4l2_sdr_format &sdr = fmt.fmt.sdr;
+<<<<<<< HEAD
 	struct v4l2_meta_format &meta = fmt.fmt.meta;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	unsigned min_data_samples;
 	unsigned min_sampling_rate;
 	v4l2_std_id std;
@@ -429,6 +555,7 @@ static int testFormatsType(struct node *node, int ret,  unsigned type, struct v4
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
 		fail_on_test(!pix.width || !pix.height);
+<<<<<<< HEAD
 		if (map.find(pix.pixelformat) == map.end())
 			return fail("pixelformat %08x (%s) for buftype %d not reported by ENUM_FMT\n",
 					pix.pixelformat, fcc2s(pix.pixelformat).c_str(), type);
@@ -440,10 +567,22 @@ static int testFormatsType(struct node *node, int ret,  unsigned type, struct v4
 		fail_on_test(pix.field == V4L2_FIELD_ANY);
 		if (pix.priv && pix.priv != V4L2_PIX_FMT_PRIV_MAGIC)
 			return fail("priv is non-zero and non-magic!\n");
+=======
+		if (set.find(pix.pixelformat) == set.end())
+			return fail("unknown pixelformat %08x for buftype %d\n",
+					pix.pixelformat, type);
+		fail_on_test(pix.bytesperline && pix.bytesperline < pix.width);
+		fail_on_test(!pix.sizeimage);
+		fail_on_test(!pix.colorspace);
+		fail_on_test(pix.field == V4L2_FIELD_ANY);
+		if (pix.priv)
+			return fail("priv is non-zero!\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		break;
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
 		fail_on_test(!pix_mp.width || !pix_mp.height);
+<<<<<<< HEAD
 		map_splane = &node->buftype_pixfmts[type - 8];
 		if (map.find(pix_mp.pixelformat) == map.end() &&
 		    map_splane->find(pix_mp.pixelformat) == map_splane->end())
@@ -452,6 +591,14 @@ static int testFormatsType(struct node *node, int ret,  unsigned type, struct v4
 		if (!node->is_m2m)
 			fail_on_test(testColorspace(pix_mp.pixelformat, pix_mp.colorspace, 
                                             pix_mp.ycbcr_enc, pix_mp.quantization));
+=======
+		set_splane = &node->buftype_pixfmts[type - 8];
+		if (set.find(pix_mp.pixelformat) == set.end() &&
+		    set_splane->find(pix_mp.pixelformat) == set_splane->end())
+			return fail("unknown pixelformat %08x for buftype %d\n",
+					pix_mp.pixelformat, type);
+		fail_on_test(!pix_mp.colorspace);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		fail_on_test(pix.field == V4L2_FIELD_ANY);
 		ret = check_0(pix_mp.reserved, sizeof(pix_mp.reserved));
 		if (ret)
@@ -516,6 +663,10 @@ static int testFormatsType(struct node *node, int ret,  unsigned type, struct v4
 		break;
 	case V4L2_BUF_TYPE_VIDEO_OVERLAY:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_OVERLAY:
+<<<<<<< HEAD
+=======
+		fail_on_test(win.field == V4L2_FIELD_ANY);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		fail_on_test(win.clipcount && !(node->fbuf_caps & V4L2_FBUF_CAP_LIST_CLIPPING));
 		if (have_clip)
 			fail_on_test(!win.clipcount && (node->fbuf_caps & V4L2_FBUF_CAP_LIST_CLIPPING));
@@ -538,6 +689,7 @@ static int testFormatsType(struct node *node, int ret,  unsigned type, struct v4
 		fail_on_test(win.global_alpha && !(node->fbuf_caps & V4L2_FBUF_CAP_GLOBAL_ALPHA));
 		break;
 	case V4L2_BUF_TYPE_SDR_CAPTURE:
+<<<<<<< HEAD
 	case V4L2_BUF_TYPE_SDR_OUTPUT:
 		if (map.find(sdr.pixelformat) == map.end())
 			return fail("pixelformat %08x (%s) for buftype %d not reported by ENUM_FMT\n",
@@ -551,6 +703,13 @@ static int testFormatsType(struct node *node, int ret,  unsigned type, struct v4
 					meta.dataformat, fcc2s(meta.dataformat).c_str(), type);
 		fail_on_test(meta.buffersize == 0);
 		break;
+=======
+		if (set.find(sdr.pixelformat) == set.end())
+			return fail("unknown pixelformat %08x for buftype %d\n",
+					pix.pixelformat, type);
+		fail_on_test(check_0(sdr.reserved, sizeof(sdr.reserved)));
+		break;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	case V4L2_BUF_TYPE_PRIVATE:
 		break;
 	}
@@ -565,7 +724,11 @@ int testGetFormats(struct node *node)
 	int type;
 	int ret;
 
+<<<<<<< HEAD
 	for (type = 0; type <= V4L2_BUF_TYPE_LAST; type++) {
+=======
+	for (type = 0; type <= V4L2_BUF_TYPE_SDR_CAPTURE; type++) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		createInvalidFmt(fmt, clip, type);
 		ret = doioctl(node, VIDIOC_G_FMT, &fmt);
 		ret = testFormatsType(node, ret, type, fmt);
@@ -576,6 +739,7 @@ int testGetFormats(struct node *node)
 			supported = true;
 			node->valid_buftypes |= 1 << type;
 		}
+<<<<<<< HEAD
 		switch (type) {
 		case V4L2_BUF_TYPE_VIDEO_CAPTURE:
 		case V4L2_BUF_TYPE_VIDEO_OUTPUT:
@@ -595,6 +759,25 @@ int testGetFormats(struct node *node)
 		default:
 			/* ENUMFMT doesn't support other buftypes */
 			break;
+=======
+		if (ret && (node->caps & buftype2cap[type]))
+			return fail("%s cap set, but no %s formats defined\n",
+					buftype2s(type).c_str(), buftype2s(type).c_str());
+		if (!ret && !(node->caps & buftype2cap[type])) {
+			switch (type) {
+			case V4L2_BUF_TYPE_VIDEO_CAPTURE:
+			case V4L2_BUF_TYPE_VIDEO_OUTPUT:
+			case V4L2_BUF_TYPE_VIDEO_OVERLAY:
+			case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+			case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+			case V4L2_BUF_TYPE_SDR_CAPTURE:
+				return fail("%s cap not set, but %s formats defined\n",
+					buftype2s(type).c_str(), buftype2s(type).c_str());
+			default:
+				/* ENUMFMT doesn't support other buftypes */
+				break;
+			}
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		}
 	}
 
@@ -618,12 +801,21 @@ static bool matchFormats(const struct v4l2_format &f1, const struct v4l2_format 
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
 		if (!memcmp(&f1.fmt.pix, &f2.fmt.pix, sizeof(f1.fmt.pix)))
 			return true;
+<<<<<<< HEAD
 		printf("\t\tG_FMT:     %dx%d, %x, %d, %d, %d, %d, %d, %d, %x\n",
 			pix1.width, pix1.height, pix1.pixelformat, pix1.field, pix1.bytesperline,
 			pix1.sizeimage, pix1.colorspace, pix1.ycbcr_enc, pix1.quantization, pix1.priv);
 		printf("\t\tTRY/S_FMT: %dx%d, %x, %d, %d, %d, %d, %d, %d, %x\n",
 			pix2.width, pix2.height, pix2.pixelformat, pix2.field, pix2.bytesperline,
 			pix2.sizeimage, pix2.colorspace, pix2.ycbcr_enc, pix2.quantization, pix2.priv);
+=======
+		printf("\t\tG_FMT:     %dx%d, %x, %d, %d, %d, %d, %d\n",
+			pix1.width, pix1.height, pix1.pixelformat, pix1.field, pix1.bytesperline,
+			pix1.sizeimage, pix1.colorspace, pix1.priv);
+		printf("\t\tTRY/S_FMT: %dx%d, %x, %d, %d, %d, %d, %d\n",
+			pix2.width, pix2.height, pix2.pixelformat, pix2.field, pix2.bytesperline,
+			pix2.sizeimage, pix2.colorspace, pix2.priv);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return false;
 	case V4L2_BUF_TYPE_VIDEO_OVERLAY:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_OVERLAY:
@@ -638,10 +830,14 @@ static bool matchFormats(const struct v4l2_format &f1, const struct v4l2_format 
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
 		return !memcmp(&f1.fmt.pix_mp, &f2.fmt.pix_mp, sizeof(f1.fmt.pix_mp));
 	case V4L2_BUF_TYPE_SDR_CAPTURE:
+<<<<<<< HEAD
 	case V4L2_BUF_TYPE_SDR_OUTPUT:
 		return !memcmp(&f1.fmt.sdr, &f2.fmt.sdr, sizeof(f1.fmt.sdr));
 	case V4L2_BUF_TYPE_META_CAPTURE:
 		return !memcmp(&f1.fmt.meta, &f2.fmt.meta, sizeof(f1.fmt.meta));
+=======
+		return !memcmp(&f1.fmt.sdr, &f2.fmt.sdr, sizeof(f1.fmt.sdr));
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	}
 	return false;
@@ -651,6 +847,7 @@ int testTryFormats(struct node *node)
 {
 	struct v4l2_clip clip;
 	struct v4l2_format fmt, fmt_try;
+<<<<<<< HEAD
 	int result = 0;
 	int type;
 	int ret;
@@ -669,6 +866,15 @@ int testTryFormats(struct node *node)
 			break;
 		}
 
+=======
+	int type;
+	int ret;
+	
+	for (type = 0; type <= V4L2_BUF_TYPE_SDR_CAPTURE; type++) {
+		if (!(node->valid_buftypes & (1 << type)))
+			continue;
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		createInvalidFmt(fmt, clip, type);
 		doioctl(node, VIDIOC_G_FMT, &fmt);
 		fmt_try = fmt;
@@ -680,6 +886,7 @@ int testTryFormats(struct node *node)
 		if (ret)
 			return ret;
 		if (!matchFormats(fmt, fmt_try))
+<<<<<<< HEAD
 			result = fail("%s: TRY_FMT(G_FMT) != G_FMT\n",
 					buftype2s(type).c_str());
 	}
@@ -698,6 +905,16 @@ int testTryFormats(struct node *node)
 			break;
 		}
 
+=======
+			return fail("%s: TRY_FMT(G_FMT) != G_FMT\n",
+					buftype2s(type).c_str());
+	}
+
+	for (type = 0; type <= V4L2_BUF_TYPE_SDR_CAPTURE; type++) {
+		if (!(node->valid_buftypes & (1 << type)))
+			continue;
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		createInvalidFmt(fmt, clip, type);
 		ret = doioctl(node, VIDIOC_TRY_FMT, &fmt);
 		if (ret == EINVAL) {
@@ -714,12 +931,17 @@ int testTryFormats(struct node *node)
 				pixelformat = fmt.fmt.pix.pixelformat;
 				break;
 			case V4L2_BUF_TYPE_SDR_CAPTURE:
+<<<<<<< HEAD
 			case V4L2_BUF_TYPE_SDR_OUTPUT:
 				pixelformat = fmt.fmt.sdr.pixelformat;
 				break;
 			case V4L2_BUF_TYPE_META_CAPTURE:
 				pixelformat = fmt.fmt.meta.dataformat;
 				break;
+=======
+				pixelformat = fmt.fmt.sdr.pixelformat;
+				break;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
 			case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
 				pixelformat = fmt.fmt.pix_mp.pixelformat;
@@ -729,16 +951,25 @@ int testTryFormats(struct node *node)
 				/* for other formats returning EINVAL is certainly wrong */
 				return fail("TRY_FMT cannot handle an invalid format\n");
 			}
+<<<<<<< HEAD
 			warn_once("TRY_FMT cannot handle an invalid pixelformat.\n");
 			warn_once("This may or may not be a problem. For more information see:\n");
 			warn_once("http://www.mail-archive.com/linux-media@vger.kernel.org/msg56550.html\n");
+=======
+			warn("TRY_FMT cannot handle an invalid pixelformat.\n");
+			warn("This may or may not be a problem. For more information see:\n");
+			warn("http://www.mail-archive.com/linux-media@vger.kernel.org/msg56550.html\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 			/* Now try again, but pass a valid pixelformat. */
 			createInvalidFmt(fmt, clip, type);
 			if (node->is_sdr)
 				fmt.fmt.sdr.pixelformat = pixelformat;
+<<<<<<< HEAD
 			else if (node->is_meta)
 				fmt.fmt.meta.dataformat = pixelformat;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			else if (is_mplane)
 				fmt.fmt.pix_mp.pixelformat = pixelformat;
 			else
@@ -758,6 +989,7 @@ int testTryFormats(struct node *node)
 	ret = doioctl(node, VIDIOC_TRY_FMT, &fmt);
 	if (ret != ENOTTY && ret != EINVAL)
 		return fail("Buffer type PRIVATE allowed!\n");
+<<<<<<< HEAD
 	return node->valid_buftypes ? result : ENOTTY;
 }
 
@@ -798,6 +1030,9 @@ static int testM2MFormats(struct node *node)
 	fail_on_test(fmt_cap.g_ycbcr_enc() != ycbcr_enc);
 	fail_on_test(fmt_cap.g_quantization() != quant);
 	return 0;
+=======
+	return node->valid_buftypes ? 0 : ENOTTY;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 static int testGlobalFormat(struct node *node, int type)
@@ -856,11 +1091,18 @@ static int testGlobalFormat(struct node *node, int type)
 	// test is pointless.
 	// This test will also never succeed if we are using the libv4l2
 	// wrapper.
+<<<<<<< HEAD
 	if (!node->g_direct() || (pixfmt1 == pixfmt2 && w1 == w2 && h1 == h2))
 		return 0;
 
 	if (type == V4L2_BUF_TYPE_SDR_CAPTURE ||
 	    type == V4L2_BUF_TYPE_SDR_OUTPUT) {
+=======
+	if (wrapper || (pixfmt1 == pixfmt2 && w1 == w2 && h1 == h2))
+		return 0;
+
+	if (type == V4L2_BUF_TYPE_SDR_CAPTURE) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		sdr1->pixelformat = pixfmt1;
 		sdr2->pixelformat = pixfmt2;
 	} else if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE ||
@@ -887,8 +1129,12 @@ static int testGlobalFormat(struct node *node, int type)
 		warn("Could not set fmt2\n");
 		return 0;
 	}
+<<<<<<< HEAD
 	if (type == V4L2_BUF_TYPE_SDR_CAPTURE ||
 	    type == V4L2_BUF_TYPE_SDR_OUTPUT) {
+=======
+	if (type == V4L2_BUF_TYPE_SDR_CAPTURE) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (sdr1->pixelformat == sdr2->pixelformat) {
 			// This compliance test only succeeds if the two formats
 			// are really different after S_FMT
@@ -914,8 +1160,12 @@ static int testGlobalFormat(struct node *node, int type)
 		}
 	}
 	doioctl(node, VIDIOC_G_FMT, &fmt1);
+<<<<<<< HEAD
 	if (type == V4L2_BUF_TYPE_SDR_CAPTURE ||
 	    type == V4L2_BUF_TYPE_SDR_OUTPUT) {
+=======
+	if (type == V4L2_BUF_TYPE_SDR_CAPTURE) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		pixfmt1 = sdr1->pixelformat;
 		pixfmt2 = sdr2->pixelformat;
 	} else if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE ||
@@ -935,9 +1185,14 @@ static int testGlobalFormat(struct node *node, int type)
 		h2 = p2->height;
 	}
 	if (pixfmt1 != pixfmt2 || w1 != w2 || h1 != h2)
+<<<<<<< HEAD
 		return fail("Global format mismatch: %08x(%s)/%dx%d vs %08x(%s)/%dx%d\n",
 			    pixfmt1, fcc2s(pixfmt1).c_str(), w1, h1,
 			    pixfmt2, fcc2s(pixfmt2).c_str(), w2, h2);
+=======
+		return fail("Global format mismatch: %08x/%dx%d vs %08x/%dx%d\n",
+				pixfmt1, w1, h1, pixfmt2, w2, h2);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	info("Global format check succeeded for type %d\n", type);
 	return 0;
 }
@@ -946,11 +1201,19 @@ int testSetFormats(struct node *node)
 {
 	struct v4l2_clip clip, clip_set;
 	struct v4l2_format fmt, fmt_set;
+<<<<<<< HEAD
 	struct v4l2_format initial_fmts[V4L2_BUF_TYPE_LAST + 1];
 	int type;
 	int ret;
 	
 	for (type = 0; type <= V4L2_BUF_TYPE_LAST; type++) {
+=======
+	struct v4l2_format initial_fmts[V4L2_BUF_TYPE_SDR_CAPTURE + 1];
+	int type;
+	int ret;
+	
+	for (type = 0; type <= V4L2_BUF_TYPE_SDR_CAPTURE; type++) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (!(node->valid_buftypes & (1 << type)))
 			continue;
 
@@ -969,11 +1232,15 @@ int testSetFormats(struct node *node)
 			doioctl(node, VIDIOC_G_FMT, &fmt_set);
 
 			switch (type) {
+<<<<<<< HEAD
 			case V4L2_BUF_TYPE_META_CAPTURE:
 				pixelformat = fmt_set.fmt.meta.dataformat;
 				break;
 			case V4L2_BUF_TYPE_SDR_CAPTURE:
 			case V4L2_BUF_TYPE_SDR_OUTPUT:
+=======
+			case V4L2_BUF_TYPE_SDR_CAPTURE:
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				pixelformat = fmt_set.fmt.sdr.pixelformat;
 				break;
 			case V4L2_BUF_TYPE_VIDEO_CAPTURE:
@@ -985,25 +1252,37 @@ int testSetFormats(struct node *node)
 				pixelformat = fmt_set.fmt.pix_mp.pixelformat;
 				is_mplane = true;
 				break;
+<<<<<<< HEAD
 			case V4L2_BUF_TYPE_VBI_CAPTURE:
 			case V4L2_BUF_TYPE_VBI_OUTPUT:
 			case V4L2_BUF_TYPE_SLICED_VBI_CAPTURE:
 			case V4L2_BUF_TYPE_SLICED_VBI_OUTPUT:
 				continue;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			default:
 				/* for other formats returning EINVAL is certainly wrong */
 				return fail("TRY_FMT cannot handle an invalid format\n");
 			}
+<<<<<<< HEAD
 			warn_once("S_FMT cannot handle an invalid pixelformat.\n");
 			warn_once("This may or may not be a problem. For more information see:\n");
 			warn_once("http://www.mail-archive.com/linux-media@vger.kernel.org/msg56550.html\n");
+=======
+			warn("S_FMT cannot handle an invalid pixelformat.\n");
+			warn("This may or may not be a problem. For more information see:\n");
+			warn("http://www.mail-archive.com/linux-media@vger.kernel.org/msg56550.html\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 			/* Now try again, but pass a valid pixelformat. */
 			createInvalidFmt(fmt_set, clip_set, type);
 			if (node->is_sdr)
 				fmt_set.fmt.sdr.pixelformat = pixelformat;
+<<<<<<< HEAD
 			else if (node->is_meta)
 				fmt_set.fmt.meta.dataformat = pixelformat;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			else if (is_mplane)
 				fmt_set.fmt.pix_mp.pixelformat = pixelformat;
 			else
@@ -1038,6 +1317,7 @@ int testSetFormats(struct node *node)
 	// filehandles.
 	if (node->node2 == NULL)
 		return 0;
+<<<<<<< HEAD
 
 	// m2m devices are special in that the format is often per-filehandle.
 	// But colorspace information should be passed from output to capture,
@@ -1049,6 +1329,15 @@ int testSetFormats(struct node *node)
 		switch (type) {
 		case V4L2_BUF_TYPE_SDR_CAPTURE:
 		case V4L2_BUF_TYPE_SDR_OUTPUT:
+=======
+	// m2m devices are unique in that the format is often per-filehandle.
+	if (node->is_m2m)
+		return 0;
+
+	for (type = 0; type <= V4L2_BUF_TYPE_SDR_CAPTURE; type++) {
+		switch (type) {
+		case V4L2_BUF_TYPE_SDR_CAPTURE:
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		case V4L2_BUF_TYPE_VIDEO_CAPTURE:
 		case V4L2_BUF_TYPE_VIDEO_OUTPUT:
 		case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
@@ -1067,7 +1356,11 @@ int testSetFormats(struct node *node)
 	}
 
 	/* Restore initial format */
+<<<<<<< HEAD
 	for (type = 0; type <= V4L2_BUF_TYPE_LAST; type++) {
+=======
+	for (type = 0; type <= V4L2_BUF_TYPE_SDR_CAPTURE; type++) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (!(node->valid_buftypes & (1 << type)))
 			continue;
 
@@ -1089,14 +1382,22 @@ static int testSlicedVBICapType(struct node *node, unsigned type)
 	cap.type = type;
 	ret = doioctl(node, VIDIOC_G_SLICED_VBI_CAP, &cap);
 	if (ret == ENOTTY || ret == EINVAL) {
+<<<<<<< HEAD
 		if (node->cur_io_caps & V4L2_IN_CAP_STD)
 			fail_on_test(sliced_type && (node->g_caps() & buftype2cap[type]));
+=======
+		fail_on_test(sliced_type && (node->caps & buftype2cap[type]));
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return ret == ENOTTY ? ret : 0;
 	}
 	fail_on_test(ret);
 	fail_on_test(check_0(cap.reserved, sizeof(cap.reserved)));
 	fail_on_test(cap.type != type);
+<<<<<<< HEAD
 	fail_on_test(!sliced_type || !(node->g_caps() & buftype2cap[type]));
+=======
+	fail_on_test(!sliced_type || !(node->caps & buftype2cap[type]));
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	for (int f = 0; f < 2; f++)
 		for (int i = 0; i < 24; i++)
@@ -1132,12 +1433,20 @@ static int testParmStruct(struct node *node, struct v4l2_streamparm &parm)
 		if (ret)
 			return fail("reserved not zeroed\n");
 		fail_on_test(cap->readbuffers > VIDEO_MAX_FRAME);
+<<<<<<< HEAD
 		if (!(node->g_caps() & V4L2_CAP_READWRITE))
 			fail_on_test(cap->readbuffers);
 		else if (node->g_caps() & V4L2_CAP_STREAMING)
 			fail_on_test(!cap->readbuffers);
 		fail_on_test(cap->capability & ~V4L2_CAP_TIMEPERFRAME);
 		fail_on_test(node->has_frmintervals && !cap->capability);
+=======
+		if (!(node->caps & V4L2_CAP_READWRITE))
+			fail_on_test(cap->readbuffers);
+		else if (node->caps & V4L2_CAP_STREAMING)
+			fail_on_test(!cap->readbuffers);
+		fail_on_test(cap->capability & ~V4L2_CAP_TIMEPERFRAME);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		fail_on_test(cap->capturemode & ~V4L2_MODE_HIGHQUALITY);
 		if (cap->capturemode & V4L2_MODE_HIGHQUALITY)
 			warn("V4L2_MODE_HIGHQUALITY is poorly defined\n");
@@ -1151,9 +1460,15 @@ static int testParmStruct(struct node *node, struct v4l2_streamparm &parm)
 		if (ret)
 			return fail("reserved not zeroed\n");
 		fail_on_test(out->writebuffers > VIDEO_MAX_FRAME);
+<<<<<<< HEAD
 		if (!(node->g_caps() & V4L2_CAP_READWRITE))
 			fail_on_test(out->writebuffers);
 		else if (node->g_caps() & V4L2_CAP_STREAMING)
+=======
+		if (!(node->caps & V4L2_CAP_READWRITE))
+			fail_on_test(out->writebuffers);
+		else if (node->caps & V4L2_CAP_STREAMING)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			fail_on_test(!out->writebuffers);
 		fail_on_test(out->capability & ~V4L2_CAP_TIMEPERFRAME);
 		fail_on_test(out->outputmode);
@@ -1175,6 +1490,7 @@ static int testParmType(struct node *node, unsigned type)
 	memset(&parm, 0, sizeof(parm));
 	parm.type = type;
 	ret = doioctl(node, VIDIOC_G_PARM, &parm);
+<<<<<<< HEAD
 	switch (type) {
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE:
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
@@ -1190,6 +1506,8 @@ static int testParmType(struct node *node, unsigned type)
 		fail_on_test(!doioctl(node, VIDIOC_S_PARM, &parm));
 		break;
 	}
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (ret == ENOTTY)
 		return ret;
 	if (ret == EINVAL)
@@ -1204,16 +1522,22 @@ static int testParmType(struct node *node, unsigned type)
 	memset(&parm, 0, sizeof(parm));
 	parm.type = type;
 	ret = doioctl(node, VIDIOC_S_PARM, &parm);
+<<<<<<< HEAD
 	fail_on_test(ret && node->has_frmintervals);
 	if (!ret && !node->has_frmintervals)
 		warn("S_PARM is supported for buftype %d, but not ENUM_FRAMEINTERVALS\n", type);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (ret == ENOTTY)
 		return 0;
 	if (ret)
 		return fail("got error %d when setting parms for buftype %d\n", ret, type);
 	fail_on_test(parm.type != type);
+<<<<<<< HEAD
 	if (!(parm.parm.capture.capability & V4L2_CAP_TIMEPERFRAME))
 		warn("S_PARM is supported but doesn't report V4L2_CAP_TIMEPERFRAME\n");
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	return testParmStruct(node, parm);
 }
 
@@ -1223,7 +1547,11 @@ int testParm(struct node *node)
 	int type;
 	int ret;
 
+<<<<<<< HEAD
 	for (type = 0; type <= V4L2_BUF_TYPE_LAST; type++) {
+=======
+	for (type = 0; type <= V4L2_BUF_TYPE_SDR_CAPTURE; type++) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		ret = testParmType(node, type);
 
 		if (ret && ret != ENOTTY)
@@ -1235,7 +1563,11 @@ int testParm(struct node *node)
 			    type != V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE &&
 			    type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
 				return fail("G/S_PARM is only allowed for video capture/output\n");
+<<<<<<< HEAD
 			if (!(node->g_caps() & buftype2cap[type]))
+=======
+			if (!(node->caps & buftype2cap[type]))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				return fail("%s cap not set, but G/S_PARM worked\n",
 						buftype2s(type).c_str());
 		}
@@ -1246,6 +1578,7 @@ int testParm(struct node *node)
 		return fail("Buffer type PRIVATE allowed!\n");
 	return supported ? 0 : ENOTTY;
 }
+<<<<<<< HEAD
 
 static bool rect_is_inside(const struct v4l2_rect *r1, const struct v4l2_rect *r2)
 {
@@ -1656,3 +1989,5 @@ int testScaling(struct node *node)
 	}
 	return node->can_scale ? 0 : ENOTTY;
 }
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2

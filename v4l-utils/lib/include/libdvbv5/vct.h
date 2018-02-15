@@ -2,22 +2,36 @@
  * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  * Copyright (c) 2013 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
 
+<<<<<<< HEAD
 /**
  * @file vct.h
  * @ingroup dvb_table
@@ -37,6 +51,8 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifndef _VCT_H
 #define _VCT_H
 
@@ -45,6 +61,7 @@
 
 #include <libdvbv5/atsc_header.h>
 
+<<<<<<< HEAD
 /**
  * @def ATSC_TABLE_TVCT
  *	@brief TVCT table ID
@@ -56,10 +73,13 @@
  *	@brief Program ID with the VCT tables on it
  *	@ingroup dvb_table
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #define ATSC_TABLE_TVCT     0xc8
 #define ATSC_TABLE_CVCT     0xc9
 #define ATSC_TABLE_VCT_PID  0x1ffb
 
+<<<<<<< HEAD
 /**
  * @struct atsc_table_vct_channel
  * @brief ATSC VCT channel table (covers both CVCT and TVCT)
@@ -98,6 +118,8 @@
  * be bit-mapped * to the data parsed from the MPEG TS. So, metadata are
  * added there.
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct atsc_table_vct_channel {
 	uint16_t	__short_name[7];
 
@@ -139,9 +161,14 @@ struct atsc_table_vct_channel {
 	} __attribute__((packed));
 
 	/*
+<<<<<<< HEAD
 	 * Everything after atsc_table_vct_channel::descriptor (including it)
 	 * won't be bit-mapped to the data parsed from the MPEG TS. So,
 	 * metadata are added there
+=======
+	 * Everything after descriptor (including it) won't be bit-mapped
+	 * to the data parsed from the MPEG TS. So, metadata are added there
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	 */
 	struct dvb_desc *descriptor;
 	struct atsc_table_vct_channel *next;
@@ -151,6 +178,7 @@ struct atsc_table_vct_channel {
 	char short_name[32];
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @struct atsc_table_vct
  * @brief ATSC VCT table (covers both CVCT and TVCT)
@@ -171,10 +199,22 @@ struct atsc_table_vct {
 
 	uint8_t num_channels_in_section;
 
+=======
+struct atsc_table_vct {
+	ATSC_HEADER();
+
+	uint8_t num_channels_in_section;
+
+	/*
+	 * Everything after descriptor (including it) won't be bit-mapped
+	 * to the data parsed from the MPEG TS. So, metadata are added there
+	 */
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	struct atsc_table_vct_channel *channel;
 	struct dvb_desc *descriptor;
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @union atsc_table_vct_descriptor_length
  * @brief ATSC VCT descriptor length
@@ -184,6 +224,9 @@ struct atsc_table_vct {
  *
  * Used internally by the library to parse the descriptor length endianness.
  */
+=======
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 union atsc_table_vct_descriptor_length {
 	uint16_t bitfield;
 	struct {
@@ -192,6 +235,7 @@ union atsc_table_vct_descriptor_length {
 	} __attribute__((packed));
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @brief Macro used to find channels on a VCT table
  * @ingroup dvb_table
@@ -202,6 +246,10 @@ union atsc_table_vct_descriptor_length {
  #define atsc_vct_channel_foreach(_channel, _vct) \
 	if (_vct && _vct->channel) \
 		for (struct atsc_table_vct_channel *_channel = _vct->channel; _channel; _channel = _channel->next) \
+=======
+#define atsc_vct_channel_foreach(_channel, _vct) \
+	for (struct atsc_table_vct_channel *_channel = _vct->channel; _channel; _channel = _channel->next) \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 struct dvb_v5_fe_parms;
 
@@ -209,6 +257,7 @@ struct dvb_v5_fe_parms;
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses VCT table
  * @ingroup dvb_table
@@ -243,6 +292,11 @@ void atsc_table_vct_free(struct atsc_table_vct *table);
  */
 void atsc_table_vct_print(struct dvb_v5_fe_parms *parms,
 			  struct atsc_table_vct *table);
+=======
+ssize_t atsc_table_vct_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, struct atsc_table_vct **table);
+void atsc_table_vct_free(struct atsc_table_vct *vct);
+void atsc_table_vct_print(struct dvb_v5_fe_parms *parms, struct atsc_table_vct *vct);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #ifdef __cplusplus
 }

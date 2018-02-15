@@ -1,16 +1,29 @@
 /*
  * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -21,6 +34,7 @@
  *	http://tdt.telecom.pt/recursos/apresentacoes/Signalling Specifications for DTT deployment in Portugal.pdf
  */
 
+<<<<<<< HEAD
 /**
  * @file desc_logical_channel.h
  * @ingroup descriptors
@@ -38,11 +52,14 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifndef _LCN_DESC_H
 #define _LCN_DESC_H
 
 #include <libdvbv5/descriptors.h>
 
+<<<<<<< HEAD
 /**
  * @struct dvb_desc_logical_channel_number
  * @ingroup descriptors
@@ -53,6 +70,8 @@
  * @param logical_channel_number	logical channel number
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_desc_logical_channel_number {
 	uint16_t service_id;
 	union {
@@ -65,6 +84,7 @@ struct dvb_desc_logical_channel_number {
 	} __attribute__((packed));
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @struct dvb_desc_logical_channel
  * @ingroup descriptors
@@ -79,6 +99,10 @@ struct dvb_desc_logical_channel {
 	uint8_t type;
 	uint8_t length;
 	struct dvb_desc *next;
+=======
+struct dvb_desc_logical_channel {
+	DVB_DESC_HEADER();
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	struct dvb_desc_logical_channel_number *lcn;
 } __attribute__((packed));
@@ -89,6 +113,7 @@ struct dvb_v5_fe_parms;
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses the logical channel number descriptor
  * @ingroup descriptors
@@ -123,6 +148,10 @@ void dvb_desc_logical_channel_print(struct dvb_v5_fe_parms *parms,
  *
  * @param desc pointer to struct dvb_desc to be freed
  */
+=======
+int dvb_desc_logical_channel_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf, struct dvb_desc *desc);
+void dvb_desc_logical_channel_print(struct dvb_v5_fe_parms *parms, const struct dvb_desc *desc);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 void dvb_desc_logical_channel_free(struct dvb_desc *desc);
 
 #ifdef __cplusplus

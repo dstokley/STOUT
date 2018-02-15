@@ -1,16 +1,29 @@
 /*
  * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -31,6 +44,7 @@ int dvb_desc_ts_info_init(struct dvb_v5_fe_parms *parms,
 	size_t len;
 	int i;
 
+<<<<<<< HEAD
 	len = sizeof(*d) - offsetof(struct dvb_desc_ts_info, bitfield);
 	memcpy(&d->bitfield, p, len);
 	p += len;
@@ -41,6 +55,17 @@ int dvb_desc_ts_info_init(struct dvb_v5_fe_parms *parms,
 	d->ts_name = NULL;
 	d->ts_name_emph = NULL;
 	dvb_parse_string(parms, &d->ts_name, &d->ts_name_emph, p, len);
+=======
+	len = sizeof(*d) - offsetof(struct dvb_desc_ts_info, remote_control_key_id);
+	memcpy(&d->remote_control_key_id, p, len);
+	p += len;
+
+	len = d->length_of_ts_name;
+	d->ts_name = NULL;
+	d->ts_name_emph = NULL;
+	parse_string(parms, &d->ts_name, &d->ts_name_emph, buf, len,
+		     default_charset, output_charset);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	p += len;
 
 	memcpy(&d->transmission_type, p, sizeof(d->transmission_type));

@@ -1,16 +1,29 @@
 /*
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -28,7 +41,11 @@
 #include <string.h>
 #include <strings.h> /* strcasecmp */
 
+<<<<<<< HEAD
 #include <parse_string.h>
+=======
+#include "parse_string.h"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <libdvbv5/dvb-log.h>
 #include <libdvbv5/dvb-fe.h>
 
@@ -299,12 +316,21 @@ static struct charset_conv en300468_latin_00_to_utf8[256] = {
 	[0xff] = { 2, {0xc2, 0xad, } },
 };
 
+<<<<<<< HEAD
 void dvb_iconv_to_charset(struct dvb_v5_fe_parms *parms,
 			  char *dest,
 			  size_t destlen,
 			  const unsigned char *src,
 			  size_t len,
 			  char *input_charset, char *output_charset)
+=======
+void iconv_to_charset(struct dvb_v5_fe_parms *parms,
+		      char *dest,
+		      size_t destlen,
+		      const unsigned char *src,
+		      size_t len,
+		      char *type, char *output_charset)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	char out_cs[strlen(output_charset) + 1 + sizeof(CS_OPTIONS)];
 	char *p = dest;
@@ -312,14 +338,22 @@ void dvb_iconv_to_charset(struct dvb_v5_fe_parms *parms,
 	strcpy(out_cs, output_charset);
 	strcat(out_cs, CS_OPTIONS);
 
+<<<<<<< HEAD
 	iconv_t cd = iconv_open(out_cs, input_charset);
+=======
+	iconv_t cd = iconv_open(out_cs, type);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (cd == (iconv_t)(-1)) {
 		memcpy(p, src, len);
 		p[len] = '\0';
 		dvb_logerr("Conversion from %s to %s not supported\n",
+<<<<<<< HEAD
 				input_charset, output_charset);
 		if (!strcasecmp(input_charset, "ARIB-STD-B24"))
 			dvb_log("Try setting GCONV_PATH to the bundled gconv dir.\n");
+=======
+				type, output_charset);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	} else {
 		iconv(cd, (ICONV_CONST char **)&src, &len, &p, &destlen);
 		iconv_close(cd);
@@ -328,13 +362,22 @@ void dvb_iconv_to_charset(struct dvb_v5_fe_parms *parms,
 }
 
 static void charset_conversion(struct dvb_v5_fe_parms *parms, char **dest, const unsigned char *s,
+<<<<<<< HEAD
 			       size_t len, char *input_charset)
+=======
+			       size_t len,
+			       char *type, char *output_charset)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	size_t destlen = len * 3;
 	int need_conversion = 1;
 
 	/* Special handler for ISO-6937 */
+<<<<<<< HEAD
 	if (!strcasecmp(input_charset, "ISO-6937")) {
+=======
+	if (!strcasecmp(type, "ISO-6937")) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		char *p = *dest;
 		unsigned char *tmp;
 		unsigned char *p1, *p2;
@@ -348,12 +391,20 @@ static void charset_conversion(struct dvb_v5_fe_parms *parms, char **dest, const
 		*p = '\0';
 
 		/* If desired charset is not UTF-8, prepare for conversion */
+<<<<<<< HEAD
 		if (strcasecmp(parms->output_charset, "UTF-8")) {
+=======
+		if (strcasecmp(output_charset, "UTF-8")) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			tmp = (unsigned char *)*dest;
 			len = p - *dest;
 
 			*dest = malloc(destlen + 1);
+<<<<<<< HEAD
 			input_charset = "UTF-8";
+=======
+			type = "UTF-8";
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			s = tmp;
 		} else
 			need_conversion = 0;
@@ -362,6 +413,7 @@ static void charset_conversion(struct dvb_v5_fe_parms *parms, char **dest, const
 
 	/* Convert from original charset to the desired one */
 	if (need_conversion)
+<<<<<<< HEAD
 		dvb_iconv_to_charset(parms, *dest, destlen, s, len,
 				     input_charset,
 				     parms->output_charset);
@@ -372,6 +424,18 @@ void dvb_parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
 {
 	size_t destlen, i, len2 = 0;
 	char *p, *p2, *type = parms->default_charset;
+=======
+		iconv_to_charset(parms, *dest, destlen, s, len, type,
+				 output_charset);
+}
+
+void parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
+		  const unsigned char *src, size_t len,
+		  char *default_charset, char *output_charset)
+{
+	size_t destlen, i, len2 = 0;
+	char *p, *p2, *type = default_charset;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	unsigned char *tmp1 = NULL, *tmp2 = NULL;
 	const unsigned char *s;
 	int emphasis = 0;
@@ -387,11 +451,15 @@ void dvb_parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
 	if (!len)
 		return;
 
+<<<<<<< HEAD
 	/*
 	 * Strings in ISDB-S/T(JP) do not start with a charset identifier,
 	 * and can start with a control character (< 0x20).
 	 */
 	if (strcasecmp(type, "ARIB-STD-B24") && *src < 0x20) {
+=======
+	if (*src < 0x20) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		switch (*src) {
 		case 0x00:	type = "ISO-6937";		break;
 		case 0x01:	type = "ISO-8859-5";		break;
@@ -404,7 +472,11 @@ void dvb_parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
 		case 0x09:	type = "ISO-8859-13";		break;
 		case 0x0a:	type = "ISO-8859-14";		break;
 		case 0x0b:	type = "ISO-8859-15";		break;
+<<<<<<< HEAD
 		case 0x11:	type = "ISO-10646/UCS2";	break;
+=======
+		case 0x11:	type = "ISO-10646";		break;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		case 0x12:	type = "ISO-2022-KR";		break;
 		case 0x13:	type = "GB2312";		break;
 		case 0x14:	type = "UTF-16BE";		break;
@@ -446,7 +518,11 @@ void dvb_parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
 	*emph = malloc(destlen + 1);
 
 	/* Remove special chars */
+<<<<<<< HEAD
 	if (!strncasecmp(type, "ISO-8859", 8) || !strcasecmp(type, "ISO-6937") || !strcasecmp(type, "ISO-10646/UTF-8")) {
+=======
+	if (!strncasecmp(type, "ISO-8859", 8) || !strcasecmp(type, "ISO-6937")) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		/*
 		 * Handles the ISO/IEC 10646 1-byte control codes
 		 * (EN 300 468 v1.11.1 Table A.1)
@@ -471,6 +547,7 @@ void dvb_parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
 		*p2 = '\0';
 		len = p - (char *)tmp1;
 		len2 = p2 - (char *)tmp2;
+<<<<<<< HEAD
 	} else if (!strcasecmp(type, "ISO-10646/UCS2")) {
 		/*
 		 * Handles the ISO/IEC 10646 2-bytes control codes
@@ -506,6 +583,14 @@ void dvb_parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
 		*out_emph = 0;
 		len = (char *)out_code - (char *)tmp1;
 		len2 = (char *)out_emph - (char *)tmp2;
+=======
+	} else {
+		dvb_logerr("charset %s not implemented", type);
+		/*
+		 * FIXME: need to handle the ISO/IEC 10646 2-byte control codes
+		 * (EN 300 468 v1.11.1 Table A.2)
+		 */
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 
 	if (tmp1)
@@ -513,7 +598,11 @@ void dvb_parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
 	else
 		s = src;
 
+<<<<<<< HEAD
 	charset_conversion(parms, dest, s, len, type);
+=======
+	charset_conversion(parms, dest, s, len, type, output_charset);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	/* The code had over-sized the space. Fix it. */
 	if (*dest)
 		*dest = realloc(*dest, strlen(*dest) + 1);
@@ -526,7 +615,11 @@ void dvb_parse_string(struct dvb_v5_fe_parms *parms, char **dest, char **emph,
 		free (*emph);
 		*emph = NULL;
 	} else {
+<<<<<<< HEAD
 		charset_conversion(parms, emph, tmp2, len2, type);
+=======
+		charset_conversion(parms, emph, tmp2, len2, type, output_charset);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		*emph = realloc(*emph, strlen(*emph) + 1);
 	}
 

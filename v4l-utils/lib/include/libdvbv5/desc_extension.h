@@ -1,22 +1,38 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2013-2014 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
 
+<<<<<<< HEAD
 /**
  * @file desc_extension.h
  * @ingroup descriptors
@@ -36,6 +52,8 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifndef _EXTENSION_DESC_H
 #define _EXTENSION_DESC_H
 
@@ -43,6 +61,7 @@
 
 struct dvb_v5_fe_parms;
 
+<<<<<<< HEAD
 /**
  * @enum extension_descriptors
  * @brief List containing all extended descriptors used by Digital TV MPEG-TS
@@ -86,6 +105,8 @@ struct dvb_v5_fe_parms;
  * @var service_relocated_descriptor
  *	@brief service relocated descriptor
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 enum extension_descriptors {
 	image_icon_descriptor				= 0x00,
 	cpcm_delivery_signalling_descriptor		= 0x01,
@@ -101,6 +122,7 @@ enum extension_descriptors {
 	service_relocated_descriptor			= 0x0b,
 };
 
+<<<<<<< HEAD
 /**
  * @struct dvb_extension_descriptor
  * @ingroup descriptors
@@ -116,6 +138,10 @@ struct dvb_extension_descriptor {
 	uint8_t type;
 	uint8_t length;
 	struct dvb_desc *next;
+=======
+struct dvb_extension_descriptor {
+	DVB_DESC_HEADER();
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	uint8_t extension_code;
 
@@ -123,6 +149,7 @@ struct dvb_extension_descriptor {
 } __attribute__((packed));
 
 
+<<<<<<< HEAD
 /**
  * @brief Function prototype for the extended descriptors parsing init code
  * @ingroup dvb_table
@@ -132,10 +159,13 @@ struct dvb_extension_descriptor {
  * @param ext		struct dvb_extension_descriptor pointer
  * @param desc		struct dvb_desc pointer
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 typedef int  (*dvb_desc_ext_init_func) (struct dvb_v5_fe_parms *parms,
 					const uint8_t *buf,
 					struct dvb_extension_descriptor *ext,
 					void *desc);
+<<<<<<< HEAD
 /**
  * @brief Function prototype for the extended descriptors parsing print code
  * @ingroup dvb_table
@@ -168,6 +198,13 @@ typedef void (*dvb_desc_ext_free_func) (const void *desc);
  * @param free	free dvb_desc_ext_free_func pointer
  * @param size	size of the descriptor
  */
+=======
+typedef void (*dvb_desc_ext_print_func)(struct dvb_v5_fe_parms *parms,
+					const struct dvb_extension_descriptor *ext,
+					const void *desc);
+typedef void (*dvb_desc_ext_free_func) (const void *desc);
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_ext_descriptor {
 	const char *name;
 	dvb_desc_ext_init_func init;
@@ -181,6 +218,7 @@ struct dvb_ext_descriptor {
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses the extended descriptor
  * @ingroup descriptors
@@ -216,6 +254,12 @@ void dvb_extension_descriptor_print(struct dvb_v5_fe_parms *parms,
  * @param desc pointer to struct dvb_desc to be freed
  */
 void dvb_extension_descriptor_free(struct dvb_desc *desc);
+=======
+int extension_descriptor_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, struct dvb_desc *desc);
+void extension_descriptor_free(struct dvb_desc *descriptor);
+void extension_descriptor_print(struct dvb_v5_fe_parms *parms,
+				const struct dvb_desc *desc);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #ifdef __cplusplus
 }

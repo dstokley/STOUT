@@ -181,7 +181,11 @@ struct parse_event key_events[] = {
 	{"KEY_WWW", 150},
 	{"KEY_MSDOS", 151},
 	{"KEY_COFFEE", 152},
+<<<<<<< HEAD
 	{"KEY_ROTATE_DISPLAY", 153},
+=======
+	{"KEY_DIRECTION", 153},
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{"KEY_CYCLEWINDOWS", 154},
 	{"KEY_MAIL", 155},
 	{"KEY_BOOKMARKS", 156},
@@ -267,7 +271,11 @@ struct parse_event key_events[] = {
 	{"KEY_VIDEO_NEXT", 241},
 	{"KEY_VIDEO_PREV", 242},
 	{"KEY_BRIGHTNESS_CYCLE", 243},
+<<<<<<< HEAD
 	{"KEY_BRIGHTNESS_AUTO", 244},
+=======
+	{"KEY_BRIGHTNESS_ZERO", 244},
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{"KEY_DISPLAY_OFF", 245},
 	{"KEY_WWAN", 246},
 	{"KEY_RFKILL", 247},
@@ -332,7 +340,10 @@ struct parse_event key_events[] = {
 	{"BTN_TOOL_MOUSE", 0x146},
 	{"BTN_TOOL_LENS", 0x147},
 	{"BTN_TOOL_QUINTTAP", 0x148},
+<<<<<<< HEAD
 	{"BTN_STYLUS3", 0x149},
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{"BTN_TOUCH", 0x14a},
 	{"BTN_STYLUS", 0x14b},
 	{"BTN_STYLUS2", 0x14c},
@@ -480,10 +491,13 @@ struct parse_event key_events[] = {
 	{"KEY_NUMERIC_9", 0x209},
 	{"KEY_NUMERIC_STAR", 0x20a},
 	{"KEY_NUMERIC_POUND", 0x20b},
+<<<<<<< HEAD
 	{"KEY_NUMERIC_A", 0x20c},
 	{"KEY_NUMERIC_B", 0x20d},
 	{"KEY_NUMERIC_C", 0x20e},
 	{"KEY_NUMERIC_D", 0x20f},
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{"KEY_CAMERA_FOCUS", 0x210},
 	{"KEY_WPS_BUTTON", 0x211},
 	{"KEY_TOUCHPAD_TOGGLE", 0x212},
@@ -504,6 +518,7 @@ struct parse_event key_events[] = {
 	{"BTN_DPAD_LEFT", 0x222},
 	{"BTN_DPAD_RIGHT", 0x223},
 	{"KEY_ALS_TOGGLE", 0x230},
+<<<<<<< HEAD
 	{"KEY_BUTTONCONFIG", 0x240},
 	{"KEY_TASKMANAGER", 0x241},
 	{"KEY_JOURNAL", 0x242},
@@ -539,6 +554,8 @@ struct parse_event key_events[] = {
 	{"KEY_SLOWREVERSE", 0x276},
 	{"KEY_DATA", 0x277},
 	{"KEY_ONSCREEN_KEYBOARD", 0x278},
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{"BTN_TRIGGER_HAPPY", 0x2c0},
 	{"BTN_TRIGGER_HAPPY1", 0x2c0},
 	{"BTN_TRIGGER_HAPPY2", 0x2c1},

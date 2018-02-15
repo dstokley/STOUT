@@ -135,7 +135,10 @@ typedef enum fe_sec_mini_cmd {
  */
 
 typedef enum fe_status {
+<<<<<<< HEAD
 	FE_NONE			= 0x00,
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	FE_HAS_SIGNAL		= 0x01,
 	FE_HAS_CARRIER		= 0x02,
 	FE_HAS_VITERBI		= 0x04,

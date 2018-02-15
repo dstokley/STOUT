@@ -6,7 +6,11 @@
 #include <linux/ioctl.h>
 #endif
 
+<<<<<<< HEAD
 #if defined(__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__OpenBSD__)
+=======
+#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <sys/ioctl.h>
 #endif
 

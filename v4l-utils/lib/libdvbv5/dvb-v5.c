@@ -39,13 +39,20 @@ struct fe_caps_name fe_caps_name[31] = {
 	{ FE_NEEDS_BENDING,              "NEEDS_BENDING" },
 };
 
+<<<<<<< HEAD
 struct fe_status_name fe_status_name[8] = {
+=======
+struct fe_status_name fe_status_name[7] = {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ FE_HAS_CARRIER, "CARRIER" },
 	{ FE_HAS_LOCK,    "LOCK" },
 	{ FE_HAS_SIGNAL,  "SIGNAL" },
 	{ FE_HAS_SYNC,    "SYNC" },
 	{ FE_HAS_VITERBI, "VITERBI" },
+<<<<<<< HEAD
 	{ FE_NONE,        "NONE" },
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ FE_REINIT,      "REINIT" },
 	{ FE_TIMEDOUT,    "TIMEDOUT" },
 };

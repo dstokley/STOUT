@@ -2,16 +2,29 @@
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  * Copyright (c) 2012 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -25,6 +38,7 @@
 #include <stdint.h>
 #include <unistd.h> /* ssize_t */
 
+<<<<<<< HEAD
 /**
  * @file header.h
  * @ingroup dvb_table
@@ -54,6 +68,8 @@
  *
  * @see http://www.etherguidesystems.com/Help/SDOs/MPEG/Semantics/MPEG-2/transport_packet.aspx
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_ts_packet_header {
 	uint8_t  sync_byte;
 	union {
@@ -71,6 +87,7 @@ struct dvb_ts_packet_header {
 
 	/* Only if adaptation_field_control > 1 */
 	uint8_t adaptation_field_length;
+<<<<<<< HEAD
 	/* Only if adaptation_field_length >= 1 */
 	struct {
 		uint8_t extension:1;
@@ -100,6 +117,10 @@ struct dvb_ts_packet_header {
  *
  * All MPEG-TS tables start with this header.
  */
+=======
+} __attribute__((packed));
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_table_header {
 	uint8_t  table_id;
 	union {
@@ -126,6 +147,7 @@ struct dvb_v5_fe_parms;
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses MPEG-TS table header
  * @ingroup dvb_table
@@ -142,6 +164,10 @@ void dvb_table_header_init (struct dvb_table_header *header);
  */
 void dvb_table_header_print(struct dvb_v5_fe_parms *parms,
 			    const struct dvb_table_header *header);
+=======
+void dvb_table_header_init (struct dvb_table_header *t);
+void dvb_table_header_print(struct dvb_v5_fe_parms *parms, const struct dvb_table_header *t);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #ifdef __cplusplus
 }

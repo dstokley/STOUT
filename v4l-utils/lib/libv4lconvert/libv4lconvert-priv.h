@@ -19,11 +19,15 @@
 #ifndef __LIBV4LCONVERT_PRIV_H
 #define __LIBV4LCONVERT_PRIV_H
 
+<<<<<<< HEAD
 #ifdef ANDROID
 #include <android-config.h>
 #else
 #include <config.h>
 #endif
+=======
+#include <config.h>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <stdio.h>
 #include <stdint.h>
 #include <sys/types.h>
@@ -66,8 +70,11 @@ struct v4lconvert_data {
 	int cinfo_initialized;
 #endif // HAVE_JPEG
 	struct v4l2_frmsizeenum framesizes[V4LCONVERT_MAX_FRAMESIZES];
+<<<<<<< HEAD
 	/* Bitmask of all supported src_formats which can do for a size */
 	int64_t framesize_supported_src_formats[V4LCONVERT_MAX_FRAMESIZES];
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	unsigned int no_framesizes;
 	int bandwidth;
 	int fps;
@@ -131,9 +138,12 @@ void v4lconvert_yuyv_to_bgr24(const unsigned char *src, unsigned char *dst,
 void v4lconvert_yuyv_to_yuv420(const unsigned char *src, unsigned char *dst,
 		int width, int height, int stride, int yvu);
 
+<<<<<<< HEAD
 void v4lconvert_nv16_to_yuyv(const unsigned char *src, unsigned char *dest,
 		int width, int height);
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 void v4lconvert_yvyu_to_rgb24(const unsigned char *src, unsigned char *dst,
 		int width, int height, int stride);
 
@@ -162,10 +172,17 @@ void v4lconvert_grey_to_yuv420(const unsigned char *src, unsigned char *dest,
 		const struct v4l2_format *src_fmt);
 
 void v4lconvert_y16_to_rgb24(const unsigned char *src, unsigned char *dest,
+<<<<<<< HEAD
 		int width, int height, int little_endian);
 
 void v4lconvert_y16_to_yuv420(const unsigned char *src, unsigned char *dest,
 		const struct v4l2_format *src_fmt, int little_endian);
+=======
+		int width, int height);
+
+void v4lconvert_y16_to_yuv420(const unsigned char *src, unsigned char *dest,
+		const struct v4l2_format *src_fmt);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 void v4lconvert_rgb32_to_rgb24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int bgr);
@@ -273,9 +290,12 @@ void v4lconvert_hm12_to_bgr24(const unsigned char *src,
 void v4lconvert_hm12_to_yuv420(const unsigned char *src,
 		unsigned char *dst, int width, int height, int yvu);
 
+<<<<<<< HEAD
 void v4lconvert_hsv_to_rgb24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int bgr, int Xin, unsigned char hsv_enc);
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 void v4lconvert_rotate90(unsigned char *src, unsigned char *dest,
 		struct v4l2_format *fmt);
 

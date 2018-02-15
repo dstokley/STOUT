@@ -17,7 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+<<<<<<< HEAD
 #ifdef ENABLE_ALSA
+=======
+#include "qv4l2.h"
+#include "general-tab.h"
+#include "vbi-tab.h"
+#include "capture-win.h"
+#include "capture-win-qt.h"
+#include "capture-win-gl.h"
+
+#ifdef ENABLE_ASLA
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 extern "C" {
 #include "alsa_stream.h"
 }
@@ -50,6 +61,7 @@ extern "C" {
 #include <sys/mman.h>
 #include <sys/time.h>
 #include <errno.h>
+<<<<<<< HEAD
 #include <sys/ioctl.h>
 #include <dirent.h>
 
@@ -80,17 +92,28 @@ ApplicationWindow::ApplicationWindow() :
 	m_minWidth(175),
 	m_vMargin(15),
 	m_hMargin(5),
+=======
+#include <dirent.h>
+#include <libv4l2.h>
+
+ApplicationWindow::ApplicationWindow() :
+	m_capture(NULL),
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	m_genTab(NULL),
 	m_sigMapper(NULL)
 {
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
 	m_capNotifier = NULL;
+<<<<<<< HEAD
 	m_outNotifier = NULL;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	m_ctrlNotifier = NULL;
 	m_capImage = NULL;
 	m_frameData = NULL;
 	m_nbuffers = 0;
+<<<<<<< HEAD
 	m_makeSnapshot = false;
 	m_singleStep = false;
 	m_tpgColorspace = 0;
@@ -100,6 +123,10 @@ ApplicationWindow::ApplicationWindow() :
 	m_tpgLimRGBRange = NULL;
 	for (unsigned b = 0; b < sizeof(m_clear); b++)
 		m_clear[b] = false;
+=======
+	m_buffers = NULL;
+	m_makeSnapshot = false;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	QAction *openAct = new QAction(QIcon(":/fileopen.png"), "&Open Device", this);
 	openAct->setStatusTip("Open a v4l device, use libv4l2 wrapper if possible");
@@ -111,17 +138,24 @@ ApplicationWindow::ApplicationWindow() :
 	openRawAct->setShortcut(Qt::CTRL+Qt::Key_R);
 	connect(openRawAct, SIGNAL(triggered()), this, SLOT(openrawdev()));
 
+<<<<<<< HEAD
 	m_capStartAct = new QAction(QIcon(":/start.png"), "Start &Capturing", this);
+=======
+	m_capStartAct = new QAction(QIcon(":/record.png"), "Start &Capturing", this);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	m_capStartAct->setStatusTip("Start capturing");
 	m_capStartAct->setCheckable(true);
 	m_capStartAct->setDisabled(true);
 	m_capStartAct->setShortcut(Qt::CTRL+Qt::Key_V);
 	connect(m_capStartAct, SIGNAL(toggled(bool)), this, SLOT(capStart(bool)));
 
+<<<<<<< HEAD
 	m_capStepAct = new QAction(QIcon(":/step.png"), "Single Step", this);
 	m_capStepAct->setDisabled(true);
 	connect(m_capStepAct, SIGNAL(triggered(bool)), this, SLOT(capStep(bool)));
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	m_snapshotAct = new QAction(QIcon(":/snapshot.png"), "&Make Snapshot", this);
 	m_snapshotAct->setStatusTip("Make snapshot");
 	m_snapshotAct->setDisabled(true);
@@ -138,16 +172,23 @@ ApplicationWindow::ApplicationWindow() :
 	m_showFramesAct->setCheckable(true);
 	m_showFramesAct->setChecked(true);
 
+<<<<<<< HEAD
 	QAction *closeAct = new QAction(QIcon(":/fileclose.png"), "&Close Device", this);
+=======
+	QAction *closeAct = new QAction(QIcon(":/fileclose.png"), "&Close", this);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	closeAct->setStatusTip("Close");
 	closeAct->setShortcut(Qt::CTRL+Qt::Key_W);
 	connect(closeAct, SIGNAL(triggered()), this, SLOT(closeDevice()));
 
+<<<<<<< HEAD
 	QAction *traceAct = new QAction("&Trace IOCTLs", this);
 	traceAct->setStatusTip("All V4L2 IOCTLs are traced on the console");
 	traceAct->setCheckable(true);
 	connect(traceAct, SIGNAL(toggled(bool)), this, SLOT(traceIoctls(bool)));
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	QAction *quitAct = new QAction(QIcon(":/exit.png"), "&Quit", this);
 	quitAct->setStatusTip("Exit the application");
 	quitAct->setShortcut(Qt::CTRL+Qt::Key_Q);
@@ -160,28 +201,43 @@ ApplicationWindow::ApplicationWindow() :
 	fileMenu->addAction(m_snapshotAct);
 	fileMenu->addAction(m_saveRawAct);
 	fileMenu->addSeparator();
+<<<<<<< HEAD
 	fileMenu->addAction(traceAct);
 	fileMenu->addSeparator();
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	fileMenu->addAction(quitAct);
 
 	QToolBar *toolBar = addToolBar("File");
 	toolBar->setObjectName("toolBar");
 	toolBar->addAction(openAct);
 	toolBar->addAction(m_capStartAct);
+<<<<<<< HEAD
 	toolBar->addAction(m_capStepAct);
 	toolBar->addAction(m_snapshotAct);
 	toolBar->addAction(m_saveRawAct);
+=======
+	toolBar->addAction(m_snapshotAct);
+	toolBar->addAction(m_saveRawAct);
+	toolBar->addAction(m_showFramesAct);
+	toolBar->addSeparator();
+	toolBar->addAction(quitAct);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	m_scalingAct = new QAction("&Enable Video Scaling", this);
 	m_scalingAct->setStatusTip("Scale video frames to match window size if set");
 	m_scalingAct->setCheckable(true);
 	m_scalingAct->setChecked(true);
 	connect(m_scalingAct, SIGNAL(toggled(bool)), this, SLOT(enableScaling(bool)));
+<<<<<<< HEAD
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	m_resetScalingAct = new QAction("Resize to &Frame Size", this);
 	m_resetScalingAct->setStatusTip("Resizes the capture window to match frame size");
 	m_resetScalingAct->setShortcut(Qt::CTRL+Qt::Key_F);
 
+<<<<<<< HEAD
 	m_overrideColorspace = -1;
 	QMenu *menu = new QMenu("Override Colorspace");
 	m_overrideColorspaceMenu = menu;
@@ -247,6 +303,13 @@ ApplicationWindow::ApplicationWindow() :
 	m_capMenu->addMenu(m_overrideQuantizationMenu);
 	m_capMenu->addAction(m_showFramesAct);
 	m_capMenu->addAction(m_scalingAct);
+=======
+	QMenu *captureMenu = menuBar()->addMenu("&Capture");
+	captureMenu->addAction(m_capStartAct);
+	captureMenu->addAction(m_showFramesAct);
+	captureMenu->addAction(m_scalingAct);
+	captureMenu->addAction(m_resetScalingAct);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	if (CaptureWinGL::isSupported()) {
 		m_renderMethod = QV4L2_RENDER_GL;
@@ -255,6 +318,7 @@ ApplicationWindow::ApplicationWindow() :
 		m_useGLAct->setStatusTip("Use GPU with OpenGL for video capture if set.");
 		m_useGLAct->setCheckable(true);
 		m_useGLAct->setChecked(true);
+<<<<<<< HEAD
 		connect(m_useGLAct, SIGNAL(toggled(bool)), this, SLOT(setRenderMethod(bool)));
 		m_capMenu->addAction(m_useGLAct);
 
@@ -292,6 +356,27 @@ ApplicationWindow::ApplicationWindow() :
 	m_audioBufferAct->setStatusTip("Set audio buffer capacity in amount of ms than can be stored");
 	connect(m_audioBufferAct, SIGNAL(triggered()), this, SLOT(setAudioBufferSize()));
 	m_capMenu->addAction(m_audioBufferAct);
+=======
+		connect(m_useGLAct, SIGNAL(triggered()), this, SLOT(setRenderMethod()));
+		captureMenu->addAction(m_useGLAct);
+	} else {
+		m_renderMethod = QV4L2_RENDER_QT;
+	}
+
+#ifdef HAVE_ALSA
+	captureMenu->addSeparator();
+
+	m_showAllAudioAct = new QAction("Show All Audio &Devices", this);
+	m_showAllAudioAct->setStatusTip("Show all audio input and output devices if set");
+	m_showAllAudioAct->setCheckable(true);
+	m_showAllAudioAct->setChecked(false);
+	captureMenu->addAction(m_showAllAudioAct);
+
+	m_audioBufferAct = new QAction("Set Audio &Buffer Capacity...", this);
+	m_audioBufferAct->setStatusTip("Set audio buffer capacity in amout of ms than can be stored");
+	connect(m_audioBufferAct, SIGNAL(triggered()), this, SLOT(setAudioBufferSize()));
+	captureMenu->addAction(m_audioBufferAct);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #endif
 
 	QMenu *helpMenu = menuBar()->addMenu("&Help");
@@ -304,6 +389,10 @@ ApplicationWindow::ApplicationWindow() :
 	statusBar()->showMessage("Ready", 2000);
 
 	m_tabs = new QTabWidget;
+<<<<<<< HEAD
+=======
+	m_tabs->setMinimumSize(300, 200);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	setCentralWidget(m_tabs);
 }
 
@@ -313,6 +402,7 @@ ApplicationWindow::~ApplicationWindow()
 	closeDevice();
 }
 
+<<<<<<< HEAD
 void ApplicationWindow::updateColorspace()
 {
 	if (!m_capture)
@@ -363,6 +453,8 @@ void ApplicationWindow::overrideQuantChanged(QAction *a)
 	m_overrideQuantization = a->data().toInt();
 	updateColorspace();
 }
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 {
@@ -370,18 +462,25 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 	m_sigMapper = new QSignalMapper(this);
 	connect(m_sigMapper, SIGNAL(mapped(int)), this, SLOT(ctrlAction(int)));
 
+<<<<<<< HEAD
 	s_direct(rawOpen);
 
 	if (open(device.toLatin1(), true) < 0) {
 #ifdef HAVE_ALSA
 		m_audioBufferAct->setEnabled(false);
 #endif
+=======
+	if (!open(device, !rawOpen)) {
+		m_showAllAudioAct->setEnabled(false);
+		m_audioBufferAct->setEnabled(false);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return;
 	}
 
 	newCaptureWin();
 
 	QWidget *w = new QWidget(m_tabs);
+<<<<<<< HEAD
 	m_genTab = new GeneralTab(device, this, 4, w);
 	int m_winWidth = m_genTab->getWidth();
 
@@ -390,10 +489,23 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 		connect(m_genTab, SIGNAL(audioDeviceChanged()), this, SLOT(changeAudioDevice()));
 		m_audioBufferAct->setEnabled(true);
 	} else {
+=======
+	m_genTab = new GeneralTab(device, *this, 4, w);
+
+#ifdef HAVE_ALSA
+	if (m_genTab->hasAlsaAudio()) {
+		connect(m_showAllAudioAct, SIGNAL(toggled(bool)), m_genTab, SLOT(showAllAudioDevices(bool)));
+		connect(m_genTab, SIGNAL(audioDeviceChanged()), this, SLOT(changeAudioDevice()));
+		m_showAllAudioAct->setEnabled(true);
+		m_audioBufferAct->setEnabled(true);
+	} else {
+		m_showAllAudioAct->setEnabled(false);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		m_audioBufferAct->setEnabled(false);
 	}
 #endif
 	connect(m_genTab, SIGNAL(pixelAspectRatioChanged()), this, SLOT(updatePixelAspectRatio()));
+<<<<<<< HEAD
 	connect(m_genTab, SIGNAL(croppingChanged()), this, SLOT(updateCropping()));
 	connect(m_genTab, SIGNAL(clearBuffers()), this, SLOT(clearBuffers()));
 	m_tabs->addTab(w, "General Settings");
@@ -407,6 +519,12 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 	addTabs(m_winWidth);
 	m_vbiTab = NULL;
 	if (has_vbi_cap()) {
+=======
+	connect(m_genTab, SIGNAL(cropChanged()), this, SLOT(updateCropping()));
+	m_tabs->addTab(w, "General");
+	addTabs();
+	if (caps() & (V4L2_CAP_VBI_CAPTURE | V4L2_CAP_SLICED_VBI_CAPTURE)) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		w = new QWidget(m_tabs);
 		m_vbiTab = new VbiTab(w);
 		m_tabs->addTab(w, "VBI");
@@ -417,6 +535,7 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 	statusBar()->clearMessage();
 	m_tabs->show();
 	m_tabs->setFocus();
+<<<<<<< HEAD
 	m_convertData = v4lconvert_create(g_fd());
 	bool canStream = has_rw() || has_streaming();
 	bool isCapture = v4l_type_is_capture(g_type());
@@ -431,6 +550,11 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 	m_genTab->sourceChangeSubscribe();
 	subscribeCtrlEvents();
 	m_ctrlNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Exception, m_tabs);
+=======
+	m_convertData = v4lconvert_create(fd());
+	m_capStartAct->setEnabled(fd() >= 0);
+	m_ctrlNotifier = new QSocketNotifier(fd(), QSocketNotifier::Exception, m_tabs);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	connect(m_ctrlNotifier, SIGNAL(activated(int)), this, SLOT(ctrlEvent()));
 }
 
@@ -454,19 +578,31 @@ void ApplicationWindow::openrawdev()
 		setDevice(d.selectedFiles().first(), true);
 }
 
+<<<<<<< HEAD
 void ApplicationWindow::setRenderMethod(bool checked)
+=======
+void ApplicationWindow::setRenderMethod()
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	if (m_capStartAct->isChecked()) {
 		m_useGLAct->setChecked(m_renderMethod == QV4L2_RENDER_GL);
 		return;
 	}
 
+<<<<<<< HEAD
 	m_renderMethod = checked ? QV4L2_RENDER_GL : QV4L2_RENDER_QT;
 	m_useBlendingAct->setEnabled(m_renderMethod == QV4L2_RENDER_GL);
+=======
+	if (m_useGLAct->isChecked())
+		m_renderMethod = QV4L2_RENDER_GL;
+	else
+		m_renderMethod = QV4L2_RENDER_QT;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	newCaptureWin();
 }
 
+<<<<<<< HEAD
 void ApplicationWindow::setBlending(bool checked)
 {
 	if (m_capture)
@@ -479,6 +615,8 @@ void ApplicationWindow::setLinearFilter(bool checked)
 		m_capture->setLinearFilter(checked);
 }
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 void ApplicationWindow::setAudioBufferSize()
 {
 	bool ok;
@@ -496,11 +634,15 @@ void ApplicationWindow::ctrlEvent()
 {
 	v4l2_event ev;
 
+<<<<<<< HEAD
 	while (dqevent(ev) == 0) {
 		if (ev.type == V4L2_EVENT_SOURCE_CHANGE) {
 			m_genTab->sourceChange(ev);
 			continue;
 		}
+=======
+	while (dqevent(ev)) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (ev.type != V4L2_EVENT_CTRL)
 			continue;
 		m_ctrlMap[ev.id].flags = ev.u.ctrl.flags;
@@ -508,6 +650,7 @@ void ApplicationWindow::ctrlEvent()
 		m_ctrlMap[ev.id].maximum = ev.u.ctrl.maximum;
 		m_ctrlMap[ev.id].step = ev.u.ctrl.step;
 		m_ctrlMap[ev.id].default_value = ev.u.ctrl.default_value;
+<<<<<<< HEAD
 
 		bool disabled = m_ctrlMap[ev.id].flags & CTRL_FLAG_DISABLED;
 
@@ -519,6 +662,9 @@ void ApplicationWindow::ctrlEvent()
 			m_sliderMap[ev.id]->setDisabled(disabled);
 		if (ev.u.ctrl.changes & V4L2_EVENT_CTRL_CH_RANGE)
 			updateCtrlRange(ev.id, ev.u.ctrl.value);
+=======
+		m_widgetMap[ev.id]->setDisabled(m_ctrlMap[ev.id].flags & CTRL_FLAG_DISABLED);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		switch (m_ctrlMap[ev.id].type) {
 		case V4L2_CTRL_TYPE_INTEGER:
 		case V4L2_CTRL_TYPE_INTEGER_MENU:
@@ -535,7 +681,11 @@ void ApplicationWindow::ctrlEvent()
 		}
 		if (m_ctrlMap[ev.id].type != V4L2_CTRL_TYPE_STRING)
 			continue;
+<<<<<<< HEAD
 		query_ext_ctrl(m_ctrlMap[ev.id]);
+=======
+		queryctrl(m_ctrlMap[ev.id]);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 		struct v4l2_ext_control c;
 		struct v4l2_ext_controls ctrls;
@@ -545,9 +695,15 @@ void ApplicationWindow::ctrlEvent()
 		c.string = (char *)malloc(c.size);
 		memset(&ctrls, 0, sizeof(ctrls));
 		ctrls.count = 1;
+<<<<<<< HEAD
 		ctrls.which = 0;
 		ctrls.controls = &c;
 		if (!g_ext_ctrls(ctrls))
+=======
+		ctrls.ctrl_class = 0;
+		ctrls.controls = &c;
+		if (!ioctl(VIDIOC_G_EXT_CTRLS, &ctrls))
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			setString(ev.id, c.string);
 		free(c.string);
 	}
@@ -562,16 +718,24 @@ void ApplicationWindow::newCaptureWin()
 
 	switch (m_renderMethod) {
 	case QV4L2_RENDER_GL:
+<<<<<<< HEAD
 		m_capture = new CaptureWinGL(this);
 		break;
 	default:
 		m_capture = new CaptureWinQt(this);
+=======
+		m_capture = new CaptureWinGL;
+		break;
+	default:
+		m_capture = new CaptureWinQt;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		break;
 	}
 
 	m_capture->setPixelAspectRatio(1.0);
 	m_capture->enableScaling(m_scalingAct->isChecked());
         connect(m_capture, SIGNAL(close()), this, SLOT(closeCaptureWin()));
+<<<<<<< HEAD
 }
 
 bool ApplicationWindow::startStreaming()
@@ -696,16 +860,27 @@ void ApplicationWindow::calculateFps()
 			last_sec = res.tv_sec;
 		}
 	}
+=======
+	connect(m_resetScalingAct, SIGNAL(triggered()), m_capture, SLOT(resetSize()));
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 void ApplicationWindow::capVbiFrame()
 {
+<<<<<<< HEAD
 	cv4l_buffer buf(m_queue);
 	__u8 *data = NULL;
 	int s = 0;
 
 	if (m_singleStep)
 		m_capNotifier->setEnabled(false);
+=======
+	__u32 buftype = m_genTab->bufType();
+	v4l2_buffer buf;
+	__u8 *data = NULL;
+	int s = 0;
+	bool again;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	switch (m_capMethod) {
 	case methodRead:
@@ -721,14 +896,35 @@ void ApplicationWindow::capVbiFrame()
 		break;
 
 	case methodMmap:
+<<<<<<< HEAD
 	case methodUser:
 		if (dqbuf(buf)) {
 			if (errno == EAGAIN)
 				return;
+=======
+		if (!dqbuf_mmap(buf, buftype, again)) {
 			error("dqbuf");
 			m_capStartAct->setChecked(false);
 			return;
 		}
+		if (again)
+			return;
+		if (buf.flags & V4L2_BUF_FLAG_ERROR) {
+			qbuf(buf);
+			return;
+		}
+		data = (__u8 *)m_buffers[buf.index].start[0];
+		s = buf.bytesused;
+		break;
+
+	case methodUser:
+		if (!dqbuf_user(buf, buftype, again)) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+			error("dqbuf");
+			m_capStartAct->setChecked(false);
+			return;
+		}
+<<<<<<< HEAD
 		if (buf.g_flags() & V4L2_BUF_FLAG_ERROR) {
 			if (qbuf(buf)) {
 				error("Couldn't queue buffer\n");
@@ -741,11 +937,28 @@ void ApplicationWindow::capVbiFrame()
 		break;
 	}
 	if (g_type() == V4L2_BUF_TYPE_VBI_CAPTURE && s != m_vbiSize) {
+=======
+		if (again)
+			return;
+		if (buf.flags & V4L2_BUF_FLAG_ERROR) {
+			qbuf(buf);
+			return;
+		}
+		data = (__u8 *)buf.m.userptr;
+		s = buf.bytesused;
+		break;
+	}
+	if (buftype == V4L2_BUF_TYPE_VBI_CAPTURE && s != m_vbiSize) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		error("incorrect vbi size");
 		m_capStartAct->setChecked(false);
 		return;
 	}
+<<<<<<< HEAD
 	if (showFrames() && g_type() == V4L2_BUF_TYPE_VBI_CAPTURE) {
+=======
+	if (showFrames()) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		for (unsigned y = 0; y < m_vbiHeight; y++) {
 			__u8 *p = data + y * m_vbiWidth;
 			__u8 *q = m_capImage->bits() + y * m_capImage->bytesPerLine();
@@ -762,7 +975,11 @@ void ApplicationWindow::capVbiFrame()
 	struct v4l2_sliced_vbi_data sdata[m_vbiHandle.count[0] + m_vbiHandle.count[1]];
 	struct v4l2_sliced_vbi_data *p;
 
+<<<<<<< HEAD
 	if (g_type() == V4L2_BUF_TYPE_SLICED_VBI_CAPTURE) {
+=======
+	if (buftype == V4L2_BUF_TYPE_SLICED_VBI_CAPTURE) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		p = (struct v4l2_sliced_vbi_data *)data;
 	} else {
 		vbi_parse(&m_vbiHandle, data, &sfmt, sdata);
@@ -770,6 +987,7 @@ void ApplicationWindow::capVbiFrame()
 		p = sdata;
 	}
 
+<<<<<<< HEAD
 	if (m_capMethod != methodRead) {
 		if (qbuf(buf)) {
 			error("Couldn't queue buffer\n");
@@ -777,10 +995,15 @@ void ApplicationWindow::capVbiFrame()
 			return;
 		}
 	}
+=======
+	if (m_capMethod != methodRead)
+		qbuf(buf);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	m_vbiTab->slicedData(p, s / sizeof(p[0]));
 
 	QString status, curStatus;
+<<<<<<< HEAD
 
 	calculateFps();
 	status = QString("Frame: %1 Fps: %2").arg(++m_frame).arg(m_fps, 0, 'f', 2, '0');
@@ -788,6 +1011,24 @@ void ApplicationWindow::capVbiFrame()
 		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
 				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(),
 				    NULL, NULL);
+=======
+	struct timeval tv, res;
+
+	if (m_frame == 0)
+		gettimeofday(&m_tv, NULL);
+	gettimeofday(&tv, NULL);
+	timersub(&tv, &m_tv, &res);
+	if (res.tv_sec) {
+		m_fps = (100 * (m_frame - m_lastFrame)) /
+			(res.tv_sec * 100 + res.tv_usec / 10000);
+		m_lastFrame = m_frame;
+		m_tv = tv;
+	}
+	status = QString("Frame: %1 Fps: %2").arg(++m_frame).arg(m_fps);
+	if (showFrames())
+		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
+				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(), NULL, status);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	curStatus = statusBar()->currentMessage();
 	if (curStatus.isEmpty() || curStatus.startsWith("Frame: "))
@@ -796,6 +1037,7 @@ void ApplicationWindow::capVbiFrame()
 		refresh();
 }
 
+<<<<<<< HEAD
 void ApplicationWindow::capSdrFrame()
 {
 	cv4l_buffer buf(m_queue);
@@ -808,6 +1050,30 @@ void ApplicationWindow::capSdrFrame()
 	switch (m_capMethod) {
 	case methodRead:
 		s = read(m_frameData, m_sdrSize);
+=======
+void ApplicationWindow::capFrame()
+{
+	__u32 buftype = m_genTab->bufType();
+	v4l2_plane planes[VIDEO_MAX_PLANES];
+	v4l2_buffer buf;
+	int s = 0;
+	int err = 0;
+	bool again;
+#ifdef HAVE_ALSA
+	struct timeval tv_alsa;
+#endif
+
+	unsigned char *displaybuf = NULL;
+	unsigned char *displaybuf2 = NULL;
+
+	switch (m_capMethod) {
+	case methodRead:
+		s = read(m_frameData, m_capSrcFormat.fmt.pix.sizeimage);
+#ifdef HAVE_ALSA
+		alsa_thread_timestamp(&tv_alsa);
+#endif
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (s < 0) {
 			if (errno != EAGAIN) {
 				error("read");
@@ -815,6 +1081,7 @@ void ApplicationWindow::capSdrFrame()
 			}
 			return;
 		}
+<<<<<<< HEAD
 		data = m_frameData;
 		break;
 
@@ -823,10 +1090,35 @@ void ApplicationWindow::capSdrFrame()
 		if (dqbuf(buf)) {
 			if (errno == EAGAIN)
 				return;
+=======
+		if (m_makeSnapshot)
+			makeSnapshot((unsigned char *)m_frameData, s);
+		if (m_saveRaw.openMode())
+			m_saveRaw.write((const char *)m_frameData, s);
+
+		if (!showFrames())
+			break;
+		if (m_mustConvert)
+			err = v4lconvert_convert(m_convertData, &m_capSrcFormat, &m_capDestFormat,
+						 m_frameData, s,
+						 m_capImage->bits(), m_capDestFormat.fmt.pix.sizeimage);
+		if (m_mustConvert && err != -1)
+			displaybuf = m_capImage->bits();
+		if (!m_mustConvert)
+			displaybuf = m_frameData;
+		break;
+
+	case methodMmap:
+		memset(planes, 0, sizeof(planes));
+		buf.length = VIDEO_MAX_PLANES;
+		buf.m.planes = planes;
+		if (!dqbuf_mmap(buf, buftype, again)) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			error("dqbuf");
 			m_capStartAct->setChecked(false);
 			return;
 		}
+<<<<<<< HEAD
 		if (buf.g_flags() & V4L2_BUF_FLAG_ERROR) {
 			if (qbuf(buf)) {
 				error("Couldn't queue buffer\n");
@@ -891,6 +1183,127 @@ void ApplicationWindow::capSdrFrame()
 		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
 				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(),
 				    NULL, NULL);
+=======
+
+		if (again)
+			return;
+		if (buf.flags & V4L2_BUF_FLAG_ERROR) {
+			qbuf(buf);
+			return;
+		}
+
+#ifdef HAVE_ALSA
+		alsa_thread_timestamp(&tv_alsa);
+#endif
+
+		if (showFrames()) {
+			if (m_mustConvert)
+				err = v4lconvert_convert(m_convertData, &m_capSrcFormat, &m_capDestFormat,
+							 (unsigned char *)m_buffers[buf.index].start[0], buf.bytesused,
+							 m_capImage->bits(), m_capDestFormat.fmt.pix.sizeimage);
+			if (m_mustConvert && err != -1)
+				displaybuf = m_capImage->bits();
+			if (!m_mustConvert) {
+				displaybuf = (unsigned char *)m_buffers[buf.index].start[0];
+				displaybuf2 = (unsigned char *)m_buffers[buf.index].start[1];
+				if (V4L2_TYPE_IS_MULTIPLANAR(buf.type)) {
+					displaybuf += planes[0].data_offset;
+					displaybuf2 += planes[1].data_offset;
+				}
+			}
+		}
+		if (m_makeSnapshot)
+			makeSnapshot((unsigned char *)m_buffers[buf.index].start[0], buf.bytesused);
+		if (m_saveRaw.openMode())
+			m_saveRaw.write((const char *)m_buffers[buf.index].start[0], buf.bytesused);
+
+		break;
+
+	case methodUser:
+		memset(planes, 0, sizeof(planes));
+		buf.length = VIDEO_MAX_PLANES;
+		buf.m.planes = planes;
+		if (!dqbuf_user(buf, buftype, again)) {
+			error("dqbuf1");
+			m_capStartAct->setChecked(false);
+			return;
+		}
+		if (again)
+			return;
+		if (buf.flags & V4L2_BUF_FLAG_ERROR) {
+			qbuf(buf);
+			return;
+		}
+#ifdef HAVE_ALSA
+		alsa_thread_timestamp(&tv_alsa);
+#endif
+		if (buf.flags & V4L2_BUF_FLAG_ERROR) {
+			qbuf(buf);
+			return;
+		}
+
+		if (showFrames()) {
+			if (m_mustConvert)
+				err = v4lconvert_convert(m_convertData, &m_capSrcFormat, &m_capDestFormat,
+							 (unsigned char *)buf.m.userptr, buf.bytesused,
+							 m_capImage->bits(), m_capDestFormat.fmt.pix.sizeimage);
+			if (m_mustConvert && err != -1)
+				displaybuf = m_capImage->bits();
+			if (!m_mustConvert) {
+				displaybuf = (unsigned char *)m_buffers[buf.index].start[0];
+				displaybuf2 = (unsigned char *)m_buffers[buf.index].start[1];
+				if (V4L2_TYPE_IS_MULTIPLANAR(buf.type)) {
+					displaybuf += planes[0].data_offset;
+					displaybuf2 += planes[1].data_offset;
+				}
+			}
+		}
+		if (m_makeSnapshot)
+			makeSnapshot((unsigned char *)buf.m.userptr, buf.bytesused);
+		if (m_saveRaw.openMode())
+			m_saveRaw.write((const char *)buf.m.userptr, buf.bytesused);
+
+		break;
+	}
+	if (err == -1 && m_frame == 0)
+		error(v4lconvert_get_error_message(m_convertData));
+
+	QString status, curStatus;
+	struct timeval tv, res;
+
+	if (m_frame == 0)
+		gettimeofday(&m_tv, NULL);
+	gettimeofday(&tv, NULL);
+	timersub(&tv, &m_tv, &res);
+	if (res.tv_sec) {
+		m_fps = (100 * (m_frame - m_lastFrame)) /
+			(res.tv_sec * 100 + res.tv_usec / 10000);
+		m_lastFrame = m_frame;
+		m_tv = tv;
+	}
+
+
+	status = QString("Frame: %1 Fps: %2").arg(++m_frame).arg(m_fps);
+#ifdef HAVE_ALSA
+	if (alsa_thread_is_running()) {
+		if (tv_alsa.tv_sec || tv_alsa.tv_usec) {
+			m_totalAudioLatency.tv_sec += buf.timestamp.tv_sec - tv_alsa.tv_sec;
+			m_totalAudioLatency.tv_usec += buf.timestamp.tv_usec - tv_alsa.tv_usec;
+		}
+		status.append(QString(" Average A-V: %3 ms")
+			      .arg((m_totalAudioLatency.tv_sec * 1000 + m_totalAudioLatency.tv_usec / 1000) / m_frame));
+	}
+#endif
+	if (displaybuf == NULL && showFrames())
+		status.append(" Error: Unsupported format.");
+
+	if (showFrames())
+		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
+				    m_capDestFormat.fmt.pix.pixelformat, displaybuf, displaybuf2, status);
+
+	if (m_capMethod == methodMmap || m_capMethod == methodUser)
+		qbuf(buf);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	curStatus = statusBar()->currentMessage();
 	if (curStatus.isEmpty() || curStatus.startsWith("Frame: "))
@@ -899,6 +1312,7 @@ void ApplicationWindow::capSdrFrame()
 		refresh();
 }
 
+<<<<<<< HEAD
 void ApplicationWindow::outFrame()
 {
 	cv4l_buffer buf(m_queue);
@@ -1162,24 +1576,256 @@ void ApplicationWindow::stopStreaming()
 	subscribeCtrlEvents();
 	m_ctrlNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Exception, m_tabs);
 	connect(m_ctrlNotifier, SIGNAL(activated(int)), this, SLOT(ctrlEvent()));
+=======
+bool ApplicationWindow::startCapture(unsigned buffer_size)
+{
+	startAudio();
+
+	if (m_genTab->isRadio())
+		return true;
+
+	__u32 buftype = m_genTab->bufType();
+	v4l2_requestbuffers req;
+	unsigned int i;
+
+	memset(&req, 0, sizeof(req));
+
+	switch (m_capMethod) {
+	case methodRead:
+		m_snapshotAct->setEnabled(true);
+		m_genTab->setHaveBuffers(true);
+		/* Nothing to do. */
+		return true;
+
+	case methodMmap:
+		if (!reqbufs_mmap(req, buftype, 3)) {
+			error("Cannot capture");
+			break;
+		}
+
+		if (req.count < 2) {
+			error("Too few buffers");
+			reqbufs_mmap(req, buftype);
+			break;
+		}
+
+		m_buffers = (buffer *)calloc(req.count, sizeof(*m_buffers));
+
+		if (!m_buffers) {
+			error("Out of memory");
+			reqbufs_mmap(req, buftype);
+			break;
+		}
+
+		for (m_nbuffers = 0; m_nbuffers < req.count; ++m_nbuffers) {
+			v4l2_plane planes[VIDEO_MAX_PLANES];
+			v4l2_buffer buf;
+
+			memset(&buf, 0, sizeof(buf));
+
+			buf.type        = buftype;
+			buf.memory      = V4L2_MEMORY_MMAP;
+			buf.index       = m_nbuffers;
+			buf.length      = VIDEO_MAX_PLANES;
+			buf.m.planes    = planes;
+
+			if (-1 == ioctl(VIDIOC_QUERYBUF, &buf)) {
+				perror("VIDIOC_QUERYBUF");
+				goto error;
+			}
+
+			if (V4L2_TYPE_IS_MULTIPLANAR(buftype)) {
+				m_buffers[m_nbuffers].planes = buf.length;
+				for (unsigned p = 0; p < buf.length; p++) {
+					m_buffers[m_nbuffers].length[p] = planes[p].length;
+					m_buffers[m_nbuffers].start[p] = mmap(planes[p].length, planes[p].m.mem_offset);
+					if (MAP_FAILED == m_buffers[m_nbuffers].start[p]) {
+						perror("mmap");
+						goto error;
+					}
+				}
+			} else {
+				m_buffers[m_nbuffers].planes = 1;
+				m_buffers[m_nbuffers].length[0] = buf.length;
+				m_buffers[m_nbuffers].start[0] = mmap(buf.length, buf.m.offset);
+				if (MAP_FAILED == m_buffers[m_nbuffers].start[0]) {
+					perror("mmap");
+					goto error;
+				}
+			}
+		}
+		for (i = 0; i < m_nbuffers; ++i) {
+			if (!qbuf_mmap(i, buftype)) {
+				perror("VIDIOC_QBUF");
+				goto error;
+			}
+		}
+		if (!streamon(buftype)) {
+			perror("VIDIOC_STREAMON");
+			goto error;
+		}
+		m_snapshotAct->setEnabled(true);
+		m_genTab->setHaveBuffers(true);
+		return true;
+
+	case methodUser:
+		if (!reqbufs_user(req, buftype, 3)) {
+			error("Cannot capture");
+			break;
+		}
+
+		if (req.count < 2) {
+			error("Too few buffers");
+			reqbufs_user(req, buftype);
+			break;
+		}
+
+		m_buffers = (buffer *)calloc(req.count, sizeof(*m_buffers));
+
+		if (!m_buffers) {
+			error("Out of memory");
+			break;
+		}
+
+		for (m_nbuffers = 0; m_nbuffers < req.count; ++m_nbuffers) {
+			v4l2_plane planes[VIDEO_MAX_PLANES];
+			v4l2_buffer buf;
+
+			memset(&buf, 0, sizeof(buf));
+
+			buf.type        = buftype;
+			buf.memory      = V4L2_MEMORY_USERPTR;
+			buf.index       = m_nbuffers;
+			buf.length      = VIDEO_MAX_PLANES;
+			buf.m.planes    = planes;
+
+			if (-1 == ioctl(VIDIOC_QUERYBUF, &buf)) {
+				perror("VIDIOC_QUERYBUF");
+				goto error;
+			}
+
+			if (V4L2_TYPE_IS_MULTIPLANAR(buftype)) {
+				m_buffers[m_nbuffers].planes = buf.length;
+				for (unsigned p = 0; p < buf.length; p++) {
+					m_buffers[m_nbuffers].length[p] = planes[p].length;
+					m_buffers[m_nbuffers].start[p] = malloc(planes[p].length);
+					if (m_buffers[m_nbuffers].start[p] == NULL) {
+						error("Out of memory");
+						goto error;
+					}
+				}
+			} else {
+				m_buffers[m_nbuffers].planes = 1;
+				m_buffers[m_nbuffers].length[0] = buffer_size;
+				m_buffers[m_nbuffers].start[0] = malloc(buffer_size);
+
+				if (!m_buffers[m_nbuffers].start[0]) {
+					error("Out of memory");
+					goto error;
+				}
+			}
+		}
+		for (i = 0; i < m_nbuffers; ++i)
+			if (!qbuf_user(i, buftype, m_buffers[i].start, m_buffers[i].length)) {
+				perror("VIDIOC_QBUF");
+				goto error;
+			}
+		if (!streamon(buftype)) {
+			perror("VIDIOC_STREAMON");
+			goto error;
+		}
+		m_snapshotAct->setEnabled(true);
+		m_genTab->setHaveBuffers(true);
+		return true;
+	}
+
+error:
+	m_capStartAct->setChecked(false);
+	return false;
+}
+
+void ApplicationWindow::stopCapture()
+{
+	stopAudio();
+
+	if (m_genTab->isRadio())
+		return;
+
+	__u32 buftype = m_genTab->bufType();
+	v4l2_requestbuffers reqbufs;
+	v4l2_encoder_cmd cmd;
+	unsigned i;
+
+	m_capture->stop();
+	m_snapshotAct->setDisabled(true);
+	switch (m_capMethod) {
+	case methodRead:
+		memset(&cmd, 0, sizeof(cmd));
+		cmd.cmd = V4L2_ENC_CMD_STOP;
+		ioctl(VIDIOC_ENCODER_CMD, &cmd);
+		break;
+
+	case methodMmap:
+		if (m_buffers == NULL)
+			break;
+		if (!streamoff(buftype))
+			perror("VIDIOC_STREAMOFF");
+		for (i = 0; i < m_nbuffers; ++i)
+			for (unsigned p = 0; p < m_buffers[i].planes; p++)
+				if (-1 == munmap(m_buffers[i].start[p], m_buffers[i].length[p]))
+					perror("munmap");
+		// Free all buffers.
+		reqbufs_mmap(reqbufs, buftype, 1);  // videobuf workaround
+		reqbufs_mmap(reqbufs, buftype, 0);
+		break;
+
+	case methodUser:
+		if (!streamoff(buftype))
+			perror("VIDIOC_STREAMOFF");
+		// Free all buffers.
+		reqbufs_user(reqbufs, buftype, 1);  // videobuf workaround
+		reqbufs_user(reqbufs, buftype, 0);
+		for (i = 0; i < m_nbuffers; ++i)
+			for (unsigned p = 0; p < m_buffers[i].planes; p++)
+				free(m_buffers[i].start[p]);
+		break;
+	}
+	free(m_buffers);
+	m_buffers = NULL;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	m_genTab->setHaveBuffers(false);
 	refresh();
 }
 
 bool ApplicationWindow::showFrames()
 {
+<<<<<<< HEAD
 	if (m_showFramesAct->isChecked() && !m_capture->isVisible() &&
 	    !m_genTab->isSlicedVbi())
 		m_capture->show();
 	if ((!m_showFramesAct->isChecked() && m_capture->isVisible()) ||
 	    m_genTab->isSlicedVbi())
+=======
+	if (m_showFramesAct->isChecked() && !m_capture->isVisible())
+		m_capture->show();
+	if (!m_showFramesAct->isChecked() && m_capture->isVisible())
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		m_capture->hide();
 	return m_showFramesAct->isChecked();
 }
 
+<<<<<<< HEAD
 void ApplicationWindow::traceIoctls(bool enable)
 {
 	s_trace(enable);
+=======
+void ApplicationWindow::startOutput(unsigned)
+{
+}
+
+void ApplicationWindow::stopOutput()
+{
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 void ApplicationWindow::enableScaling(bool enable)
@@ -1200,6 +1846,7 @@ void ApplicationWindow::updateCropping()
 		m_capture->setCropMethod(m_genTab->getCropMethod());
 }
 
+<<<<<<< HEAD
 void ApplicationWindow::clearBuffers()
 {
 	if (m_capture)
@@ -1207,6 +1854,8 @@ void ApplicationWindow::clearBuffers()
 			m_clear[b] = true;
 }
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 void ApplicationWindow::startAudio()
 {
 #ifdef HAVE_ALSA
@@ -1217,7 +1866,11 @@ void ApplicationWindow::startAudio()
 	QString audOut = m_genTab->getAudioOutDevice();
 
 	if (audIn != NULL && audOut != NULL && audIn.compare("None") && audIn.compare(audOut) != 0) {
+<<<<<<< HEAD
 		alsa_thread_startup(audOut.toLatin1().data(), audIn.toLatin1().data(),
+=======
+		alsa_thread_startup(audOut.toAscii().data(), audIn.toAscii().data(),
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				    m_genTab->getAudioDeviceBufferSize(), NULL, 0);
 
 		if (m_genTab->isRadio())
@@ -1248,6 +1901,7 @@ void ApplicationWindow::closeCaptureWin()
 	m_capStartAct->setChecked(false);
 }
 
+<<<<<<< HEAD
 void ApplicationWindow::outStart(bool start)
 {
 	if (start) {
@@ -1349,23 +2003,46 @@ void ApplicationWindow::capStart(bool start)
 			startStreaming();
 		else
 			stopStreaming();
+=======
+void ApplicationWindow::capStart(bool start)
+{
+	if (m_genTab->isRadio()) {
+		if (start)
+			startCapture(0);
+		else
+			stopCapture();
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 		return;
 	}
 
 	QImage::Format dstFmt = QImage::Format_RGB888;
 	struct v4l2_fract interval;
+<<<<<<< HEAD
 	__u32 width, height, pixfmt;
 	unsigned field;
 
 	if (!start) {
 		stopStreaming();
+=======
+	v4l2_pix_format &srcPix = m_capSrcFormat.fmt.pix;
+	v4l2_pix_format &dstPix = m_capDestFormat.fmt.pix;
+	v4l2_pix_format_mplane &srcMPix = m_capSrcFormat.fmt.pix_mp;
+	v4l2_pix_format_mplane &dstMPix = m_capDestFormat.fmt.pix_mp;
+	__u32 buftype = m_genTab->bufType();
+	bool isPlanar = m_genTab->isPlanar();
+	__u32 width, height, pixfmt;
+
+	if (!start) {
+		stopCapture();
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		delete m_capNotifier;
 		m_capNotifier = NULL;
 		delete m_capImage;
 		m_capImage = NULL;
 		return;
 	}
+<<<<<<< HEAD
 	m_frame = m_fps = 0;
 	m_capMethod = m_genTab->capMethod();
 
@@ -1384,18 +2061,38 @@ void ApplicationWindow::capStart(bool start)
 		}
 		fmt.fmt.sliced.service_set = (std & V4L2_STD_525_60) ?
 			V4L2_SLICED_VBI_525 : V4L2_SLICED_VBI_625;
+=======
+	m_frame = m_lastFrame = m_fps = 0;
+	m_capMethod = m_genTab->capMethod();
+
+	if (m_genTab->isSlicedVbi()) {
+		v4l2_format fmt;
+		v4l2_std_id std;
+
+		g_fmt_sliced_vbi(fmt);
+		g_std(std);
+		fmt.fmt.sliced.service_set = (std & V4L2_STD_625_50) ?
+			V4L2_SLICED_VBI_625 : V4L2_SLICED_VBI_525;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		s_fmt(fmt);
 		memset(&m_vbiHandle, 0, sizeof(m_vbiHandle));
 		m_vbiTab->slicedFormat(fmt.fmt.sliced);
 		m_vbiSize = fmt.fmt.sliced.io_size;
 		m_frameData = new unsigned char[m_vbiSize];
+<<<<<<< HEAD
 		if (startStreaming()) {
 			m_capNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Read, m_tabs);
+=======
+		updatePixelAspectRatio();
+		if (startCapture(m_vbiSize)) {
+			m_capNotifier = new QSocketNotifier(fd(), QSocketNotifier::Read, m_tabs);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			connect(m_capNotifier, SIGNAL(activated(int)), this, SLOT(capVbiFrame()));
 		}
 		return;
 	}
 	if (m_genTab->isVbi()) {
+<<<<<<< HEAD
 		cv4l_fmt fmt;
 		v4l2_std_id std;
 
@@ -1408,38 +2105,69 @@ void ApplicationWindow::capStart(bool start)
 			error("could not obtain an VBI format\n");
 			return;
 		}
+=======
+		v4l2_format fmt;
+		v4l2_std_id std;
+
+		g_fmt_vbi(fmt);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (fmt.fmt.vbi.sample_format != V4L2_PIX_FMT_GREY) {
 			error("non-grey pixelformat not supported for VBI\n");
 			return;
 		}
 		s_fmt(fmt);
+<<<<<<< HEAD
+=======
+		g_std(std);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (!vbi_prepare(&m_vbiHandle, &fmt.fmt.vbi, std)) {
 			error("no services possible\n");
 			return;
 		}
+<<<<<<< HEAD
 		m_capDestFormat.s_type(V4L2_BUF_TYPE_VIDEO_CAPTURE);
 		m_capDestFormat.s_pixelformat(V4L2_PIX_FMT_RGB24);
 		m_vbiTab->rawFormat(fmt.fmt.vbi);
 		m_vbiWidth = fmt.fmt.vbi.samples_per_line;
 		m_vbiHeight = fmt.fmt.vbi.count[0] + fmt.fmt.vbi.count[1];
+=======
+		m_vbiTab->rawFormat(fmt.fmt.vbi);
+		m_vbiWidth = fmt.fmt.vbi.samples_per_line;
+		if (fmt.fmt.vbi.flags & V4L2_VBI_INTERLACED)
+			m_vbiHeight = fmt.fmt.vbi.count[0];
+		else
+			m_vbiHeight = fmt.fmt.vbi.count[0] + fmt.fmt.vbi.count[1];
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		m_vbiSize = m_vbiWidth * m_vbiHeight;
 		m_frameData = new unsigned char[m_vbiSize];
 		m_capImage = new QImage(m_vbiWidth, m_vbiHeight, dstFmt);
 		m_capImage->fill(0);
+<<<<<<< HEAD
 		m_capture->setWindowSize(QSize(m_vbiWidth, m_vbiHeight));
 		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
 				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(), NULL, NULL);
+=======
+		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
+				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(), NULL, "No frame");
+		m_capture->resize(m_vbiWidth, m_vbiHeight);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (showFrames())
 			m_capture->show();
 
 		statusBar()->showMessage("No frame");
+<<<<<<< HEAD
 		if (startStreaming()) {
 			m_capNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Read, m_tabs);
+=======
+		if (startCapture(m_vbiSize)) {
+			m_capNotifier = new QSocketNotifier(fd(), QSocketNotifier::Read, m_tabs);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			connect(m_capNotifier, SIGNAL(activated(int)), this, SLOT(capVbiFrame()));
 		}
 		return;
 	}
 
+<<<<<<< HEAD
 	if (m_genTab->isSDR()) {
 		cv4l_fmt fmt;
 
@@ -1489,21 +2217,51 @@ void ApplicationWindow::capStart(bool start)
 		height = m_capSrcFormat.g_height();
 		pixfmt = m_capSrcFormat.g_pixelformat();
 		field = m_capSrcFormat.g_field();
+=======
+	g_fmt_cap(buftype, m_capSrcFormat);
+	s_fmt(m_capSrcFormat);
+	if (m_genTab->get_interval(interval))
+		set_interval(buftype, interval);
+
+	if (!isPlanar)
+		m_frameData = new unsigned char[srcPix.sizeimage];
+	else
+		m_frameData = new unsigned char[srcMPix.plane_fmt[0].sizeimage + srcMPix.plane_fmt[1].sizeimage];
+	m_capDestFormat = m_capSrcFormat;
+
+	if (isPlanar) {
+		dstMPix.pixelformat = srcMPix.pixelformat;
+		width = srcMPix.width;
+		height = srcMPix.height;
+		pixfmt = srcMPix.pixelformat;
+		m_mustConvert = false;
+	} else if (m_capture->hasNativeFormat(srcPix.pixelformat)) {
+		dstPix.pixelformat = srcPix.pixelformat;
+		width = srcPix.width;
+		height = srcPix.height;
+		pixfmt = srcPix.pixelformat;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		m_mustConvert = false;
 	} else {
 		m_mustConvert = true;
 
+<<<<<<< HEAD
 		m_capDestFormat.s_pixelformat(V4L2_PIX_FMT_RGB24);
 		// Make sure sizeimage is large enough. This is necessary if the mplane
 		// plugin is in use since v4lconvert_try_format() bypasses the plugin.
 		m_capDestFormat.s_sizeimage(m_capDestFormat.g_width() *
 					    m_capDestFormat.g_height() * 3);
 		cv4l_fmt copy = m_capSrcFormat;
+=======
+		dstPix.pixelformat = V4L2_PIX_FMT_RGB24;
+		v4l2_format copy = m_capSrcFormat;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		v4lconvert_try_format(m_convertData, &m_capDestFormat, &m_capSrcFormat);
 		// v4lconvert_try_format sometimes modifies the source format if it thinks
 		// that there is a better format available. Restore our selected source
 		// format since we do not want that happening.
 		m_capSrcFormat = copy;
+<<<<<<< HEAD
 		width = m_capDestFormat.g_width();
 		height = m_capDestFormat.g_height();
 		pixfmt = m_capDestFormat.g_pixelformat();
@@ -1527,10 +2285,21 @@ void ApplicationWindow::capStart(bool start)
 		height *= 2;
 		break;
 	}
+=======
+		width = dstPix.width;
+		height = dstPix.height;
+		pixfmt = dstPix.pixelformat;
+	}
+
+	// Ensure that the initial image is large enough for native 32 bit per pixel formats
+	if (pixfmt == V4L2_PIX_FMT_RGB32 || pixfmt == V4L2_PIX_FMT_BGR32)
+		dstFmt = QImage::Format_ARGB32;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	m_capImage = new QImage(width, height, dstFmt);
 	m_capImage->fill(0);
 	
 	updatePixelAspectRatio();
+<<<<<<< HEAD
 	m_capture->setField(field);
 
 	m_capture->setWindowSize(QSize(width, height));
@@ -1538,22 +2307,36 @@ void ApplicationWindow::capStart(bool start)
 			    pixfmt, m_capImage->bits(), NULL, NULL);
 	m_capture->makeFullScreen(m_makeFullScreenAct->isChecked());
 	updateColorspace();
+=======
+	
+	m_capture->setFrame(m_capImage->width(), m_capImage->height(),
+			    pixfmt, m_capImage->bits(), NULL, "No frame");
+	m_capture->resize(width, height);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (showFrames())
 		m_capture->show();
 
 	statusBar()->showMessage("No frame");
+<<<<<<< HEAD
 	if (startStreaming()) {
 		m_capNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Read, m_tabs);
+=======
+	if (startCapture(srcPix.sizeimage)) {
+		m_capNotifier = new QSocketNotifier(fd(), QSocketNotifier::Read, m_tabs);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		connect(m_capNotifier, SIGNAL(activated(int)), this, SLOT(capFrame()));
 	}
 }
 
+<<<<<<< HEAD
 void ApplicationWindow::makeFullScreen(bool checked)
 {
 	if (m_capture && m_capStartAct->isChecked())
 		m_capture->makeFullScreen(checked);
 }
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 void ApplicationWindow::closeDevice()
 {
 	stopAudio();
@@ -1561,27 +2344,41 @@ void ApplicationWindow::closeDevice()
 	m_sigMapper = NULL;
 	m_capStartAct->setEnabled(false);
 	m_capStartAct->setChecked(false);
+<<<<<<< HEAD
 	m_capStepAct->setEnabled(false);
 	m_saveRawAct->setEnabled(false);
 	if (g_fd() >= 0) {
+=======
+	if (fd() >= 0) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (m_capNotifier) {
 			delete m_capNotifier;
 			delete m_capImage;
 			m_capNotifier = NULL;
 			m_capImage = NULL;
 		}
+<<<<<<< HEAD
 		if (m_outNotifier) {
 			delete m_outNotifier;
 			m_outNotifier = NULL;
 		}
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (m_ctrlNotifier) {
 			delete m_ctrlNotifier;
 			m_ctrlNotifier = NULL;
 		}
+<<<<<<< HEAD
 		delete [] m_frameData;
 		m_frameData = NULL;
 		v4lconvert_destroy(m_convertData);
 		cv4l_fd::close();
+=======
+		delete m_frameData;
+		m_frameData = NULL;
+		v4lconvert_destroy(m_convertData);
+		v4l2::close();
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		delete m_capture;
 		m_capture = NULL;
 	}
@@ -1589,12 +2386,18 @@ void ApplicationWindow::closeDevice()
 		m_tabs->removeTab(0);
 		delete page;
 	}
+<<<<<<< HEAD
 	m_genTab = NULL;
 	m_ctrlMap.clear();
 	m_widgetMap.clear();
 	m_sliderMap.clear();
 	m_classMap.clear();
 	m_tpgLimRGBRange = NULL;
+=======
+	m_ctrlMap.clear();
+	m_widgetMap.clear();
+	m_classMap.clear();
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 bool SaveDialog::setBuffer(unsigned char *buf, unsigned size)
@@ -1701,7 +2504,11 @@ void ApplicationWindow::error(const QString &error)
 {
 	statusBar()->showMessage(error, 20000);
 	if (!error.isEmpty())
+<<<<<<< HEAD
 		fprintf(stderr, "%s\n", error.toLatin1().data());
+=======
+		fprintf(stderr, "%s\n", error.toAscii().data());
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 void ApplicationWindow::error(int err)
@@ -1744,7 +2551,11 @@ ApplicationWindow *g_mw;
 static void usage()
 {
 	printf("  Usage:\n"
+<<<<<<< HEAD
 	       "  qv4l2 [-R] [-h] [-d <dev>] [-r <dev>] [-V <dev>] [-S <dev>]\n"
+=======
+	       "  qv4l2 [-R] [-h] [-d <dev>] [-r <dev>] [-V <dev>]\n"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	       "\n  -d, --device=<dev> use device <dev> as the video device\n"
 	       "                     if <dev> is a number, then /dev/video<dev> is used\n"
 	       "  -V, --vbi-device=<dev> use device <dev> as the vbi device\n"
@@ -1770,6 +2581,7 @@ static QString getDeviceName(QString dev, QString &name)
 	return ok ? QString("%1%2").arg(dev).arg(name) : name;
 }
 
+<<<<<<< HEAD
 static bool processShortOption(const QStringList &args, int &i, QString &dev)
 {
 	if (args[i].length() < 2)
@@ -1806,6 +2618,8 @@ static bool processLongOption(const QStringList &args, int &i, QString &dev)
 	return true;
 }
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 int main(int argc, char **argv)
 {
 	QApplication a(argc, argv);
@@ -1822,6 +2636,7 @@ int main(int argc, char **argv)
 
 	QStringList args = a.arguments();
 	for (int i = 1; i < args.size(); i++) {
+<<<<<<< HEAD
 		if (args[i].startsWith("-d")) {
 			if (!processShortOption(args, i, video_device))
 				return 0;
@@ -1846,14 +2661,103 @@ int main(int argc, char **argv)
 		} else if (args[i].startsWith("--sdr-device")) {
 			if (!processLongOption(args, i, sdr_device))
 				return 0;
+=======
+		if (args[i] == "-d" || args[i] == "--device") {
+			++i;
+			if (i >= args.size()) {
+				usageError("-d");
+				return 0;
+			}
+
+			video_device = args[i];
+			if (video_device.startsWith("-")) {
+				usageError("-d");
+				return 0;
+			}
+		} else if (args[i] == "-V" || args[i] == "--vbi-device") {
+			++i;
+			if (i >= args.size()) {
+				usageError("-V");
+				return 0;
+			}
+
+			vbi_device = args[i];
+			if (vbi_device.startsWith("-")) {
+				usageError("-V");
+				return 0;
+			}
+		} else if (args[i] == "-r" || args[i] == "--radio-device") {
+			++i;
+			if (i >= args.size()) {
+				usageError("-r");
+				return 0;
+			}
+
+			radio_device = args[i];
+			if (radio_device.startsWith("-")) {
+				usageError("-r");
+				return 0;
+			}
+		} else if (args[i] == "-S" || args[i] == "--sdr-device") {
+			++i;
+			if (i >= args.size()) {
+				usageError("-S");
+				return 0;
+			}
+
+			sdr_device = args[i];
+			if (sdr_device.startsWith("-")) {
+				usageError("-S");
+				return 0;
+			}
+		} else if (args[i].startsWith("--device")) {
+			QStringList param = args[i].split("=");
+			if (param.size() == 2) {
+				video_device = param[1];
+			} else {
+				usageError("--device");
+				return 0;
+			}
+		} else if (args[i].startsWith("--vbi-device")) {
+			QStringList param = args[i].split("=");
+			if (param.size() == 2) {
+				vbi_device = param[1];
+			} else {
+				usageError("--vbi-device");
+				return 0;
+			}
+		} else if (args[i].startsWith("--radio-device")) {
+			QStringList param = args[i].split("=");
+			if (param.size() == 2) {
+				radio_device = param[1];
+			} else {
+				usageError("--radio-device");
+				return 0;
+			}
+		} else if (args[i].startsWith("--sdr-device")) {
+			QStringList param = args[i].split("=");
+			if (param.size() == 2) {
+				sdr_device = param[1];
+			} else {
+				usageError("--sdr-device");
+				return 0;
+			}
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		} else if (args[i] == "-h" || args[i] == "--help") {
 			usage();
 			return 0;
 
 		} else if (args[i] == "-R" || args[i] == "--raw") {
 			raw = true;
+<<<<<<< HEAD
 		} else {
 			printf("Invalid argument %s\n", args[i].toLatin1().data());
+=======
+
+
+		} else {
+			printf("Invalid argument %s\n", args[i].toAscii().data());
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			return 0;
 		}
 	}

@@ -74,7 +74,11 @@ void selection_usage(void)
 	       "  --set-selection=target=<target>,flags=<flags>,top=<x>,left=<y>,width=<w>,height=<h>\n"
 	       "                     set the video capture selection rectangle [VIDIOC_S_SELECTION]\n"
 	       "                     target=crop|crop_bounds|crop_default|compose|compose_bounds|\n"
+<<<<<<< HEAD
 	       "                            compose_default|compose_padded|native_size\n"
+=======
+	       "                            compose_default|compose_padded\n"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	       "                     flags=le|ge\n"
 	       "  --get-selection-output=target=<target>\n"
 	       "                     query the video output selection rectangle [VIDIOC_G_SELECTION]\n"
@@ -172,7 +176,10 @@ static int parse_selection_target(const char *s, unsigned int &target)
 	else if (!strcmp(s, "compose_default")) target = V4L2_SEL_TGT_COMPOSE_DEFAULT;
 	else if (!strcmp(s, "compose_bounds")) target = V4L2_SEL_TGT_COMPOSE_BOUNDS;
 	else if (!strcmp(s, "compose_padded")) target = V4L2_SEL_TGT_COMPOSE_PADDED;
+<<<<<<< HEAD
 	else if (!strcmp(s, "native_size")) target = V4L2_SEL_TGT_NATIVE_SIZE;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	else return -EINVAL;
 
 	return 0;
@@ -263,7 +270,10 @@ static const flag_def selection_targets_def[] = {
 	{ V4L2_SEL_TGT_COMPOSE_DEFAULT, "compose_default" },
 	{ V4L2_SEL_TGT_COMPOSE_BOUNDS, "compose_bounds" },
 	{ V4L2_SEL_TGT_COMPOSE_PADDED, "compose_padded" },
+<<<<<<< HEAD
 	{ V4L2_SEL_TGT_NATIVE_SIZE, "native_size" },
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	{ 0, NULL }
 };
 

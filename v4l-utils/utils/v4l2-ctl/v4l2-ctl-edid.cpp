@@ -12,6 +12,7 @@
 
 #include <linux/v4l2-subdev.h>
 
+<<<<<<< HEAD
 /*
  * The 24-bit IEEE Registration Identifier for the HDMI-LLC Vendor
  * Specific Data Block.
@@ -31,12 +32,15 @@
 #define SPEAKER_TAG		4
 #define EXTENDED_TAG		7
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 enum format {
 	HEX,
 	RAW,
 	CARRAY
 };
 
+<<<<<<< HEAD
 static struct v4l2_edid sedid;
 static char *file_in;
 
@@ -211,17 +215,37 @@ void edid_usage(void)
 	       "                     <pad> is the input or output index for which to clear the EDID.\n"
 	       "  --info-edid=<pad>  print the current EDID's modifiers\n"
 	       "                     <pad> is the input or output index for which to get the EDID.\n"
+=======
+void edid_usage(void)
+{
+	printf("\nEDID options:\n"
+	       "  --set-edid=pad=<pad>,[edid=<type>|file=<file>]\n"
+	       "                     <pad> is the input or output index for which to set the EDID.\n"
+	       "                     <type> can be 'hdmi', 'dvid' or 'vga'. A predefined EDID suitable\n"
+	       "                     for that connector type will be set. It has a 1920x1080p60 native resolution.\n"
+	       "                     If <file> is '-', then the data is read from stdin, otherwise it is\n"
+	       "                     read from the given file. The file format must be in hex as in get-edid.\n"
+	       "                     The 'edid' or 'file' arguments are mutually exclusive. One of the two\n"
+	       "                     must be specified.\n"
+	       "  --clear-edid=<pad>\n"
+	       "                     <pad> is the input or output index for which to clear the EDID.\n"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	       "  --get-edid=pad=<pad>,startblock=<startblock>,blocks=<blocks>,format=<fmt>,file=<file>\n"
 	       "                     <pad> is the input or output index for which to get the EDID.\n"
 	       "                     <startblock> is the first block number you want to read. Default 0.\n"
 	       "                     <blocks> is the number of blocks you want to read. Default is\n"
 	       "                     all blocks.\n"
 	       "                     <fmt> is one of:\n"
+<<<<<<< HEAD
 	       "                     hex:    hex numbers in ascii text (default)\n"
+=======
+	       "                     hex:    hex numbers in ascii text\n"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	       "                     raw:    can be piped directly into the edid-decode tool\n"
 	       "                     carray: c-program struct\n"
 	       "                     If <file> is '-' or not the 'file' argument is not supplied, then the data\n"
 	       "                     is written to stdout.\n"
+<<<<<<< HEAD
 	       "  --fix-edid-checksums\n"
 	       "                     If specified then any checksum errors will be fixed silently.\n"
 	       );
@@ -242,10 +266,20 @@ static void edid_add_block(struct v4l2_edid *e)
 static void read_edid_file(FILE *f, struct v4l2_edid *e)
 {
 	char value[3] = { 0 };
+=======
+	       );
+}
+
+static void read_edid_file(FILE *f, struct v4l2_edid *e)
+{
+	char value[3] = { 0 };
+	unsigned blocks = 1;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	unsigned i = 0;
 	int c;
 
 	fseek(f, SEEK_SET, 0);
+<<<<<<< HEAD
 	e->edid = NULL;
 	e->blocks = 0;
 
@@ -260,25 +294,51 @@ static void read_edid_file(FILE *f, struct v4l2_edid *e)
 		/* Handle '0x' prefix */
 		if ((i & 1) && value[0] == '0' && (c == 'x' || c == 'X'))
 			i--;
+=======
+	e->edid = (unsigned char *)malloc(blocks * 128);
+
+	while ((c = fgetc(f)) != EOF) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (!isxdigit(c))
 			continue;
 		if (i & 0x01) {
 			value[1] = c;
+<<<<<<< HEAD
 			if (i % 256 == 1)
 				edid_add_block(e);
+=======
+			if (i / 2 > blocks * 128) {
+				blocks++;
+				if (blocks > 256) {
+					fprintf(stderr, "edid file error: too long\n");
+					free(e->edid);
+					e->edid = NULL;
+					exit(1);
+				}
+				e->edid = (unsigned char *)realloc(e->edid, blocks * 128);
+			}
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			e->edid[i / 2] = strtoul(value, 0, 16);
 		} else {
 			value[0] = c;
 		}
 		i++;
 	}
+<<<<<<< HEAD
 }
 
 static unsigned char crc_calc(const unsigned char *b)
+=======
+	e->blocks = i / 256;
+}
+
+static bool crc_ok(unsigned char *b)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 {
 	unsigned char sum = 0;
 	int i;
 
+<<<<<<< HEAD
 	for (i = 0; i < 127; i++)
 		sum += b[i];
 	return 256 - sum;
@@ -313,6 +373,11 @@ static bool verify_edid(struct v4l2_edid *e)
 		}
 	}
 	return valid;
+=======
+	for (i = 0; i < 128; i++)
+		sum += b[i];
+	return sum == 0;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 static void hexdumpedid(FILE *f, struct v4l2_edid *e)
@@ -320,8 +385,11 @@ static void hexdumpedid(FILE *f, struct v4l2_edid *e)
 	for (unsigned b = 0; b < e->blocks; b++) {
 		unsigned char *buf = e->edid + 128 * b;
 
+<<<<<<< HEAD
 		if (b)
 			fprintf(f, "\n");
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		for (unsigned i = 0; i < 128; i += 0x10) {
 			fprintf(f, "%02x", buf[i]);
 			for (unsigned j = 1; j < 0x10; j++) {
@@ -330,8 +398,12 @@ static void hexdumpedid(FILE *f, struct v4l2_edid *e)
 			fprintf(f, "\n");
 		}
 		if (!crc_ok(buf))
+<<<<<<< HEAD
 			fprintf(f, "Block %u has a checksum error (should be 0x%02x)\n",
 					b, crc_calc(buf));
+=======
+			fprintf(f, "Block has a checksum error\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 }
 
@@ -342,9 +414,12 @@ static void rawdumpedid(FILE *f, struct v4l2_edid *e)
 
 		for (unsigned i = 0; i < 128; i++)
 			fprintf(f, "%c", buf[i]);
+<<<<<<< HEAD
 		if (!crc_ok(buf))
 			fprintf(stderr, "Block %u has a checksum error (should be %02x)\n",
 					b, crc_calc(buf));
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 }
 
@@ -364,8 +439,12 @@ static void carraydumpedid(FILE *f, struct v4l2_edid *e)
 			fprintf(f, "\n");
 		}
 		if (!crc_ok(buf))
+<<<<<<< HEAD
 			fprintf(f, "\t/* Block %u has a checksum error (should be 0x%02x) */\n",
 					b, crc_calc(buf));
+=======
+			fprintf(f, "\t/* Block has a checksum error */\n");
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 	fprintf(f, "};\n");
 }
@@ -386,6 +465,7 @@ static void printedid(FILE *f, struct v4l2_edid *e, enum format gf)
 	}
 }
 
+<<<<<<< HEAD
 static int get_edid_tag_location(const unsigned char *edid, unsigned size,
 				 unsigned char want_tag, __u32 ext_tag)
 {
@@ -828,10 +908,76 @@ static uint8_t hdmi_edid_4k_170[256] = {
 	0x32, 0x00, 0x00, 0x1a, 0x1a, 0x1d, 0x00, 0x80,
 	0x51, 0xd0, 0x1c, 0x20, 0x40, 0x80, 0x35, 0x00,
 	0xc0, 0x1c, 0x32, 0x00, 0x00, 0x1c, 0x00, 0x00,
+=======
+/****************** EDIDs *****************************/
+static uint8_t dvid_edid[128] = {
+	0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00,
+	0x63, 0x3a, 0xaa, 0x55, 0x00, 0x00, 0x00, 0x00,
+	0x0a, 0x18, 0x01, 0x03, 0x80, 0x10, 0x09, 0x78,
+	0x0e, 0x00, 0xb2, 0xa0, 0x57, 0x49, 0x9b, 0x26,
+	0x10, 0x48, 0x4f, 0x2f, 0xcf, 0x00, 0x31, 0x59,
+	0x45, 0x59, 0x81, 0x80, 0x81, 0x40, 0x90, 0x40,
+	0x95, 0x00, 0xa9, 0x40, 0xb3, 0x00, 0x02, 0x3a,
+	0x80, 0x18, 0x71, 0x38, 0x2d, 0x40, 0x58, 0x2c,
+	0x46, 0x00, 0x10, 0x09, 0x00, 0x00, 0x00, 0x1e,
+	0x00, 0x00, 0x00, 0xfd, 0x00, 0x18, 0x55, 0x18,
+	0x5e, 0x11, 0x00, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x00, 0x00, 0x00, 0xfc, 0x00,  'v',
+	'4',   'l',  '2',  '-',  'd',  'v',  'i',  'd',
+	0x0a, 0x0a, 0x0a, 0x0a, 0x00, 0x00, 0x00, 0x10,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xec
+};
+static uint8_t vga_edid[128] = {
+	0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00,
+	0x63, 0x3a, 0xaa, 0x55, 0x00, 0x00, 0x00, 0x00,
+	0x0a, 0x18, 0x01, 0x03, 0x08, 0x10, 0x09, 0x78,
+	0x0a, 0x00, 0xb2, 0xa0, 0x57, 0x49, 0x9b, 0x26,
+	0x10, 0x48, 0x4f, 0x2f, 0xcf, 0x00, 0x31, 0x59,
+	0x45, 0x59, 0x61, 0x59, 0x81, 0x40, 0x81, 0x80,
+	0x95, 0x00, 0xa9, 0x40, 0xb3, 0x00, 0x02, 0x3a,
+	0x80, 0x18, 0x71, 0x38, 0x2d, 0x40, 0x58, 0x2c,
+	0x45, 0x00, 0x10, 0x09, 0x00, 0x00, 0x00, 0x1e,
+	0x00, 0x00, 0x00, 0xfd, 0x00, 0x31, 0x55, 0x18,
+	0x5e, 0x11, 0x00, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x00, 0x00, 0x00, 0xfc, 0x00,  'v',
+	'4',   'l',  '2',  '-',  'v',  'g',  'a', 0x0a,
+	0x0a, 0x0a, 0x0a, 0x0a, 0x00, 0x00, 0x00, 0x10,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc5
+};
+static uint8_t hdmi_edid[256] = {
+	0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00,
+	0x63, 0x3a, 0xaa, 0x55, 0x00, 0x00, 0x00, 0x00,
+	0x0a, 0x18, 0x01, 0x03, 0x80, 0x10, 0x09, 0x78,
+	0x0e, 0x00, 0xb2, 0xa0, 0x57, 0x49, 0x9b, 0x26,
+	0x10, 0x48, 0x4f, 0x2f, 0xcf, 0x00, 0x31, 0x59,
+	0x45, 0x59, 0x81, 0x80, 0x81, 0x40, 0x90, 0x40,
+	0x95, 0x00, 0xa9, 0x40, 0xb3, 0x00, 0x02, 0x3a,
+	0x80, 0x18, 0x71, 0x38, 0x2d, 0x40, 0x58, 0x2c,
+	0x46, 0x00, 0x10, 0x09, 0x00, 0x00, 0x00, 0x1e,
+	0x00, 0x00, 0x00, 0xfd, 0x00, 0x18, 0x55, 0x18,
+	0x5e, 0x11, 0x00, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x00, 0x00, 0x00, 0xfc, 0x00,  'v',
+	'4',   'l',  '2',  '-',  'h',  'd',  'm',  'i',
+	0x0a, 0x0a, 0x0a, 0x0a, 0x00, 0x00, 0x00, 0x10,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xf0,
+
+	0x02, 0x03, 0x1a, 0xc0, 0x48, 0xa2, 0x10, 0x04,
+	0x02, 0x01, 0x21, 0x14, 0x13, 0x23, 0x09, 0x07,
+	0x07, 0x65, 0x03, 0x0c, 0x00, 0x10, 0x00, 0xe2,
+	0x00, 0x2a, 0x01, 0x1d, 0x00, 0x80, 0x51, 0xd0,
+	0x1c, 0x20, 0x40, 0x80, 0x35, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x1e, 0x8c, 0x0a, 0xd0, 0x8a,
+	0x20, 0xe0, 0x2d, 0x10, 0x10, 0x3e, 0x96, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x00, 0x00,
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+<<<<<<< HEAD
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4e,
 };
 
@@ -908,6 +1054,23 @@ static uint8_t hdmi_edid_4k_600[256] = {
 };
 
 /******************************************************/
+=======
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xd7
+};
+/******************************************************/
+
+
+static struct v4l2_edid sedid;
+static char *file_in;
+
+static struct v4l2_edid gedid;
+static char *file_out;
+static enum format gformat;
+static unsigned clear_pad;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 void edid_cmd(int ch, char *optarg)
 {
@@ -923,6 +1086,7 @@ void edid_cmd(int ch, char *optarg)
 		while (*subs != '\0') {
 			static const char *const subopts[] = {
 				"pad",
+<<<<<<< HEAD
 				"type",
 				"edid",
 				"file",
@@ -996,17 +1160,28 @@ void edid_cmd(int ch, char *optarg)
 				exit(1);
 			}
 			switch (opt) {
+=======
+				"edid",
+				"file",
+				NULL
+			};
+			switch (parse_subopt(&subs, subopts, &value)) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			case 0:
 				sedid.pad = strtoul(value, 0, 0);
 				break;
 			case 1:
+<<<<<<< HEAD
 			case 2:	/* keep edid for compat reasons, it's the same as type */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				if (!strcmp(value, "dvid")) {
 					sedid.edid = dvid_edid;
 					sedid.blocks = sizeof(dvid_edid) / 128;
 				} else if (!strcmp(value, "vga")) {
 					sedid.edid = vga_edid;
 					sedid.blocks = sizeof(vga_edid) / 128;
+<<<<<<< HEAD
 				} else if (!strcmp(value, "hdmi-4k-170mhz")) {
 					sedid.edid = hdmi_edid_4k_170;
 					sedid.blocks = sizeof(hdmi_edid) / 128;
@@ -1016,6 +1191,8 @@ void edid_cmd(int ch, char *optarg)
 				} else if (!strcmp(value, "hdmi-4k-600mhz")) {
 					sedid.edid = hdmi_edid_4k_600;
 					sedid.blocks = sizeof(hdmi_edid) / 128;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				} else if (!strcmp(value, "hdmi")) {
 					sedid.edid = hdmi_edid;
 					sedid.blocks = sizeof(hdmi_edid) / 128;
@@ -1028,7 +1205,11 @@ void edid_cmd(int ch, char *optarg)
 					exit(1);
 				}
 				break;
+<<<<<<< HEAD
 			case 3:
+=======
+			case 2:
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 				if (value) {
 					file_in = value;
 					if (sedid.edid) {
@@ -1037,6 +1218,7 @@ void edid_cmd(int ch, char *optarg)
 					}
 				}
 				break;
+<<<<<<< HEAD
 			case 4:
 				if (!strcmp(value, "hex")) {
 					sformat = HEX;
@@ -1108,6 +1290,8 @@ void edid_cmd(int ch, char *optarg)
 			case 54: toggle_speaker3_flags |= SPEAKER3_BTFC; break;
 			case 55: toggle_speaker3_flags |= SPEAKER3_BTFL_BTFR; break;
 			case 56: toggle_speaker3_flags |= SPEAKER3_TPLS_TPRS; break;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			default:
 				edid_usage();
 				exit(1);
@@ -1137,7 +1321,10 @@ void edid_cmd(int ch, char *optarg)
 				"file",
 				NULL
 			};
+<<<<<<< HEAD
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			switch (parse_subopt(&subs, subopts, &value)) {
 			case 0:
 				gedid.pad = strtoul(value, 0, 0);
@@ -1175,6 +1362,7 @@ void edid_cmd(int ch, char *optarg)
 		}
 		if (gedid.start_block + gedid.blocks > 256)
 			gedid.blocks = 256 - gedid.start_block;
+<<<<<<< HEAD
 		break;
 
 	case OptInfoEdid:
@@ -1182,24 +1370,36 @@ void edid_cmd(int ch, char *optarg)
 		if (optarg)
 			info_edid.pad = strtoul(optarg, 0, 0);
 		break;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 }
 
 void edid_set(int fd)
 {
+<<<<<<< HEAD
 	int loc;
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	if (options[OptClearEdid]) {
 		struct v4l2_edid edid;
 
 		memset(&edid, 0, sizeof(edid));
 		edid.pad = clear_pad;
+<<<<<<< HEAD
 		doioctl(fd, VIDIOC_S_EDID, &edid);
+=======
+		doioctl(fd, VIDIOC_S_EDID, &sedid);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	}
 
 	if (options[OptSetEdid]) {
 		FILE *fin = NULL;
+<<<<<<< HEAD
 		bool must_fix_edid = options[OptFixEdidChecksums];
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 		if (file_in) {
 			if (!strcmp(file_in, "-"))
@@ -1220,6 +1420,7 @@ void edid_set(int fd)
 				exit(1);
 			}
 		}
+<<<<<<< HEAD
 		if (toggle_cta861_hdr_flags || phys_addr >= 0) {
 			loc = get_edid_cta861_hdr_location(sedid.edid, sedid.blocks * 128);
 			if (loc >= 0) {
@@ -1303,6 +1504,9 @@ void edid_set(int fd)
 			doioctl(fd, VIDIOC_S_EDID, &sedid);
 		else
 			fprintf(stderr, "EDID not set due to checksum errors\n");
+=======
+		doioctl(fd, VIDIOC_S_EDID, &sedid);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (fin) {
 			if (sedid.edid) {
 				free(sedid.edid);
@@ -1331,15 +1535,21 @@ void edid_get(int fd)
 			}
 		}
 		gedid.edid = (unsigned char *)malloc(gedid.blocks * 128);
+<<<<<<< HEAD
 		if (doioctl(fd, VIDIOC_G_EDID, &gedid) == 0) {
 			if (options[OptFixEdidChecksums])
 				fix_edid(&gedid);
 			printedid(fout, &gedid, gformat);
 		}
+=======
+		if (doioctl(fd, VIDIOC_G_EDID, &gedid) == 0)
+			printedid(fout, &gedid, gformat);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		if (file_out && fout != stdout)
 			fclose(fout);
 		free(gedid.edid);
 	}
+<<<<<<< HEAD
 	if (options[OptInfoEdid]) {
 		info_edid.blocks = 2;
 		info_edid.edid = (unsigned char *)malloc(info_edid.blocks * 128);
@@ -1347,4 +1557,6 @@ void edid_get(int fd)
 			print_edid_mods(&info_edid);
 		free(info_edid.edid);
 	}
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }

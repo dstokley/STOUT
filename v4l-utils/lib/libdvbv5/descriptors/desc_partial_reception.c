@@ -1,16 +1,29 @@
 /*
  * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -20,6 +33,10 @@
 
 #include <libdvbv5/desc_partial_reception.h>
 #include <libdvbv5/dvb-fe.h>
+<<<<<<< HEAD
+=======
+#include <parse_string.h>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 int isdb_desc_partial_reception_init(struct dvb_v5_fe_parms *parms,
 			      const uint8_t *buf, struct dvb_desc *desc)
@@ -37,7 +54,11 @@ int isdb_desc_partial_reception_init(struct dvb_v5_fe_parms *parms,
 
 	memcpy(d->partial_reception, p, d->length);
 
+<<<<<<< HEAD
        len = d->length / sizeof(*d->partial_reception);
+=======
+	len = d->length / sizeof(d->partial_reception);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	for (i = 0; i < len; i++)
 		bswap16(d->partial_reception[i].service_id);
@@ -57,7 +78,11 @@ void isdb_desc_partial_reception_print(struct dvb_v5_fe_parms *parms, const stru
 	int i;
 	size_t len;
 
+<<<<<<< HEAD
        len = d->length / sizeof(*d->partial_reception);
+=======
+	len = d->length / sizeof(d->partial_reception);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	for (i = 0; i < len; i++) {
 		dvb_loginfo("|           service ID[%d]     %d", i, d->partial_reception[i].service_id);

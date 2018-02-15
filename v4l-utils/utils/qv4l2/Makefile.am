@@ -1,6 +1,7 @@
 bin_PROGRAMS = qv4l2
 man_MANS = qv4l2.1
 
+<<<<<<< HEAD
 qv4l2_SOURCES = qv4l2.cpp general-tab.cpp ctrl-tab.cpp vbi-tab.cpp capture-win.cpp tpg-tab.cpp \
   capture-win-qt.cpp capture-win-qt.h capture-win-gl.cpp capture-win-gl.h alsa_stream.c alsa_stream.h \
   raw2sliced.cpp qv4l2.h capture-win.h general-tab.h vbi-tab.h raw2sliced.h \
@@ -15,15 +16,35 @@ qv4l2_CPPFLAGS += $(QTGL_CFLAGS)
 qv4l2_LDFLAGS = $(QTGL_LIBS)
 else
 qv4l2_CPPFLAGS += $(QT_CFLAGS)
+=======
+qv4l2_SOURCES = qv4l2.cpp general-tab.cpp ctrl-tab.cpp vbi-tab.cpp v4l2-api.cpp capture-win.cpp \
+  capture-win-qt.cpp capture-win-qt.h capture-win-gl.cpp capture-win-gl.h alsa_stream.c alsa_stream.h \
+  raw2sliced.cpp qv4l2.h capture-win.h general-tab.h vbi-tab.h v4l2-api.h raw2sliced.h
+nodist_qv4l2_SOURCES = moc_qv4l2.cpp moc_general-tab.cpp moc_capture-win.cpp moc_vbi-tab.cpp qrc_qv4l2.cpp
+qv4l2_LDADD = ../../lib/libv4l2/libv4l2.la ../../lib/libv4lconvert/libv4lconvert.la ../libv4l2util/libv4l2util.la \
+  ../libmedia_dev/libmedia_dev.la
+
+if WITH_QTGL
+qv4l2_CPPFLAGS = $(QTGL_CFLAGS)
+qv4l2_LDFLAGS = $(QTGL_LIBS)
+else
+qv4l2_CPPFLAGS = $(QT_CFLAGS)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 qv4l2_LDFLAGS = $(QT_LIBS)
 endif
 
 qv4l2_CPPFLAGS += $(ALSA_CFLAGS)
 qv4l2_LDFLAGS += $(ALSA_LIBS) -pthread
 
+<<<<<<< HEAD
 EXTRA_DIST = enterbutt.png exit.png fileopen.png qv4l2_24x24.png qv4l2_64x64.png qv4l2.png qv4l2.svg \
   snapshot.png video-television.png fileclose.png qv4l2_16x16.png qv4l2_32x32.png qv4l2.desktop \
   qv4l2.qrc saveraw.png qv4l2.pro qv4l2.1 fullscreenexit.png fullscreen.png start.png step.png
+=======
+EXTRA_DIST = exit.png fileopen.png qv4l2_24x24.png qv4l2_64x64.png qv4l2.png qv4l2.svg snapshot.png \
+  video-television.png fileclose.png qv4l2_16x16.png qv4l2_32x32.png qv4l2.desktop qv4l2.qrc record.png \
+  saveraw.png qv4l2.pro
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 clean-local:
 	-rm -vf moc_*.cpp qrc_*.cpp qrc_*.o ui_*.h
@@ -51,4 +72,8 @@ install-data-local:
 	$(INSTALL_DATA) -D -p "$(srcdir)/qv4l2_24x24.png" "$(DESTDIR)$(datadir)/icons/hicolor/24x24/apps/qv4l2.png"
 	$(INSTALL_DATA) -D -p "$(srcdir)/qv4l2_32x32.png" "$(DESTDIR)$(datadir)/icons/hicolor/32x32/apps/qv4l2.png"
 	$(INSTALL_DATA) -D -p "$(srcdir)/qv4l2_64x64.png" "$(DESTDIR)$(datadir)/icons/hicolor/64x64/apps/qv4l2.png"
+<<<<<<< HEAD
 	$(INSTALL_DATA) -D -p "$(srcdir)/qv4l2.svg"       "$(DESTDIR)$(datadir)/icons/hicolor/scalable/apps/qv4l2.svg"
+=======
+	$(INSTALL_DATA) -D -p "$(srcdir)/qv4l2.svg"       "$(DESTDIR)$(datadir)/icons/hicolor/scalable/apps/qv4l2.svg"
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2

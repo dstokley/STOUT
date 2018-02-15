@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 if WITH_DYN_LIBV4L
+=======
+if WITH_LIBV4L
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 lib_LTLIBRARIES = libv4l2rds.la
 include_HEADERS = ../include/libv4l2rds.h
 pkgconfig_DATA = libv4l2rds.pc

@@ -72,8 +72,11 @@ int v4lcontrol_needs_conversion(struct v4lcontrol_data *data);
 int v4lcontrol_vidioc_queryctrl(struct v4lcontrol_data *data, void *arg);
 int v4lcontrol_vidioc_g_ctrl(struct v4lcontrol_data *data, void *arg);
 int v4lcontrol_vidioc_s_ctrl(struct v4lcontrol_data *data, void *arg);
+<<<<<<< HEAD
 int v4lcontrol_vidioc_g_ext_ctrls(struct v4lcontrol_data *data, void *arg);
 int v4lcontrol_vidioc_try_ext_ctrls(struct v4lcontrol_data *data, void *arg);
 int v4lcontrol_vidioc_s_ext_ctrls(struct v4lcontrol_data *data, void *arg);
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #endif

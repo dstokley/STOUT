@@ -18,21 +18,29 @@
 # Foundation, Inc., 51 Franklin Street, Suite 500, Boston, MA  02110-1335  USA
  */
 
+<<<<<<< HEAD
 #ifdef ANDROID
 #include <android-config.h>
 #else
 #include <config.h>
 #endif
+=======
+#include <config.h>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include "../libv4lconvert/libv4lsyscall-priv.h"
+<<<<<<< HEAD
 #if defined(__OpenBSD__)
 #include <sys/videoio.h>
 #else
 #include <linux/videodev2.h>
 #endif
+=======
+#include <linux/videodev2.h>
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include "libv4l2.h"
 #include "libv4l2-priv.h"
 

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # table dtt200u, type: NEC
+=======
+# table dtt200u, type: UNKNOWN
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 0x8001 KEY_MUTE
 0x8002 KEY_CHANNELDOWN
 0x8003 KEY_VOLUMEDOWN

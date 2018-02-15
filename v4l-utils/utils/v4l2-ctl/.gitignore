@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 v4l2-ctl
 v4l2-ctl.1
 cx18-ctl
 ivtv-ctl
+=======
+cx18-ctl
+ivtv-ctl
+v4l2-ctl
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2

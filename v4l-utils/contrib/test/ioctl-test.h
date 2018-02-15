@@ -57,7 +57,10 @@ union v4l_parms {
 	struct v4l2_jpegcompression		p_v4l2_jpegcompression;
 	struct v4l2_modulator			p_v4l2_modulator;
 	struct v4l2_output			p_v4l2_output;
+<<<<<<< HEAD
 	struct v4l2_query_ext_ctrl		p_v4l2_query_ext_ctrl;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	struct v4l2_queryctrl			p_v4l2_queryctrl;
 	struct v4l2_querymenu			p_v4l2_querymenu;
 	struct v4l2_requestbuffers		p_v4l2_requestbuffers;
@@ -86,12 +89,20 @@ static const struct {
 } ioctls[] = {
 	/* ioctl structs */
 	ioc(demux, DMX_ADD_PID),							/*  __u16 */
+<<<<<<< HEAD
+=======
+	ioc(demux, DMX_GET_CAPS),							/*  dmx_caps_t */
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ioc(demux, DMX_GET_PES_PIDS),							/*  __u16[5] */
 	ioc(demux, DMX_GET_STC),							/*  struct dmx_stc */
 	ioc(demux, DMX_REMOVE_PID),							/*  __u16 */
 	ioc(demux, DMX_SET_BUFFER_SIZE),						/*  void */
 	ioc(demux, DMX_SET_FILTER),							/*  struct dmx_sct_filter_params */
 	ioc(demux, DMX_SET_PES_FILTER),							/*  struct dmx_pes_filter_params */
+<<<<<<< HEAD
+=======
+	ioc(demux, DMX_SET_SOURCE),							/*  dmx_source_t */
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ioc(demux, DMX_START),								/*  void */
 	ioc(demux, DMX_STOP),								/*  void */
 	ioc(frontend, FE_DISEQC_RECV_SLAVE_REPLY),					/*  struct dvb_diseqc_slave_reply */
@@ -166,25 +177,38 @@ static const struct {
 	ioc(video, VIDIOC_QUERYMENU),							/*  struct v4l2_querymenu */
 	ioc(video, VIDIOC_QUERYSTD),							/*  v4l2_std_id */
 	ioc(video, VIDIOC_QUERY_DV_TIMINGS),						/*  struct v4l2_dv_timings */
+<<<<<<< HEAD
 	ioc(video, VIDIOC_QUERY_EXT_CTRL),						/*  struct v4l2_query_ext_ctrl */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ioc(video, VIDIOC_REQBUFS),							/*  struct v4l2_requestbuffers */
 	ioc(video, VIDIOC_RESERVED),							/*  void */
 	ioc(video, VIDIOC_STREAMOFF),							/*  int */
 	ioc(video, VIDIOC_STREAMON),							/*  int */
+<<<<<<< HEAD
 	ioc(subdev, VIDIOC_SUBDEV_DV_TIMINGS_CAP),					/*  struct v4l2_dv_timings_cap */
 	ioc(subdev, VIDIOC_SUBDEV_ENUM_DV_TIMINGS),					/*  struct v4l2_enum_dv_timings */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ioc(subdev, VIDIOC_SUBDEV_ENUM_FRAME_INTERVAL),					/*  struct v4l2_subdev_frame_interval_enum */
 	ioc(subdev, VIDIOC_SUBDEV_ENUM_FRAME_SIZE),					/*  struct v4l2_subdev_frame_size_enum */
 	ioc(subdev, VIDIOC_SUBDEV_ENUM_MBUS_CODE),					/*  struct v4l2_subdev_mbus_code_enum */
 	ioc(subdev, VIDIOC_SUBDEV_G_CROP),						/*  struct v4l2_subdev_crop */
+<<<<<<< HEAD
 	ioc(subdev, VIDIOC_SUBDEV_G_DV_TIMINGS),					/*  struct v4l2_dv_timings */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ioc(subdev, VIDIOC_SUBDEV_G_EDID),						/*  struct v4l2_edid */
 	ioc(subdev, VIDIOC_SUBDEV_G_FMT),						/*  struct v4l2_subdev_format */
 	ioc(subdev, VIDIOC_SUBDEV_G_FRAME_INTERVAL),					/*  struct v4l2_subdev_frame_interval */
 	ioc(subdev, VIDIOC_SUBDEV_G_SELECTION),						/*  struct v4l2_subdev_selection */
+<<<<<<< HEAD
 	ioc(subdev, VIDIOC_SUBDEV_QUERY_DV_TIMINGS),					/*  struct v4l2_dv_timings */
 	ioc(subdev, VIDIOC_SUBDEV_S_CROP),						/*  struct v4l2_subdev_crop */
 	ioc(subdev, VIDIOC_SUBDEV_S_DV_TIMINGS),					/*  struct v4l2_dv_timings */
+=======
+	ioc(subdev, VIDIOC_SUBDEV_S_CROP),						/*  struct v4l2_subdev_crop */
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	ioc(subdev, VIDIOC_SUBDEV_S_EDID),						/*  struct v4l2_edid */
 	ioc(subdev, VIDIOC_SUBDEV_S_FMT),						/*  struct v4l2_subdev_format */
 	ioc(subdev, VIDIOC_SUBDEV_S_FRAME_INTERVAL),					/*  struct v4l2_subdev_frame_interval */

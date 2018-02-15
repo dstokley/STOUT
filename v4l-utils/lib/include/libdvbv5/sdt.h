@@ -2,16 +2,29 @@
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  * Copyright (c) 2012 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -21,6 +34,7 @@
 #ifndef _SDT_H
 #define _SDT_H
 
+<<<<<<< HEAD
 /**
  * @file sdt.h
  * @ingroup dvb_table
@@ -39,11 +53,14 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #include <stdint.h>
 #include <unistd.h> /* ssize_t */
 
 #include <libdvbv5/header.h>
 
+<<<<<<< HEAD
 /**
  * @def DVB_TABLE_SDT
  *	@brief SDT table ID
@@ -55,10 +72,13 @@
  *	@brief SDT Program ID
  *	@ingroup dvb_table
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #define DVB_TABLE_SDT      0x42
 #define DVB_TABLE_SDT2     0x46
 #define DVB_TABLE_SDT_PID  0x0011
 
+<<<<<<< HEAD
 /**
  * @struct dvb_table_sdt_service
  * @brief MPEG-TS SDT service table
@@ -84,6 +104,8 @@
  * be bit-mapped to the data parsed from the MPEG TS. So, metadata are added
  * there.
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_table_sdt_service {
 	uint16_t service_id;
 	uint8_t EIT_present_following:1;
@@ -101,6 +123,7 @@ struct dvb_table_sdt_service {
 	struct dvb_table_sdt_service *next;
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @struct dvb_table_sdt
  * @brief MPEG-TS SDT table
@@ -120,6 +143,8 @@ struct dvb_table_sdt_service {
  * Everything after dvb_table_sdt::service (including it) won't be bit-mapped
  * to the data parsed from the MPEG TS. So, metadata are added there.
  */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_table_sdt {
 	struct dvb_table_header header;
 	uint16_t network_id;
@@ -127,6 +152,7 @@ struct dvb_table_sdt {
 	struct dvb_table_sdt_service *service;
 } __attribute__((packed));
 
+<<<<<<< HEAD
 /**
  * @brief Macro used to find services on a SDT table
  * @ingroup dvb_table
@@ -137,6 +163,10 @@ struct dvb_table_sdt {
 #define dvb_sdt_service_foreach(_service, _sdt) \
 	if (_sdt && _sdt->service) \
 		for (struct dvb_table_sdt_service *_service = _sdt->service; _service; _service = _service->next ) \
+=======
+#define dvb_sdt_service_foreach(_service, _sdt) \
+	for (struct dvb_table_sdt_service *_service = _sdt->service; _service; _service = _service->next ) \
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 struct dvb_v5_fe_parms;
 
@@ -144,6 +174,7 @@ struct dvb_v5_fe_parms;
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses SDT table
  * @ingroup dvb_table
@@ -179,6 +210,11 @@ void dvb_table_sdt_free(struct dvb_table_sdt *table);
  * @param table pointer to struct dvb_table_sdt
  */
 void dvb_table_sdt_print(struct dvb_v5_fe_parms *parms, struct dvb_table_sdt *table);
+=======
+ssize_t dvb_table_sdt_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, struct dvb_table_sdt **table);
+void dvb_table_sdt_free(struct dvb_table_sdt *sdt);
+void dvb_table_sdt_print(struct dvb_v5_fe_parms *parms, struct dvb_table_sdt *sdt);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #ifdef __cplusplus
 }

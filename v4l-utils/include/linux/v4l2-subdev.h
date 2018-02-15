@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 /*
  * V4L2 subdev userspace API
  *
@@ -69,23 +72,35 @@ struct v4l2_subdev_crop {
  * struct v4l2_subdev_mbus_code_enum - Media bus format enumeration
  * @pad: pad number, as reported by the media API
  * @index: format index during enumeration
+<<<<<<< HEAD
  * @code: format code (MEDIA_BUS_FMT_ definitions)
  * @which: format type (from enum v4l2_subdev_format_whence)
+=======
+ * @code: format code (from enum v4l2_mbus_pixelcode)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  */
 struct v4l2_subdev_mbus_code_enum {
 	__u32 pad;
 	__u32 index;
 	__u32 code;
+<<<<<<< HEAD
 	__u32 which;
 	__u32 reserved[8];
+=======
+	__u32 reserved[9];
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 };
 
 /**
  * struct v4l2_subdev_frame_size_enum - Media bus format enumeration
  * @pad: pad number, as reported by the media API
  * @index: format index during enumeration
+<<<<<<< HEAD
  * @code: format code (MEDIA_BUS_FMT_ definitions)
  * @which: format type (from enum v4l2_subdev_format_whence)
+=======
+ * @code: format code (from enum v4l2_mbus_pixelcode)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  */
 struct v4l2_subdev_frame_size_enum {
 	__u32 index;
@@ -95,8 +110,12 @@ struct v4l2_subdev_frame_size_enum {
 	__u32 max_width;
 	__u32 min_height;
 	__u32 max_height;
+<<<<<<< HEAD
 	__u32 which;
 	__u32 reserved[8];
+=======
+	__u32 reserved[9];
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 };
 
 /**
@@ -114,11 +133,18 @@ struct v4l2_subdev_frame_interval {
  * struct v4l2_subdev_frame_interval_enum - Frame interval enumeration
  * @pad: pad number, as reported by the media API
  * @index: frame interval index during enumeration
+<<<<<<< HEAD
  * @code: format code (MEDIA_BUS_FMT_ definitions)
  * @width: frame width in pixels
  * @height: frame height in pixels
  * @interval: frame interval in seconds
  * @which: format type (from enum v4l2_subdev_format_whence)
+=======
+ * @code: format code (from enum v4l2_mbus_pixelcode)
+ * @width: frame width in pixels
+ * @height: frame height in pixels
+ * @interval: frame interval in seconds
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  */
 struct v4l2_subdev_frame_interval_enum {
 	__u32 index;
@@ -127,8 +153,12 @@ struct v4l2_subdev_frame_interval_enum {
 	__u32 width;
 	__u32 height;
 	struct v4l2_fract interval;
+<<<<<<< HEAD
 	__u32 which;
 	__u32 reserved[8];
+=======
+	__u32 reserved[9];
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 };
 
 /**
@@ -158,6 +188,7 @@ struct v4l2_subdev_selection {
 /* Backwards compatibility define --- to be removed */
 #define v4l2_subdev_edid v4l2_edid
 
+<<<<<<< HEAD
 #define VIDIOC_SUBDEV_G_FMT			_IOWR('V',  4, struct v4l2_subdev_format)
 #define VIDIOC_SUBDEV_S_FMT			_IOWR('V',  5, struct v4l2_subdev_format)
 #define VIDIOC_SUBDEV_G_FRAME_INTERVAL		_IOWR('V', 21, struct v4l2_subdev_frame_interval)
@@ -177,5 +208,28 @@ struct v4l2_subdev_selection {
 #define VIDIOC_SUBDEV_ENUM_DV_TIMINGS		_IOWR('V', 98, struct v4l2_enum_dv_timings)
 #define VIDIOC_SUBDEV_QUERY_DV_TIMINGS		_IOR('V', 99, struct v4l2_dv_timings)
 #define VIDIOC_SUBDEV_DV_TIMINGS_CAP		_IOWR('V', 100, struct v4l2_dv_timings_cap)
+=======
+#define VIDIOC_SUBDEV_G_FMT	_IOWR('V',  4, struct v4l2_subdev_format)
+#define VIDIOC_SUBDEV_S_FMT	_IOWR('V',  5, struct v4l2_subdev_format)
+#define VIDIOC_SUBDEV_G_FRAME_INTERVAL \
+			_IOWR('V', 21, struct v4l2_subdev_frame_interval)
+#define VIDIOC_SUBDEV_S_FRAME_INTERVAL \
+			_IOWR('V', 22, struct v4l2_subdev_frame_interval)
+#define VIDIOC_SUBDEV_ENUM_MBUS_CODE \
+			_IOWR('V',  2, struct v4l2_subdev_mbus_code_enum)
+#define VIDIOC_SUBDEV_ENUM_FRAME_SIZE \
+			_IOWR('V', 74, struct v4l2_subdev_frame_size_enum)
+#define VIDIOC_SUBDEV_ENUM_FRAME_INTERVAL \
+			_IOWR('V', 75, struct v4l2_subdev_frame_interval_enum)
+#define VIDIOC_SUBDEV_G_CROP	_IOWR('V', 59, struct v4l2_subdev_crop)
+#define VIDIOC_SUBDEV_S_CROP	_IOWR('V', 60, struct v4l2_subdev_crop)
+#define VIDIOC_SUBDEV_G_SELECTION \
+	_IOWR('V', 61, struct v4l2_subdev_selection)
+#define VIDIOC_SUBDEV_S_SELECTION \
+	_IOWR('V', 62, struct v4l2_subdev_selection)
+/* These two G/S_EDID ioctls are identical to the ioctls in videodev2.h */
+#define VIDIOC_SUBDEV_G_EDID	_IOWR('V', 40, struct v4l2_edid)
+#define VIDIOC_SUBDEV_S_EDID	_IOWR('V', 41, struct v4l2_edid)
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #endif

@@ -3,15 +3,35 @@ use strict;
 use File::Find;
 
 my @ir_files = (
+<<<<<<< HEAD
 	"drivers/media/usb/dvb-usb/af9005-remote.c",
 	"drivers/media/usb/dvb-usb/az6027.c",
 	"drivers/media/usb/dvb-usb/cinergyT2-core.c",
 	"drivers/media/usb/dvb-usb/dibusb-common.c",
 	"drivers/media/usb/dvb-usb/digitv.c",
+=======
+	"drivers/media/usb/dvb-usb/a800.c",
+	"drivers/media/usb/dvb-usb/af9005-remote.c",
+	"drivers/media/usb/dvb-usb-v2/af9015.c",
+	"drivers/media/usb/dvb-usb-v2/af9015.h",
+	"drivers/media/usb/dvb-usb-v2/anysee.c",
+	"drivers/media/usb/dvb-usb/cinergyT2-core.c",
+	"drivers/media/usb/dvb-usb/cxusb.c",
+	"drivers/media/usb/dvb-usb/dibusb-common.c",
+	"drivers/media/usb/dvb-usb/digitv.c",
+	"drivers/media/usb/dvb-usb/dtt200u.c",
+	"drivers/media/usb/dvb-usb/dvb-usb-remote.c",
+	"drivers/media/usb/dvb-usb/dvb-usb.h",
+	"drivers/media/usb/dvb-usb/dw2102.c",
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	"drivers/media/usb/dvb-usb/m920x.c",
 	"drivers/media/usb/dvb-usb/nova-t-usb2.c",
 	"drivers/media/usb/dvb-usb/opera1.c",
 	"drivers/media/usb/dvb-usb/vp702x.c",
+<<<<<<< HEAD
+=======
+	"drivers/media/usb/dvb-usb/vp7045.c",
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 );
 
 my $debug = 1;
@@ -30,10 +50,16 @@ my %rc_map_names;
 
 my $kernel_dir = shift or die "Need a file name to proceed.";
 
+<<<<<<< HEAD
 sub flush($$)
 {
 	my $filename = shift;
 	my $legacy = shift;
+=======
+sub flush($)
+{
+	my $filename = shift;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	my $defined;
 
 	return if (!$keyname || !$out);
@@ -43,7 +69,11 @@ sub flush($$)
 	print OUT $out;
 	close OUT;
 
+<<<<<<< HEAD
 	if (!$name && !$legacy) {
+=======
+	if (!$name) {
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		$warn++;
 	} else {
 		$defined = 1 if ($rc_map_names{$name});
@@ -63,6 +93,7 @@ sub flush($$)
 	$name = "";
 }
 
+<<<<<<< HEAD
 sub parse_file($$)
 {
 	my $filename = shift;
@@ -73,17 +104,32 @@ sub parse_file($$)
 
 	next if ($filename =~ m/\.mod.c/);
 
+=======
+sub parse_file($)
+{
+	my $filename = shift;
+
+	$warn = 0;
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	printf "processing file $filename\n" if ($debug);
 	open IN, "<$filename" or die "couldn't find $filename";
 	while (<IN>) {
 		if (m/struct\s+rc_map_table\s+(\w[\w\d_]+)/) {
+<<<<<<< HEAD
 			flush($filename, $legacy);
+=======
+			flush($filename);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 			$keyname = $1;
 			$keyname =~ s/^rc_map_//;
 			$keyname =~ s/_table$//;
 			$read = 1;
+<<<<<<< HEAD
 			$num_tables++;
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			next;
 		}
 		if (m/struct\s+rc_map_list.*=\s+{/) {
@@ -103,6 +149,7 @@ sub parse_file($$)
 				$check_type = 0;
 				next;
 			}
+<<<<<<< HEAD
 			if (m/RC_PROTO_([\w\d_]+)/) {
 				$type = $1;
 
@@ -114,6 +161,10 @@ sub parse_file($$)
 
 				# NECX protocol variant uses nec decoder
 				$type =~ s/^NECX$/NEC/;
+=======
+			if (m/RC_TYPE_([\w\d_]+)/) {
+				$type = $1;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			}
 			next;
 		}
@@ -130,10 +181,16 @@ sub parse_file($$)
 	}
 	close IN;
 
+<<<<<<< HEAD
 	flush($filename, $legacy);
 
 	printf STDERR "WARNING: keyboard name not found on %d tables at file $filename\n", $warn if ($warn);
 	print STDERR "WARNING: no tables found at $filename\n" if (!$num_tables);
+=======
+	flush($filename);
+
+	printf STDERR "WARNING: keyboard name not found on %d tables at file $filename\n", $warn if ($warn);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 	$warn_all += $warn;
 }
@@ -146,12 +203,16 @@ sub parse_dir()
 
 	return if (! ($file =~ m/\.c$/));
 
+<<<<<<< HEAD
 	parse_file $file, 0;
 }
 
 sub sort_dir()
 {
 	sort @_;
+=======
+	parse_file $file;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 sub parse_rc_map_names($)
@@ -210,10 +271,17 @@ print OUT_MAP << "EOF";
 #driver table                    file
 EOF
 
+<<<<<<< HEAD
 find({wanted => \&parse_dir, preprocess => \&sort_dir, no_chdir => 1}, "$kernel_dir/drivers/media/rc/keymaps");
 
 foreach my $file (@ir_files) {
 	parse_file "$kernel_dir/$file", 1;
+=======
+find({wanted => \&parse_dir, no_chdir => 1}, "$kernel_dir/drivers/media/rc/keymaps");
+
+foreach my $file (@ir_files) {
+	parse_file "$kernel_dir/$file";
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 printf STDERR "WARNING: there are %d tables not defined at rc_maps.h\n", $warn_all if ($warn_all);

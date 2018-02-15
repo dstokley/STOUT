@@ -1,22 +1,36 @@
 /*
  * Copyright (c) 2013 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
 
+<<<<<<< HEAD
 /**
  * @file cat.h
  * @ingroup dvb_table
@@ -28,6 +42,8 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+=======
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifndef _CAT_H
 #define _CAT_H
 
@@ -36,6 +52,7 @@
 
 #include <libdvbv5/header.h>
 
+<<<<<<< HEAD
 /**
  * @def DVB_TABLE_CAT
  *	@brief ATSC CAT table ID
@@ -54,6 +71,11 @@
  * @param header	struct dvb_table_header content
  * @param descriptor	pointer to struct dvb_desc
  */
+=======
+#define DVB_TABLE_CAT      0x01
+#define DVB_TABLE_CAT_PID  0x0001
+
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 struct dvb_table_cat {
 	struct dvb_table_header header;
 	struct dvb_desc *descriptor;
@@ -65,6 +87,7 @@ struct dvb_v5_fe_parms;
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @brief Initializes and parses CAT table
  *
@@ -98,6 +121,11 @@ void dvb_table_cat_free(struct dvb_table_cat *table);
  */
 void dvb_table_cat_print(struct dvb_v5_fe_parms *parms,
 			 struct dvb_table_cat *table);
+=======
+ssize_t dvb_table_cat_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, struct dvb_table_cat **table);
+void dvb_table_cat_free(struct dvb_table_cat *cat);
+void dvb_table_cat_print(struct dvb_v5_fe_parms *parms, struct dvb_table_cat *t);
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 
 #ifdef __cplusplus
 }
