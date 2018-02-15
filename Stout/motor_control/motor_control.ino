@@ -22,7 +22,9 @@
 #define CH1_y 10              // Vertical encoder channel 1
 #define CH2_y 11              // Vertical encoder channel 2
 // Digital interrupt pins
-#define INT 12               // If motor actuations are completed (transmit)
+#define INT1 12               // If motor actuations have arrived (receive)
+#define INT2 13               // If humidity sensor is read (trasmit)
+#define INT3 14               // If motor actuations are complete (trasmit
 
 // Declare variables for actuation use
 float step_x = 0;            // Required horizontal actuation distance [m]
@@ -44,7 +46,7 @@ int counter_x = 0;
 int counter_y = 0;
 
 // Humidity sensor variables
-int analogPin = 0;    // Humidity sensor connected to analog pin 0
+int analogPin = 1;    // Humidity sensor connected to analog pin 0
 int val;          // Variable to store bin values
 float voltage;    // Variable to store voltage
 float RH;           // Relative humidity
@@ -61,9 +63,9 @@ void setup()
   }
 
   // Set up interrupts
-  pinMode(INT, INPUT);      // Set interrupt pin to an input
+  pinMode(INT1, INPUT);      // Set interrupt pin to an input
   // Attach interrupt to ISR
-  attachInterrupt(digitalPinToInterrupt(INT), controlsISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(INT1), controlsISR, CHANGE);
 
   // Set all relevant digital pins to outputs for motor control
   // Horizontal actuator motor driver
@@ -75,8 +77,9 @@ void setup()
   pinMode(STP_x, OUTPUT);
   pinMode(DIR_x, OUTPUT);
 
-  // GPIO pin for signaling actuations are completed
-  pinmode(INT, OUTPUT)
+  // GPIO pins for signaling interrupts on the UDOO
+  pinMode(INT2, OUTPUT);
+  pinMode(INT3, OUTPUT);
 
   // Set all relevant digital pins to inputs for encoder readings
   pinMode(CH1_x, INPUT);      // Horizontal encoder
@@ -89,7 +92,7 @@ void setup()
   ch1laststate_y = digitalRead(CH1_y);
 
   // Enable interrupts
-  interrupts();
+  noInterrupts();
 
 }
 
@@ -102,35 +105,34 @@ void loop()
   if (currentMillis - previousMillis >= interval)
   {
   val = analogRead(analogPin);            // Read input pin voltage
-  voltage = (float)3.3*(val/1024);        // Conversion to voltage [V]
-  RH = (float)0.0062*(voltage/5 - 0.16);  // Conversion to % relative humidity
+  Serial.write(val);
+
+  // Send done signal to UDOO (GPIO state change)
+  // Change state of output
+  digitalWrite(INT2, !digitalRead(INT2));
+  
   previousMillis = currentMillis;         // Reset time stamp
-
-  // Send RH to Braswell via serial
-  byte * b = (byte *) &RH;                // Create byte pointer for RH
-  Serial.write(b, 4);                     // Send all 4 bytes to UDOO
-
   }
+  
 }
 
 
 void controlsISR()
 {
+  byte temp_var[4]; 
   // Read incoming serial data & save in step_x and step_y
-  for (int i=0; i<4; i++)
+ for (int i=0; i<4; i++)
   {
-    byte temp_var;                           // Save current byte
-    temp_var = Serial.read()
-    step_x = (step_x << 8) | temp_var;      // Convert from 4 bytes to 1 float
+    temp_var[i] = Serial.read();
   }
+  memcpy(&step_x, &temp_var, sizeof step_x);    // Save bytes to create a float
 
   for (int i=0; i<4; i++)
   {
-    byte temp_var;                           // Save current byte
-    temp_var = Serial.read()
-    step_y = (step_y << 8) | temp_var;      // Convert from 4 bytes to 1 float
+    temp_var[i] = Serial.read();
   }
-
+  memcpy(&step_y, &temp_var, sizeof step_y);    // Save bytes to create a float
+  
   // Calculate necessary numbers of steps and dirction for hoizontal and vertical
   // actuations
   // Horizontal linear actuator
@@ -316,10 +318,6 @@ void controlsISR()
   digitalWrite(EN_y, HIGH);
 
   // Send done signal to UDOO (GPIO state change)
-  // Only send this signal if the current GPIO state is 0
-  if (digitalRead(INT) == 0)
-  {
     // Change state of output
-    digitalWrite(INT, !digtalRead(INT));
-  }
+    digitalWrite(INT3, !digitalRead(INT3));
 }
