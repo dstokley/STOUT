@@ -1,0 +1,12 @@
+Makefile
+moc_capture-win.cpp
+moc_general-tab.cpp
+moc_vbi-tab.cpp
+moc_qv4l2.cpp
+qrc_qv4l2.cpp
+qv4l2
+<<<<<<< HEAD
+=======
+qv4l2.1
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+

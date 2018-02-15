@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Qt V4L2 test Utility
+Name[pt]=Utilitário de teste V4L2
+Comment=Allow testing Video4Linux devices
+Comment[pt]=Permite testar dispositivos Video4Linux
+Exec=qv4l2
+Icon=qv4l2
+Terminal=false
+Type=Application
+Categories=AudioVideo;
+<<<<<<< HEAD
+
+=======
+Keywords=video;grabber;V4L;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
