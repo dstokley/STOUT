@@ -27,9 +27,9 @@
 #define INT 12
 
 // Declare variables for actuation use
-float step_x;                // Required horizontal actuation distance [m]
-float step_y;                // Required vertical actuation distance [m]
-float step_size = 1.5e-6;    // Step size of actuators [m]
+float step_x;                // Required horizontal actuation distance [mm]
+float step_y;                // Required vertical actuation distance [mm]
+float step_size = 1.5e-3;    // Step size of actuators [mm]
 int stepact_x;               // Number of horizontal steps & direction (+/-)
 int stepact_y;               //  Number of vertical steps & direction (+/-)
 int stepnum_x;               // Number of horizontal actuation steps
@@ -73,8 +73,6 @@ void setup()
   pinmode(EN_x, OUTPUT);
   pinmode(STP_x, OUTPUT);
   pinmode(DIR_x, OUTPUT);
-
-  resetEDPins();              // Reset all pins to their default values
 
   // Set all relevant digital pins to inputs for encoder readings
   pinmode(CH1_x, INPUT);      // Horizontal encoder
