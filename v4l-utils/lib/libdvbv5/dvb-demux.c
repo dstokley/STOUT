@@ -1,15 +1,27 @@
 /*
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -30,6 +42,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
+<<<<<<< HEAD
+=======
+#include <time.h>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #include <errno.h>
 
 #include <sys/ioctl.h>
@@ -39,6 +55,7 @@
 #include <stdlib.h> /* free */
 
 #include <libdvbv5/dvb-demux.h>
+<<<<<<< HEAD
 
 int dvb_dmx_open(int adapter, int demux)
 {
@@ -51,18 +68,70 @@ int dvb_dmx_open(int adapter, int demux)
 		return -1;
 	fd_demux = open( demux_name, O_RDWR | O_NONBLOCK );
 	free(demux_name);
+=======
+#include <libdvbv5/dvb-dev.h>
+
+#define MAX_TIME		10	/* 1.0 seconds */
+
+#define xioctl(fh, request, arg...) ({					\
+	int __rc;							\
+	struct timespec __start, __end;					\
+									\
+	clock_gettime(CLOCK_MONOTONIC, &__start);			\
+	do {								\
+		__rc = ioctl(fh, request, ##arg);			\
+		if (__rc != -1)						\
+			break;						\
+		if ((errno != EINTR) && (errno != EAGAIN))		\
+			break;						\
+		clock_gettime(CLOCK_MONOTONIC, &__end);			\
+		if (__end.tv_sec * 10 + __end.tv_nsec / 100000000 >	\
+		    __start.tv_sec * 10 + __start.tv_nsec / 100000000 +	\
+		    MAX_TIME)						\
+			break;						\
+	} while (1);							\
+									\
+	__rc;								\
+})
+
+int dvb_dmx_open(int adapter, int demux)
+{
+	int fd_demux;
+	struct dvb_device *dvb;
+	struct dvb_dev_list *dvb_dev;
+
+	dvb = dvb_dev_alloc();
+	dvb_dev_find(dvb, NULL, NULL);
+	dvb_dev = dvb_dev_seek_by_adapter(dvb, adapter, demux, DVB_DEVICE_DEMUX);
+	if (!dvb_dev) {
+		dvb_dev_free(dvb);
+		return -1;
+	}
+
+	fd_demux = open(dvb_dev->path, O_RDWR | O_NONBLOCK);
+	dvb_dev_free(dvb);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	return fd_demux;
 }
 
 void dvb_dmx_close(int dmx_fd)
 {
+<<<<<<< HEAD
 	(void) ioctl(dmx_fd, DMX_STOP);
 	close( dmx_fd);
+=======
+	(void)xioctl(dmx_fd, DMX_STOP);
+	close(dmx_fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 void dvb_dmx_stop(int dmx_fd)
 {
+<<<<<<< HEAD
 	(void) ioctl(dmx_fd, DMX_STOP);
+=======
+	(void)xioctl(dmx_fd, DMX_STOP);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
@@ -71,7 +140,11 @@ int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
 	struct dmx_pes_filter_params pesfilter;
 
 	if (buffersize) {
+<<<<<<< HEAD
 		if (ioctl(dmxfd, DMX_SET_BUFFER_SIZE, buffersize) == -1)
+=======
+		if (xioctl(dmxfd, DMX_SET_BUFFER_SIZE, buffersize) == -1)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			perror("DMX_SET_BUFFER_SIZE failed");
 	}
 
@@ -83,7 +156,11 @@ int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
 	pesfilter.pes_type = type;
 	pesfilter.flags = DMX_IMMEDIATE_START;
 
+<<<<<<< HEAD
 	if (ioctl(dmxfd, DMX_SET_PES_FILTER, &pesfilter) == -1) {
+=======
+	if (xioctl(dmxfd, DMX_SET_PES_FILTER, &pesfilter) == -1) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		fprintf(stderr, "DMX_SET_PES_FILTER failed "
 		"(PID = 0x%04x): %d %m\n", pid, errno);
 		return -1;
@@ -116,7 +193,11 @@ int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
 
 	sctfilter.flags = flags;
 
+<<<<<<< HEAD
 	if (ioctl(dmxfd, DMX_SET_FILTER, &sctfilter) == -1) {
+=======
+	if (xioctl(dmxfd, DMX_SET_FILTER, &sctfilter) == -1) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		fprintf(stderr, "DMX_SET_FILTER failed (PID = 0x%04x): %d %m\n",
 			pid, errno);
 		return -1;
@@ -125,9 +206,15 @@ int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
 	return 0;
 }
 
+<<<<<<< HEAD
 int get_pmt_pid(const char *dmxdev, int sid)
 {
 	int patfd, count;
+=======
+int dvb_get_pmt_pid(int patfd, int sid)
+{
+	int count;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	int pmt_pid = 0;
 	int patread = 0;
 	int section_length;
@@ -142,6 +229,7 @@ int get_pmt_pid(const char *dmxdev, int sid)
 	f.timeout = 0;
 	f.flags = DMX_IMMEDIATE_START | DMX_CHECK_CRC;
 
+<<<<<<< HEAD
 	if ((patfd = open(dmxdev, O_RDWR)) < 0) {
 		perror("openening pat demux failed");
 		return -1;
@@ -150,6 +238,10 @@ int get_pmt_pid(const char *dmxdev, int sid)
 	if (ioctl(patfd, DMX_SET_FILTER, &f) == -1) {
 		perror("ioctl DMX_SET_FILTER failed");
 		close(patfd);
+=======
+	if (xioctl(patfd, DMX_SET_FILTER, &f) == -1) {
+		perror("ioctl DMX_SET_FILTER failed");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		return -1;
 	}
 
@@ -158,7 +250,10 @@ int get_pmt_pid(const char *dmxdev, int sid)
 		count = read(patfd, buf, sizeof(buft));
 		if (count < 0) {
 		perror("read_sections: read error");
+<<<<<<< HEAD
 		close(patfd);
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		return -1;
 		}
 
@@ -181,6 +276,9 @@ int get_pmt_pid(const char *dmxdev, int sid)
 		}
 	}
 
+<<<<<<< HEAD
 	close(patfd);
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	return pmt_pid;
 }

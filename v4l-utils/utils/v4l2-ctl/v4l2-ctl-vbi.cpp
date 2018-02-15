@@ -16,10 +16,17 @@
 
 #include "v4l2-ctl.h"
 
+<<<<<<< HEAD
 	struct v4l2_format vbi_fmt;	/* set_format/get_format for sliced VBI */
 	struct v4l2_format vbi_fmt_out;	/* set_format/get_format for sliced VBI output */
 	struct v4l2_format raw_fmt;	/* set_format/get_format for VBI */
 	struct v4l2_format raw_fmt_out;	/* set_format/get_format for VBI output */
+=======
+static struct v4l2_format vbi_fmt;	/* set_format/get_format for sliced VBI */
+static struct v4l2_format vbi_fmt_out;	/* set_format/get_format for sliced VBI output */
+static struct v4l2_format raw_fmt;	/* set_format/get_format for VBI */
+static struct v4l2_format raw_fmt_out;	/* set_format/get_format for VBI output */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 void vbi_usage(void)
 {
@@ -48,6 +55,22 @@ void vbi_usage(void)
 	       "                     vps:      VPS (PAL/SECAM)\n"
 	       "  --get-fmt-vbi      query the VBI capture format [VIDIOC_G_FMT]\n"
 	       "  --get-fmt-vbi-out  query the VBI output format [VIDIOC_G_FMT]\n"
+<<<<<<< HEAD
+=======
+	       "  --set-fmt-vbi\n"
+	       "  --try-fmt-vbi\n"
+	       "  --set-fmt-vbi-out\n"
+	       "  --try-fmt-vbi-out=samplingrate=<r>,offset=<o>,samplesperline=<spl>,\n"
+	       "                     start0=<s0>,count0=<c0>,start1=<s1>,count1=<c1>\n"
+	       "                     set/try the raw VBI capture/output format [VIDIOC_S/TRY_FMT]\n"
+	       "                     samplingrate: samples per second\n"
+	       "                     offset: horizontal offset in samples\n"
+	       "                     samplesperline: samples per line\n"
+	       "                     start0: start line number of the first field\n"
+	       "                     count0: number of lines in the first field\n"
+	       "                     start1: start line number of the second field\n"
+	       "                     count1: number of lines in the second field\n"
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	       );
 }
 
@@ -68,6 +91,10 @@ void vbi_cmd(int ch, char *optarg)
 	char *value, *subs;
 	bool found_off = false;
 	v4l2_format *fmt = &vbi_fmt;
+<<<<<<< HEAD
+=======
+	v4l2_format *raw = &raw_fmt;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	switch (ch) {
 	case OptSetSlicedVbiOutFormat:
@@ -77,6 +104,7 @@ void vbi_cmd(int ch, char *optarg)
 	case OptSetSlicedVbiFormat:
 	case OptTrySlicedVbiFormat:
 		fmt->fmt.sliced.service_set = 0;
+<<<<<<< HEAD
 		subs = optarg;
 		while (*subs != '\0') {
 			static const char *const subopts[] = {
@@ -85,11 +113,67 @@ void vbi_cmd(int ch, char *optarg)
 				"cc",
 				"wss",
 				"vps",
+=======
+		if (optarg[0] == 0) {
+			fprintf(stderr, "empty string\n");
+			vbi_usage();
+			exit(1);
+		}
+		while (*optarg) {
+			subs = strchr(optarg, ',');
+			if (subs)
+				*subs = 0;
+
+			if (!strcmp(optarg, "off"))
+				found_off = true;
+			else if (!strcmp(optarg, "teletext"))
+				fmt->fmt.sliced.service_set |=
+					V4L2_SLICED_TELETEXT_B;
+			else if (!strcmp(optarg, "cc"))
+				fmt->fmt.sliced.service_set |=
+					V4L2_SLICED_CAPTION_525;
+			else if (!strcmp(optarg, "wss"))
+				fmt->fmt.sliced.service_set |=
+					V4L2_SLICED_WSS_625;
+			else if (!strcmp(optarg, "vps"))
+				fmt->fmt.sliced.service_set |=
+					V4L2_SLICED_VPS;
+			else
+				vbi_usage();
+			if (subs == NULL)
+				break;
+			optarg = subs + 1;
+		}
+		if (found_off && fmt->fmt.sliced.service_set) {
+			fprintf(stderr, "Sliced VBI mode 'off' cannot be combined with other modes\n");
+			vbi_usage();
+			exit(1);
+		}
+		break;
+	case OptSetVbiOutFormat:
+	case OptTryVbiOutFormat:
+		raw = &raw_fmt_out;
+		/* fall through */
+	case OptSetVbiFormat:
+	case OptTryVbiFormat:
+		subs = optarg;
+		memset(&raw->fmt.vbi, 0, sizeof(raw->fmt.vbi));
+		while (*subs != '\0') {
+			static const char *const subopts[] = {
+				"samplingrate",
+				"offset",
+				"samplesperline",
+				"start0",
+				"start1",
+				"count0",
+				"count1",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				NULL
 			};
 
 			switch (parse_subopt(&subs, subopts, &value)) {
 			case 0:
+<<<<<<< HEAD
 				found_off = true;
 				break;
 			case 1:
@@ -107,21 +191,66 @@ void vbi_cmd(int ch, char *optarg)
 			case 4:
 				fmt->fmt.sliced.service_set |=
 					V4L2_SLICED_VPS;
+=======
+				raw->fmt.vbi.sampling_rate = strtoul(value, NULL, 0);
+				break;
+			case 1:
+				raw->fmt.vbi.offset = strtoul(value, NULL, 0);
+				break;
+			case 2:
+				raw->fmt.vbi.samples_per_line = strtoul(value, NULL, 0);
+				break;
+			case 3:
+				raw->fmt.vbi.start[0] = strtoul(value, NULL, 0);
+				break;
+			case 4:
+				raw->fmt.vbi.start[1] = strtoul(value, NULL, 0);
+				break;
+			case 5:
+				raw->fmt.vbi.count[0] = strtoul(value, NULL, 0);
+				break;
+			case 6:
+				raw->fmt.vbi.count[1] = strtoul(value, NULL, 0);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				break;
 			default:
 				vbi_usage();
 				break;
 			}
 		}
+<<<<<<< HEAD
 		if (found_off && fmt->fmt.sliced.service_set) {
 			fprintf(stderr, "Sliced VBI mode 'off' cannot be combined with other modes\n");
 			vbi_usage();
 			exit(1);
 		}
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		break;
 	}
 }
 
+<<<<<<< HEAD
+=======
+static void fill_raw_vbi(v4l2_vbi_format &dst, const v4l2_vbi_format &src)
+{
+	if (src.sampling_rate)
+		dst.sampling_rate = src.sampling_rate;
+	if (src.offset)
+		dst.offset = src.offset;
+	if (src.samples_per_line)
+		dst.samples_per_line = src.samples_per_line;
+	if (src.start[0])
+		dst.start[0] = src.start[0];
+	if (src.start[1])
+		dst.start[1] = src.start[1];
+	if (src.count[0])
+		dst.count[0] = src.count[0];
+	if (src.count[1])
+		dst.count[1] = src.count[1];
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 void vbi_set(int fd)
 {
 	int ret;
@@ -145,6 +274,37 @@ void vbi_set(int fd)
 		if (ret == 0 && (verbose || options[OptTrySlicedVbiOutFormat]))
 			printfmt(vbi_fmt_out);
 	}
+<<<<<<< HEAD
+=======
+
+	if (options[OptSetVbiFormat] || options[OptTryVbiFormat]) {
+		v4l2_format fmt;
+
+		fmt.type = vbi_fmt.type = V4L2_BUF_TYPE_VBI_CAPTURE;
+		doioctl(fd, VIDIOC_G_FMT, &fmt);
+		fill_raw_vbi(fmt.fmt.vbi, raw_fmt.fmt.vbi);
+		if (options[OptSetVbiFormat])
+			ret = doioctl(fd, VIDIOC_S_FMT, &raw_fmt);
+		else
+			ret = doioctl(fd, VIDIOC_TRY_FMT, &raw_fmt);
+		if (ret == 0 && (verbose || options[OptTryVbiFormat]))
+			printfmt(vbi_fmt);
+	}
+
+	if (options[OptSetVbiOutFormat] || options[OptTryVbiOutFormat]) {
+		v4l2_format fmt;
+
+		fmt.type = vbi_fmt.type = V4L2_BUF_TYPE_VBI_OUTPUT;
+		doioctl(fd, VIDIOC_G_FMT, &fmt);
+		fill_raw_vbi(fmt.fmt.vbi, raw_fmt.fmt.vbi);
+		if (options[OptSetVbiOutFormat])
+			ret = doioctl(fd, VIDIOC_S_FMT, &raw_fmt);
+		else
+			ret = doioctl(fd, VIDIOC_TRY_FMT, &raw_fmt);
+		if (ret == 0 && (verbose || options[OptTryVbiOutFormat]))
+			printfmt(vbi_fmt);
+	}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 void vbi_get(int fd)

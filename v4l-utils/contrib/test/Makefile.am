@@ -2,10 +2,16 @@ noinst_PROGRAMS = \
 	ioctl-test		\
 	sliced-vbi-test		\
 	sliced-vbi-detect	\
+<<<<<<< HEAD
 	vbi-test 		\
 	v4lgrab			\
 	v4l2grab		\
 	driver-test		\
+=======
+	v4l2grab		\
+	driver-test		\
+	mc_nextgen_test		\
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	stress-buffer		\
 	capture-example
 
@@ -17,6 +23,13 @@ if HAVE_GLU
 noinst_PROGRAMS += v4l2gl
 endif
 
+<<<<<<< HEAD
+=======
+if HAVE_SDL
+noinst_PROGRAMS += sdlcam
+endif
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 driver_test_SOURCES = driver-test.c
 driver_test_LDADD = ../../utils/libv4l2util/libv4l2util.la
 
@@ -25,22 +38,43 @@ pixfmt_test_CFLAGS = $(X11_CFLAGS)
 pixfmt_test_LDFLAGS = $(X11_LIBS)
 
 v4l2grab_SOURCES = v4l2grab.c
+<<<<<<< HEAD
 v4l2grab_LDADD = ../../lib/libv4l2/libv4l2.la ../../lib/libv4lconvert/libv4lconvert.la
 
 v4l2gl_SOURCES = v4l2gl.c
 v4l2gl_LDFLAGS = $(X11_LIBS) $(GL_LIBS) $(GLU_LIBS)
 v4l2gl_LDADD = ../../lib/libv4l2/libv4l2.la ../../lib/libv4lconvert/libv4lconvert.la
 
+=======
+v4l2grab_LDFLAGS = $(ARGP_LIBS)
+v4l2grab_LDADD = ../../lib/libv4l2/libv4l2.la ../../lib/libv4lconvert/libv4lconvert.la -lpthread
+
+v4l2gl_SOURCES = v4l2gl.c
+v4l2gl_LDFLAGS = $(X11_LIBS) $(GL_LIBS) $(GLU_LIBS) $(ARGP_LIBS)
+v4l2gl_LDADD = ../../lib/libv4l2/libv4l2.la ../../lib/libv4lconvert/libv4lconvert.la
+
+sdlcam_LDFLAGS = $(JPEG_LIBS) $(SDL2_LIBS) -lm -ldl -lrt
+sdlcam_CFLAGS = -I../.. $(SDL2_CFLAGS)
+sdlcam_LDADD = ../../lib/libv4l2/libv4l2.la  ../../lib/libv4lconvert/libv4lconvert.la
+
+mc_nextgen_test_CFLAGS = $(LIBUDEV_CFLAGS)
+mc_nextgen_test_LDFLAGS = $(LIBUDEV_LIBS)
+
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 ioctl_test_SOURCES = ioctl-test.c ioctl-test.h ioctl_32.h ioctl_64.h
 
 sliced_vbi_test_SOURCES = sliced-vbi-test.c
 
 sliced_vbi_detect_SOURCES = sliced-vbi-detect.c
 
+<<<<<<< HEAD
 vbi_test_SOURCES = vbi-test.c
 
 v4lgrab_SOURCES = v4lgrab.c
 
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 stress_buffer_SOURCES = stress-buffer.c
 
 capture_example_SOURCES = capture-example.c

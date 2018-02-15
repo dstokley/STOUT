@@ -20,6 +20,10 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
+<<<<<<< HEAD
+=======
+#include <sys/sysmacros.h>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #include <sys/stat.h>
 #include <string.h>
 #include <stdlib.h>

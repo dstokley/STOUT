@@ -18,6 +18,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
+<<<<<<< HEAD
 #include <stdlib.h>
 #include <string.h>
 #include <linux/input.h>
@@ -28,6 +29,36 @@
 
 #include "parse.h"
 
+=======
+#include <poll.h>
+#include <stdlib.h>
+#include <string.h>
+#include <linux/input.h>
+#include <linux/lirc.h>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <argp.h>
+#include <time.h>
+#include <stdbool.h>
+
+#include "ir-encode.h"
+#include "parse.h"
+
+#ifdef ENABLE_NLS
+# define _(string) gettext(string)
+# include "gettext.h"
+# include <locale.h>
+# include <langinfo.h>
+# include <iconv.h>
+#else
+# define _(string) string
+#endif
+
+# define N_(string) string
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 struct input_keymap_entry_v2 {
 #define KEYMAP_BY_INDEX	(1 << 0)
 	u_int8_t  flags;
@@ -42,12 +73,23 @@ struct input_keymap_entry_v2 {
 #define EVIOCSKEYCODE_V2	_IOW('E', 0x04, struct input_keymap_entry_v2)
 #endif
 
+<<<<<<< HEAD
 struct keytable {
 	u_int32_t codes[2];
 	struct input_keymap_entry_v2 keymap;
 	struct keytable *next;
 };
 
+=======
+struct keytable_entry {
+	u_int32_t scancode;
+	u_int32_t keycode;
+	struct keytable_entry *next;
+};
+
+struct keytable_entry *keytable = NULL;
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 struct uevents {
 	char		*key;
 	char		*value;
@@ -77,6 +119,7 @@ enum sysfs_ver {
 	VERSION_2,	/* has node protocols */
 };
 
+<<<<<<< HEAD
 enum ir_protocols {
 	RC_5		= 1 << 0,
 	RC_6		= 1 << 1,
@@ -89,6 +132,105 @@ enum ir_protocols {
 	OTHER		= 1 << 31,
 };
 
+=======
+enum sysfs_protocols {
+	SYSFS_UNKNOWN		= (1 << 0),
+	SYSFS_OTHER		= (1 << 1),
+	SYSFS_LIRC		= (1 << 2),
+	SYSFS_RC5		= (1 << 3),
+	SYSFS_RC5_SZ		= (1 << 4),
+	SYSFS_JVC		= (1 << 5),
+	SYSFS_SONY		= (1 << 6),
+	SYSFS_NEC		= (1 << 7),
+	SYSFS_SANYO		= (1 << 8),
+	SYSFS_MCE_KBD		= (1 << 9),
+	SYSFS_RC6		= (1 << 10),
+	SYSFS_SHARP		= (1 << 11),
+	SYSFS_XMP		= (1 << 12),
+	SYSFS_CEC		= (1 << 13),
+	SYSFS_INVALID		= 0,
+};
+
+struct protocol_map_entry {
+	const char *name;
+	const char *sysfs1_name;
+	enum sysfs_protocols sysfs_protocol;
+};
+
+const struct protocol_map_entry protocol_map[] = {
+	{ "unknown",	NULL,		SYSFS_UNKNOWN	},
+	{ "other",	NULL,		SYSFS_OTHER	},
+	{ "lirc",	NULL,		SYSFS_LIRC	},
+	{ "rc-5",	"/rc5_decoder",	SYSFS_RC5	},
+	{ "rc-5x",	NULL,		SYSFS_INVALID	},
+	{ "rc-5-sz",	NULL,		SYSFS_RC5_SZ	},
+	{ "jvc",	"/jvc_decoder",	SYSFS_JVC	},
+	{ "sony",	"/sony_decoder",SYSFS_SONY	},
+	{ "sony12",	NULL,		SYSFS_INVALID	},
+	{ "sony15",	NULL,		SYSFS_INVALID	},
+	{ "sony20",	NULL,		SYSFS_INVALID	},
+	{ "nec",	"/nec_decoder",	SYSFS_NEC	},
+	{ "sanyo",	NULL,		SYSFS_SANYO	},
+	{ "mce_kbd",	NULL,		SYSFS_MCE_KBD	},
+	{ "rc-6",	"/rc6_decoder",	SYSFS_RC6	},
+	{ "rc-6-0",	NULL,		SYSFS_INVALID	},
+	{ "rc-6-6a-20",	NULL,		SYSFS_INVALID	},
+	{ "rc-6-6a-24",	NULL,		SYSFS_INVALID	},
+	{ "rc-6-6a-32",	NULL,		SYSFS_INVALID	},
+	{ "rc-6-mce",	NULL,		SYSFS_INVALID	},
+	{ "sharp",	NULL,		SYSFS_SHARP	},
+	{ "xmp",	"/xmp_decoder",	SYSFS_XMP	},
+	{ "cec",	NULL,		SYSFS_CEC	},
+	{ NULL,		NULL,		SYSFS_INVALID	},
+};
+
+static bool protocol_like(const char *a, const char *b)
+{
+	while (*a && *b) {
+		if (*a == '-' || *a == '_')
+			a++;
+		if (*b == '-' || *b == '_')
+			b++;
+		if (tolower(*a) != tolower(*b))
+			return false;
+		a++; b++;
+	}
+
+	return !*a && !*b;
+}
+
+static enum sysfs_protocols parse_sysfs_protocol(const char *name, bool all_allowed)
+{
+	const struct protocol_map_entry *pme;
+
+	if (!name)
+		return SYSFS_INVALID;
+
+	if (all_allowed && !strcasecmp(name, "all"))
+		return ~0;
+
+	for (pme = protocol_map; pme->name; pme++) {
+		if (protocol_like(name, pme->name))
+			return pme->sysfs_protocol;
+	}
+
+	return SYSFS_INVALID;
+}
+
+static void write_sysfs_protocols(enum sysfs_protocols protocols, FILE *fp, const char *fmt)
+{
+	const struct protocol_map_entry *pme;
+
+	for (pme = protocol_map; pme->name; pme++) {
+		if (!(protocols & pme->sysfs_protocol))
+			continue;
+
+		fprintf(fp, fmt, pme->name);
+		protocols &= ~pme->sysfs_protocol;
+	}
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 static int parse_code(char *string)
 {
 	struct parse_event *p;
@@ -100,16 +242,27 @@ static int parse_code(char *string)
 	return -1;
 }
 
+<<<<<<< HEAD
 const char *argp_program_version = "IR keytable control version "V4L_UTILS_VERSION;
 const char *argp_program_bug_address = "Mauro Carvalho Chehab <m.chehab@samsung.com>";
 
 static const char doc[] = "\nAllows get/set IR keycode/scancode tables\n"
 	"You need to have read permissions on /dev/input for the program to work\n"
 	"\nOn the options bellow, the arguments are:\n"
+=======
+const char *argp_program_version = "IR keytable control version " V4L_UTILS_VERSION;
+const char *argp_program_bug_address = "Mauro Carvalho Chehab <m.chehab@samsung.com>";
+
+static const char doc[] = N_(
+	"\nAllows get/set IR keycode/scancode tables\n"
+	"You need to have read permissions on /dev/input for the program to work\n"
+	"\nOn the options below, the arguments are:\n"
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	"  DEV      - the /dev/input/event* device to control\n"
 	"  SYSDEV   - the ir class as found at /sys/class/rc\n"
 	"  TABLE    - a file with a set of scancode=keycode value pairs\n"
 	"  SCANKEY  - a set of scancode1=keycode1,scancode2=keycode2.. value pairs\n"
+<<<<<<< HEAD
 	"  PROTOCOL - protocol name (nec, rc-5, rc-6, jvc, sony, sanyo, rc-5-sz, lirc, other) to be enabled\n"
 	"  DELAY    - Delay before repeating a keystroke\n"
 	"  PERIOD   - Period to repeat a keystroke\n"
@@ -139,11 +292,47 @@ static const char args_doc[] =
 
 /* Static vars to store the parameters */
 static char *devclass = "rc0";
+=======
+	"  PROTOCOL - protocol name (nec, rc-5, rc-6, jvc, sony, sanyo, rc-5-sz, lirc,\n"
+	"                            sharp, mce_kbd, xmp, other, all) to be enabled\n"
+	"  DELAY    - Delay before repeating a keystroke\n"
+	"  PERIOD   - Period to repeat a keystroke\n"
+	"  CFGFILE  - configuration file that associates a driver/table name with a keymap file\n"
+	"\nOptions can be combined together.");
+
+static const struct argp_option options[] = {
+	{"verbose",	'v',	0,		0,	N_("enables debug messages"), 0},
+	{"clear",	'c',	0,		0,	N_("clears the old table"), 0},
+	{"sysdev",	's',	N_("SYSDEV"),	0,	N_("ir class device to control"), 0},
+	{"test",	't',	0,		0,	N_("test if IR is generating events"), 0},
+	{"device",	'd',	N_("DEV"),	0,	N_("ir device to control"), 0},
+	{"read",	'r',	0,		0,	N_("reads the current scancode/keycode table"), 0},
+	{"write",	'w',	N_("TABLE"),	0,	N_("write (adds) the scancodes to the device scancode/keycode table from an specified file"), 0},
+	{"set-key",	'k',	N_("SCANKEY"),	0,	N_("Change scan/key pairs"), 0},
+	{"protocol",	'p',	N_("PROTOCOL"),	0,	N_("Protocol to enable (the other ones will be disabled). To enable more than one, use the option more than one time"), 0},
+	{"delay",	'D',	N_("DELAY"),	0,	N_("Sets the delay before repeating a keystroke"), 0},
+	{"period",	'P',	N_("PERIOD"),	0,	N_("Sets the period to repeat a keystroke"), 0},
+	{"auto-load",	'a',	N_("CFGFILE"),	0,	N_("Auto-load a table, based on a configuration file. Only works with sysdev."), 0},
+	{"help",        '?',	0,		0,	N_("Give this help list"), -1},
+	{"usage",	-3,	0,		0,	N_("Give a short usage message")},
+	{"version",	'V',	0,		0,	N_("Print program version"), -1},
+	{ 0, 0, 0, 0, 0, 0 }
+};
+
+static const char args_doc[] = N_(
+	"--device [/dev/input/event* device]\n"
+	"--sysdev [ir class (f. ex. rc0)]\n"
+	"[for using the rc0 sysdev]");
+
+/* Static vars to store the parameters */
+static char *devclass = NULL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 static char *devicename = NULL;
 static int readtable = 0;
 static int clear = 0;
 static int debug = 0;
 static int test = 0;
+<<<<<<< HEAD
 static int delay = 0;
 static int period = 0;
 static enum ir_protocols ch_proto = 0;
@@ -153,6 +342,11 @@ struct keytable keys = {
 	.next = NULL
 };
 
+=======
+static int delay = -1;
+static int period = -1;
+static enum sysfs_protocols ch_proto = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 struct cfgfile cfg = {
 	NULL, NULL, NULL, NULL
@@ -171,26 +365,46 @@ static int sysfs = 0;
 struct rc_device {
 	char *sysfs_name;	/* Device sysfs node name */
 	char *input_name;	/* Input device file name */
+<<<<<<< HEAD
 	char *drv_name;		/* Kernel driver that implements it */
+=======
+	char *lirc_name;	/* Lirc device file name */
+	char *drv_name;		/* Kernel driver that implements it */
+	char *dev_name;		/* Kernel device name */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	char *keytable_name;	/* Keycode table name */
 
 	enum sysfs_ver version; /* sysfs version */
 	enum rc_type type;	/* Software (raw) or hardware decoder */
+<<<<<<< HEAD
 	enum ir_protocols supported, current; /* Current and supported IR protocols */
 };
 
 struct keytable *nextkey = &keys;
 
+=======
+	enum sysfs_protocols supported, current; /* Current and supported IR protocols */
+};
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 static error_t parse_keyfile(char *fname, char **table)
 {
 	FILE *fin;
 	int value, line = 0;
 	char *scancode, *keycode, s[2048];
+<<<<<<< HEAD
+=======
+	struct keytable_entry *ke;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	*table = NULL;
 
 	if (debug)
+<<<<<<< HEAD
 		fprintf(stderr, "Parsing %s keycode file\n", fname);
+=======
+		fprintf(stderr, _("Parsing %s keycode file\n"), fname);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	fin = fopen(fname, "r");
 	if (!fin) {
@@ -217,6 +431,7 @@ static error_t parse_keyfile(char *fname, char **table)
 					strcpy(*table, p);
 				} else if (!strcmp(p, "type")) {
 					p = strtok(NULL, " ,\n");
+<<<<<<< HEAD
 					do {
 						if (!p)
 							goto err_einval;
@@ -242,6 +457,22 @@ static error_t parse_keyfile(char *fname, char **table)
 						}
 						p = strtok(NULL, " ,\n");
 					} while (p);
+=======
+					if (!p)
+						goto err_einval;
+
+					while (p) {
+						enum sysfs_protocols protocol;
+
+						protocol = parse_sysfs_protocol(p, false);
+						if (protocol == SYSFS_INVALID) {
+							fprintf(stderr, _("Protocol %s invalid\n"), p);
+							goto err_einval;
+						}
+						ch_proto |= protocol;
+						p = strtok(NULL, " ,\n");
+					}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				} else {
 					goto err_einval;
 				}
@@ -267,14 +498,22 @@ static error_t parse_keyfile(char *fname, char **table)
 			goto err_einval;
 
 		if (debug)
+<<<<<<< HEAD
 			fprintf(stderr, "parsing %s=%s:", scancode, keycode);
 		value = parse_code(keycode);
 		if (debug)
 			fprintf(stderr, "\tvalue=%d\n", value);
+=======
+			fprintf(stderr, _("parsing %s=%s:"), scancode, keycode);
+		value = parse_code(keycode);
+		if (debug)
+			fprintf(stderr, _("\tvalue=%d\n"), value);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 		if (value == -1) {
 			value = strtol(keycode, NULL, 0);
 			if (errno)
+<<<<<<< HEAD
 				perror("value");
 		}
 
@@ -286,13 +525,32 @@ static error_t parse_keyfile(char *fname, char **table)
 			return ENOMEM;
 		}
 		nextkey = nextkey->next;
+=======
+				perror(_("value"));
+		}
+
+		ke = calloc(1, sizeof(*ke));
+		if (!ke) {
+			perror("parse_keyfile");
+			return ENOMEM;
+		}
+
+		ke->scancode	= strtoul(scancode, NULL, 0);
+		ke->keycode	= value;
+		ke->next	= keytable;
+		keytable	= ke;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	}
 	fclose(fin);
 
 	return 0;
 
 err_einval:
+<<<<<<< HEAD
 	fprintf(stderr, "Invalid parameter on line %d of %s\n",
+=======
+	fprintf(stderr, _("Invalid parameter on line %d of %s\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		line, fname);
 	return EINVAL;
 
@@ -308,11 +566,19 @@ static error_t parse_cfgfile(char *fname)
 	char *driver, *table, *filename;
 
 	if (debug)
+<<<<<<< HEAD
 		fprintf(stderr, "Parsing %s config file\n", fname);
 
 	fin = fopen(fname, "r");
 	if (!fin) {
 		perror("opening keycode file");
+=======
+		fprintf(stderr, _("Parsing %s config file\n"), fname);
+
+	fin = fopen(fname, "r");
+	if (!fin) {
+		perror(_("opening keycode file"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		return errno;
 	}
 
@@ -339,7 +605,11 @@ static error_t parse_cfgfile(char *fname)
 			goto err_einval;
 
 		if (debug)
+<<<<<<< HEAD
 			fprintf(stderr, "Driver %s, Table %s => file %s\n",
+=======
+			fprintf(stderr, _("Driver %s, Table %s => file %s\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				driver, table, filename);
 
 		nextcfg->driver = malloc(strlen(driver) + 1);
@@ -363,7 +633,11 @@ static error_t parse_cfgfile(char *fname)
 	return 0;
 
 err_einval:
+<<<<<<< HEAD
 	fprintf(stderr, "Invalid parameter on line %d of %s\n",
+=======
+	fprintf(stderr, _("Invalid parameter on line %d of %s\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		line, fname);
 	return EINVAL;
 
@@ -386,10 +660,21 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 		clear++;
 		break;
 	case 'D':
+<<<<<<< HEAD
 		delay = atoi(arg);
 		break;
 	case 'P':
 		period = atoi(arg);
+=======
+		delay = strtol(arg, &p, 10);
+		if (!p || *p || delay < 0)
+			argp_error(state, _("Invalid delay: %s"), arg);
+		break;
+	case 'P':
+		period = strtol(arg, &p, 10);
+		if (!p || *p || period < 0)
+			argp_error(state, _("Invalid period: %s"), arg);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		break;
 	case 'd':
 		devicename = arg;
@@ -405,20 +690,31 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 
 		rc = parse_keyfile(arg, &name);
 		if (rc)
+<<<<<<< HEAD
 			goto err_inval;
 		if (name)
 			fprintf(stderr, "Read %s table\n", name);
+=======
+			argp_error(state, _("Failed to read table file %s"), arg);
+		if (name)
+			fprintf(stderr, _("Read %s table\n"), name);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		break;
 	}
 	case 'a': {
 		rc = parse_cfgfile(arg);
 		if (rc)
+<<<<<<< HEAD
 			goto err_inval;
+=======
+			argp_error(state, _("Failed to read config file %s"), arg);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		break;
 	}
 	case 'k':
 		p = strtok(arg, ":=");
 		do {
+<<<<<<< HEAD
 			if (!p)
 				goto err_inval;
 			nextkey->codes[0] = strtoul(p, NULL, 0);
@@ -446,11 +742,59 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 				return ENOMEM;
 			}
 			nextkey = nextkey->next;
+=======
+			struct keytable_entry *ke;
+
+			if (!p) {
+				argp_error(state, _("Missing scancode: %s"), arg);
+				break;
+			}
+
+			ke = calloc(1, sizeof(*ke));
+			if (!ke) {
+				perror(_("No memory!\n"));
+				return ENOMEM;
+			}
+
+			ke->scancode = strtoul(p, NULL, 0);
+			if (errno) {
+				free(ke);
+				argp_error(state, _("Invalid scancode: %s"), p);
+				break;
+			}
+
+			p = strtok(NULL, ",;");
+			if (!p) {
+				free(ke);
+				argp_error(state, _("Missing keycode"));
+				break;
+			}
+
+			key = parse_code(p);
+			if (key == -1) {
+				key = strtol(p, NULL, 0);
+				if (errno) {
+					free(ke);
+					argp_error(state, _("Unknown keycode: %s"), p);
+					break;
+				}
+			}
+
+			ke->keycode = key;
+
+			if (debug)
+				fprintf(stderr, _("scancode 0x%04x=%u\n"),
+					ke->scancode, ke->keycode);
+
+			ke->next = keytable;
+			keytable = ke;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 			p = strtok(NULL, ":=");
 		} while (p);
 		break;
 	case 'p':
+<<<<<<< HEAD
 		p = strtok(arg, ",;");
 		do {
 			if (!p)
@@ -485,6 +829,37 @@ err_inval:
 	fprintf(stderr, "Invalid parameter(s)\n");
 	return ARGP_ERR_UNKNOWN;
 
+=======
+		for (p = strtok(arg, ",;"); p; p = strtok(NULL, ",;")) {
+			enum sysfs_protocols protocol;
+
+			protocol = parse_sysfs_protocol(p, true);
+			if (protocol == SYSFS_INVALID) {
+				argp_error(state, _("Unknown protocol: %s"), p);
+				break;
+			}
+
+			ch_proto |= protocol;
+		}
+		break;
+	case '?':
+		argp_state_help(state, state->out_stream,
+				ARGP_HELP_SHORT_USAGE | ARGP_HELP_LONG
+				| ARGP_HELP_DOC);
+		fprintf(state->out_stream, _("\nReport bugs to %s.\n"), argp_program_bug_address);
+		exit(0);
+	case 'V':
+		fprintf (state->out_stream, "%s\n", argp_program_version);
+		exit(0);
+	case -3:
+		argp_state_help(state, state->out_stream, ARGP_HELP_USAGE);
+		exit(0);
+	default:
+		return ARGP_ERR_UNKNOWN;
+	}
+
+	return 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 static struct argp argp = {
@@ -500,15 +875,25 @@ static void prtcode(int *codes)
 
 	for (p = key_events; p->name != NULL; p++) {
 		if (p->value == (unsigned)codes[1]) {
+<<<<<<< HEAD
 			printf("scancode 0x%04x = %s (0x%02x)\n", codes[0], p->name, codes[1]);
+=======
+			printf(_("scancode 0x%04x = %s (0x%02x)\n"), codes[0], p->name, codes[1]);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			return;
 		}
 	}
 
 	if (isprint (codes[1]))
+<<<<<<< HEAD
 		printf("scancode 0x%04x = '%c' (0x%02x)\n", codes[0], codes[1], codes[1]);
 	else
 		printf("scancode 0x%04x = 0x%02x\n", codes[0], codes[1]);
+=======
+		printf(_("scancode 0x%04x = '%c' (0x%02x)\n"), codes[0], codes[1], codes[1]);
+	else
+		printf(_("scancode 0x%04x = 0x%02x\n"), codes[0], codes[1]);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 static void free_names(struct sysfs_names *names)
@@ -558,15 +943,26 @@ static struct sysfs_names *seek_sysfs_dir(char *dname, char *node_name)
 	closedir(dir);
 
 	if (names == cur_name) {
+<<<<<<< HEAD
 		fprintf(stderr, "Couldn't find any node at %s%s*.\n",
 			dname, node_name);
+=======
+		if (debug)
+			fprintf(stderr, _("Couldn't find any node at %s%s*.\n"),
+				dname, node_name);
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		free (names);
 		names = NULL;
 	}
 	return names;
 
 err:
+<<<<<<< HEAD
 	perror("Seek dir");
+=======
+	perror(_("Seek dir"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	free_names(names);
 	return NULL;
 }
@@ -598,7 +994,11 @@ static struct uevents *read_sysfs_uevents(char *dname)
 	strcat(file, event);
 
 	if (debug)
+<<<<<<< HEAD
 		fprintf(stderr, "Parsing uevent %s\n", file);
+=======
+		fprintf(stderr, _("Parsing uevent %s\n"), file);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 
 	fp = fopen(file, "r");
@@ -622,7 +1022,11 @@ static struct uevents *read_sysfs_uevents(char *dname)
 
 		p = strtok(NULL, "\n");
 		if (!p) {
+<<<<<<< HEAD
 			fprintf(stderr, "Error on uevent information\n");
+=======
+			fprintf(stderr, _("Error on uevent information\n"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			fclose(fp);
 			free(file);
 			free_uevent(uevent);
@@ -638,7 +1042,11 @@ static struct uevents *read_sysfs_uevents(char *dname)
 		strcpy(next->value, p);
 
 		if (debug)
+<<<<<<< HEAD
 			fprintf(stderr, "%s uevent %s=%s\n", file, next->key, next->value);
+=======
+			fprintf(stderr, _("%s uevent %s=%s\n"), file, next->key, next->value);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 		next->next = calloc(1, sizeof(*next));
 		if (!next->next) {
@@ -666,12 +1074,23 @@ static struct sysfs_names *find_device(char *name)
 	snprintf(dname, sizeof(dname), "/sys/class/rc/");
 
 	names = seek_sysfs_dir(dname, input);
+<<<<<<< HEAD
 	if (!names)
 		return NULL;
 
 	if (debug) {
 		for (cur = names; cur->next; cur = cur->next) {
 			fprintf(stderr, "Found device %s\n", cur->name);
+=======
+	if (!names) {
+		fprintf(stderr, _("No devices found\n"));
+		return NULL;
+	}
+
+	if (debug) {
+		for (cur = names; cur->next; cur = cur->next) {
+			fprintf(stderr, _("Found device %s\n"), cur->name);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		}
 	}
 
@@ -695,7 +1114,11 @@ static struct sysfs_names *find_device(char *name)
 		free(n);
 		if (!found) {
 			free_names(names);
+<<<<<<< HEAD
 			fprintf(stderr, "Not found device %s\n", name);
+=======
+			fprintf(stderr, _("Not found device %s\n"), name);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			return NULL;
 		}
 		tmp = calloc(sizeof(*names), 1);
@@ -708,11 +1131,19 @@ static struct sysfs_names *find_device(char *name)
 	return names;
 }
 
+<<<<<<< HEAD
 static enum ir_protocols v1_get_hw_protocols(char *name)
 {
 	FILE *fp;
 	char *p, buf[4096];
 	enum ir_protocols proto = 0;
+=======
+static enum sysfs_protocols v1_get_hw_protocols(char *name)
+{
+	FILE *fp;
+	char *p, buf[4096];
+	enum sysfs_protocols protocols = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	fp = fopen(name, "r");
 	if (!fp) {
@@ -726,6 +1157,7 @@ static enum ir_protocols v1_get_hw_protocols(char *name)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	p = strtok(buf, " \n");
 	while (p) {
 		if (debug)
@@ -748,11 +1180,28 @@ static enum ir_protocols v1_get_hw_protocols(char *name)
 			proto |= OTHER;
 
 		p = strtok(NULL, " \n");
+=======
+	for (p = strtok(buf, " \n"); p; p = strtok(NULL, " \n")) {
+		enum sysfs_protocols protocol;
+
+		if (debug)
+			fprintf(stderr, _("%s protocol %s\n"), name, p);
+
+		protocol = parse_sysfs_protocol(p, false);
+		if (protocol == SYSFS_INVALID)
+			protocol = SYSFS_OTHER;
+
+		protocols |= protocol;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	}
 
 	fclose(fp);
 
+<<<<<<< HEAD
 	return proto;
+=======
+	return protocols;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 static int v1_set_hw_protocols(struct rc_device *rc_dev)
@@ -769,6 +1218,7 @@ static int v1_set_hw_protocols(struct rc_device *rc_dev)
 		return errno;
 	}
 
+<<<<<<< HEAD
 	if (rc_dev->current & RC_5)
 		fprintf(fp, "rc-5 ");
 
@@ -792,6 +1242,9 @@ static int v1_set_hw_protocols(struct rc_device *rc_dev)
 
 	if (rc_dev->current & OTHER)
 		fprintf(fp, "unknown ");
+=======
+	write_sysfs_protocols(rc_dev->current, fp, "%s ");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	fprintf(fp, "\n");
 
@@ -828,15 +1281,24 @@ static int v1_get_sw_enabled_protocol(char *dirname)
 
 	p = strtok(buf, " \n");
 	if (!p) {
+<<<<<<< HEAD
 		fprintf(stderr, "%s has invalid content: '%s'\n", name, buf);
+=======
+		fprintf(stderr, _("%s has invalid content: '%s'\n"), name, buf);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		return 0;
 	}
 
 	rc = atoi(p);
 
 	if (debug)
+<<<<<<< HEAD
 		fprintf(stderr, "protocol %s is %s\n",
 			name, rc? "enabled" : "disabled");
+=======
+		fprintf(stderr, _("protocol %s is %s\n"),
+			name, rc? _("enabled") : _("disabled"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	if (atoi(p) == 1)
 		return 1;
@@ -845,7 +1307,11 @@ static int v1_get_sw_enabled_protocol(char *dirname)
 }
 
 static int v1_set_sw_enabled_protocol(struct rc_device *rc_dev,
+<<<<<<< HEAD
 				   char *dirname, int enabled)
+=======
+				      const char *dirname, int enabled)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 {
 	FILE *fp;
 	char name[512];
@@ -873,12 +1339,19 @@ static int v1_set_sw_enabled_protocol(struct rc_device *rc_dev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static enum ir_protocols v2_get_protocols(struct rc_device *rc_dev, char *name)
+=======
+static enum sysfs_protocols v2_get_protocols(struct rc_device *rc_dev, char *name)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 {
 	FILE *fp;
 	char *p, buf[4096];
 	int enabled;
+<<<<<<< HEAD
 	enum ir_protocols proto;
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	fp = fopen(name, "r");
 	if (!fp) {
@@ -892,8 +1365,14 @@ static enum ir_protocols v2_get_protocols(struct rc_device *rc_dev, char *name)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	p = strtok(buf, " \n");
 	while (p) {
+=======
+	for (p = strtok(buf, " \n"); p; p = strtok(NULL, " \n")) {
+		enum sysfs_protocols protocol;
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		if (*p == '[') {
 			enabled = 1;
 			p++;
@@ -902,6 +1381,7 @@ static enum ir_protocols v2_get_protocols(struct rc_device *rc_dev, char *name)
 			enabled = 0;
 
 		if (debug)
+<<<<<<< HEAD
 			fprintf(stderr, "%s protocol %s (%s)\n", name, p,
 				enabled? "enabled" : "disabled");
 
@@ -929,6 +1409,19 @@ static enum ir_protocols v2_get_protocols(struct rc_device *rc_dev, char *name)
 			rc_dev->current |= proto;
 
 		p = strtok(NULL, " \n");
+=======
+			fprintf(stderr, _("%s protocol %s (%s)\n"), name, p,
+				enabled? _("enabled") : _("disabled"));
+
+		protocol = parse_sysfs_protocol(p, false);
+		if (protocol == SYSFS_INVALID)
+			protocol = SYSFS_OTHER;
+
+		rc_dev->supported |= protocol;
+		if (enabled)
+			rc_dev->current |= protocol;
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	}
 
 	fclose(fp);
@@ -940,10 +1433,22 @@ static int v2_set_protocols(struct rc_device *rc_dev)
 {
 	FILE *fp;
 	char name[4096];
+<<<<<<< HEAD
+=======
+	struct stat st;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	strcpy(name, rc_dev->sysfs_name);
 	strcat(name, "/protocols");
 
+<<<<<<< HEAD
+=======
+	if (!stat(name, &st) && !(st.st_mode & 0222)) {
+		fprintf(stderr, _("Protocols for device can not be changed\n"));
+		return 0;
+	}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	fp = fopen(name, "w");
 	if (!fp) {
 		perror(name);
@@ -953,6 +1458,7 @@ static int v2_set_protocols(struct rc_device *rc_dev)
 	/* Disable all protocols */
 	fprintf(fp, "none\n");
 
+<<<<<<< HEAD
 	if (rc_dev->current & RC_5)
 		fprintf(fp, "+rc-5\n");
 
@@ -979,6 +1485,9 @@ static int v2_set_protocols(struct rc_device *rc_dev)
 
 	if (rc_dev->current & OTHER)
 		fprintf(fp, "+unknown\n");
+=======
+	write_sysfs_protocols(rc_dev->current, fp, "+%s\n");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	if (fclose(fp)) {
 		perror(name);
@@ -988,6 +1497,7 @@ static int v2_set_protocols(struct rc_device *rc_dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void show_proto(	enum ir_protocols proto)
 {
 	if (proto & NEC)
@@ -1016,16 +1526,46 @@ static int get_attribs(struct rc_device *rc_dev, char *sysfs_name)
 	char		*input = "input", *event = "event";
 	char		*DEV = "/dev/";
 	static struct sysfs_names *input_names, *event_names, *attribs, *cur;
+=======
+static int get_attribs(struct rc_device *rc_dev, char *sysfs_name)
+{
+	struct uevents  *uevent;
+	char		*input = "input", *event = "event", *lirc = "lirc";
+	char		*DEV = "/dev/";
+	static struct sysfs_names *input_names, *event_names, *attribs, *cur, *lirc_names;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	/* Clean the attributes */
 	memset(rc_dev, 0, sizeof(*rc_dev));
 
 	rc_dev->sysfs_name = sysfs_name;
 
+<<<<<<< HEAD
+=======
+	lirc_names = seek_sysfs_dir(rc_dev->sysfs_name, lirc);
+	if (lirc_names) {
+		uevent = read_sysfs_uevents(lirc_names->name);
+		free_names(lirc_names);
+		if (uevent) {
+			while (uevent->next) {
+				if (!strcmp(uevent->key, "DEVNAME")) {
+					rc_dev->lirc_name = malloc(strlen(uevent->value) + strlen(DEV) + 1);
+					strcpy(rc_dev->lirc_name, DEV);
+					strcat(rc_dev->lirc_name, uevent->value);
+					break;
+				}
+				uevent = uevent->next;
+			}
+			free_uevent(uevent);
+		}
+	}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	input_names = seek_sysfs_dir(rc_dev->sysfs_name, input);
 	if (!input_names)
 		return EINVAL;
 	if (input_names->next->next) {
+<<<<<<< HEAD
 		fprintf(stderr, "Found more than one input interface."
 				"This is currently unsupported\n");
 		return EINVAL;
@@ -1047,6 +1587,29 @@ static int get_attribs(struct rc_device *rc_dev, char *sysfs_name)
 	}
 	if (debug)
 		fprintf(stderr, "Event sysfs node is %s\n", event_names->name);
+=======
+		fprintf(stderr, _("Found more than one input interface. This is currently unsupported\n"));
+		return EINVAL;
+	}
+	if (debug)
+		fprintf(stderr, _("Input sysfs node is %s\n"), input_names->name);
+
+	event_names = seek_sysfs_dir(input_names->name, event);
+	if (!event_names) {
+		fprintf(stderr, _("Couldn't find any node at %s%s*.\n"),
+			input_names->name, event);
+		free_names(input_names);
+		return EINVAL;
+	}
+	free_names(input_names);
+	if (event_names->next->next) {
+		free_names(event_names);
+		fprintf(stderr, _("Found more than one event interface. This is currently unsupported\n"));
+		return EINVAL;
+	}
+	if (debug)
+		fprintf(stderr, _("Event sysfs node is %s\n"), event_names->name);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	uevent = read_sysfs_uevents(event_names->name);
 	free_names(event_names);
@@ -1065,7 +1628,11 @@ static int get_attribs(struct rc_device *rc_dev, char *sysfs_name)
 	free_uevent(uevent);
 
 	if (!rc_dev->input_name) {
+<<<<<<< HEAD
 		fprintf(stderr, "Input device name not found.\n");
+=======
+		fprintf(stderr, _("Input device name not found.\n"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		return EINVAL;
 	}
 
@@ -1077,6 +1644,13 @@ static int get_attribs(struct rc_device *rc_dev, char *sysfs_name)
 			rc_dev->drv_name = malloc(strlen(uevent->value) + 1);
 			strcpy(rc_dev->drv_name, uevent->value);
 		}
+<<<<<<< HEAD
+=======
+		if (!strcmp(uevent->key, "DEV_NAME")) {
+			rc_dev->dev_name = malloc(strlen(uevent->value) + 1);
+			strcpy(rc_dev->dev_name, uevent->value);
+		}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		if (!strcmp(uevent->key, "NAME")) {
 			rc_dev->keytable_name = malloc(strlen(uevent->value) + 1);
 			strcpy(rc_dev->keytable_name, uevent->value);
@@ -1086,7 +1660,11 @@ static int get_attribs(struct rc_device *rc_dev, char *sysfs_name)
 	free_uevent(uevent);
 
 	if (debug)
+<<<<<<< HEAD
 		fprintf(stderr, "input device is %s\n", rc_dev->input_name);
+=======
+		fprintf(stderr, _("input device is %s\n"), rc_dev->input_name);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	sysfs++;
 
@@ -1108,6 +1686,7 @@ static int get_attribs(struct rc_device *rc_dev, char *sysfs_name)
 		} else if (strstr(cur->name, "/supported_protocols")) {
 			rc_dev->version = VERSION_1;
 			rc_dev->supported = v1_get_hw_protocols(cur->name);
+<<<<<<< HEAD
 		} else if (strstr(cur->name, "/nec_decoder")) {
 			rc_dev->supported |= NEC;
 			if (v1_get_sw_enabled_protocol(cur->name))
@@ -1128,6 +1707,22 @@ static int get_attribs(struct rc_device *rc_dev, char *sysfs_name)
 			rc_dev->supported |= SONY;
 			if (v1_get_sw_enabled_protocol(cur->name))
 				rc_dev->current |= SONY;
+=======
+		} else {
+			const struct protocol_map_entry *pme;
+
+			for (pme = protocol_map; pme->name; pme++) {
+				if (!pme->sysfs1_name)
+					continue;
+
+				if (strstr(cur->name, pme->sysfs1_name)) {
+					rc_dev->supported |= pme->sysfs_protocol;
+					if (v1_get_sw_enabled_protocol(cur->name))
+						rc_dev->supported |= pme->sysfs_protocol;
+					break;
+				}
+			}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		}
 	}
 
@@ -1138,12 +1733,22 @@ static int set_proto(struct rc_device *rc_dev)
 {
 	int rc = 0;
 
+<<<<<<< HEAD
+=======
+	rc_dev->current &= rc_dev->supported;
+	if (!rc_dev->current) {
+		fprintf(stderr, _("Invalid protocols selected\n"));
+		return EINVAL;
+	}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	if (rc_dev->version == VERSION_2) {
 		rc = v2_set_protocols(rc_dev);
 		return rc;
 	}
 
 	if (rc_dev->type == SOFTWARE_DECODER) {
+<<<<<<< HEAD
 		if (rc_dev->supported & NEC)
 			rc += v1_set_sw_enabled_protocol(rc_dev, "/nec_decoder",
 						      rc_dev->current & NEC);
@@ -1159,6 +1764,21 @@ static int set_proto(struct rc_device *rc_dev)
 		if (rc_dev->supported & SONY)
 			rc += v1_set_sw_enabled_protocol(rc_dev, "/sony_decoder",
 						      rc_dev->current & SONY);
+=======
+		const struct protocol_map_entry *pme;
+
+		for (pme = protocol_map; pme->name; pme++) {
+			if (!pme->sysfs1_name)
+				continue;
+
+			if (!(rc_dev->supported & pme->sysfs_protocol))
+				continue;
+
+			rc += v1_set_sw_enabled_protocol(rc_dev, pme->sysfs1_name,
+							 rc_dev->current & pme->sysfs_protocol);
+		}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	} else {
 		rc = v1_set_hw_protocols(rc_dev);
 	}
@@ -1170,12 +1790,20 @@ static int get_input_protocol_version(int fd)
 {
 	if (ioctl(fd, EVIOCGVERSION, &input_protocol_version) < 0) {
 		fprintf(stderr,
+<<<<<<< HEAD
 			"Unable to query evdev protocol version: %s\n",
+=======
+			_("Unable to query evdev protocol version: %s\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			strerror(errno));
 		return errno;
 	}
 	if (debug)
+<<<<<<< HEAD
 		fprintf(stderr, "Input Protocol version: 0x%08x\n",
+=======
+		fprintf(stderr, _("Input Protocol version: 0x%08x\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			input_protocol_version);
 
 	return 0;
@@ -1206,7 +1834,11 @@ static void clear_table(int fd)
 
 			i++;
 			if (debug)
+<<<<<<< HEAD
 				fprintf(stderr, "Deleting entry %d\n", i);
+=======
+				fprintf(stderr, _("Deleting entry %d\n"), i);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		} while (ioctl(fd, EVIOCSKEYCODE_V2, &entry) == 0);
 	}
 }
@@ -1214,6 +1846,7 @@ static void clear_table(int fd)
 static int add_keys(int fd)
 {
 	int write_cnt = 0;
+<<<<<<< HEAD
 
 	nextkey = &keys;
 	while (nextkey->next) {
@@ -1234,6 +1867,32 @@ static int add_keys(int fd)
 		nextkey = nextkey->next;
 		if (old != &keys)
 			free(old);
+=======
+	struct keytable_entry *ke;
+	unsigned codes[2];
+
+	for (ke = keytable; ke; ke = ke->next) {
+		write_cnt++;
+		if (debug)
+			fprintf(stderr, "\t%04x=%04x\n",
+				ke->scancode, ke->keycode);
+
+		codes[0] = ke->scancode;
+		codes[1] = ke->keycode;
+
+		if (ioctl(fd, EVIOCSKEYCODE, codes)) {
+			fprintf(stderr,
+				_("Setting scancode 0x%04x with 0x%04x via "),
+				ke->scancode, ke->keycode);
+			perror("EVIOCSKEYCODE");
+		}
+	}
+
+	while (keytable) {
+		ke = keytable;
+		keytable = ke->next;
+		free(ke);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	}
 
 	return write_cnt;
@@ -1242,10 +1901,17 @@ static int add_keys(int fd)
 static void display_proto(struct rc_device *rc_dev)
 {
 	if (rc_dev->type == HARDWARE_DECODER)
+<<<<<<< HEAD
 		fprintf(stderr, "Current protocols: ");
 	else
 		fprintf(stderr, "Enabled protocols: ");
 	show_proto(rc_dev->current);
+=======
+		fprintf(stderr, _("Current protocols: "));
+	else
+		fprintf(stderr, _("Enabled protocols: "));
+	write_sysfs_protocols(rc_dev->current, stderr, "%s ");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	fprintf(stderr, "\n");
 }
 
@@ -1261,6 +1927,7 @@ static char *get_event_name(struct parse_event *event, u_int16_t code)
 	return "";
 }
 
+<<<<<<< HEAD
 static void test_event(int fd)
 {
 	struct input_event ev[64];
@@ -1272,11 +1939,112 @@ static void test_event(int fd)
 
 		if (rd < (int) sizeof(struct input_event)) {
 			perror("Error reading event");
+=======
+static void print_scancodes(const struct lirc_scancode *scancodes, unsigned count)
+{
+	unsigned i;
+
+	for (i=0; i< count; i++)  {
+		const char *p = protocol_name(scancodes[i].rc_proto);
+
+		printf(_("%llu.%06llu: "),
+			scancodes[i].timestamp / 1000000000ull,
+			(scancodes[i].timestamp % 1000000000ull) / 1000ull);
+
+		if (p)
+			printf(_("lirc protocol(%s): scancode = 0x%llx"),
+				p, scancodes[i].scancode);
+		else
+			printf(_("lirc protocol(%d): scancode = 0x%llx"),
+				scancodes[i].rc_proto, scancodes[i].scancode);
+
+		if (scancodes[i].flags & LIRC_SCANCODE_FLAG_REPEAT)
+			printf(_(" repeat"));
+		if (scancodes[i].flags & LIRC_SCANCODE_FLAG_TOGGLE)
+			printf(_(" toggle=1"));
+
+		printf("\n");
+	}
+}
+
+static void test_event(struct rc_device *rc_dev, int fd)
+{
+	struct input_event ev[64];
+	struct lirc_scancode sc[64];
+	int rd, i, lircfd = -1;
+	unsigned mode;
+
+	/* LIRC reports time in monotonic, set event to same */
+	mode = CLOCK_MONOTONIC;
+	ioctl(fd, EVIOCSCLOCKID, &mode);
+
+	if (rc_dev->lirc_name) {
+		lircfd = open(rc_dev->lirc_name, O_RDONLY | O_NONBLOCK);
+		if (lircfd == -1) {
+			perror(_("Can't open lirc device"));
+			return;
+		}
+		unsigned features;
+		if (ioctl(lircfd, LIRC_GET_FEATURES, &features)) {
+			perror(_("Can't get lirc features"));
+			return;
+		}
+
+		if (!(features & LIRC_CAN_REC_SCANCODE)) {
+			close(lircfd);
+			lircfd = -1;
+		}
+		else {
+			unsigned mode = LIRC_MODE_SCANCODE;
+			if (ioctl(lircfd, LIRC_SET_REC_MODE, &mode)) {
+				perror(_("Can't set lirc scancode mode"));
+				return;
+			}
+		}
+	}
+
+	printf (_("Testing events. Please, press CTRL-C to abort.\n"));
+	while (1) {
+		struct pollfd pollstruct[2] = {
+			{ .fd = fd, .events = POLLIN },
+			{ .fd = lircfd, .events = POLLIN },
+		};
+
+		if (poll(pollstruct, 2, -1) < 0) {
+			if (errno == EINTR)
+				continue;
+
+			perror(_("poll returned error"));
+		}
+
+		if (lircfd != -1) {
+			rd = read(lircfd, sc, sizeof(sc));
+
+			if (rd != -1) {
+				print_scancodes(sc, rd / sizeof(struct lirc_scancode));
+			} else if (errno != EAGAIN) {
+				perror(_("Error reading lirc scancode"));
+				return;
+			}
+		}
+
+		rd = read(fd, ev, sizeof(ev));
+
+		if (rd < (int) sizeof(struct input_event)) {
+			if (errno == EAGAIN)
+				continue;
+
+			perror(_("Error reading event"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			return;
 		}
 
 		for (i = 0; i < rd / sizeof(struct input_event); i++) {
+<<<<<<< HEAD
 			printf("%ld.%06ld: event type %s(0x%02x)",
+=======
+			printf(_("%ld.%06ld: event type %s(0x%02x)"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				ev[i].time.tv_sec, ev[i].time.tv_usec,
 				get_event_name(events_type, ev[i].type), ev[i].type);
 
@@ -1285,6 +2053,7 @@ static void test_event(int fd)
 				printf(".\n");
 				break;
 			case EV_KEY:
+<<<<<<< HEAD
 				printf(" key_%s: %s(0x%04x)\n",
 					(ev[i].value == 0) ? "up" : "down",
 					get_event_name(key_events, ev[i].code),
@@ -1300,18 +2069,45 @@ static void test_event(int fd)
 				printf(": %s (0x%04x) value=%d\n",
 					get_event_name(abs_events, ev[i].code),
 					ev[i].type,
+=======
+				printf(_(" key_%s: %s(0x%04x)\n"),
+					(ev[i].value == 0) ? _("up") : _("down"),
+					get_event_name(key_events, ev[i].code),
+					ev[i].code);
+				break;
+			case EV_REL:
+				printf(_(": %s (0x%04x) value=%d\n"),
+					get_event_name(rel_events, ev[i].code),
+					ev[i].code,
+					ev[i].value);
+				break;
+			case EV_ABS:
+				printf(_(": %s (0x%04x) value=%d\n"),
+					get_event_name(abs_events, ev[i].code),
+					ev[i].code,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 					ev[i].value);
 				break;
 			case EV_MSC:
 				if (ev[i].code == MSC_SCAN)
+<<<<<<< HEAD
 					printf(": scancode = 0x%02x\n", ev[i].value);
 				else
 					printf(": code = %s(0x%02x), value = %d\n",
+=======
+					printf(_(": scancode = 0x%02x\n"), ev[i].value);
+				else
+					printf(_(": code = %s(0x%02x), value = %d\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 						get_event_name(msc_events, ev[i].code),
 						ev[i].code, ev[i].value);
 				break;
 			case EV_REP:
+<<<<<<< HEAD
 				printf(": value = %d\n", ev[i].value);
+=======
+				printf(_(": value = %d\n"), ev[i].value);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				break;
 			case EV_SW:
 			case EV_LED:
@@ -1320,7 +2116,11 @@ static void test_event(int fd)
 			case EV_PWR:
 			case EV_FF_STATUS:
 			default:
+<<<<<<< HEAD
 				printf(": code = 0x%02x, value = %d\n",
+=======
+				printf(_(": code = 0x%02x, value = %d\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 					ev[i].code, ev[i].value);
 				break;
 			}
@@ -1389,7 +2189,11 @@ static int set_rate(int fd, unsigned int delay, unsigned int period)
 		return -1;
 	}
 
+<<<<<<< HEAD
 	printf("Changed Repeat delay to %d ms and repeat period to %d ms\n", delay, period);
+=======
+	printf(_("Changed Repeat delay to %d ms and repeat period to %d ms\n"), delay, period);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	return 0;
 }
 
@@ -1403,7 +2207,11 @@ static int get_rate(int fd, unsigned int *delay, unsigned int *period)
 	}
 	*delay = rep[0];
 	*period = rep[1];
+<<<<<<< HEAD
 	printf("Repeat delay = %d ms, repeat period = %d ms\n", *delay, *period);
+=======
+	printf(_("Repeat delay = %d ms, repeat period = %d ms\n"), *delay, *period);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	return 0;
 }
 
@@ -1415,32 +2223,58 @@ static void show_evdev_attribs(int fd)
 	get_rate(fd, &delay, &period);
 }
 
+<<<<<<< HEAD
 static void device_info(int fd, char *prepend)
 {
 	struct input_id id;
+=======
+static void device_name(int fd, char *prepend)
+{
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	char buf[32];
 	int rc;
 
 	rc = ioctl(fd, EVIOCGNAME(sizeof(buf)), buf);
 	if (rc >= 0)
+<<<<<<< HEAD
 		fprintf(stderr,"%sName: %.*s\n",prepend, rc, buf);
 	else
 		perror ("EVIOCGNAME");
+=======
+		fprintf(stderr,_("%sName: %.*s\n"),prepend, rc, buf);
+	else
+		perror ("EVIOCGNAME");
+}
+
+static void device_info(int fd, char *prepend)
+{
+	struct input_id id;
+	int rc;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	rc = ioctl(fd, EVIOCGID, &id);
 	if (rc >= 0)
 		fprintf(stderr,
+<<<<<<< HEAD
 			"%sbus: %d, vendor/product: %04x:%04x, version: 0x%04x\n",
+=======
+			_("%sbus: %d, vendor/product: %04x:%04x, version: 0x%04x\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			prepend, id.bustype, id.vendor, id.product, id.version);
 	else
 		perror ("EVIOCGID");
 }
 
+<<<<<<< HEAD
 static int show_sysfs_attribs(struct rc_device *rc_dev)
+=======
+static int show_sysfs_attribs(struct rc_device *rc_dev, char *name)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 {
 	static struct sysfs_names *names, *cur;
 	int fd;
 
+<<<<<<< HEAD
 	names = find_device(NULL);
 	if (!names)
 		return -1;
@@ -1456,15 +2290,47 @@ static int show_sysfs_attribs(struct rc_device *rc_dev)
 				rc_dev->keytable_name);
 			fprintf(stderr, "\tSupported protocols: ");
 			show_proto(rc_dev->supported);
+=======
+	names = find_device(name);
+	if (!names)
+		return -1;
+	for (cur = names; cur; cur = cur->next) {
+		if (cur->name) {
+			if (get_attribs(rc_dev, cur->name))
+				continue;
+			fprintf(stderr, _("Found %s (%s) with:\n"),
+				rc_dev->sysfs_name,
+				rc_dev->input_name);
+			if (rc_dev->dev_name)
+				fprintf(stderr, _("\tName: %s\n"),
+					rc_dev->dev_name);
+			fprintf(stderr, _("\tDriver: %s, table: %s\n"),
+				rc_dev->drv_name,
+				rc_dev->keytable_name);
+			if (rc_dev->lirc_name)
+				fprintf(stderr, _("\tlirc device: %s\n"),
+					rc_dev->lirc_name);
+			fprintf(stderr, _("\tSupported protocols: "));
+			write_sysfs_protocols(rc_dev->supported, stderr, "%s ");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			fprintf(stderr, "\n\t");
 			display_proto(rc_dev);
 			fd = open(rc_dev->input_name, O_RDONLY);
 			if (fd > 0) {
+<<<<<<< HEAD
+=======
+				if (!rc_dev->dev_name)
+					device_name(fd, "\t");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				device_info(fd, "\t");
 				show_evdev_attribs(fd);
 				close(fd);
 			} else {
+<<<<<<< HEAD
 				printf("\tExtra capabilities: <access denied>\n");
+=======
+				printf(_("\tExtra capabilities: <access denied>\n"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			}
 		}
 	}
@@ -1478,6 +2344,7 @@ int main(int argc, char *argv[])
 	static struct sysfs_names *names;
 	struct rc_device	  rc_dev;
 
+<<<<<<< HEAD
 	argp_parse(&argp, argc, argv, 0, 0, 0);
 
 	/* Just list all devices */
@@ -1488,18 +2355,49 @@ int main(int argc, char *argv[])
 				perror("Can't open device");
 				return -1;
 			}
+=======
+#ifdef ENABLE_NLS
+	setlocale (LC_ALL, "");
+	bindtextdomain (PACKAGE, LOCALEDIR);
+	textdomain (PACKAGE);
+#endif
+
+	argp_parse(&argp, argc, argv, ARGP_NO_HELP, 0, 0);
+
+	/* Just list all devices */
+	if (!clear && !readtable && !keytable && !ch_proto && !cfg.next && !test && delay < 0 && period < 0) {
+		if (devicename) {
+			fd = open(devicename, O_RDONLY);
+			if (fd < 0) {
+				perror(_("Can't open device"));
+				return -1;
+			}
+			device_name(fd, "");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			device_info(fd, "");
 			close(fd);
 			return 0;
 		}
+<<<<<<< HEAD
 		if (show_sysfs_attribs(&rc_dev))
+=======
+		if (show_sysfs_attribs(&rc_dev, devclass))
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			return -1;
 
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (cfg.next && (clear || keys.next || ch_proto || devicename)) {
 		fprintf (stderr, "Auto-mode can be used only with --read, --debug and --sysdev options\n");
+=======
+	if (!devclass)
+		devclass = "rc0";
+
+	if (cfg.next && (clear || keytable || ch_proto || devicename)) {
+		fprintf (stderr, _("Auto-mode can be used only with --read, --debug and --sysdev options\n"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		return -1;
 	}
 	if (!devicename) {
@@ -1533,19 +2431,31 @@ int main(int argc, char *argv[])
 
 		if (!cur->next) {
 			if (debug)
+<<<<<<< HEAD
 				fprintf(stderr, "Table for %s, %s not found. Keep as-is\n",
+=======
+				fprintf(stderr, _("Table for %s, %s not found. Keep as-is\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				       rc_dev.drv_name, rc_dev.keytable_name);
 			return 0;
 		}
 		if (debug)
+<<<<<<< HEAD
 			fprintf(stderr, "Table for %s, %s is on %s file.\n",
+=======
+			fprintf(stderr, _("Table for %s, %s is on %s file.\n"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				rc_dev.drv_name, rc_dev.keytable_name,
 				cur->fname);
 		if (cur->fname[0] == '/' || ((cur->fname[0] == '.') && strchr(cur->fname, '/'))) {
 			fname = cur->fname;
 			rc = parse_keyfile(fname, &name);
 			if (rc < 0) {
+<<<<<<< HEAD
 				fprintf(stderr, "Can't load %s table\n", fname);
+=======
+				fprintf(stderr, _("Can't load %s table\n"), fname);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				return -1;
 			}
 		} else {
@@ -1562,20 +2472,34 @@ int main(int argc, char *argv[])
 				rc = parse_keyfile(fname, &name);
 			}
 			if (rc != 0) {
+<<<<<<< HEAD
 				fprintf(stderr, "Can't load %s table from %s or %s\n", cur->fname, IR_KEYTABLE_USER_DIR, IR_KEYTABLE_SYSTEM_DIR);
 				return -1;
 			}
 		}
 		if (!keys.next) {
 			fprintf(stderr, "Empty table %s\n", fname);
+=======
+				fprintf(stderr, _("Can't load %s table from %s or %s\n"), cur->fname, IR_KEYTABLE_USER_DIR, IR_KEYTABLE_SYSTEM_DIR);
+				return -1;
+			}
+		}
+		if (!keytable) {
+			fprintf(stderr, _("Empty table %s\n"), fname);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			return -1;
 		}
 		clear = 1;
 	}
 
 	if (debug)
+<<<<<<< HEAD
 		fprintf(stderr, "Opening %s\n", devicename);
 	fd = open(devicename, O_RDONLY);
+=======
+		fprintf(stderr, _("Opening %s\n"), devicename);
+	fd = open(devicename, O_RDONLY | O_NONBLOCK);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	if (fd < 0) {
 		perror(devicename);
 		return -1;
@@ -1590,7 +2514,11 @@ int main(int argc, char *argv[])
 	 */
 	if (clear) {
 		clear_table(fd);
+<<<<<<< HEAD
 		fprintf(stderr, "Old keytable cleared\n");
+=======
+		fprintf(stderr, _("Old keytable cleared\n"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	}
 
 	/*
@@ -1598,7 +2526,11 @@ int main(int argc, char *argv[])
 	 */
 	write_cnt = add_keys(fd);
 	if (write_cnt)
+<<<<<<< HEAD
 		fprintf(stderr, "Wrote %d keycode(s) to driver\n", write_cnt);
+=======
+		fprintf(stderr, _("Wrote %d keycode(s) to driver\n"), write_cnt);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	/*
 	 * Third step: change protocol
@@ -1606,10 +2538,17 @@ int main(int argc, char *argv[])
 	if (ch_proto) {
 		rc_dev.current = ch_proto;
 		if (set_proto(&rc_dev))
+<<<<<<< HEAD
 			fprintf(stderr, "Couldn't change the IR protocols\n");
 		else {
 			fprintf(stderr, "Protocols changed to ");
 			show_proto(rc_dev.current);
+=======
+			fprintf(stderr, _("Couldn't change the IR protocols\n"));
+		else {
+			fprintf(stderr, _("Protocols changed to "));
+			write_sysfs_protocols(rc_dev.current, stderr, "%s ");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			fprintf(stderr, "\n");
 		}
 	}
@@ -1623,18 +2562,31 @@ int main(int argc, char *argv[])
 	/*
 	 * Fiveth step: change repeat rate/delay
 	 */
+<<<<<<< HEAD
 	if (delay || period) {
 		unsigned int new_delay, new_period;
 		get_rate(fd, &new_delay, &new_period);
 		if (delay)
 			new_delay = delay;
 		if (period)
+=======
+	if (delay >= 0 || period >= 0) {
+		unsigned int new_delay, new_period;
+		get_rate(fd, &new_delay, &new_period);
+		if (delay >= 0)
+			new_delay = delay;
+		if (period >= 0)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			new_period = period;
 		set_rate(fd, new_delay, new_period);
 	}
 
 	if (test)
+<<<<<<< HEAD
 		test_event(fd);
+=======
+		test_event(&rc_dev, fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	return 0;
 }

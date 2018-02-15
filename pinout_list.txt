@@ -1,0 +1,2 @@
+346 - Watchdog (dir: out, value: 1)
+351 - Trigger Signal

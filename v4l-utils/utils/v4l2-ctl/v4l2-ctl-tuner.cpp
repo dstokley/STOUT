@@ -71,6 +71,21 @@ static const char *audmode2s(int audmode)
 	}
 }
 
+<<<<<<< HEAD
+=======
+static const char *ttype2s(int type)
+{
+	switch (type) {
+		case V4L2_TUNER_RADIO: return "radio";
+		case V4L2_TUNER_ANALOG_TV: return "Analog TV";
+		case V4L2_TUNER_DIGITAL_TV: return "Digital TV";
+		case V4L2_TUNER_SDR: return "SDR";
+		case V4L2_TUNER_RF: return "RF";
+		default: return "unknown";
+	}
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 static std::string rxsubchans2s(int rxsubchans)
 {
 	std::string s;
@@ -380,7 +395,13 @@ void tuner_get(int fd)
 		}
 		vf.tuner = tuner_index;
 		if (doioctl(fd, VIDIOC_G_FREQUENCY, &vf) == 0)
+<<<<<<< HEAD
 			printf("Frequency for tuner %d: %d (%f MHz)\n",
+=======
+			printf("Frequency for %s %d: %d (%f MHz)\n",
+			       (capabilities & V4L2_CAP_MODULATOR) ?
+					"modulator" : "tuner",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			       vf.tuner, vf.frequency, vf.frequency / fac);
 	}
 
@@ -392,6 +413,10 @@ void tuner_get(int fd)
 		if (doioctl(fd, VIDIOC_G_TUNER, &vt) == 0) {
 			printf("Tuner %d:\n", vt.index);
 			printf("\tName                 : %s\n", vt.name);
+<<<<<<< HEAD
+=======
+			printf("\tType                 : %s\n", ttype2s(vt.type));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			printf("\tCapabilities         : %s\n", tcap2s(vt.capability).c_str());
 			if (vt.capability & V4L2_TUNER_CAP_LOW)
 				printf("\tFrequency range      : %.3f MHz - %.3f MHz\n",
@@ -403,7 +428,11 @@ void tuner_get(int fd)
 				printf("\tFrequency range      : %.3f MHz - %.3f MHz\n",
 				     vt.rangelow / 16.0, vt.rangehigh / 16.0);
 
+<<<<<<< HEAD
 			if (vt.type != V4L2_TUNER_ADC && vt.type != V4L2_TUNER_RF) {
+=======
+			if (vt.type != V4L2_TUNER_SDR && vt.type != V4L2_TUNER_RF) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				printf("\tSignal strength/AFC  : %d%%/%d\n", (int)((vt.signal / 655.35)+0.5), vt.afc);
 				printf("\tCurrent audio mode   : %s\n", audmode2s(vt.audmode));
 				printf("\tAvailable subchannels: %s\n", rxsubchans2s(vt.rxsubchans).c_str());
@@ -419,10 +448,20 @@ void tuner_get(int fd)
 		if (doioctl(fd, VIDIOC_G_MODULATOR, &mt) == 0) {
 			printf("Modulator %d:\n", modulator.index);
 			printf("\tName                 : %s\n", mt.name);
+<<<<<<< HEAD
+=======
+			printf("\tType                 : %s\n", ttype2s(mt.type));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			printf("\tCapabilities         : %s\n", tcap2s(mt.capability).c_str());
 			if (mt.capability & V4L2_TUNER_CAP_LOW)
 				printf("\tFrequency range      : %.1f MHz - %.1f MHz\n",
 				     mt.rangelow / 16000.0, mt.rangehigh / 16000.0);
+<<<<<<< HEAD
+=======
+			else if (mt.capability & V4L2_TUNER_CAP_1HZ)
+				printf("\tFrequency range      : %.6f MHz - %.6f MHz\n",
+				     mt.rangelow / 1000000.0, mt.rangehigh / 1000000.0);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			else
 				printf("\tFrequency range      : %.1f MHz - %.1f MHz\n",
 				     mt.rangelow / 16.0, mt.rangehigh / 16.0);

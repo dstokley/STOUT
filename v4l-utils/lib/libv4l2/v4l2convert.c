@@ -25,16 +25,34 @@
 
 #define _LARGEFILE64_SOURCE 1
 
+<<<<<<< HEAD
 #include <config.h>
+=======
+#ifdef ANDROID
+#include <android-config.h>
+#else
+#include <config.h>
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #include <stdarg.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <string.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>
+<<<<<<< HEAD
 #include "../libv4lconvert/libv4lsyscall-priv.h"
 #include <linux/videodev2.h>
 #include <libv4l2.h>
+=======
+#if defined(__OpenBSD__)
+#include <sys/videoio.h>
+#else
+#include <linux/videodev2.h>
+#endif
+#include <libv4l2.h>
+#include "../libv4lconvert/libv4lsyscall-priv.h"
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 /* Check that open/read/mmap is not a define */
 #if defined open || defined read || defined mmap
@@ -86,7 +104,11 @@ LIBV4L_PUBLIC int open(const char *file, int oflag, ...)
 	return fd;
 }
 
+<<<<<<< HEAD
 #ifdef linux
+=======
+#if defined(linux) && defined(__GLIBC__)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 LIBV4L_PUBLIC int open64(const char *file, int oflag, ...)
 {
 	int fd;
@@ -111,6 +133,10 @@ LIBV4L_PUBLIC int open64(const char *file, int oflag, ...)
 }
 #endif
 
+<<<<<<< HEAD
+=======
+#ifndef ANDROID
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 LIBV4L_PUBLIC int close(int fd)
 {
 	return v4l2_close(fd);
@@ -121,7 +147,15 @@ LIBV4L_PUBLIC int dup(int fd)
 	return v4l2_dup(fd);
 }
 
+<<<<<<< HEAD
 LIBV4L_PUBLIC int ioctl(int fd, unsigned long int request, ...)
+=======
+#ifdef HAVE_POSIX_IOCTL
+LIBV4L_PUBLIC int ioctl(int fd, int request, ...)
+#else
+LIBV4L_PUBLIC int ioctl(int fd, unsigned long int request, ...)
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 {
 	void *arg;
 	va_list ap;
@@ -139,14 +173,24 @@ LIBV4L_PUBLIC ssize_t read(int fd, void *buffer, size_t n)
 }
 
 LIBV4L_PUBLIC void *mmap(void *start, size_t length, int prot, int flags, int fd,
+<<<<<<< HEAD
 		__off_t offset)
+=======
+		off_t offset)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 {
 	return v4l2_mmap(start, length, prot, flags, fd, offset);
 }
 
+<<<<<<< HEAD
 #ifdef linux
 LIBV4L_PUBLIC void *mmap64(void *start, size_t length, int prot, int flags, int fd,
 		__off64_t offset)
+=======
+#if defined(linux) && defined(__GLIBC__)
+LIBV4L_PUBLIC void *mmap64(void *start, size_t length, int prot, int flags, int fd,
+		off64_t offset)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 {
 	return v4l2_mmap(start, length, prot, flags, fd, offset);
 }
@@ -156,4 +200,8 @@ LIBV4L_PUBLIC int munmap(void *start, size_t length)
 {
 	return v4l2_munmap(start, length);
 }
+<<<<<<< HEAD
 
+=======
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d

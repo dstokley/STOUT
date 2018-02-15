@@ -1,17 +1,29 @@
 /*
  * Copyright (c) 2012-2014 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -86,9 +98,15 @@ ssize_t dvb_table_eit_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 		event->descriptor = NULL;
 		event->next = NULL;
 		dvb_time(event->dvbstart, &event->start);
+<<<<<<< HEAD
 		event->duration = bcd((uint32_t) event->dvbduration[0]) * 3600 +
 				  bcd((uint32_t) event->dvbduration[1]) * 60 +
 				  bcd((uint32_t) event->dvbduration[2]);
+=======
+		event->duration = dvb_bcd((uint32_t) event->dvbduration[0]) * 3600 +
+				  dvb_bcd((uint32_t) event->dvbduration[1]) * 60 +
+				  dvb_bcd((uint32_t) event->dvbduration[2]);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 		event->service_id = eit->header.id;
 
@@ -99,7 +117,11 @@ ssize_t dvb_table_eit_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 		if (event->desc_length > 0) {
 			uint16_t desc_length = event->desc_length;
 			if (p + desc_length > endbuf) {
+<<<<<<< HEAD
 				dvb_logwarn("%s: decsriptors short read %zd/%d bytes", __func__,
+=======
+				dvb_logwarn("%s: descriptors short read %zd/%d bytes", __func__,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 					   endbuf - p, desc_length);
 				desc_length = endbuf - p;
 			}
@@ -163,9 +185,15 @@ void dvb_time(const uint8_t data[5], struct tm *tm)
   uint16_t mjd;
 
   mjd   = *(uint16_t *) data;
+<<<<<<< HEAD
   hour  = bcd(data[2]);
   min   = bcd(data[3]);
   sec   = bcd(data[4]);
+=======
+  hour  = dvb_bcd(data[2]);
+  min   = dvb_bcd(data[3]);
+  sec   = dvb_bcd(data[4]);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
   year  = ((mjd - 15078.2) / 365.25);
   month = ((mjd - 14956.1 - (int) (year * 365.25)) / 30.6001);
   day   = mjd - 14956 - (int) (year * 365.25) - (int) (month * 30.6001);

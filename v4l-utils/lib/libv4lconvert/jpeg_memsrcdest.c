@@ -16,7 +16,15 @@
 
 /* this is not a core library module, so it doesn't define JPEG_INTERNALS */
 
+<<<<<<< HEAD
 #include <config.h>
+=======
+#ifdef ANDROID
+#include <android-config.h>
+#else
+#include <config.h>
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -27,7 +35,11 @@
 
 /* libjpeg8 and later come with their own (API compatible) memory source
    and dest */
+<<<<<<< HEAD
 #if JPEG_LIB_VERSION < 80
+=======
+#if JPEG_LIB_VERSION < 80 && !defined(MEM_SRCDST_SUPPORTED)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 /* Expanded data source object for memory input */
 
@@ -305,5 +317,9 @@ jpeg_mem_dest (j_compress_ptr cinfo, unsigned char ** outbuffer,
 	dest->pub.free_in_buffer = dest->buf_size;
 }
 
+<<<<<<< HEAD
 #endif /* JPEG_LIB_VERSION < 80 */
+=======
+#endif /* JPEG_LIB_VERSION < 80 && !defined(MEM_SRCDST_SUPPORTED) */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #endif /* HAVE_JPEG */

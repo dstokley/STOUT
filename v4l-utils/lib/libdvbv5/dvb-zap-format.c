@@ -1,17 +1,29 @@
 /*
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -25,6 +37,12 @@
 #include <libdvbv5/dvb-file.h>
 #include <libdvbv5/dvb-v5-std.h>
 
+<<<<<<< HEAD
+=======
+#define PTABLE(a) .table = a, .size=ARRAY_SIZE(a)
+
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 /*
  * Standard channel.conf format for DVB-T, DVB-C, DVB-S and ATSC
  */
@@ -113,7 +131,11 @@ static const char *zap_parse_polarization[] = {
 	[POLARIZATION_R] = "R",
 };
 
+<<<<<<< HEAD
 static const struct parse_table sys_atsc_table[] = {
+=======
+static const struct dvb_parse_table sys_atsc_table[] = {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{ DTV_CH_NAME, NULL, 0 },
 
 	{ DTV_FREQUENCY, NULL, 0 },
@@ -125,7 +147,11 @@ static const struct parse_table sys_atsc_table[] = {
 
 };
 
+<<<<<<< HEAD
 static const struct parse_table sys_dvbc_table[] = {
+=======
+static const struct dvb_parse_table sys_dvbc_table[] = {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{ DTV_CH_NAME, NULL, 0 },
 
 	{ DTV_FREQUENCY, NULL, 0 },
@@ -140,7 +166,11 @@ static const struct parse_table sys_dvbc_table[] = {
 };
 
 /* Note: On DVB-S, frequency and symbol rate are divided by 1000 */
+<<<<<<< HEAD
 static const struct parse_table sys_dvbs_table[] = {
+=======
+static const struct dvb_parse_table sys_dvbs_table[] = {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{ DTV_CH_NAME, NULL, 0 },
 
 	{ DTV_FREQUENCY, NULL, 0 },
@@ -153,7 +183,11 @@ static const struct parse_table sys_dvbs_table[] = {
 
 };
 
+<<<<<<< HEAD
 static const struct parse_table sys_dvbt_table[] = {
+=======
+static const struct dvb_parse_table sys_dvbt_table[] = {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{ DTV_CH_NAME, NULL, 0 },
 
 	{ DTV_FREQUENCY, NULL, 0 },
@@ -171,7 +205,11 @@ static const struct parse_table sys_dvbt_table[] = {
 	{ DTV_SERVICE_ID, NULL, 0 },
 };
 
+<<<<<<< HEAD
 const struct parse_file channel_file_zap_format = {
+=======
+const struct dvb_parse_file channel_file_zap_format = {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	.has_delsys_id = 0,
 	.delimiter = ":\n",
 	.formats = {

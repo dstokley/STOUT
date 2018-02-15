@@ -1,17 +1,29 @@
 /*
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -47,7 +59,11 @@ const unsigned int sys_dvbt2_props[] = {
 	DTV_GUARD_INTERVAL,
 	DTV_TRANSMISSION_MODE,
 	DTV_HIERARCHY,
+<<<<<<< HEAD
 	DTV_DVBT2_PLP_ID_LEGACY,
+=======
+	DTV_STREAM_ID,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	0
 };
 
@@ -75,6 +91,10 @@ const unsigned int sys_isdbt_props[] = {
 	DTV_ISDBT_LAYERC_MODULATION,
 	DTV_ISDBT_LAYERC_SEGMENT_COUNT,
 	DTV_ISDBT_LAYERC_TIME_INTERLEAVING,
+<<<<<<< HEAD
+=======
+	DTV_COUNTRY_CODE,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	0
 };
 
@@ -138,6 +158,10 @@ const unsigned int sys_dvbs2_props[] = {
 	DTV_PILOT,
 	DTV_ROLLOFF,
 	DTV_POLARIZATION,
+<<<<<<< HEAD
+=======
+	DTV_STREAM_ID,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	0
 };
 
@@ -153,11 +177,27 @@ const unsigned int sys_turbo_props[] = {
 
 const unsigned int sys_isdbs_props[] = {
 	DTV_FREQUENCY,
+<<<<<<< HEAD
 	DTV_INVERSION,
 	DTV_SYMBOL_RATE,
 	DTV_INNER_FEC,
 	DTV_ISDBS_TS_ID_LEGACY,
 	DTV_POLARIZATION,
+=======
+	DTV_STREAM_ID,
+	0
+};
+
+const unsigned int sys_dtmb_props[] = {
+	DTV_FREQUENCY,
+	DTV_MODULATION,
+	DTV_BANDWIDTH_HZ,
+	DTV_INVERSION,
+	DTV_INNER_FEC,
+	DTV_GUARD_INTERVAL,
+	DTV_TRANSMISSION_MODE,
+	DTV_INTERLEAVING,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	0
 };
 
@@ -174,10 +214,17 @@ const unsigned int *dvb_v5_delivery_system[] = {
 	[SYS_ISDBS] =         sys_isdbs_props,
 	[SYS_ISDBT] =         sys_isdbt_props,
 	[SYS_TURBO] =         sys_turbo_props,
+<<<<<<< HEAD
 	[SYS_ATSCMH] =        NULL,
 	[SYS_CMMB] =          NULL,
 	[SYS_DAB] =           NULL,
 	[SYS_DMBTH] =         NULL,
+=======
+	[SYS_DTMB] =          sys_dtmb_props,
+	[SYS_ATSCMH] =        NULL,
+	[SYS_CMMB] =          NULL,
+	[SYS_DAB] =           NULL,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	[SYS_DSS] =           NULL,
 	[SYS_DVBH] =          NULL,
 	[SYS_ISDBC] =         NULL,
@@ -216,7 +263,11 @@ const char *dvb_sat_pol_name[6] = {
 	[5] = NULL,
 };
 
+<<<<<<< HEAD
 const char *dvb_user_name[DTV_USER_NAME_SIZE] = {
+=======
+const char *dvb_user_name[DTV_USER_NAME_SIZE + 1] = {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	[DTV_POLARIZATION - DTV_USER_COMMAND_START] =   "POLARIZATION",
 	[DTV_VIDEO_PID - DTV_USER_COMMAND_START] =	"VIDEO PID",
 	[DTV_AUDIO_PID - DTV_USER_COMMAND_START] =	"AUDIO PID",
@@ -227,6 +278,7 @@ const char *dvb_user_name[DTV_USER_NAME_SIZE] = {
 	[DTV_DISEQC_WAIT - DTV_USER_COMMAND_START] =	"DISEQC WAIT",
 	[DTV_DISEQC_LNB - DTV_USER_COMMAND_START] =	"DISEQC LNB",
 	[DTV_FREQ_BPF - DTV_USER_COMMAND_START] =	"FREQ BPF",
+<<<<<<< HEAD
 	[DTV_STATUS - DTV_USER_COMMAND_START] = 	"STATUS",
 	[DTV_BER - DTV_USER_COMMAND_START] =		"POST BER",
 	[DTV_PER - DTV_USER_COMMAND_START] =		"PER",
@@ -238,6 +290,25 @@ const char *dvb_user_name[DTV_USER_NAME_SIZE] = {
 
 const void *dvb_user_attr_names[] = {
 	[0 ... DTV_MAX_STAT_COMMAND - DTV_USER_COMMAND_START] = NULL,
+=======
+	[DTV_PLS_CODE - DTV_USER_COMMAND_START] =	"PLS CODE",
+	[DTV_PLS_MODE - DTV_USER_COMMAND_START] =	"PLS MODE",
+	[DTV_COUNTRY_CODE - DTV_USER_COMMAND_START] =	"COUNTRY",
+	[DTV_USER_NAME_SIZE] = NULL,
+};
+
+const char *dvb_stat_name[DTV_STAT_NAME_SIZE + 1] = {
+	[DTV_STATUS - DTV_STAT_COMMAND_START] = 	"STATUS",
+	[DTV_BER - DTV_STAT_COMMAND_START] =		"POST BER",
+	[DTV_PER - DTV_STAT_COMMAND_START] =		"PER",
+	[DTV_QUALITY - DTV_STAT_COMMAND_START] =	"QUALITY",
+	[DTV_PRE_BER - DTV_STAT_COMMAND_START] =	"PRE BER",
+	[DTV_STAT_NAME_SIZE] = NULL,
+};
+
+const void *dvb_user_attr_names[DTV_USER_NAME_SIZE + 1] = {
+	[0 ... DTV_USER_NAME_SIZE] = NULL,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	[DTV_POLARIZATION - DTV_USER_COMMAND_START]           = dvb_sat_pol_name,
 };
 

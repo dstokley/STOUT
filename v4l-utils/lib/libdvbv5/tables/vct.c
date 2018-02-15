@@ -2,17 +2,29 @@
  * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  * Copyright (c) 2013-2014 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -96,12 +108,21 @@ ssize_t atsc_table_vct_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 		bswap16(channel->bitfield3);
 
 		/* Short name is always UTF-16 */
+<<<<<<< HEAD
 		iconv_to_charset(parms, channel->short_name,
 				 sizeof(channel->short_name),
 				 (const unsigned char *)channel->__short_name,
 				 sizeof(channel->__short_name),
 				 "UTF-16",
 				 output_charset);
+=======
+		dvb_iconv_to_charset(parms, channel->short_name,
+				     sizeof(channel->short_name),
+				     (const unsigned char *)channel->__short_name,
+				     sizeof(channel->__short_name),
+				     "UTF-16",
+				     parms->output_charset);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 		/* Fill descriptors */
 

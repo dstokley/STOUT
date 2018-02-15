@@ -28,7 +28,11 @@
 #include <linux/ioctl.h>
 #endif
 
+<<<<<<< HEAD
 #if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+=======
+#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__OpenBSD__)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -36,7 +40,15 @@
 
 /* end broken header workaround includes */
 
+<<<<<<< HEAD
 #include <linux/videodev2.h>
+=======
+#if defined(__OpenBSD__)
+#include <sys/videoio.h>
+#else
+#include <linux/videodev2.h>
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 #ifdef __cplusplus
 extern "C" {
@@ -132,6 +144,15 @@ LIBV4L_PUBLIC int v4lconvert_vidioc_g_ctrl(struct v4lconvert_data *data,
 		void *arg);
 LIBV4L_PUBLIC int v4lconvert_vidioc_s_ctrl(struct v4lconvert_data *data,
 		void *arg);
+<<<<<<< HEAD
+=======
+LIBV4L_PUBLIC int v4lconvert_vidioc_g_ext_ctrls(struct v4lconvert_data *data,
+		void *arg);
+LIBV4L_PUBLIC int v4lconvert_vidioc_try_ext_ctrls(struct v4lconvert_data *data,
+		void *arg);
+LIBV4L_PUBLIC int v4lconvert_vidioc_s_ext_ctrls(struct v4lconvert_data *data,
+		void *arg);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 /* Is the passed in pixelformat supported as destination format? */
 LIBV4L_PUBLIC int v4lconvert_supported_dst_format(unsigned int pixelformat);
@@ -141,6 +162,12 @@ LIBV4L_PUBLIC int v4lconvert_supported_dst_format(unsigned int pixelformat);
 LIBV4L_PUBLIC int v4lconvert_get_fps(struct v4lconvert_data *data);
 LIBV4L_PUBLIC void v4lconvert_set_fps(struct v4lconvert_data *data, int fps);
 
+<<<<<<< HEAD
+=======
+/* Fixup bytesperline and sizeimage for supported destination formats */
+LIBV4L_PUBLIC void v4lconvert_fixup_fmt(struct v4l2_format *fmt);
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

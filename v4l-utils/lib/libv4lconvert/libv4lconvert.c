@@ -16,7 +16,15 @@
 # Foundation, Inc., 51 Franklin Street, Suite 500, Boston, MA  02110-1335  USA
  */
 
+<<<<<<< HEAD
 #include <config.h>
+=======
+#ifdef ANDROID
+#include <android-config.h>
+#else
+#include <config.h>
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
@@ -70,8 +78,20 @@ const struct libv4l_dev_ops *v4lconvert_get_default_dev_ops()
 static void v4lconvert_get_framesizes(struct v4lconvert_data *data,
 		unsigned int pixelformat, int index);
 
+<<<<<<< HEAD
 /* Note for proper functioning of v4lconvert_enum_fmt the first entries in
    supported_src_pixfmts must match with the entries in supported_dst_pixfmts */
+=======
+/*
+ * Notes:
+ * 1) for proper functioning of v4lconvert_enum_fmt the first entries in
+ *    supported_src_pixfmts must match with the entries in
+ *    supported_dst_pixfmts.
+ * 2) The field needs_conversion should be zero, *except* for device-specific
+ *    formats, where it doesn't make sense for applications to have their
+ *    own decoders.
+ */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #define SUPPORTED_DST_PIXFMTS \
 	/* fourcc			bpp	rgb	yuv	needs      */ \
 	/*					rank	rank	conversion */ \
@@ -86,10 +106,22 @@ static const struct v4lconvert_pixfmt supported_src_pixfmts[] = {
 	{ V4L2_PIX_FMT_RGB565,		16,	 4,	 6,	0 },
 	{ V4L2_PIX_FMT_BGR32,		32,	 4,	 6,	0 },
 	{ V4L2_PIX_FMT_RGB32,		32,	 4,	 6,	0 },
+<<<<<<< HEAD
+=======
+	{ V4L2_PIX_FMT_XBGR32,		32,	 4,	 6,	0 },
+	{ V4L2_PIX_FMT_XRGB32,		32,	 4,	 6,	0 },
+	{ V4L2_PIX_FMT_ABGR32,		32,	 4,	 6,	0 },
+	{ V4L2_PIX_FMT_ARGB32,		32,	 4,	 6,	0 },
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	/* yuv 4:2:2 formats */
 	{ V4L2_PIX_FMT_YUYV,		16,	 5,	 4,	0 },
 	{ V4L2_PIX_FMT_YVYU,		16,	 5,	 4,	0 },
 	{ V4L2_PIX_FMT_UYVY,		16,	 5,	 4,	0 },
+<<<<<<< HEAD
+=======
+	{ V4L2_PIX_FMT_NV16,		16,	 5,	 4,	1 },
+	{ V4L2_PIX_FMT_NV61,		16,	 5,	 4,	1 },
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	/* yuv 4:2:0 formats */
 	{ V4L2_PIX_FMT_SPCA501,		12,      6,	 3,	1 },
 	{ V4L2_PIX_FMT_SPCA505,		12,	 6,	 3,	1 },
@@ -105,6 +137,7 @@ static const struct v4lconvert_pixfmt supported_src_pixfmts[] = {
 	{ V4L2_PIX_FMT_JPEG,		 0,	 7,	 7,	0 },
 	{ V4L2_PIX_FMT_PJPG,		 0,	 7,	 7,	1 },
 	{ V4L2_PIX_FMT_JPGL,		 0,	 7,	 7,	1 },
+<<<<<<< HEAD
 	{ V4L2_PIX_FMT_OV511,		 0,	 7,	 7,	1 },
 	{ V4L2_PIX_FMT_OV518,		 0,	 7,	 7,	1 },
 	/* uncompressed bayer */
@@ -113,6 +146,19 @@ static const struct v4lconvert_pixfmt supported_src_pixfmts[] = {
 	{ V4L2_PIX_FMT_SGRBG8,		 8,	 8,	 8,	1 },
 	{ V4L2_PIX_FMT_SRGGB8,		 8,	 8,	 8,	1 },
 	{ V4L2_PIX_FMT_STV0680,		 8,	 8,	 8,	1 },
+=======
+#ifdef HAVE_LIBV4LCONVERT_HELPERS
+	{ V4L2_PIX_FMT_OV511,		 0,	 7,	 7,	1 },
+	{ V4L2_PIX_FMT_OV518,		 0,	 7,	 7,	1 },
+#endif
+	/* uncompressed bayer */
+	{ V4L2_PIX_FMT_SBGGR8,		 8,	 8,	 8,	0 },
+	{ V4L2_PIX_FMT_SGBRG8,		 8,	 8,	 8,	0 },
+	{ V4L2_PIX_FMT_SGRBG8,		 8,	 8,	 8,	0 },
+	{ V4L2_PIX_FMT_SRGGB8,		 8,	 8,	 8,	0 },
+	{ V4L2_PIX_FMT_STV0680,		 8,	 8,	 8,	1 },
+	{ V4L2_PIX_FMT_SGRBG10,		16,	 8,	 8,	1 },
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	/* compressed bayer */
 	{ V4L2_PIX_FMT_SPCA561,		 0,	 9,	 9,	1 },
 	{ V4L2_PIX_FMT_SN9C10X,		 0,	 9,	 9,	1 },
@@ -131,6 +177,13 @@ static const struct v4lconvert_pixfmt supported_src_pixfmts[] = {
 	{ V4L2_PIX_FMT_Y6,		 8,	20,	20,	0 },
 	{ V4L2_PIX_FMT_Y10BPACK,	10,	20,	20,	0 },
 	{ V4L2_PIX_FMT_Y16,		16,	20,	20,	0 },
+<<<<<<< HEAD
+=======
+	{ V4L2_PIX_FMT_Y16_BE,		16,	20,	20,	0 },
+	/* hsv formats */
+	{ V4L2_PIX_FMT_HSV32,		32,	 5,	 4,	0 },
+	{ V4L2_PIX_FMT_HSV24,		24,	 5,	 4,	0 },
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 };
 
 static const struct v4lconvert_pixfmt supported_dst_pixfmts[] = {
@@ -161,9 +214,19 @@ struct v4lconvert_data *v4lconvert_create_with_dev_ops(int fd, void *dev_ops_pri
 	int i, j;
 	struct v4lconvert_data *data = calloc(1, sizeof(struct v4lconvert_data));
 	struct v4l2_capability cap;
+<<<<<<< HEAD
 	/* This keeps tracks of devices which have only formats for which apps
 	   most likely will need conversion and we can thus safely add software
 	   processing controls without a performance impact. */
+=======
+	/*
+	 * This keeps tracks of device-specific formats for which apps most
+	 * likely don't know. If all a driver can offer are proprietary
+	 * formats, a conversion is needed anyway. We can thus safely
+	 * add software processing controls without much concern about a
+	 * performance impact.
+	 */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	int always_needs_conversion = 1;
 
 	if (!data) {
@@ -252,7 +315,13 @@ void v4lconvert_destroy(struct v4lconvert_data *data)
 	if (data->cinfo_initialized)
 		jpeg_destroy_decompress(&data->cinfo);
 #endif // HAVE_JPEG
+<<<<<<< HEAD
 	v4lconvert_helper_cleanup(data);
+=======
+#ifdef HAVE_LIBV4LCONVERT_HELPERS
+	v4lconvert_helper_cleanup(data);
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	free(data->convert1_buf);
 	free(data->convert2_buf);
 	free(data->rotate90_buf);
@@ -404,7 +473,12 @@ static int v4lconvert_do_try_format_uvc(struct v4lconvert_data *data,
 
 	for (i = 0; i < ARRAY_SIZE(supported_src_pixfmts); i++) {
 		/* is this format supported? */
+<<<<<<< HEAD
 		if (!(data->framesizes[best_framesize].pixel_format & (1 << i)))
+=======
+		if (!(data->framesize_supported_src_formats[best_framesize] &
+		      (1ULL << i)))
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			continue;
 
 		/* Note the hardcoded use of discrete is based on this function
@@ -426,7 +500,11 @@ static int v4lconvert_do_try_format_uvc(struct v4lconvert_data *data,
 	   so we should be able to get away with this. */
 	dest_fmt->fmt.pix.bytesperline = 0;
 	dest_fmt->fmt.pix.sizeimage = 0;
+<<<<<<< HEAD
 	dest_fmt->fmt.pix.colorspace = 0;
+=======
+	dest_fmt->fmt.pix.colorspace = V4L2_COLORSPACE_DEFAULT;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	dest_fmt->fmt.pix.priv = 0;
 
 	*src_fmt = *dest_fmt;
@@ -683,6 +761,19 @@ unsigned char *v4lconvert_alloc_buffer(int needed,
 	return *buf;
 }
 
+<<<<<<< HEAD
+=======
+static void v4lconvert_10to8(void *_src, unsigned char *dst, int width, int height)
+{
+	int i;
+	uint16_t *src = _src;
+	
+	for (i = 0; i < width * height; i++) {
+		dst[i] = src[i] >> 2;
+	}
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 int v4lconvert_oom_error(struct v4lconvert_data *data)
 {
 	V4LCONVERT_ERR("could not allocate memory\n");
@@ -797,6 +888,10 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 				return -1;
 			}
 			break;
+<<<<<<< HEAD
+=======
+#ifdef HAVE_LIBV4LCONVERT_HELPERS
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		case V4L2_PIX_FMT_OV511:
 			if (v4lconvert_helper_decompress(data, LIBV4LCONVERT_PRIV_DIR "/ov511-decomp",
 						src, src_size, d, d_size, width, height, yvu)) {
@@ -813,6 +908,10 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 				return -1;
 			}
 			break;
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		}
 
 		switch (dest_pix_fmt) {
@@ -856,7 +955,12 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 #endif
 	case V4L2_PIX_FMT_SN9C2028:
 	case V4L2_PIX_FMT_SQ905C:
+<<<<<<< HEAD
 	case V4L2_PIX_FMT_STV0680: { /* Not compressed but needs some shuffling */
+=======
+	case V4L2_PIX_FMT_STV0680:
+	case V4L2_PIX_FMT_SGRBG10: { /* Not compressed but needs some shuffling */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		unsigned char *tmpbuf;
 		struct v4l2_format tmpfmt = *fmt;
 
@@ -866,6 +970,14 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 			return v4lconvert_oom_error(data);
 
 		switch (src_pix_fmt) {
+<<<<<<< HEAD
+=======
+		case V4L2_PIX_FMT_SGRBG10:
+			v4lconvert_10to8(src, tmpbuf, width, height);
+			tmpfmt.fmt.pix.pixelformat = V4L2_PIX_FMT_SGRBG8;
+			bytesperline = width;
+			break;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		case V4L2_PIX_FMT_SPCA561:
 			v4lconvert_decode_spca561(src, tmpbuf, width, height);
 			tmpfmt.fmt.pix.pixelformat = V4L2_PIX_FMT_SGBRG8;
@@ -997,6 +1109,10 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 	}
 
 	case V4L2_PIX_FMT_Y16:
+<<<<<<< HEAD
+=======
+	case V4L2_PIX_FMT_Y16_BE:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		if (src_size < (width * height * 2)) {
 			V4LCONVERT_ERR("short y16 data frame\n");
 			errno = EPIPE;
@@ -1005,11 +1121,21 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 		switch (dest_pix_fmt) {
 		case V4L2_PIX_FMT_RGB24:
 	        case V4L2_PIX_FMT_BGR24:
+<<<<<<< HEAD
 			v4lconvert_y16_to_rgb24(src, dest, width, height);
 			break;
 		case V4L2_PIX_FMT_YUV420:
 		case V4L2_PIX_FMT_YVU420:
 			v4lconvert_y16_to_yuv420(src, dest, fmt);
+=======
+			v4lconvert_y16_to_rgb24(src, dest, width, height,
+					src_pix_fmt == V4L2_PIX_FMT_Y16);
+			break;
+		case V4L2_PIX_FMT_YUV420:
+		case V4L2_PIX_FMT_YVU420:
+			v4lconvert_y16_to_yuv420(src, dest, fmt,
+					 src_pix_fmt == V4L2_PIX_FMT_Y16);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			break;
 		}
 		break;
@@ -1052,11 +1178,14 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 							   width, height);
 			break;
 		}
+<<<<<<< HEAD
 		if (result == 0) {
 			V4LCONVERT_ERR("y10b conversion failed\n");
 			errno = EPIPE;
 			result = -1;
 		}
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		break;
 
 	case V4L2_PIX_FMT_RGB565:
@@ -1126,11 +1255,20 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 		break;
 
 	case V4L2_PIX_FMT_RGB32:
+<<<<<<< HEAD
+=======
+	case V4L2_PIX_FMT_XRGB32:
+	case V4L2_PIX_FMT_ARGB32:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		if (src_size < (width * height * 4)) {
 			V4LCONVERT_ERR("short rgb32 data frame\n");
 			errno = EPIPE;
 			result = -1;
 		}
+<<<<<<< HEAD
+=======
+		src++;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		switch (dest_pix_fmt) {
 		case V4L2_PIX_FMT_RGB24:
 			v4lconvert_rgb32_to_rgb24(src, dest, width, height, 0);
@@ -1148,6 +1286,11 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 		break;
 
 	case V4L2_PIX_FMT_BGR32:
+<<<<<<< HEAD
+=======
+	case V4L2_PIX_FMT_XBGR32:
+	case V4L2_PIX_FMT_ABGR32:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		if (src_size < (width * height * 4)) {
 			V4LCONVERT_ERR("short bgr32 data frame\n");
 			errno = EPIPE;
@@ -1217,6 +1360,23 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 		}
 		break;
 
+<<<<<<< HEAD
+=======
+	case V4L2_PIX_FMT_NV16: {
+		unsigned char *tmpbuf;
+
+		tmpbuf = v4lconvert_alloc_buffer(width * height * 2,
+				&data->convert_pixfmt_buf, &data->convert_pixfmt_buf_size);
+		if (!tmpbuf)
+			return v4lconvert_oom_error(data);
+
+		v4lconvert_nv16_to_yuyv(src, tmpbuf, width, height);
+		src_pix_fmt = V4L2_PIX_FMT_YUYV;
+		src = tmpbuf;
+		bytesperline = bytesperline * 2;
+		/* fall through */
+	}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	case V4L2_PIX_FMT_YUYV:
 		if (src_size < (width * height * 2)) {
 			V4LCONVERT_ERR("short yuyv data frame\n");
@@ -1239,6 +1399,24 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 		}
 		break;
 
+<<<<<<< HEAD
+=======
+	case V4L2_PIX_FMT_NV61: {
+		unsigned char *tmpbuf;
+
+		tmpbuf = v4lconvert_alloc_buffer(width * height * 2,
+				&data->convert_pixfmt_buf, &data->convert_pixfmt_buf_size);
+		if (!tmpbuf)
+			return v4lconvert_oom_error(data);
+
+		/* Note NV61 is NV16 with U and V swapped so this becomes yvyu. */
+		v4lconvert_nv16_to_yuyv(src, tmpbuf, width, height);
+		src_pix_fmt = V4L2_PIX_FMT_YVYU;
+		src = tmpbuf;
+		bytesperline = bytesperline * 2;
+		/* fall through */
+	}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	case V4L2_PIX_FMT_YVYU:
 		if (src_size < (width * height * 2)) {
 			V4LCONVERT_ERR("short yvyu data frame\n");
@@ -1284,6 +1462,68 @@ static int v4lconvert_convert_pixfmt(struct v4lconvert_data *data,
 			break;
 		}
 		break;
+<<<<<<< HEAD
+=======
+	case V4L2_PIX_FMT_HSV24:
+		if (src_size < (width * height * 3)) {
+			V4LCONVERT_ERR("short hsv24 data frame\n");
+			errno = EPIPE;
+			result = -1;
+		}
+		switch (dest_pix_fmt) {
+		case V4L2_PIX_FMT_RGB24:
+			v4lconvert_hsv_to_rgb24(src, dest, width, height, 0,
+						24, fmt->fmt.pix.hsv_enc);
+			break;
+		case V4L2_PIX_FMT_BGR24:
+			v4lconvert_hsv_to_rgb24(src, dest, width, height, 1,
+						24, fmt->fmt.pix.hsv_enc);
+			break;
+		case V4L2_PIX_FMT_YUV420:
+			v4lconvert_hsv_to_rgb24(src, dest, width, height, 0,
+						24, fmt->fmt.pix.hsv_enc);
+			v4lconvert_rgb24_to_yuv420(src, dest, fmt, 0, 0, 3);
+			break;
+		case V4L2_PIX_FMT_YVU420:
+			v4lconvert_hsv_to_rgb24(src, dest, width, height, 0,
+						24, fmt->fmt.pix.hsv_enc);
+			v4lconvert_rgb24_to_yuv420(src, dest, fmt, 0, 1, 3);
+			break;
+		}
+
+		break;
+
+	case V4L2_PIX_FMT_HSV32:
+		if (src_size < (width * height * 4)) {
+			V4LCONVERT_ERR("short hsv32 data frame\n");
+			errno = EPIPE;
+			result = -1;
+		}
+		switch (dest_pix_fmt) {
+		case V4L2_PIX_FMT_RGB24:
+			v4lconvert_hsv_to_rgb24(src, dest, width, height, 0,
+						32, fmt->fmt.pix.hsv_enc);
+			break;
+		case V4L2_PIX_FMT_BGR24:
+			v4lconvert_hsv_to_rgb24(src, dest, width, height, 1,
+						32, fmt->fmt.pix.hsv_enc);
+			break;
+		case V4L2_PIX_FMT_YUV420:
+			v4lconvert_hsv_to_rgb24(src, dest, width, height, 0,
+						32, fmt->fmt.pix.hsv_enc);
+			v4lconvert_rgb24_to_yuv420(src, dest, fmt, 0, 0, 3);
+			break;
+		case V4L2_PIX_FMT_YVU420:
+			v4lconvert_hsv_to_rgb24(src, dest, width, height, 0,
+						32, fmt->fmt.pix.hsv_enc);
+			v4lconvert_rgb24_to_yuv420(src, dest, fmt, 0, 1, 3);
+			break;
+		}
+
+		break;
+
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	default:
 		V4LCONVERT_ERR("Unknown src format in conversion\n");
@@ -1508,9 +1748,13 @@ static void v4lconvert_get_framesizes(struct v4lconvert_data *data,
 				return;
 			}
 			data->framesizes[data->no_framesizes].type = frmsize.type;
+<<<<<<< HEAD
 			/* We use the pixel_format member to store a bitmask of all
 			   supported src_formats which can do this size */
 			data->framesizes[data->no_framesizes].pixel_format = 1 << index;
+=======
+			data->framesize_supported_src_formats[data->no_framesizes] = 1ULL << index;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 			switch (frmsize.type) {
 			case V4L2_FRMSIZE_TYPE_DISCRETE:
@@ -1523,7 +1767,11 @@ static void v4lconvert_get_framesizes(struct v4lconvert_data *data,
 			}
 			data->no_framesizes++;
 		} else {
+<<<<<<< HEAD
 			data->framesizes[j].pixel_format |= 1 << index;
+=======
+			data->framesize_supported_src_formats[j] |= 1ULL << index;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		}
 	}
 }
@@ -1664,6 +1912,24 @@ int v4lconvert_vidioc_s_ctrl(struct v4lconvert_data *data, void *arg)
 	return v4lcontrol_vidioc_s_ctrl(data->control, arg);
 }
 
+<<<<<<< HEAD
+=======
+int v4lconvert_vidioc_g_ext_ctrls(struct v4lconvert_data *data, void *arg)
+{
+	return v4lcontrol_vidioc_g_ext_ctrls(data->control, arg);
+}
+
+int v4lconvert_vidioc_try_ext_ctrls(struct v4lconvert_data *data, void *arg)
+{
+	return v4lcontrol_vidioc_try_ext_ctrls(data->control, arg);
+}
+
+int v4lconvert_vidioc_s_ext_ctrls(struct v4lconvert_data *data, void *arg)
+{
+	return v4lcontrol_vidioc_s_ext_ctrls(data->control, arg);
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 int v4lconvert_get_fps(struct v4lconvert_data *data)
 {
 	return data->fps;

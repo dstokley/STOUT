@@ -46,6 +46,10 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+<<<<<<< HEAD
+=======
+#include <fstream>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 char options[OptLast];
 
@@ -54,6 +58,11 @@ int verbose;
 
 unsigned capabilities;
 unsigned out_capabilities;
+<<<<<<< HEAD
+=======
+unsigned priv_magic;
+unsigned out_priv_magic;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 bool is_multiplanar;
 __u32 vidcap_buftype;
 __u32 vidout_buftype;
@@ -79,6 +88,10 @@ static struct option long_options[] = {
 	{"help-overlay", no_argument, 0, OptHelpOverlay},
 	{"help-vbi", no_argument, 0, OptHelpVbi},
 	{"help-sdr", no_argument, 0, OptHelpSdr},
+<<<<<<< HEAD
+=======
+	{"help-meta", no_argument, 0, OptHelpMeta},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"help-selection", no_argument, 0, OptHelpSelection},
 	{"help-misc", no_argument, 0, OptHelpMisc},
 	{"help-streaming", no_argument, 0, OptHelpStreaming},
@@ -108,13 +121,23 @@ static struct option long_options[] = {
 	{"list-frameintervals", required_argument, 0, OptListFrameIntervals},
 	{"list-formats-overlay", no_argument, 0, OptListOverlayFormats},
 	{"list-formats-sdr", no_argument, 0, OptListSdrFormats},
+<<<<<<< HEAD
 	{"list-formats-out", no_argument, 0, OptListOutFormats},
+=======
+	{"list-formats-sdr-out", no_argument, 0, OptListSdrOutFormats},
+	{"list-formats-out", no_argument, 0, OptListOutFormats},
+	{"list-formats-meta", no_argument, 0, OptListMetaFormats},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"list-fields-out", no_argument, 0, OptListOutFields},
 	{"clear-clips", no_argument, 0, OptClearClips},
 	{"clear-bitmap", no_argument, 0, OptClearBitmap},
 	{"add-clip", required_argument, 0, OptAddClip},
 	{"add-bitmap", required_argument, 0, OptAddBitmap},
 	{"find-fb", no_argument, 0, OptFindFb},
+<<<<<<< HEAD
+=======
+	{"subset", required_argument, 0, OptSubset},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"get-standard", no_argument, 0, OptGetStandard},
 	{"set-standard", required_argument, 0, OptSetStandard},
 	{"get-detected-standard", no_argument, 0, OptQueryStandard},
@@ -143,10 +166,27 @@ static struct option long_options[] = {
 	{"set-fmt-sliced-vbi-out", required_argument, 0, OptSetSlicedVbiOutFormat},
 	{"try-fmt-sliced-vbi-out", required_argument, 0, OptTrySlicedVbiOutFormat},
 	{"get-fmt-vbi", no_argument, 0, OptGetVbiFormat},
+<<<<<<< HEAD
 	{"get-fmt-vbi-out", no_argument, 0, OptGetVbiOutFormat},
 	{"get-fmt-sdr", no_argument, 0, OptGetSdrFormat},
 	{"set-fmt-sdr", required_argument, 0, OptSetSdrFormat},
 	{"try-fmt-sdr", required_argument, 0, OptTrySdrFormat},
+=======
+	{"set-fmt-vbi", required_argument, 0, OptSetVbiFormat},
+	{"try-fmt-vbi", required_argument, 0, OptTryVbiFormat},
+	{"get-fmt-vbi-out", no_argument, 0, OptGetVbiOutFormat},
+	{"set-fmt-vbi-out", required_argument, 0, OptSetVbiOutFormat},
+	{"try-fmt-vbi-out", required_argument, 0, OptTryVbiOutFormat},
+	{"get-fmt-sdr", no_argument, 0, OptGetSdrFormat},
+	{"set-fmt-sdr", required_argument, 0, OptSetSdrFormat},
+	{"try-fmt-sdr", required_argument, 0, OptTrySdrFormat},
+	{"get-fmt-sdr-out", no_argument, 0, OptGetSdrOutFormat},
+	{"set-fmt-sdr-out", required_argument, 0, OptSetSdrOutFormat},
+	{"try-fmt-sdr-out", required_argument, 0, OptTrySdrOutFormat},
+	{"get-fmt-meta", no_argument, 0, OptGetMetaFormat},
+	{"set-fmt-meta", required_argument, 0, OptSetMetaFormat},
+	{"try-fmt-meta", required_argument, 0, OptTryMetaFormat},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"get-sliced-vbi-cap", no_argument, 0, OptGetSlicedVbiCap},
 	{"get-sliced-vbi-out-cap", no_argument, 0, OptGetSlicedVbiOutCap},
 	{"get-fbuf", no_argument, 0, OptGetFBuf},
@@ -191,6 +231,11 @@ static struct option long_options[] = {
 	{"set-edid", required_argument, 0, OptSetEdid},
 	{"clear-edid", optional_argument, 0, OptClearEdid},
 	{"get-edid", optional_argument, 0, OptGetEdid},
+<<<<<<< HEAD
+=======
+	{"info-edid", optional_argument, 0, OptInfoEdid},
+	{"fix-edid-checksums", no_argument, 0, OptFixEdidChecksums},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"tuner-index", required_argument, 0, OptTunerIndex},
 	{"list-buffers", no_argument, 0, OptListBuffers},
 	{"list-buffers-out", no_argument, 0, OptListBuffersOut},
@@ -199,19 +244,55 @@ static struct option long_options[] = {
 	{"list-buffers-vbi-out", no_argument, 0, OptListBuffersVbiOut},
 	{"list-buffers-sliced-vbi-out", no_argument, 0, OptListBuffersSlicedVbiOut},
 	{"list-buffers-sdr", no_argument, 0, OptListBuffersSdr},
+<<<<<<< HEAD
 	{"stream-count", required_argument, 0, OptStreamCount},
 	{"stream-skip", required_argument, 0, OptStreamSkip},
 	{"stream-loop", no_argument, 0, OptStreamLoop},
 	{"stream-poll", no_argument, 0, OptStreamPoll},
 	{"stream-to", required_argument, 0, OptStreamTo},
+=======
+	{"list-buffers-sdr-out", no_argument, 0, OptListBuffersSdrOut},
+	{"list-buffers-meta", no_argument, 0, OptListBuffersMeta},
+	{"stream-count", required_argument, 0, OptStreamCount},
+	{"stream-skip", required_argument, 0, OptStreamSkip},
+	{"stream-loop", no_argument, 0, OptStreamLoop},
+	{"stream-sleep", required_argument, 0, OptStreamSleep},
+	{"stream-poll", no_argument, 0, OptStreamPoll},
+	{"stream-no-query", no_argument, 0, OptStreamNoQuery},
+#ifndef NO_STREAM_TO
+	{"stream-to", required_argument, 0, OptStreamTo},
+	{"stream-to-host", required_argument, 0, OptStreamToHost},
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"stream-mmap", optional_argument, 0, OptStreamMmap},
 	{"stream-user", optional_argument, 0, OptStreamUser},
 	{"stream-dmabuf", no_argument, 0, OptStreamDmaBuf},
 	{"stream-from", required_argument, 0, OptStreamFrom},
+<<<<<<< HEAD
 	{"stream-pattern", required_argument, 0, OptStreamPattern},
 	{"stream-out-mmap", optional_argument, 0, OptStreamOutMmap},
 	{"stream-out-user", optional_argument, 0, OptStreamOutUser},
 	{"stream-out-dmabuf", no_argument, 0, OptStreamOutDmaBuf},
+=======
+	{"stream-from-host", required_argument, 0, OptStreamFromHost},
+	{"stream-out-pattern", required_argument, 0, OptStreamOutPattern},
+	{"stream-out-square", no_argument, 0, OptStreamOutSquare},
+	{"stream-out-border", no_argument, 0, OptStreamOutBorder},
+	{"stream-out-sav", no_argument, 0, OptStreamOutInsertSAV},
+	{"stream-out-eav", no_argument, 0, OptStreamOutInsertEAV},
+	{"stream-out-pixel-aspect", required_argument, 0, OptStreamOutPixelAspect},
+	{"stream-out-video-aspect", required_argument, 0, OptStreamOutVideoAspect},
+	{"stream-out-alpha", required_argument, 0, OptStreamOutAlphaComponent},
+	{"stream-out-alpha-red-only", no_argument, 0, OptStreamOutAlphaRedOnly},
+	{"stream-out-rgb-lim-range", required_argument, 0, OptStreamOutRGBLimitedRange},
+	{"stream-out-hor-speed", required_argument, 0, OptStreamOutHorSpeed},
+	{"stream-out-vert-speed", required_argument, 0, OptStreamOutVertSpeed},
+	{"stream-out-perc-fill", required_argument, 0, OptStreamOutPercFill},
+	{"stream-out-mmap", optional_argument, 0, OptStreamOutMmap},
+	{"stream-out-user", optional_argument, 0, OptStreamOutUser},
+	{"stream-out-dmabuf", no_argument, 0, OptStreamOutDmaBuf},
+	{"list-patterns", no_argument, 0, OptListPatterns},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{0, 0, 0, 0}
 };
 
@@ -226,6 +307,10 @@ static void usage_all(void)
        overlay_usage();
        vbi_usage();
        sdr_usage();
+<<<<<<< HEAD
+=======
+       meta_usage();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
        selection_usage();
        misc_usage();
        streaming_usage();
@@ -297,6 +382,13 @@ std::string buftype2s(int type)
 		return "Video Output Overlay";
 	case V4L2_BUF_TYPE_SDR_CAPTURE:
 		return "SDR Capture";
+<<<<<<< HEAD
+=======
+	case V4L2_BUF_TYPE_SDR_OUTPUT:
+		return "SDR Output";
+	case V4L2_BUF_TYPE_META_CAPTURE:
+		return "Metadata Capture";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	default:
 		return "Unknown (" + num2s(type) + ")";
 	}
@@ -306,10 +398,19 @@ std::string fcc2s(unsigned int val)
 {
 	std::string s;
 
+<<<<<<< HEAD
 	s += val & 0xff;
 	s += (val >> 8) & 0xff;
 	s += (val >> 16) & 0xff;
 	s += (val >> 24) & 0xff;
+=======
+	s += val & 0x7f;
+	s += (val >> 8) & 0x7f;
+	s += (val >> 16) & 0x7f;
+	s += (val >> 24) & 0x7f;
+	if (val & (1 << 31))
+		s += "-BE";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	return s;
 }
 
@@ -344,6 +445,7 @@ std::string field2s(int val)
 std::string colorspace2s(int val)
 {
 	switch (val) {
+<<<<<<< HEAD
 	case V4L2_COLORSPACE_SMPTE170M:
 		return "Broadcast NTSC/PAL (SMPTE170M/ITU601)";
 	case V4L2_COLORSPACE_SMPTE240M:
@@ -360,6 +462,100 @@ std::string colorspace2s(int val)
 		return "JPEG (JFIF/ITU601)";
 	case V4L2_COLORSPACE_SRGB:
 		return "SRGB";
+=======
+	case V4L2_COLORSPACE_DEFAULT:
+		return "Default";
+	case V4L2_COLORSPACE_SMPTE170M:
+		return "SMPTE 170M";
+	case V4L2_COLORSPACE_SMPTE240M:
+		return "SMPTE 240M";
+	case V4L2_COLORSPACE_REC709:
+		return "Rec. 709";
+	case V4L2_COLORSPACE_BT878:
+		return "Broken Bt878";
+	case V4L2_COLORSPACE_470_SYSTEM_M:
+		return "470 System M";
+	case V4L2_COLORSPACE_470_SYSTEM_BG:
+		return "470 System BG";
+	case V4L2_COLORSPACE_JPEG:
+		return "JPEG";
+	case V4L2_COLORSPACE_SRGB:
+		return "sRGB";
+	case V4L2_COLORSPACE_ADOBERGB:
+		return "AdobeRGB";
+	case V4L2_COLORSPACE_DCI_P3:
+		return "DCI-P3";
+	case V4L2_COLORSPACE_BT2020:
+		return "BT.2020";
+	case V4L2_COLORSPACE_RAW:
+		return "Raw";
+	default:
+		return "Unknown (" + num2s(val) + ")";
+	}
+}
+
+static std::string xfer_func2s(int val)
+{
+	switch (val) {
+	case V4L2_XFER_FUNC_DEFAULT:
+		return "Default";
+	case V4L2_XFER_FUNC_709:
+		return "Rec. 709";
+	case V4L2_XFER_FUNC_SRGB:
+		return "sRGB";
+	case V4L2_XFER_FUNC_ADOBERGB:
+		return "AdobeRGB";
+	case V4L2_XFER_FUNC_DCI_P3:
+		return "DCI-P3";
+	case V4L2_XFER_FUNC_SMPTE2084:
+		return "SMPTE 2084";
+	case V4L2_XFER_FUNC_SMPTE240M:
+		return "SMPTE 240M";
+	case V4L2_XFER_FUNC_NONE:
+		return "None";
+	default:
+		return "Unknown (" + num2s(val) + ")";
+	}
+}
+
+static std::string ycbcr_enc2s(int val)
+{
+	switch (val) {
+	case V4L2_YCBCR_ENC_DEFAULT:
+		return "Default";
+	case V4L2_YCBCR_ENC_601:
+		return "ITU-R 601";
+	case V4L2_YCBCR_ENC_709:
+		return "Rec. 709";
+	case V4L2_YCBCR_ENC_XV601:
+		return "xvYCC 601";
+	case V4L2_YCBCR_ENC_XV709:
+		return "xvYCC 709";
+	case V4L2_YCBCR_ENC_BT2020:
+		return "BT.2020";
+	case V4L2_YCBCR_ENC_BT2020_CONST_LUM:
+		return "BT.2020 Constant Luminance";
+	case V4L2_YCBCR_ENC_SMPTE240M:
+		return "SMPTE 240M";
+	case V4L2_HSV_ENC_180:
+		return "HSV with Hue 0-179";
+	case V4L2_HSV_ENC_256:
+		return "HSV with Hue 0-255";
+	default:
+		return "Unknown (" + num2s(val) + ")";
+	}
+}
+
+static std::string quantization2s(int val)
+{
+	switch (val) {
+	case V4L2_QUANTIZATION_DEFAULT:
+		return "Default";
+	case V4L2_QUANTIZATION_FULL_RANGE:
+		return "Full Range";
+	case V4L2_QUANTIZATION_LIM_RANGE:
+		return "Limited Range";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	default:
 		return "Unknown (" + num2s(val) + ")";
 	}
@@ -385,6 +581,19 @@ std::string flags2s(unsigned val, const flag_def *def)
 }
 
 
+<<<<<<< HEAD
+=======
+static const flag_def pixflags_def[] = {
+	{ V4L2_PIX_FMT_FLAG_PREMUL_ALPHA,  "premultiplied-alpha" },
+	{ 0, NULL }
+};
+
+std::string pixflags2s(unsigned flags)
+{
+	return flags2s(flags, pixflags_def);
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 static const flag_def service_def[] = {
 	{ V4L2_SLICED_TELETEXT_B,  "teletext" },
 	{ V4L2_SLICED_VPS,         "vps" },
@@ -398,6 +607,66 @@ std::string service2s(unsigned service)
 	return flags2s(service, service_def);
 }
 
+<<<<<<< HEAD
+=======
+/*
+ * Any pixelformat that is not a YUV format is assumed to be
+ * RGB or HSV.
+ */
+static bool is_rgb_or_hsv(__u32 pixelformat)
+{
+	switch (pixelformat) {
+	case V4L2_PIX_FMT_UV8:
+	case V4L2_PIX_FMT_YVU410:
+	case V4L2_PIX_FMT_YVU420:
+	case V4L2_PIX_FMT_YUYV:
+	case V4L2_PIX_FMT_YYUV:
+	case V4L2_PIX_FMT_YVYU:
+	case V4L2_PIX_FMT_UYVY:
+	case V4L2_PIX_FMT_VYUY:
+	case V4L2_PIX_FMT_YUV422P:
+	case V4L2_PIX_FMT_YUV411P:
+	case V4L2_PIX_FMT_Y41P:
+	case V4L2_PIX_FMT_YUV444:
+	case V4L2_PIX_FMT_YUV555:
+	case V4L2_PIX_FMT_YUV565:
+	case V4L2_PIX_FMT_YUV32:
+	case V4L2_PIX_FMT_YUV410:
+	case V4L2_PIX_FMT_YUV420:
+	case V4L2_PIX_FMT_HI240:
+	case V4L2_PIX_FMT_HM12:
+	case V4L2_PIX_FMT_M420:
+	case V4L2_PIX_FMT_NV12:
+	case V4L2_PIX_FMT_NV21:
+	case V4L2_PIX_FMT_NV16:
+	case V4L2_PIX_FMT_NV61:
+	case V4L2_PIX_FMT_NV24:
+	case V4L2_PIX_FMT_NV42:
+	case V4L2_PIX_FMT_NV12M:
+	case V4L2_PIX_FMT_NV21M:
+	case V4L2_PIX_FMT_NV16M:
+	case V4L2_PIX_FMT_NV61M:
+	case V4L2_PIX_FMT_NV12MT:
+	case V4L2_PIX_FMT_NV12MT_16X16:
+	case V4L2_PIX_FMT_YUV420M:
+	case V4L2_PIX_FMT_YVU420M:
+	case V4L2_PIX_FMT_YUV422M:
+	case V4L2_PIX_FMT_YVU422M:
+	case V4L2_PIX_FMT_YUV444M:
+	case V4L2_PIX_FMT_YVU444M:
+	case V4L2_PIX_FMT_SN9C20X_I420:
+	case V4L2_PIX_FMT_SPCA501:
+	case V4L2_PIX_FMT_SPCA505:
+	case V4L2_PIX_FMT_SPCA508:
+	case V4L2_PIX_FMT_CIT_YYVYUY:
+	case V4L2_PIX_FMT_KONICA420:
+		return false;
+	default:
+		return true;
+	}
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 void printfmt(const struct v4l2_format &vfmt)
 {
 	const flag_def vbi_def[] = {
@@ -405,11 +674,18 @@ void printfmt(const struct v4l2_format &vfmt)
 		{ V4L2_VBI_INTERLACED, "interlaced" },
 		{ 0, NULL }
 	};
+<<<<<<< HEAD
+=======
+	__u32 colsp = vfmt.fmt.pix.colorspace;
+	__u32 ycbcr_enc = vfmt.fmt.pix.ycbcr_enc;
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	printf("Format %s:\n", buftype2s(vfmt.type).c_str());
 
 	switch (vfmt.type) {
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
+<<<<<<< HEAD
 		printf("\tWidth/Height  : %u/%u\n", vfmt.fmt.pix.width, vfmt.fmt.pix.height);
 		printf("\tPixel Format  : '%s'\n", fcc2s(vfmt.fmt.pix.pixelformat).c_str());
 		printf("\tField         : %s\n", field2s(vfmt.fmt.pix.field).c_str());
@@ -418,6 +694,33 @@ void printfmt(const struct v4l2_format &vfmt)
 		printf("\tColorspace    : %s\n", colorspace2s(vfmt.fmt.pix.colorspace).c_str());
 		if (vfmt.fmt.pix.priv)
 			printf("\tCustom Info   : %08x\n", vfmt.fmt.pix.priv);
+=======
+		printf("\tWidth/Height      : %u/%u\n", vfmt.fmt.pix.width, vfmt.fmt.pix.height);
+		printf("\tPixel Format      : '%s'\n", fcc2s(vfmt.fmt.pix.pixelformat).c_str());
+		printf("\tField             : %s\n", field2s(vfmt.fmt.pix.field).c_str());
+		printf("\tBytes per Line    : %u\n", vfmt.fmt.pix.bytesperline);
+		printf("\tSize Image        : %u\n", vfmt.fmt.pix.sizeimage);
+		printf("\tColorspace        : %s\n", colorspace2s(colsp).c_str());
+		printf("\tTransfer Function : %s", xfer_func2s(vfmt.fmt.pix.xfer_func).c_str());
+		if (vfmt.fmt.pix.xfer_func == V4L2_XFER_FUNC_DEFAULT)
+			printf(" (maps to %s)",
+			       xfer_func2s(V4L2_MAP_XFER_FUNC_DEFAULT(colsp)).c_str());
+		printf("\n");
+		printf("\tYCbCr/HSV Encoding: %s", ycbcr_enc2s(ycbcr_enc).c_str());
+		if (ycbcr_enc == V4L2_YCBCR_ENC_DEFAULT) {
+			ycbcr_enc = V4L2_MAP_YCBCR_ENC_DEFAULT(colsp);
+			printf(" (maps to %s)", ycbcr_enc2s(ycbcr_enc).c_str());
+		}
+		printf("\n");
+		printf("\tQuantization      : %s", quantization2s(vfmt.fmt.pix.quantization).c_str());
+		if (vfmt.fmt.pix.quantization == V4L2_QUANTIZATION_DEFAULT)
+			printf(" (maps to %s)",
+			       quantization2s(V4L2_MAP_QUANTIZATION_DEFAULT(is_rgb_or_hsv(vfmt.fmt.pix.pixelformat),
+									    colsp, ycbcr_enc)).c_str());
+		printf("\n");
+		if (vfmt.fmt.pix.priv == V4L2_PIX_FMT_PRIV_MAGIC)
+			printf("\tFlags             : %s\n", pixflags2s(vfmt.fmt.pix.flags).c_str());
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		break;
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
@@ -425,7 +728,15 @@ void printfmt(const struct v4l2_format &vfmt)
 		printf("\tPixel Format      : '%s'\n", fcc2s(vfmt.fmt.pix_mp.pixelformat).c_str());
 		printf("\tField             : %s\n", field2s(vfmt.fmt.pix_mp.field).c_str());
 		printf("\tNumber of planes  : %u\n", vfmt.fmt.pix_mp.num_planes);
+<<<<<<< HEAD
 		printf("\tColorspace        : %s\n", colorspace2s(vfmt.fmt.pix_mp.colorspace).c_str());
+=======
+		printf("\tFlags             : %s\n", pixflags2s(vfmt.fmt.pix_mp.flags).c_str());
+		printf("\tColorspace        : %s\n", colorspace2s(vfmt.fmt.pix_mp.colorspace).c_str());
+		printf("\tTransfer Function : %s\n", xfer_func2s(vfmt.fmt.pix_mp.xfer_func).c_str());
+		printf("\tYCbCr Encoding    : %s\n", ycbcr_enc2s(vfmt.fmt.pix_mp.ycbcr_enc).c_str());
+		printf("\tQuantization      : %s\n", quantization2s(vfmt.fmt.pix_mp.quantization).c_str());
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		for (int i = 0; i < vfmt.fmt.pix_mp.num_planes && i < VIDEO_MAX_PLANES; i++) {
 			printf("\tPlane %d           :\n", i);
 			printf("\t   Bytes per Line : %u\n", vfmt.fmt.pix_mp.plane_fmt[i].bytesperline);
@@ -490,7 +801,17 @@ void printfmt(const struct v4l2_format &vfmt)
 		printf("\tI/O Size       : %u\n", vfmt.fmt.sliced.io_size);
 		break;
 	case V4L2_BUF_TYPE_SDR_CAPTURE:
+<<<<<<< HEAD
 		printf("\tSample Format   : %s\n", fcc2s(vfmt.fmt.sdr.pixelformat).c_str());
+=======
+	case V4L2_BUF_TYPE_SDR_OUTPUT:
+		printf("\tSample Format   : %s\n", fcc2s(vfmt.fmt.sdr.pixelformat).c_str());
+		printf("\tBuffer Size     : %u\n", vfmt.fmt.sdr.buffersize);
+		break;
+	case V4L2_BUF_TYPE_META_CAPTURE:
+		printf("\tSample Format   : %s\n", fcc2s(vfmt.fmt.meta.dataformat).c_str());
+		printf("\tBuffer Size     : %u\n", vfmt.fmt.meta.buffersize);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		break;
 	}
 }
@@ -553,14 +874,32 @@ static std::string cap2s(unsigned cap)
 		s += "\t\tSliced VBI Capture\n";
 	if (cap & V4L2_CAP_SLICED_VBI_OUTPUT)
 		s += "\t\tSliced VBI Output\n";
+<<<<<<< HEAD
 	if (cap & V4L2_CAP_SDR_CAPTURE)
 		s += "\t\tSDR Capture\n";
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	if (cap & V4L2_CAP_RDS_CAPTURE)
 		s += "\t\tRDS Capture\n";
 	if (cap & V4L2_CAP_RDS_OUTPUT)
 		s += "\t\tRDS Output\n";
+<<<<<<< HEAD
 	if (cap & V4L2_CAP_TUNER)
 		s += "\t\tTuner\n";
+=======
+	if (cap & V4L2_CAP_SDR_CAPTURE)
+		s += "\t\tSDR Capture\n";
+	if (cap & V4L2_CAP_SDR_OUTPUT)
+		s += "\t\tSDR Output\n";
+	if (cap & V4L2_CAP_META_CAPTURE)
+		s += "\t\tMetadata Capture\n";
+	if (cap & V4L2_CAP_TUNER)
+		s += "\t\tTuner\n";
+	if (cap & V4L2_CAP_TOUCH)
+		s += "\t\tTouch Device\n";
+	if (cap & V4L2_CAP_HW_FREQ_SEEK)
+		s += "\t\tHW Frequency Seek\n";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	if (cap & V4L2_CAP_MODULATOR)
 		s += "\t\tModulator\n";
 	if (cap & V4L2_CAP_AUDIO)
@@ -573,6 +912,11 @@ static std::string cap2s(unsigned cap)
 		s += "\t\tAsync I/O\n";
 	if (cap & V4L2_CAP_STREAMING)
 		s += "\t\tStreaming\n";
+<<<<<<< HEAD
+=======
+	if (cap & V4L2_CAP_EXT_PIX_FORMAT)
+		s += "\t\tExtended Pix Format\n";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	if (cap & V4L2_CAP_DEVICE_CAPS)
 		s += "\t\tDevice Capabilities\n";
 	return s;
@@ -688,22 +1032,78 @@ static __u32 parse_colorspace(const char *s)
 	if (!strcmp(s, "smpte170m")) return V4L2_COLORSPACE_SMPTE170M;
 	if (!strcmp(s, "smpte240m")) return V4L2_COLORSPACE_SMPTE240M;
 	if (!strcmp(s, "rec709")) return V4L2_COLORSPACE_REC709;
+<<<<<<< HEAD
 	if (!strcmp(s, "bt878")) return V4L2_COLORSPACE_BT878;
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	if (!strcmp(s, "470m")) return V4L2_COLORSPACE_470_SYSTEM_M;
 	if (!strcmp(s, "470bg")) return V4L2_COLORSPACE_470_SYSTEM_BG;
 	if (!strcmp(s, "jpeg")) return V4L2_COLORSPACE_JPEG;
 	if (!strcmp(s, "srgb")) return V4L2_COLORSPACE_SRGB;
+<<<<<<< HEAD
 	return 0;
 }
 
 int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 	      __u32 &field, __u32 &colorspace, __u32 *bytesperline)
+=======
+	if (!strcmp(s, "adobergb")) return V4L2_COLORSPACE_ADOBERGB;
+	if (!strcmp(s, "bt2020")) return V4L2_COLORSPACE_BT2020;
+	if (!strcmp(s, "dcip3")) return V4L2_COLORSPACE_DCI_P3;
+	return 0;
+}
+
+static __u32 parse_xfer_func(const char *s)
+{
+	if (!strcmp(s, "default")) return V4L2_XFER_FUNC_DEFAULT;
+	if (!strcmp(s, "smpte240m")) return V4L2_XFER_FUNC_SMPTE240M;
+	if (!strcmp(s, "rec709")) return V4L2_XFER_FUNC_709;
+	if (!strcmp(s, "srgb")) return V4L2_XFER_FUNC_SRGB;
+	if (!strcmp(s, "adobergb")) return V4L2_XFER_FUNC_ADOBERGB;
+	if (!strcmp(s, "dcip3")) return V4L2_XFER_FUNC_DCI_P3;
+	if (!strcmp(s, "smpte2084")) return V4L2_XFER_FUNC_SMPTE2084;
+	if (!strcmp(s, "none")) return V4L2_XFER_FUNC_NONE;
+	return 0;
+}
+
+static __u32 parse_ycbcr(const char *s)
+{
+	if (!strcmp(s, "default")) return V4L2_YCBCR_ENC_DEFAULT;
+	if (!strcmp(s, "601")) return V4L2_YCBCR_ENC_601;
+	if (!strcmp(s, "709")) return V4L2_YCBCR_ENC_709;
+	if (!strcmp(s, "xv601")) return V4L2_YCBCR_ENC_XV601;
+	if (!strcmp(s, "xv709")) return V4L2_YCBCR_ENC_XV709;
+	if (!strcmp(s, "bt2020")) return V4L2_YCBCR_ENC_BT2020;
+	if (!strcmp(s, "bt2020c")) return V4L2_YCBCR_ENC_BT2020_CONST_LUM;
+	if (!strcmp(s, "smpte240m")) return V4L2_YCBCR_ENC_SMPTE240M;
+	return V4L2_YCBCR_ENC_DEFAULT;
+}
+
+static __u32 parse_quantization(const char *s)
+{
+	if (!strcmp(s, "default")) return V4L2_QUANTIZATION_DEFAULT;
+	if (!strcmp(s, "full-range")) return V4L2_QUANTIZATION_FULL_RANGE;
+	if (!strcmp(s, "lim-range")) return V4L2_QUANTIZATION_LIM_RANGE;
+	return V4L2_QUANTIZATION_DEFAULT;
+}
+
+int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
+	      __u32 &field, __u32 &colorspace, __u32 &xfer_func, __u32 &ycbcr,
+	      __u32 &quantization, __u32 &flags, __u32 *bytesperline)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 {
 	char *value, *subs;
 	int fmts = 0;
 	unsigned bpl_index = 0;
+<<<<<<< HEAD
 
 	field = V4L2_FIELD_ANY;
+=======
+	bool be_pixfmt;
+
+	field = V4L2_FIELD_ANY;
+	flags = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	subs = optarg;
 	while (*subs != '\0') {
 		static const char *const subopts[] = {
@@ -712,7 +1112,15 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			"pixelformat",
 			"field",
 			"colorspace",
+<<<<<<< HEAD
 			"bytesperline",
+=======
+			"ycbcr",
+			"bytesperline",
+			"premul-alpha",
+			"quantization",
+			"xfer",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			NULL
 		};
 
@@ -726,12 +1134,27 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			fmts |= FmtHeight;
 			break;
 		case 2:
+<<<<<<< HEAD
 			if (strlen(value) == 4)
 				pixelformat =
 					v4l2_fourcc(value[0], value[1],
 							value[2], value[3]);
 			else
 				pixelformat = strtol(value, 0L, 0);
+=======
+			be_pixfmt = strlen(value) == 7 && !memcmp(value + 4, "-BE", 3);
+			if (be_pixfmt)
+				value[4] = 0;
+			if (strlen(value) == 4) {
+				pixelformat =
+					v4l2_fourcc(value[0], value[1],
+							value[2], value[3]);
+				if (be_pixfmt)
+					pixelformat |= 1 << 31;
+			} else {
+				pixelformat = strtol(value, 0L, 0);
+			}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			fmts |= FmtPixelFormat;
 			break;
 		case 3:
@@ -746,6 +1169,13 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 				fprintf(stderr, "unknown colorspace %s\n", value);
 			break;
 		case 5:
+<<<<<<< HEAD
+=======
+			ycbcr = parse_ycbcr(value);
+			fmts |= FmtYCbCr;
+			break;
+		case 6:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			bytesperline[bpl_index] = strtoul(value, 0L, 0);
 			if (bytesperline[bpl_index] > 0xffff) {
 				fprintf(stderr, "bytesperline can't be more than 65535\n");
@@ -754,6 +1184,21 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			bpl_index++;
 			fmts |= FmtBytesPerLine;
 			break;
+<<<<<<< HEAD
+=======
+		case 7:
+			flags |= V4L2_PIX_FMT_FLAG_PREMUL_ALPHA;
+			fmts |= FmtFlags;
+			break;
+		case 8:
+			quantization = parse_quantization(value);
+			fmts |= FmtQuantization;
+			break;
+		case 9:
+			xfer_func = parse_xfer_func(value);
+			fmts |= FmtXferFunc;
+			break;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		default:
 			return 0;
 		}
@@ -780,6 +1225,20 @@ static void print_event(const struct v4l2_event *ev)
 	case V4L2_EVENT_FRAME_SYNC:
 		printf("frame_sync %d\n", ev->u.frame_sync.frame_sequence);
 		break;
+<<<<<<< HEAD
+=======
+	case V4L2_EVENT_SOURCE_CHANGE:
+		printf("source_change: pad/input=%d changes: %x\n", ev->id, ev->u.src_change.changes);
+		break;
+	case V4L2_EVENT_MOTION_DET:
+		if (ev->u.motion_det.flags & V4L2_EVENT_MD_FL_HAVE_FRAME_SEQ)
+			printf("motion_det frame %d, regions 0x%x\n",
+					ev->u.motion_det.frame_sequence,
+					ev->u.motion_det.region_mask);
+		else
+			printf("motion_det regions 0x%x\n", ev->u.motion_det.region_mask);
+		break;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	default:
 		if (ev->type >= V4L2_EVENT_PRIVATE_START)
 			printf("unknown private event (%08x)\n", ev->type);
@@ -802,9 +1261,20 @@ static __u32 parse_event(const char *e, const char **name)
 		event = V4L2_EVENT_VSYNC;
 	else if (!strcmp(e, "frame_sync"))
 		event = V4L2_EVENT_FRAME_SYNC;
+<<<<<<< HEAD
 	else if (!strncmp(e, "ctrl=", 5)) {
 		event = V4L2_EVENT_CTRL;
 		*name = e + 5;
+=======
+	else if (!strcmp(e, "motion_det"))
+		event = V4L2_EVENT_MOTION_DET;
+	else if (!strncmp(e, "ctrl=", 5)) {
+		event = V4L2_EVENT_CTRL;
+		*name = e + 5;
+	} else if (!strncmp(e, "source_change=", 14)) {
+		event = V4L2_EVENT_SOURCE_CHANGE;
+		*name = e + 14;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	}
 
 	if (event == 0) {
@@ -832,6 +1302,62 @@ __u32 find_pixel_format(int fd, unsigned index, bool output, bool mplane)
 	return fmt.pixelformat;
 }
 
+<<<<<<< HEAD
+=======
+static bool is_subdevice(int fd)
+{
+	struct stat sb;
+	if (fstat(fd, &sb) == -1) {
+		fprintf(stderr, "failed to stat file\n");
+		exit(1);
+	}
+
+	char uevent_path[100];
+	if (snprintf(uevent_path, sizeof(uevent_path), "/sys/dev/char/%d:%d/uevent",
+		     major(sb.st_rdev), minor(sb.st_rdev)) == -1) {
+		fprintf(stderr, "failed to create uevent file path\n");
+		exit(1);
+	}
+
+	std::ifstream uevent_file(uevent_path);
+	if (uevent_file.fail()) {
+		fprintf(stderr, "failed to open %s\n", uevent_path);
+		exit(1);
+	}
+
+	std::string line;
+
+	while (std::getline(uevent_file, line)) {
+		if (line.compare(0, 8, "DEVNAME="))
+			continue;
+
+		static const char * devnames[] = {
+			"v4l-subdev",
+			"video",
+			"vbi",
+			"radio",
+			"swradio",
+			"v4l-touch",
+			NULL
+		};
+
+		for (size_t i = 0; devnames[i]; i++) {
+			size_t len = strlen(devnames[i]);
+
+			if (!line.compare(8, len, devnames[i]) && isdigit(line[8+len])) {
+				uevent_file.close();
+				return i == 0;
+			}
+		}
+	}
+
+	uevent_file.close();
+
+	fprintf(stderr, "unknown device name\n");
+	exit(1);
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 int main(int argc, char **argv)
 {
 	int i;
@@ -907,6 +1433,12 @@ int main(int argc, char **argv)
 		case OptHelpSdr:
 			sdr_usage();
 			return 0;
+<<<<<<< HEAD
+=======
+		case OptHelpMeta:
+			meta_usage();
+			return 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		case OptHelpSelection:
 			selection_usage();
 			return 0;
@@ -973,6 +1505,10 @@ int main(int argc, char **argv)
 			overlay_cmd(ch, optarg);
 			vbi_cmd(ch, optarg);
 			sdr_cmd(ch, optarg);
+<<<<<<< HEAD
+=======
+			meta_cmd(ch, optarg);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			selection_cmd(ch, optarg);
 			misc_cmd(ch, optarg);
 			streaming_cmd(ch, optarg);
@@ -996,7 +1532,11 @@ int main(int argc, char **argv)
 	}
 
 	verbose = options[OptVerbose];
+<<<<<<< HEAD
 	if (doioctl(fd, VIDIOC_QUERYCAP, &vcap)) {
+=======
+	if (!is_subdevice(fd) && doioctl(fd, VIDIOC_QUERYCAP, &vcap)) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		fprintf(stderr, "%s: not a v4l2 node\n", device);
 		exit(1);
 	}
@@ -1004,6 +1544,11 @@ int main(int argc, char **argv)
 	if (capabilities & V4L2_CAP_DEVICE_CAPS)
 		capabilities = vcap.device_caps;
 
+<<<<<<< HEAD
+=======
+	priv_magic = (capabilities & V4L2_CAP_EXT_PIX_FORMAT) ?
+			V4L2_PIX_FMT_PRIV_MAGIC : 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	is_multiplanar = capabilities & (V4L2_CAP_VIDEO_CAPTURE_MPLANE |
 					 V4L2_CAP_VIDEO_M2M_MPLANE |
 					 V4L2_CAP_VIDEO_OUTPUT_MPLANE);
@@ -1026,6 +1571,11 @@ int main(int argc, char **argv)
 		out_capabilities = vcap.capabilities;
 		if (out_capabilities & V4L2_CAP_DEVICE_CAPS)
 			out_capabilities = vcap.device_caps;
+<<<<<<< HEAD
+=======
+		out_priv_magic = (out_capabilities & V4L2_CAP_EXT_PIX_FORMAT) ?
+				V4L2_PIX_FMT_PRIV_MAGIC : 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	}
 
 	common_process_controls(fd);
@@ -1062,6 +1612,10 @@ int main(int argc, char **argv)
 		options[OptGetSlicedVbiFormat] = 1;
 		options[OptGetSlicedVbiOutFormat] = 1;
 		options[OptGetSdrFormat] = 1;
+<<<<<<< HEAD
+=======
+		options[OptGetSdrOutFormat] = 1;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		options[OptGetFBuf] = 1;
 		options[OptGetCropCap] = 1;
 		options[OptGetOutputCropCap] = 1;
@@ -1106,6 +1660,10 @@ int main(int argc, char **argv)
 	overlay_set(fd);
 	vbi_set(fd);
 	sdr_set(fd);
+<<<<<<< HEAD
+=======
+	meta_set(fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	selection_set(fd);
 	streaming_set(fd, out_fd);
 	misc_set(fd);
@@ -1122,6 +1680,10 @@ int main(int argc, char **argv)
 	overlay_get(fd);
 	vbi_get(fd);
 	sdr_get(fd);
+<<<<<<< HEAD
+=======
+	meta_get(fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	selection_get(fd);
 	misc_get(fd);
 	edid_get(fd);
@@ -1136,6 +1698,10 @@ int main(int argc, char **argv)
 	overlay_list(fd);
 	vbi_list(fd);
 	sdr_list(fd);
+<<<<<<< HEAD
+=======
+	meta_list(fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	streaming_list(fd, out_fd);
 
 	if (options[OptWaitForEvent]) {
@@ -1146,6 +1712,11 @@ int main(int argc, char **argv)
 		sub.type = wait_for_event;
 		if (wait_for_event == V4L2_EVENT_CTRL)
 			sub.id = common_find_ctrl_id(wait_event_id);
+<<<<<<< HEAD
+=======
+		else if (wait_for_event == V4L2_EVENT_SOURCE_CHANGE)
+			sub.id = strtoul(wait_event_id, 0L, 0);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		if (!doioctl(fd, VIDIOC_SUBSCRIBE_EVENT, &sub))
 			if (!doioctl(fd, VIDIOC_DQEVENT, &ev))
 				print_event(&ev);
@@ -1160,6 +1731,11 @@ int main(int argc, char **argv)
 		sub.type = poll_for_event;
 		if (poll_for_event == V4L2_EVENT_CTRL)
 			sub.id = common_find_ctrl_id(poll_event_id);
+<<<<<<< HEAD
+=======
+		else if (poll_for_event == V4L2_EVENT_SOURCE_CHANGE)
+			sub.id = strtoul(poll_event_id, 0L, 0);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		if (!doioctl(fd, VIDIOC_SUBSCRIBE_EVENT, &sub)) {
 			fd_set fds;
 			__u32 seq = 0;
@@ -1196,5 +1772,13 @@ int main(int argc, char **argv)
 	test_close(fd);
 	if (out_device)
 		test_close(out_fd);
+<<<<<<< HEAD
 	exit(app_result);
+=======
+
+	// --all sets --silent to avoid ioctl errors to be shown when an ioctl
+	// is not implemented by the driver. Which is fine, but we shouldn't
+	// return an application error in that specific case.
+	exit(options[OptAll] ? 0 : app_result);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }

@@ -25,6 +25,7 @@
 
 #define DO_SANITY_CHECKS 0
 
+<<<<<<< HEAD
 static const int UVTranslate[32] = {
 	0, 1, 2, 3,
 	8, 9, 10, 11,
@@ -36,6 +37,8 @@ static const int UVTranslate[32] = {
 	28, 29, 30, 31
 };
 
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 static const int Y_coords_624x[128][2] = {
 	{ 0,  0}, { 1,  0}, { 2,  0}, { 3,  0}, { 4,  0}, { 5,  0}, { 6,  0}, { 7,  0},
 	{ 0,  1}, { 1,  1}, { 2,  1}, { 3,  1}, { 4,  1}, { 5,  1}, { 6,  1}, { 7,  1},

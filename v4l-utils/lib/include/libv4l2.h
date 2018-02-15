@@ -78,7 +78,11 @@ LIBV4L_PUBLIC int v4l2_munmap(void *_start, size_t length);
    and is not locked sets the cid to the scaled value.
 
    Normally returns 0, even if the cid did not exist or was locked, returns
+<<<<<<< HEAD
    non 0 when an other error occured. */
+=======
+   non 0 when an other error occurred. */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 LIBV4L_PUBLIC int v4l2_set_control(int fd, int cid, int value);
 
 /* This function returns a value of 0 - 65535, scaled to from the actual range

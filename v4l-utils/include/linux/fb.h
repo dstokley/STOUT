@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 #ifndef _UAPI_LINUX_FB_H
 #define _UAPI_LINUX_FB_H
+=======
+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+#ifndef _LINUX_FB_H
+#define _LINUX_FB_H
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 #include <linux/types.h>
 #include <linux/i2c.h>
@@ -16,9 +22,13 @@
 #define FBIOGETCMAP		0x4604
 #define FBIOPUTCMAP		0x4605
 #define FBIOPAN_DISPLAY		0x4606
+<<<<<<< HEAD
 #ifndef __KERNEL__
 #define FBIO_CURSOR            _IOWR('F', 0x08, struct fb_cursor)
 #endif
+=======
+#define FBIO_CURSOR            _IOWR('F', 0x08, struct fb_cursor)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 /* 0x4607-0x460B are defined below */
 /* #define FBIOGET_MONITORSPEC	0x460C */
 /* #define FBIOPUT_MONITORSPEC	0x460D */
@@ -399,4 +409,8 @@ struct fb_cursor {
 #endif
 
 
+<<<<<<< HEAD
 #endif /* _UAPI_LINUX_FB_H */
+=======
+#endif /* _LINUX_FB_H */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d

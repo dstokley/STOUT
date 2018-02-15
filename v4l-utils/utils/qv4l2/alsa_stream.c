@@ -409,7 +409,11 @@ static int setparams(snd_pcm_t *phandle, snd_pcm_t *chandle,
     }
 
     if (verbose) {
+<<<<<<< HEAD
 	fprintf(error_fp, "alsa: Negociated configuration:\n");
+=======
+	fprintf(error_fp, "alsa: Negotiated configuration:\n");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	snd_pcm_dump_setup(phandle, output);
 	snd_pcm_dump_setup(chandle, output);
 	fprintf(error_fp, "alsa: Parameters are %iHz, %s, %i channels\n",

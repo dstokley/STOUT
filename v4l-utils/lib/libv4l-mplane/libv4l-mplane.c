@@ -21,16 +21,36 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+<<<<<<< HEAD
+=======
+#include <stddef.h>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #include <string.h>
 #include <unistd.h>
 #include <sys/syscall.h>
 
+<<<<<<< HEAD
 #include <linux/videodev2.h>
+=======
+#if defined(__OpenBSD__)
+#include <sys/videoio.h>
+#include <sys/ioctl.h>
+#else
+#include <linux/videodev2.h>
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 #include "libv4l-plugin.h"
 
 #define SYS_IOCTL(fd, cmd, arg) \
 	syscall(SYS_ioctl, (int)(fd), (unsigned long)(cmd), (void *)(arg))
+<<<<<<< HEAD
+=======
+#define SYS_READ(fd, buf, len) \
+	syscall(SYS_read, (int)(fd), (void *)(buf), (size_t)(len));
+#define SYS_WRITE(fd, buf, len) \
+	syscall(SYS_write, (int)(fd), (const void *)(buf), (size_t)(len));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 
 #if HAVE_VISIBILITY
@@ -53,9 +73,21 @@ struct mplane_plugin {
 	int __ret;						\
 	struct __struc *req = arg;				\
 	uint32_t type = req->type;				\
+<<<<<<< HEAD
 	req->type = convert_type(type);				\
 	__ret = SYS_IOCTL(fd, cmd, arg);			\
 	req->type = type;					\
+=======
+	if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE ||	\
+	    type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {	\
+		errno = EINVAL;					\
+		__ret = -1;					\
+	} else {						\
+		req->type = convert_type(type);			\
+		__ret = SYS_IOCTL(fd, cmd, arg);		\
+		req->type = type;				\
+	}							\
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	__ret;							\
 	})
 
@@ -126,12 +158,29 @@ static int querycap_ioctl(int fd, unsigned long int cmd,
 	if (cap->capabilities & V4L2_CAP_VIDEO_OUTPUT_MPLANE)
 		cap->capabilities |= V4L2_CAP_VIDEO_OUTPUT;
 
+<<<<<<< HEAD
+=======
+	if (cap->device_caps & V4L2_CAP_VIDEO_CAPTURE_MPLANE)
+		cap->device_caps |= V4L2_CAP_VIDEO_CAPTURE;
+
+	if (cap->device_caps & V4L2_CAP_VIDEO_OUTPUT_MPLANE)
+		cap->device_caps |= V4L2_CAP_VIDEO_OUTPUT;
+
+	cap->capabilities |= V4L2_CAP_EXT_PIX_FORMAT;
+	cap->device_caps |= V4L2_CAP_EXT_PIX_FORMAT;
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	/*
 	 * Don't report mplane caps, as this will be handled via
 	 * this plugin
 	 */
 	cap->capabilities &= ~(V4L2_CAP_VIDEO_OUTPUT_MPLANE |
 			       V4L2_CAP_VIDEO_CAPTURE_MPLANE);
+<<<<<<< HEAD
+=======
+	cap->device_caps &= ~(V4L2_CAP_VIDEO_OUTPUT_MPLANE |
+			      V4L2_CAP_VIDEO_CAPTURE_MPLANE);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	return 0;
 }
@@ -148,6 +197,35 @@ static int convert_type(int type)
 	}
 }
 
+<<<<<<< HEAD
+=======
+static void sanitize_format(struct v4l2_format *fmt)
+{
+	unsigned int offset;
+
+	/*
+	 * The v4l2_pix_format structure has been extended with fields that were
+	 * not previously required to be set to zero by applications. The priv
+	 * field, when set to a magic value, indicates the the extended fields
+	 * are valid. We support these extended fields since struct
+	 * v4l2_pix_format_mplane supports those fields as well.
+	 *
+	 * So this function will sanitize v4l2_pix_format if priv != PRIV_MAGIC
+	 * by setting priv to that value and zeroing the remaining fields.
+	 */
+
+	if (fmt->fmt.pix.priv == V4L2_PIX_FMT_PRIV_MAGIC)
+		return;
+
+	fmt->fmt.pix.priv = V4L2_PIX_FMT_PRIV_MAGIC;
+
+	offset = offsetof(struct v4l2_pix_format, priv)
+	       + sizeof(fmt->fmt.pix.priv);
+	memset(((char *)&fmt->fmt.pix) + offset, 0,
+	       sizeof(fmt->fmt.pix) - offset);
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 static int try_set_fmt_ioctl(int fd, unsigned long int cmd,
 			     struct v4l2_format *arg)
 {
@@ -162,16 +240,37 @@ static int try_set_fmt_ioctl(int fd, unsigned long int cmd,
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
 		fmt.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
 		break;
+<<<<<<< HEAD
 	default:
 		return SYS_IOCTL(fd, cmd, &fmt);
 	}
 
+=======
+	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+		errno = EINVAL;
+		return -1;
+	default:
+		return SYS_IOCTL(fd, cmd, arg);
+	}
+
+	sanitize_format(org);
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	fmt.fmt.pix_mp.width = org->fmt.pix.width;
 	fmt.fmt.pix_mp.height = org->fmt.pix.height;
 	fmt.fmt.pix_mp.pixelformat = org->fmt.pix.pixelformat;
 	fmt.fmt.pix_mp.field = org->fmt.pix.field;
 	fmt.fmt.pix_mp.colorspace = org->fmt.pix.colorspace;
+<<<<<<< HEAD
 	fmt.fmt.pix_mp.num_planes = 1;
+=======
+	fmt.fmt.pix_mp.xfer_func = org->fmt.pix.xfer_func;
+	fmt.fmt.pix_mp.ycbcr_enc = org->fmt.pix.ycbcr_enc;
+	fmt.fmt.pix_mp.quantization = org->fmt.pix.quantization;
+	fmt.fmt.pix_mp.num_planes = 1;
+	fmt.fmt.pix_mp.flags = org->fmt.pix.flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	fmt.fmt.pix_mp.plane_fmt[0].bytesperline = org->fmt.pix.bytesperline;
 	fmt.fmt.pix_mp.plane_fmt[0].sizeimage = org->fmt.pix.sizeimage;
 
@@ -184,8 +283,17 @@ static int try_set_fmt_ioctl(int fd, unsigned long int cmd,
 	org->fmt.pix.pixelformat = fmt.fmt.pix_mp.pixelformat;
 	org->fmt.pix.field = fmt.fmt.pix_mp.field;
 	org->fmt.pix.colorspace = fmt.fmt.pix_mp.colorspace;
+<<<<<<< HEAD
 	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
 	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
+=======
+	org->fmt.pix.xfer_func = fmt.fmt.pix_mp.xfer_func;
+	org->fmt.pix.ycbcr_enc = fmt.fmt.pix_mp.ycbcr_enc;
+	org->fmt.pix.quantization = fmt.fmt.pix_mp.quantization;
+	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
+	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
+	org->fmt.pix.flags = fmt.fmt.pix_mp.flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	return 0;
 }
@@ -193,12 +301,18 @@ static int try_set_fmt_ioctl(int fd, unsigned long int cmd,
 static int create_bufs_ioctl(int fd, unsigned long int cmd,
 			     struct v4l2_create_buffers *arg)
 {
+<<<<<<< HEAD
 	struct v4l2_format fmt = { 0 };
+=======
+	struct v4l2_create_buffers cbufs = { 0 };
+	struct v4l2_format *fmt = &cbufs.format;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	struct v4l2_format *org = &arg->format;
 	int ret;
 
 	switch (arg->format.type) {
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE:
+<<<<<<< HEAD
 		fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
 		break;
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
@@ -230,6 +344,55 @@ static int create_bufs_ioctl(int fd, unsigned long int cmd,
 	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
 
 	return 0;
+=======
+		fmt->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
+		break;
+	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
+		fmt->type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
+		break;
+	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+		errno = EINVAL;
+		return -1;
+	default:
+		return SYS_IOCTL(fd, cmd, arg);
+	}
+
+	cbufs.index = arg->index;
+	cbufs.count = arg->count;
+	cbufs.memory = arg->memory;
+	sanitize_format(org);
+	fmt->fmt.pix_mp.width = org->fmt.pix.width;
+	fmt->fmt.pix_mp.height = org->fmt.pix.height;
+	fmt->fmt.pix_mp.pixelformat = org->fmt.pix.pixelformat;
+	fmt->fmt.pix_mp.field = org->fmt.pix.field;
+	fmt->fmt.pix_mp.colorspace = org->fmt.pix.colorspace;
+	fmt->fmt.pix_mp.xfer_func = org->fmt.pix.xfer_func;
+	fmt->fmt.pix_mp.ycbcr_enc = org->fmt.pix.ycbcr_enc;
+	fmt->fmt.pix_mp.quantization = org->fmt.pix.quantization;
+	fmt->fmt.pix_mp.num_planes = 1;
+	fmt->fmt.pix_mp.flags = org->fmt.pix.flags;
+	fmt->fmt.pix_mp.plane_fmt[0].bytesperline = org->fmt.pix.bytesperline;
+	fmt->fmt.pix_mp.plane_fmt[0].sizeimage = org->fmt.pix.sizeimage;
+
+	ret = SYS_IOCTL(fd, cmd, &cbufs);
+
+	arg->index = cbufs.index;
+	arg->count = cbufs.count;
+	org->fmt.pix.width = fmt->fmt.pix_mp.width;
+	org->fmt.pix.height = fmt->fmt.pix_mp.height;
+	org->fmt.pix.pixelformat = fmt->fmt.pix_mp.pixelformat;
+	org->fmt.pix.field = fmt->fmt.pix_mp.field;
+	org->fmt.pix.colorspace = fmt->fmt.pix_mp.colorspace;
+	org->fmt.pix.xfer_func = fmt->fmt.pix_mp.xfer_func;
+	org->fmt.pix.ycbcr_enc = fmt->fmt.pix_mp.ycbcr_enc;
+	org->fmt.pix.quantization = fmt->fmt.pix_mp.quantization;
+	org->fmt.pix.bytesperline = fmt->fmt.pix_mp.plane_fmt[0].bytesperline;
+	org->fmt.pix.sizeimage = fmt->fmt.pix_mp.plane_fmt[0].sizeimage;
+	org->fmt.pix.flags = fmt->fmt.pix_mp.flags;
+
+	return ret;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 static int get_fmt_ioctl(int fd, unsigned long int cmd, struct v4l2_format *arg)
@@ -245,28 +408,55 @@ static int get_fmt_ioctl(int fd, unsigned long int cmd, struct v4l2_format *arg)
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
 		fmt.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
 		break;
+<<<<<<< HEAD
 	default:
 		return SYS_IOCTL(fd, cmd, &fmt);
+=======
+	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+		errno = EINVAL;
+		return -1;
+	default:
+		return SYS_IOCTL(fd, cmd, arg);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	}
 
 	ret = SYS_IOCTL(fd, cmd, &fmt);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+=======
+	memset(&org->fmt.pix, 0, sizeof(org->fmt.pix));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	org->fmt.pix.width = fmt.fmt.pix_mp.width;
 	org->fmt.pix.height = fmt.fmt.pix_mp.height;
 	org->fmt.pix.pixelformat = fmt.fmt.pix_mp.pixelformat;
 	org->fmt.pix.field = fmt.fmt.pix_mp.field;
 	org->fmt.pix.colorspace = fmt.fmt.pix_mp.colorspace;
+<<<<<<< HEAD
 	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
 	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
+=======
+	org->fmt.pix.xfer_func = fmt.fmt.pix_mp.xfer_func;
+	org->fmt.pix.ycbcr_enc = fmt.fmt.pix_mp.ycbcr_enc;
+	org->fmt.pix.quantization = fmt.fmt.pix_mp.quantization;
+	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
+	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
+	org->fmt.pix.priv = V4L2_PIX_FMT_PRIV_MAGIC;
+	org->fmt.pix.flags = fmt.fmt.pix_mp.flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	/*
 	 * If the device doesn't support just one plane, there's
 	 * nothing we can do, except return an error condition.
 	 */
 	if (fmt.fmt.pix_mp.num_planes > 1) {
+<<<<<<< HEAD
 		errno = -EINVAL;
+=======
+		errno = EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		return -1;
 	}
 
@@ -279,6 +469,15 @@ static int buf_ioctl(int fd, unsigned long int cmd, struct v4l2_buffer *arg)
 	struct v4l2_plane plane = { 0 };
 	int ret;
 
+<<<<<<< HEAD
+=======
+	if (arg->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE ||
+	    arg->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
+		errno = EINVAL;
+		return -1;
+	}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	buf.type = convert_type(arg->type);
 
 	if (buf.type == arg->type)
@@ -294,6 +493,10 @@ static int buf_ioctl(int fd, unsigned long int cmd, struct v4l2_buffer *arg)
 	ret = SYS_IOCTL(fd, cmd, &buf);
 
 	arg->index = buf.index;
+<<<<<<< HEAD
+=======
+	arg->memory = buf.memory;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	arg->flags = buf.flags;
 	arg->field = buf.field;
 	arg->timestamp = buf.timestamp;
@@ -302,6 +505,10 @@ static int buf_ioctl(int fd, unsigned long int cmd, struct v4l2_buffer *arg)
 
 	arg->length = plane.length;
 	arg->bytesused = plane.bytesused;
+<<<<<<< HEAD
+=======
+	memcpy(&arg->m, &plane.m, sizeof(arg->m));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	return ret;
 }
@@ -309,7 +516,10 @@ static int buf_ioctl(int fd, unsigned long int cmd, struct v4l2_buffer *arg)
 static int plugin_ioctl(void *dev_ops_priv, int fd,
 			unsigned long int cmd, void *arg)
 {
+<<<<<<< HEAD
 	struct mplane_plugin *plugin = dev_ops_priv;
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	switch (cmd) {
 	case VIDIOC_QUERYCAP:
 		return querycap_ioctl(fd, cmd, arg);
@@ -323,11 +533,14 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 	case VIDIOC_S_PARM:
 	case VIDIOC_G_PARM:
 		return SIMPLE_CONVERT_IOCTL(fd, cmd, arg, v4l2_streamparm);
+<<<<<<< HEAD
 	case VIDIOC_CROPCAP:
 		return SIMPLE_CONVERT_IOCTL(fd, cmd, arg, v4l2_cropcap);
 	case VIDIOC_S_CROP:
 	case VIDIOC_G_CROP:
 		return SIMPLE_CONVERT_IOCTL(fd, cmd, arg, v4l2_crop);
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	case VIDIOC_QBUF:
 	case VIDIOC_DQBUF:
 	case VIDIOC_QUERYBUF:
@@ -340,6 +553,7 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 	case VIDIOC_STREAMON:
 	case VIDIOC_STREAMOFF:
 	{
+<<<<<<< HEAD
 		int type, ret;
 
 		/*
@@ -360,6 +574,18 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 		}
 
 		return ret;
+=======
+		int type = *(int *)arg;
+
+		if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE ||
+		    type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
+			errno = EINVAL;
+			return -1;
+		}
+		type = convert_type(type);
+
+		return SYS_IOCTL(fd, cmd, &type);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	}
 	/* CASE VIDIOC_EXPBUF: */
 	default:
@@ -367,8 +593,27 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 	}
 }
 
+<<<<<<< HEAD
+=======
+static ssize_t plugin_read(void *dev_ops_priv, int fd, void *buf, size_t len)
+{
+	return SYS_READ(fd, buf, len);
+}
+
+static ssize_t plugin_write(void *dev_ops_priv, int fd, const void *buf,
+                         size_t len)
+{
+	return SYS_WRITE(fd, buf, len);
+}
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 PLUGIN_PUBLIC const struct libv4l_dev_ops libv4l2_plugin = {
 	.init = &plugin_init,
 	.close = &plugin_close,
 	.ioctl = &plugin_ioctl,
+<<<<<<< HEAD
+=======
+	.read = &plugin_read,
+	.write = &plugin_write,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 };

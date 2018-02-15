@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+#ifndef __V4L_ANDROID_CONFIG_H__
+#define __V4L_ANDROID_CONFIG_H__
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
@@ -358,3 +363,7 @@ getsubopt (char **optionp, char *const *tokens, char **valuep)
 
   return -1;
 }
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d

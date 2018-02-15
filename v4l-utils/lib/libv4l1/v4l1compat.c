@@ -26,7 +26,10 @@
 #include <stdarg.h>
 #include <fcntl.h>
 #include <libv4l1.h>
+<<<<<<< HEAD
 #include "../libv4lconvert/libv4lsyscall-priv.h" /* for __off_t */
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 #include <sys/ioctl.h>
 #include <sys/mman.h>
@@ -62,7 +65,11 @@ LIBV4L_PUBLIC int open(const char *file, int oflag, ...)
 	return fd;
 }
 
+<<<<<<< HEAD
 #ifdef linux
+=======
+#if defined(linux) && defined(__GLIBC__)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 LIBV4L_PUBLIC int open64(const char *file, int oflag, ...)
 {
 	int fd;
@@ -94,7 +101,15 @@ LIBV4L_PUBLIC int dup(int fd)
 	return v4l1_dup(fd);
 }
 
+<<<<<<< HEAD
 LIBV4L_PUBLIC int ioctl(int fd, unsigned long int request, ...)
+=======
+#ifdef HAVE_POSIX_IOCTL
+LIBV4L_PUBLIC int ioctl(int fd, int request, ...)
+#else
+LIBV4L_PUBLIC int ioctl(int fd, unsigned long int request, ...)
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 {
 	void *arg;
 	va_list ap;
@@ -112,12 +127,20 @@ LIBV4L_PUBLIC ssize_t read(int fd, void *buffer, size_t n)
 }
 
 LIBV4L_PUBLIC void *mmap(void *start, size_t length, int prot, int flags, int fd,
+<<<<<<< HEAD
 		__off_t offset)
+=======
+		off_t offset)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 {
 	return v4l1_mmap(start, length, prot, flags, fd, offset);
 }
 
+<<<<<<< HEAD
 #ifdef linux
+=======
+#if defined(linux) && defined(__GLIBC__)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 LIBV4L_PUBLIC void *mmap64(void *start, size_t length, int prot, int flags, int fd,
 		__off64_t offset)
 {

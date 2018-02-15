@@ -36,12 +36,22 @@
 
 #ifdef linux
 #include <sys/time.h>
+<<<<<<< HEAD
 #include <syscall.h>
+=======
+#include <sys/syscall.h>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #include <linux/types.h>
 #include <linux/ioctl.h>
 /* On 32 bits archs we always use mmap2, on 64 bits archs there is no mmap2 */
 #ifdef __NR_mmap2
+<<<<<<< HEAD
 #define	SYS_mmap2 __NR_mmap2
+=======
+#if !defined(SYS_mmap2)
+#define	SYS_mmap2 __NR_mmap2
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #define	MMAP2_PAGE_SHIFT 12
 #else
 #define	SYS_mmap2 SYS_mmap
@@ -59,7 +69,19 @@
 #define	_IOC_SIZE(cmd) IOCPARM_LEN(cmd)
 #define	MAP_ANONYMOUS MAP_ANON
 #define	MMAP2_PAGE_SHIFT 0
+<<<<<<< HEAD
 typedef off_t __off_t;
+=======
+#endif
+
+#if defined(__OpenBSD__)
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/ioctl.h>
+#define	_IOC_NR(cmd) ((cmd) & 0xFF)
+#define	_IOC_TYPE(cmd) IOCGROUP(cmd)
+#define	MMAP2_PAGE_SHIFT 0
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #endif
 
 #undef SYS_OPEN
@@ -91,6 +113,7 @@ typedef off_t __off_t;
 #if defined(__FreeBSD__)
 #define SYS_MMAP(addr, len, prot, flags, fd, off) \
 	__syscall(SYS_mmap, (void *)(addr), (size_t)(len), \
+<<<<<<< HEAD
 			(int)(prot), (int)(flags), (int)(fd), (__off_t)(off))
 #elif defined(__FreeBSD_kernel__)
 #define SYS_MMAP(addr, len, prot, flags, fd, off) \
@@ -100,6 +123,22 @@ typedef off_t __off_t;
 #define SYS_MMAP(addr, len, prot, flags, fd, off) \
 	syscall(SYS_mmap2, (void *)(addr), (size_t)(len), \
 			(int)(prot), (int)(flags), (int)(fd), (__off_t)((off) >> MMAP2_PAGE_SHIFT))
+=======
+			(int)(prot), (int)(flags), (int)(fd), (off_t)(off))
+#elif defined(__FreeBSD_kernel__)
+#define SYS_MMAP(addr, len, prot, flags, fd, off) \
+	syscall(SYS_mmap, (void *)(addr), (size_t)(len), \
+			(int)(prot), (int)(flags), (int)(fd), (off_t)(off))
+#elif defined(__OpenBSD__)
+register_t __syscall(quad_t, ...);
+#define SYS_MMAP(addr, len, prot, flags, fd, offset) \
+	__syscall((quad_t)SYS_mmap, (void *)(addr), (size_t)(len), \
+			(int)(prot), (int)(flags), (int)(fd), 0, (off_t)(offset))
+#else
+#define SYS_MMAP(addr, len, prot, flags, fd, off) \
+	syscall(SYS_mmap2, (void *)(addr), (size_t)(len), \
+			(int)(prot), (int)(flags), (int)(fd), (off_t)((off) >> MMAP2_PAGE_SHIFT))
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 #endif
 
 #define SYS_MUNMAP(addr, len) \

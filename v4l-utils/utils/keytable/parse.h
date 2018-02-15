@@ -181,7 +181,11 @@ struct parse_event key_events[] = {
 	{"KEY_WWW", 150},
 	{"KEY_MSDOS", 151},
 	{"KEY_COFFEE", 152},
+<<<<<<< HEAD
 	{"KEY_DIRECTION", 153},
+=======
+	{"KEY_ROTATE_DISPLAY", 153},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"KEY_CYCLEWINDOWS", 154},
 	{"KEY_MAIL", 155},
 	{"KEY_BOOKMARKS", 156},
@@ -267,7 +271,11 @@ struct parse_event key_events[] = {
 	{"KEY_VIDEO_NEXT", 241},
 	{"KEY_VIDEO_PREV", 242},
 	{"KEY_BRIGHTNESS_CYCLE", 243},
+<<<<<<< HEAD
 	{"KEY_BRIGHTNESS_ZERO", 244},
+=======
+	{"KEY_BRIGHTNESS_AUTO", 244},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"KEY_DISPLAY_OFF", 245},
 	{"KEY_WWAN", 246},
 	{"KEY_RFKILL", 247},
@@ -332,6 +340,10 @@ struct parse_event key_events[] = {
 	{"BTN_TOOL_MOUSE", 0x146},
 	{"BTN_TOOL_LENS", 0x147},
 	{"BTN_TOOL_QUINTTAP", 0x148},
+<<<<<<< HEAD
+=======
+	{"BTN_STYLUS3", 0x149},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"BTN_TOUCH", 0x14a},
 	{"BTN_STYLUS", 0x14b},
 	{"BTN_STYLUS2", 0x14c},
@@ -479,6 +491,13 @@ struct parse_event key_events[] = {
 	{"KEY_NUMERIC_9", 0x209},
 	{"KEY_NUMERIC_STAR", 0x20a},
 	{"KEY_NUMERIC_POUND", 0x20b},
+<<<<<<< HEAD
+=======
+	{"KEY_NUMERIC_A", 0x20c},
+	{"KEY_NUMERIC_B", 0x20d},
+	{"KEY_NUMERIC_C", 0x20e},
+	{"KEY_NUMERIC_D", 0x20f},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"KEY_CAMERA_FOCUS", 0x210},
 	{"KEY_WPS_BUTTON", 0x211},
 	{"KEY_TOUCHPAD_TOGGLE", 0x212},
@@ -499,6 +518,44 @@ struct parse_event key_events[] = {
 	{"BTN_DPAD_LEFT", 0x222},
 	{"BTN_DPAD_RIGHT", 0x223},
 	{"KEY_ALS_TOGGLE", 0x230},
+<<<<<<< HEAD
+=======
+	{"KEY_BUTTONCONFIG", 0x240},
+	{"KEY_TASKMANAGER", 0x241},
+	{"KEY_JOURNAL", 0x242},
+	{"KEY_CONTROLPANEL", 0x243},
+	{"KEY_APPSELECT", 0x244},
+	{"KEY_SCREENSAVER", 0x245},
+	{"KEY_VOICECOMMAND", 0x246},
+	{"KEY_ASSISTANT", 0x247},
+	{"KEY_BRIGHTNESS_MIN", 0x250},
+	{"KEY_BRIGHTNESS_MAX", 0x251},
+	{"KEY_KBDINPUTASSIST_PREV", 0x260},
+	{"KEY_KBDINPUTASSIST_NEXT", 0x261},
+	{"KEY_KBDINPUTASSIST_PREVGROUP", 0x262},
+	{"KEY_KBDINPUTASSIST_NEXTGROUP", 0x263},
+	{"KEY_KBDINPUTASSIST_ACCEPT", 0x264},
+	{"KEY_KBDINPUTASSIST_CANCEL", 0x265},
+	{"KEY_RIGHT_UP", 0x266},
+	{"KEY_RIGHT_DOWN", 0x267},
+	{"KEY_LEFT_UP", 0x268},
+	{"KEY_LEFT_DOWN", 0x269},
+	{"KEY_ROOT_MENU", 0x26a},
+	{"KEY_MEDIA_TOP_MENU", 0x26b},
+	{"KEY_NUMERIC_11", 0x26c},
+	{"KEY_NUMERIC_12", 0x26d},
+	{"KEY_AUDIO_DESC", 0x26e},
+	{"KEY_3D_MODE", 0x26f},
+	{"KEY_NEXT_FAVORITE", 0x270},
+	{"KEY_STOP_RECORD", 0x271},
+	{"KEY_PAUSE_RECORD", 0x272},
+	{"KEY_VOD", 0x273},
+	{"KEY_UNMUTE", 0x274},
+	{"KEY_FASTREVERSE", 0x275},
+	{"KEY_SLOWREVERSE", 0x276},
+	{"KEY_DATA", 0x277},
+	{"KEY_ONSCREEN_KEYBOARD", 0x278},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	{"BTN_TRIGGER_HAPPY", 0x2c0},
 	{"BTN_TRIGGER_HAPPY1", 0x2c0},
 	{"BTN_TRIGGER_HAPPY2", 0x2c1},

@@ -196,8 +196,21 @@ static std::string cap2s(unsigned cap)
 
 	if (cap & V4L2_CAP_VIDEO_CAPTURE)
 		s += "\t\tVideo Capture\n";
+<<<<<<< HEAD
 	if (cap & V4L2_CAP_VIDEO_OUTPUT)
 		s += "\t\tVideo Output\n";
+=======
+	if (cap & V4L2_CAP_VIDEO_CAPTURE_MPLANE)
+		s += "\t\tVideo Capture Multiplanar\n";
+	if (cap & V4L2_CAP_VIDEO_OUTPUT)
+		s += "\t\tVideo Output\n";
+	if (cap & V4L2_CAP_VIDEO_OUTPUT_MPLANE)
+		s += "\t\tVideo Output Multiplanar\n";
+	if (cap & V4L2_CAP_VIDEO_M2M)
+		s += "\t\tVideo Memory-to-Memory\n";
+	if (cap & V4L2_CAP_VIDEO_M2M_MPLANE)
+		s += "\t\tVideo Memory-to-Memory Multiplanar\n";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	if (cap & V4L2_CAP_VIDEO_OVERLAY)
 		s += "\t\tVideo Overlay\n";
 	if (cap & V4L2_CAP_VIDEO_OUTPUT_OVERLAY)
@@ -212,8 +225,23 @@ static std::string cap2s(unsigned cap)
 		s += "\t\tSliced VBI Output\n";
 	if (cap & V4L2_CAP_RDS_CAPTURE)
 		s += "\t\tRDS Capture\n";
+<<<<<<< HEAD
 	if (cap & V4L2_CAP_TUNER)
 		s += "\t\tTuner\n";
+=======
+	if (cap & V4L2_CAP_RDS_OUTPUT)
+		s += "\t\tRDS Output\n";
+	if (cap & V4L2_CAP_SDR_CAPTURE)
+		s += "\t\tSDR Capture\n";
+	if (cap & V4L2_CAP_TOUCH)
+		s += "\t\tTouch Device\n";
+	if (cap & V4L2_CAP_TUNER)
+		s += "\t\tTuner\n";
+	if (cap & V4L2_CAP_HW_FREQ_SEEK)
+		s += "\t\tHW Frequency Seek\n";
+	if (cap & V4L2_CAP_MODULATOR)
+		s += "\t\tModulator\n";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	if (cap & V4L2_CAP_AUDIO)
 		s += "\t\tAudio\n";
 	if (cap & V4L2_CAP_RADIO)
@@ -224,19 +252,48 @@ static std::string cap2s(unsigned cap)
 		s += "\t\tAsync I/O\n";
 	if (cap & V4L2_CAP_STREAMING)
 		s += "\t\tStreaming\n";
+<<<<<<< HEAD
+=======
+	if (cap & V4L2_CAP_EXT_PIX_FORMAT)
+		s += "\t\tExtended Pix Format\n";
+	if (cap & V4L2_CAP_DEVICE_CAPS)
+		s += "\t\tDevice Capabilities\n";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	return s;
 }
 
 static void print_regs(int fd, struct v4l2_dbg_register *reg, unsigned long min, unsigned long max, int stride)
 {
+<<<<<<< HEAD
 	unsigned long mask = stride > 1 ? 0x1f : 0x0f;
 	unsigned long i;
 	int line = 0;
 
+=======
+	unsigned long mask;
+	unsigned long i;
+	int line = 0;
+
+	/* Query size of the first register */
+	reg->reg = min;
+	if (ioctl(fd, VIDIOC_DBG_G_REGISTER, reg) == 0) {
+		/* If size is set, then use this as the stride */
+		if (reg->size)
+			stride = reg->size;
+	}
+
+	mask = stride > 2 ? 0x1f : 0x0f;
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	for (i = min & ~mask; i <= max; i += stride) {
 		if ((i & mask) == 0 && line % 32 == 0) {
 			if (stride == 4)
 				printf("\n                00       04       08       0C       10       14       18       1C");
+<<<<<<< HEAD
+=======
+			else if (stride == 2)
+				printf("\n            00   02   04   06   08   0A   0C   0E");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			else
 				printf("\n          00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F");
 		}
@@ -554,6 +611,15 @@ int main(int argc, char **argv)
 			usage();
 		set_reg.reg = parse_reg(curr_bd, reg_set_arg);
 		while (optind < argc) {
+<<<<<<< HEAD
+=======
+			unsigned size = 0;
+
+			if (doioctl(fd, VIDIOC_DBG_G_REGISTER, &set_reg,
+				    "VIDIOC_DBG_G_REGISTER") >= 0)
+				size = set_reg.size;
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 			set_reg.val = strtoull(argv[optind++], NULL, 0);
 			if (doioctl(fd, VIDIOC_DBG_S_REGISTER, &set_reg,
 						"VIDIOC_DBG_S_REGISTER") >= 0) {
@@ -571,7 +637,11 @@ int main(int argc, char **argv)
 				printf("Failed to set register 0x%08llx value 0x%llx: %s\n",
 					set_reg.reg, set_reg.val, strerror(errno));
 			}
+<<<<<<< HEAD
 			set_reg.reg++;
+=======
+			set_reg.reg += size ? : (forcedstride ? : 1);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		}
 	}
 

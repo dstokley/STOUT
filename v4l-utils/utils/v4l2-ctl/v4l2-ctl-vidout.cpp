@@ -17,7 +17,11 @@
 #include "v4l2-ctl.h"
 
 static unsigned set_fmts_out;
+<<<<<<< HEAD
 static __u32 width, height, pixfmt, field, colorspace;
+=======
+static __u32 width, height, pixfmt, field, colorspace, xfer_func, ycbcr, quantization, flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 static __u32 bytesperline[VIDEO_MAX_PLANES];
 
 void vidout_usage(void)
@@ -28,6 +32,7 @@ void vidout_usage(void)
 	       "  --get-fmt-video-out\n"
 	       "     		     query the video output format [VIDIOC_G_FMT]\n"
 	       "  --set-fmt-video-out\n"
+<<<<<<< HEAD
 	       "  --try-fmt-video-out=width=<w>,height=<h>,pixelformat=<pf>,field=<f>,colorspace=<c>,bytesperline=<bpl>\n"
 	       "                     set/try the video output format [VIDIOC_S/TRY_FMT]\n"
 	       "                     pixelformat is either the format index as reported by\n"
@@ -38,6 +43,27 @@ void vidout_usage(void)
 	       "                     alternate, interlaced_tb, interlaced_bt\n"
 	       "                     <c> can be one of:\n"
 	       "                     smpte170m, smpte240m, rec709, bt878, 470m, 470bg, jpeg, srgb\n"
+=======
+	       "  --try-fmt-video-out=width=<w>,height=<h>,pixelformat=<pf>,field=<f>,colorspace=<c>,\n"
+	       "                      xfer=<xf>,ycbcr=<y>,quantization=<q>,premul-alpha,bytesperline=<bpl>\n"
+	       "                     set/try the video output format [VIDIOC_S/TRY_FMT]\n"
+	       "                     pixelformat is either the format index as reported by\n"
+	       "                       --list-formats-out, or the fourcc value as a string.\n"
+	       "                     premul-alpha sets V4L2_PIX_FMT_FLAG_PREMUL_ALPHA.\n"
+	       "                     The bytesperline option can be used multiple times, once for each plane.\n"
+	       "                     <f> can be one of the following field layouts:\n"
+	       "                       any, none, top, bottom, interlaced, seq_tb, seq_bt,\n"
+	       "                       alternate, interlaced_tb, interlaced_bt\n"
+	       "                     <c> can be one of the following colorspaces:\n"
+	       "                       smpte170m, smpte240m, rec709, 470m, 470bg, jpeg, srgb,\n"
+	       "                       adobergb, bt2020, dcip3\n"
+	       "                     <xf> can be one of the following transfer functions:\n"
+	       "                       default, 709, srgb, adobergb, smpte240m, smpte2084, dcip3, none\n"
+	       "                     <y> can be one of the following Y'CbCr encodings:\n"
+	       "                       default, 601, 709, xv601, xv709, bt2020, bt2020c, smpte240m\n"
+	       "                     <q> can be one of the following quantization methods:\n"
+	       "                       default, full-range, lim-range\n"
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	       );
 }
 
@@ -46,6 +72,11 @@ static void print_video_out_fields(int fd)
 	struct v4l2_format fmt;
 	struct v4l2_format tmp;
 
+<<<<<<< HEAD
+=======
+	memset(&fmt, 0, sizeof(fmt));
+	fmt.fmt.pix.priv = priv_magic;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	fmt.type = vidout_buftype;
 	if (test_ioctl(fd, VIDIOC_G_FMT, &fmt) < 0)
 		return;
@@ -75,7 +106,12 @@ void vidout_cmd(int ch, char *optarg)
 	switch (ch) {
 	case OptSetVideoOutFormat:
 	case OptTryVideoOutFormat:
+<<<<<<< HEAD
 		set_fmts_out = parse_fmt(optarg, width, height, pixfmt, field, colorspace, bytesperline);
+=======
+		set_fmts_out = parse_fmt(optarg, width, height, pixfmt, field,
+				colorspace, xfer_func, ycbcr, quantization, flags, bytesperline);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		if (!set_fmts_out) {
 			vidcap_usage();
 			exit(1);
@@ -91,6 +127,11 @@ void vidout_set(int fd)
 	if (options[OptSetVideoOutFormat] || options[OptTryVideoOutFormat]) {
 		struct v4l2_format vfmt;
 
+<<<<<<< HEAD
+=======
+		memset(&vfmt, 0, sizeof(vfmt));
+		vfmt.fmt.pix.priv = priv_magic;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		vfmt.type = vidout_buftype;
 		if (doioctl(fd, VIDIOC_G_FMT, &vfmt) == 0) {
 			if (is_multiplanar) {
@@ -110,6 +151,17 @@ void vidout_set(int fd)
 					vfmt.fmt.pix_mp.field = field;
 				if (set_fmts_out & FmtColorspace)
 					vfmt.fmt.pix_mp.colorspace = colorspace;
+<<<<<<< HEAD
+=======
+				if (set_fmts_out & FmtXferFunc)
+					vfmt.fmt.pix_mp.xfer_func = xfer_func;
+				if (set_fmts_out & FmtYCbCr)
+					vfmt.fmt.pix_mp.ycbcr_enc = ycbcr;
+				if (set_fmts_out & FmtQuantization)
+					vfmt.fmt.pix_mp.quantization = quantization;
+				if (set_fmts_out & FmtFlags)
+					vfmt.fmt.pix_mp.flags = flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				if (set_fmts_out & FmtBytesPerLine) {
 					for (unsigned i = 0; i < VIDEO_MAX_PLANES; i++)
 						vfmt.fmt.pix_mp.plane_fmt[i].bytesperline =
@@ -138,6 +190,17 @@ void vidout_set(int fd)
 					vfmt.fmt.pix.field = field;
 				if (set_fmts_out & FmtColorspace)
 					vfmt.fmt.pix.colorspace = colorspace;
+<<<<<<< HEAD
+=======
+				if (set_fmts_out & FmtXferFunc)
+					vfmt.fmt.pix.xfer_func = xfer_func;
+				if (set_fmts_out & FmtYCbCr)
+					vfmt.fmt.pix.ycbcr_enc = ycbcr;
+				if (set_fmts_out & FmtQuantization)
+					vfmt.fmt.pix.quantization = quantization;
+				if (set_fmts_out & FmtFlags)
+					vfmt.fmt.pix.flags = flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 				if (set_fmts_out & FmtBytesPerLine) {
 					vfmt.fmt.pix.bytesperline = bytesperline[0];
 				} else {
@@ -163,6 +226,11 @@ void vidout_get(int fd)
 	if (options[OptGetVideoOutFormat]) {
 		struct v4l2_format vfmt;
 
+<<<<<<< HEAD
+=======
+		memset(&vfmt, 0, sizeof(vfmt));
+		vfmt.fmt.pix.priv = priv_magic;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		vfmt.type = vidout_buftype;
 		if (doioctl(fd, VIDIOC_G_FMT, &vfmt) == 0)
 			printfmt(vfmt);

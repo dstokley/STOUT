@@ -21,6 +21,7 @@ static struct v4l2_format vfmt;	/* set_format/get_format */
 void sdr_usage(void)
 {
 	printf("\nSDR Formats options:\n"
+<<<<<<< HEAD
 	       "  --list-formats-sdr display supported SDR formats [VIDIOC_ENUM_FMT]\n"
 	       "  --get-fmt-sdr      query the SDR capture format [VIDIOC_G_FMT]\n"
 	       "  --set-fmt-sdr=<f>  set the SDR capture format [VIDIOC_S_FMT]\n"
@@ -29,6 +30,27 @@ void sdr_usage(void)
 	       "  --try-fmt-sdr=<f>  try the SDR capture format [VIDIOC_TRY_FMT]\n"
 	       "                     parameter is either the format index as reported by\n"
 	       "                     --list-formats-sdr, or the fourcc value as a string\n"
+=======
+	       "  --list-formats-sdr display supported SDR capture formats [VIDIOC_ENUM_FMT]\n"
+	       "  --get-fmt-sdr      query the SDR capture format [VIDIOC_G_FMT]\n"
+	       "  --set-fmt-sdr=<f>  set the SDR capture format [VIDIOC_S_FMT]\n"
+	       "                     parameter is either the format index as reported by\n"
+	       "                     --list-formats-sdr-cap, or the fourcc value as a string\n"
+	       "  --try-fmt-sdr=<f>  try the SDR capture format [VIDIOC_TRY_FMT]\n"
+	       "                     parameter is either the format index as reported by\n"
+	       "                     --list-formats-sdr-cap, or the fourcc value as a string\n"
+	       "  --list-formats-sdr-out\n"
+	       "                     display supported SDR output formats [VIDIOC_ENUM_FMT]\n"
+	       "  --get-fmt-sdr-out  query the SDR output format [VIDIOC_G_FMT]\n"
+	       "  --set-fmt-sdr-out=<f>\n"
+	       "                     set the SDR output format [VIDIOC_S_FMT]\n"
+	       "                     parameter is either the format index as reported by\n"
+	       "                     --list-formats-sdr-out, or the fourcc value as a string\n"
+	       "  --try-fmt-sdr-out=<f>\n"
+	       "                     try the SDR output format [VIDIOC_TRY_FMT]\n"
+	       "                     parameter is either the format index as reported by\n"
+	       "                     --list-formats-sdr-out, or the fourcc value as a string\n"
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	       );
 }
 
@@ -37,6 +59,11 @@ void sdr_cmd(int ch, char *optarg)
 	switch (ch) {
 	case OptSetSdrFormat:
 	case OptTrySdrFormat:
+<<<<<<< HEAD
+=======
+	case OptSetSdrOutFormat:
+	case OptTrySdrOutFormat:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		if (strlen(optarg) == 0) {
 			sdr_usage();
 			exit(1);
@@ -79,6 +106,34 @@ void sdr_set(int fd)
 		if (ret == 0 && (verbose || options[OptTrySdrFormat]))
 			printfmt(in_vfmt);
 	}
+<<<<<<< HEAD
+=======
+	if (options[OptSetSdrOutFormat] || options[OptTrySdrOutFormat]) {
+		struct v4l2_format in_vfmt;
+
+		in_vfmt.type = V4L2_BUF_TYPE_SDR_OUTPUT;
+		in_vfmt.fmt.sdr.pixelformat = vfmt.fmt.sdr.pixelformat;
+
+		if (in_vfmt.fmt.sdr.pixelformat < 256) {
+			struct v4l2_fmtdesc fmt;
+
+			fmt.index = in_vfmt.fmt.sdr.pixelformat;
+			fmt.type = V4L2_BUF_TYPE_SDR_OUTPUT;
+
+			if (doioctl(fd, VIDIOC_ENUM_FMT, &fmt))
+				fmt.pixelformat = 0;
+
+			in_vfmt.fmt.sdr.pixelformat = fmt.pixelformat;
+		}
+
+		if (options[OptSetSdrOutFormat])
+			ret = doioctl(fd, VIDIOC_S_FMT, &in_vfmt);
+		else
+			ret = doioctl(fd, VIDIOC_TRY_FMT, &in_vfmt);
+		if (ret == 0 && (verbose || options[OptTrySdrOutFormat]))
+			printfmt(in_vfmt);
+	}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 void sdr_get(int fd)
@@ -88,6 +143,14 @@ void sdr_get(int fd)
 		if (doioctl(fd, VIDIOC_G_FMT, &vfmt) == 0)
 			printfmt(vfmt);
 	}
+<<<<<<< HEAD
+=======
+	if (options[OptGetSdrOutFormat]) {
+		vfmt.type = V4L2_BUF_TYPE_SDR_OUTPUT;
+		if (doioctl(fd, VIDIOC_G_FMT, &vfmt) == 0)
+			printfmt(vfmt);
+	}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 void sdr_list(int fd)
@@ -96,4 +159,11 @@ void sdr_list(int fd)
 		printf("ioctl: VIDIOC_ENUM_FMT\n");
 		print_video_formats(fd, V4L2_BUF_TYPE_SDR_CAPTURE);
 	}
+<<<<<<< HEAD
+=======
+	if (options[OptListSdrOutFormats]) {
+		printf("ioctl: VIDIOC_ENUM_FMT\n");
+		print_video_formats(fd, V4L2_BUF_TYPE_SDR_OUTPUT);
+	}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }

@@ -1,17 +1,29 @@
 /*
  * Copyright (c) 2013 - Andre Roth <neolynx@gmail.com>
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -34,13 +46,22 @@ int dvb_desc_ca_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf, struct d
 	if (d->length > size) {
 		size = d->length - size;
 		d->privdata = malloc(size);
+<<<<<<< HEAD
+=======
+		if (!d->privdata)
+			return -1;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		d->privdata_len = size;
 		memcpy(d->privdata, buf + 4, size);
 	} else {
 		d->privdata = NULL;
 		d->privdata_len = 0;
 	}
+<<<<<<< HEAD
 	/*hexdump(parms, "desc ca ", buf, desc->length);*/
+=======
+	/*dvb_hexdump(parms, "desc ca ", buf, desc->length);*/
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 	/*dvb_desc_ca_print(parms, desc);*/
 	return 0;
 }
@@ -52,7 +73,11 @@ void dvb_desc_ca_print(struct dvb_v5_fe_parms *parms, const struct dvb_desc *des
 	dvb_loginfo("|           ca_pid            0x%04x", d->ca_pid);
 	dvb_loginfo("|           privdata length   %d", d->privdata_len);
 	if (d->privdata)
+<<<<<<< HEAD
 		hexdump(parms, "|           privdata          ", d->privdata, d->privdata_len);
+=======
+		dvb_hexdump(parms, "|           privdata          ", d->privdata, d->privdata_len);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 void dvb_desc_ca_free(struct dvb_desc *desc)
