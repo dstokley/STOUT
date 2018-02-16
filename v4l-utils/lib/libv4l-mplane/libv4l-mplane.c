@@ -22,35 +22,58 @@
 #include <stdio.h>
 #include <stdlib.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <stddef.h>
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#include <stddef.h>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <string.h>
 #include <unistd.h>
 #include <sys/syscall.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <linux/videodev2.h>
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #if defined(__OpenBSD__)
 #include <sys/videoio.h>
 #include <sys/ioctl.h>
 #else
 #include <linux/videodev2.h>
 #endif
+<<<<<<< HEAD
 =======
 #include <linux/videodev2.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #include "libv4l-plugin.h"
 
 #define SYS_IOCTL(fd, cmd, arg) \
 	syscall(SYS_ioctl, (int)(fd), (unsigned long)(cmd), (void *)(arg))
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define SYS_READ(fd, buf, len) \
 	syscall(SYS_read, (int)(fd), (void *)(buf), (size_t)(len));
 #define SYS_WRITE(fd, buf, len) \
 	syscall(SYS_write, (int)(fd), (const void *)(buf), (size_t)(len));
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 
 #if HAVE_VISIBILITY
@@ -74,6 +97,13 @@ struct mplane_plugin {
 	struct __struc *req = arg;				\
 	uint32_t type = req->type;				\
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	req->type = convert_type(type);				\
+	__ret = SYS_IOCTL(fd, cmd, arg);			\
+	req->type = type;					\
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE ||	\
 	    type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {	\
 		errno = EINVAL;					\
@@ -83,11 +113,15 @@ struct mplane_plugin {
 		__ret = SYS_IOCTL(fd, cmd, arg);		\
 		req->type = type;				\
 	}							\
+<<<<<<< HEAD
 =======
 	req->type = convert_type(type);				\
 	__ret = SYS_IOCTL(fd, cmd, arg);			\
 	req->type = type;					\
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	__ret;							\
 	})
 
@@ -159,6 +193,10 @@ static int querycap_ioctl(int fd, unsigned long int cmd,
 		cap->capabilities |= V4L2_CAP_VIDEO_OUTPUT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap->device_caps & V4L2_CAP_VIDEO_CAPTURE_MPLANE)
 		cap->device_caps |= V4L2_CAP_VIDEO_CAPTURE;
 
@@ -168,8 +206,12 @@ static int querycap_ioctl(int fd, unsigned long int cmd,
 	cap->capabilities |= V4L2_CAP_EXT_PIX_FORMAT;
 	cap->device_caps |= V4L2_CAP_EXT_PIX_FORMAT;
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/*
 	 * Don't report mplane caps, as this will be handled via
 	 * this plugin
@@ -177,10 +219,17 @@ static int querycap_ioctl(int fd, unsigned long int cmd,
 	cap->capabilities &= ~(V4L2_CAP_VIDEO_OUTPUT_MPLANE |
 			       V4L2_CAP_VIDEO_CAPTURE_MPLANE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cap->device_caps &= ~(V4L2_CAP_VIDEO_OUTPUT_MPLANE |
 			      V4L2_CAP_VIDEO_CAPTURE_MPLANE);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	cap->device_caps &= ~(V4L2_CAP_VIDEO_OUTPUT_MPLANE |
+			      V4L2_CAP_VIDEO_CAPTURE_MPLANE);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return 0;
 }
@@ -198,6 +247,10 @@ static int convert_type(int type)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static void sanitize_format(struct v4l2_format *fmt)
 {
 	unsigned int offset;
@@ -224,8 +277,12 @@ static void sanitize_format(struct v4l2_format *fmt)
 	       sizeof(fmt->fmt.pix) - offset);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static int try_set_fmt_ioctl(int fd, unsigned long int cmd,
 			     struct v4l2_format *arg)
 {
@@ -241,6 +298,14 @@ static int try_set_fmt_ioctl(int fd, unsigned long int cmd,
 		fmt.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	default:
+		return SYS_IOCTL(fd, cmd, &fmt);
+	}
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
 		errno = EINVAL;
@@ -251,26 +316,39 @@ static int try_set_fmt_ioctl(int fd, unsigned long int cmd,
 
 	sanitize_format(org);
 
+<<<<<<< HEAD
 =======
 	default:
 		return SYS_IOCTL(fd, cmd, &fmt);
 	}
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	fmt.fmt.pix_mp.width = org->fmt.pix.width;
 	fmt.fmt.pix_mp.height = org->fmt.pix.height;
 	fmt.fmt.pix_mp.pixelformat = org->fmt.pix.pixelformat;
 	fmt.fmt.pix_mp.field = org->fmt.pix.field;
 	fmt.fmt.pix_mp.colorspace = org->fmt.pix.colorspace;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	fmt.fmt.pix_mp.num_planes = 1;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	fmt.fmt.pix_mp.xfer_func = org->fmt.pix.xfer_func;
 	fmt.fmt.pix_mp.ycbcr_enc = org->fmt.pix.ycbcr_enc;
 	fmt.fmt.pix_mp.quantization = org->fmt.pix.quantization;
 	fmt.fmt.pix_mp.num_planes = 1;
 	fmt.fmt.pix_mp.flags = org->fmt.pix.flags;
+<<<<<<< HEAD
 =======
 	fmt.fmt.pix_mp.num_planes = 1;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	fmt.fmt.pix_mp.plane_fmt[0].bytesperline = org->fmt.pix.bytesperline;
 	fmt.fmt.pix_mp.plane_fmt[0].sizeimage = org->fmt.pix.sizeimage;
 
@@ -284,16 +362,26 @@ static int try_set_fmt_ioctl(int fd, unsigned long int cmd,
 	org->fmt.pix.field = fmt.fmt.pix_mp.field;
 	org->fmt.pix.colorspace = fmt.fmt.pix_mp.colorspace;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
+	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	org->fmt.pix.xfer_func = fmt.fmt.pix_mp.xfer_func;
 	org->fmt.pix.ycbcr_enc = fmt.fmt.pix_mp.ycbcr_enc;
 	org->fmt.pix.quantization = fmt.fmt.pix_mp.quantization;
 	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
 	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
 	org->fmt.pix.flags = fmt.fmt.pix_mp.flags;
+<<<<<<< HEAD
 =======
 	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
 	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return 0;
 }
@@ -302,17 +390,60 @@ static int create_bufs_ioctl(int fd, unsigned long int cmd,
 			     struct v4l2_create_buffers *arg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct v4l2_create_buffers cbufs = { 0 };
 	struct v4l2_format *fmt = &cbufs.format;
 =======
 	struct v4l2_format fmt = { 0 };
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct v4l2_format fmt = { 0 };
+=======
+	struct v4l2_create_buffers cbufs = { 0 };
+	struct v4l2_format *fmt = &cbufs.format;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct v4l2_format *org = &arg->format;
 	int ret;
 
 	switch (arg->format.type) {
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
+		break;
+	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
+		fmt.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
+		break;
+	default:
+		return SYS_IOCTL(fd, cmd, &fmt);
+	}
+
+	fmt.fmt.pix_mp.width = org->fmt.pix.width;
+	fmt.fmt.pix_mp.height = org->fmt.pix.height;
+	fmt.fmt.pix_mp.pixelformat = org->fmt.pix.pixelformat;
+	fmt.fmt.pix_mp.field = org->fmt.pix.field;
+	fmt.fmt.pix_mp.colorspace = org->fmt.pix.colorspace;
+	fmt.fmt.pix_mp.num_planes = 1;
+	fmt.fmt.pix_mp.plane_fmt[0].bytesperline = org->fmt.pix.bytesperline;
+	fmt.fmt.pix_mp.plane_fmt[0].sizeimage = org->fmt.pix.sizeimage;
+
+	ret = SYS_IOCTL(fd, cmd, &arg);
+	if (ret)
+		return ret;
+
+	org->fmt.pix.width = fmt.fmt.pix_mp.width;
+	org->fmt.pix.height = fmt.fmt.pix_mp.height;
+	org->fmt.pix.pixelformat = fmt.fmt.pix_mp.pixelformat;
+	org->fmt.pix.field = fmt.fmt.pix_mp.field;
+	org->fmt.pix.colorspace = fmt.fmt.pix_mp.colorspace;
+	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
+	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
+
+	return 0;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		fmt->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
 		break;
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
@@ -360,6 +491,7 @@ static int create_bufs_ioctl(int fd, unsigned long int cmd,
 	org->fmt.pix.flags = fmt->fmt.pix_mp.flags;
 
 	return ret;
+<<<<<<< HEAD
 =======
 		fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
 		break;
@@ -393,6 +525,9 @@ static int create_bufs_ioctl(int fd, unsigned long int cmd,
 
 	return 0;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 static int get_fmt_ioctl(int fd, unsigned long int cmd, struct v4l2_format *arg)
@@ -409,16 +544,26 @@ static int get_fmt_ioctl(int fd, unsigned long int cmd, struct v4l2_format *arg)
 		fmt.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	default:
+		return SYS_IOCTL(fd, cmd, &fmt);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
 		errno = EINVAL;
 		return -1;
 	default:
 		return SYS_IOCTL(fd, cmd, arg);
+<<<<<<< HEAD
 =======
 	default:
 		return SYS_IOCTL(fd, cmd, &fmt);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	ret = SYS_IOCTL(fd, cmd, &fmt);
@@ -426,15 +571,27 @@ static int get_fmt_ioctl(int fd, unsigned long int cmd, struct v4l2_format *arg)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memset(&org->fmt.pix, 0, sizeof(org->fmt.pix));
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	memset(&org->fmt.pix, 0, sizeof(org->fmt.pix));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	org->fmt.pix.width = fmt.fmt.pix_mp.width;
 	org->fmt.pix.height = fmt.fmt.pix_mp.height;
 	org->fmt.pix.pixelformat = fmt.fmt.pix_mp.pixelformat;
 	org->fmt.pix.field = fmt.fmt.pix_mp.field;
 	org->fmt.pix.colorspace = fmt.fmt.pix_mp.colorspace;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
+	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	org->fmt.pix.xfer_func = fmt.fmt.pix_mp.xfer_func;
 	org->fmt.pix.ycbcr_enc = fmt.fmt.pix_mp.ycbcr_enc;
 	org->fmt.pix.quantization = fmt.fmt.pix_mp.quantization;
@@ -442,10 +599,14 @@ static int get_fmt_ioctl(int fd, unsigned long int cmd, struct v4l2_format *arg)
 	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
 	org->fmt.pix.priv = V4L2_PIX_FMT_PRIV_MAGIC;
 	org->fmt.pix.flags = fmt.fmt.pix_mp.flags;
+<<<<<<< HEAD
 =======
 	org->fmt.pix.bytesperline = fmt.fmt.pix_mp.plane_fmt[0].bytesperline;
 	org->fmt.pix.sizeimage = fmt.fmt.pix_mp.plane_fmt[0].sizeimage;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	/*
 	 * If the device doesn't support just one plane, there's
@@ -453,10 +614,17 @@ static int get_fmt_ioctl(int fd, unsigned long int cmd, struct v4l2_format *arg)
 	 */
 	if (fmt.fmt.pix_mp.num_planes > 1) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		errno = EINVAL;
 =======
 		errno = -EINVAL;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		errno = -EINVAL;
+=======
+		errno = EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return -1;
 	}
 
@@ -470,14 +638,22 @@ static int buf_ioctl(int fd, unsigned long int cmd, struct v4l2_buffer *arg)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (arg->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE ||
 	    arg->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
 		errno = EINVAL;
 		return -1;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	buf.type = convert_type(arg->type);
 
 	if (buf.type == arg->type)
@@ -494,9 +670,15 @@ static int buf_ioctl(int fd, unsigned long int cmd, struct v4l2_buffer *arg)
 
 	arg->index = buf.index;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	arg->memory = buf.memory;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	arg->memory = buf.memory;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	arg->flags = buf.flags;
 	arg->field = buf.field;
 	arg->timestamp = buf.timestamp;
@@ -506,9 +688,15 @@ static int buf_ioctl(int fd, unsigned long int cmd, struct v4l2_buffer *arg)
 	arg->length = plane.length;
 	arg->bytesused = plane.bytesused;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memcpy(&arg->m, &plane.m, sizeof(arg->m));
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	memcpy(&arg->m, &plane.m, sizeof(arg->m));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return ret;
 }
@@ -517,9 +705,15 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 			unsigned long int cmd, void *arg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct mplane_plugin *plugin = dev_ops_priv;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct mplane_plugin *plugin = dev_ops_priv;
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	switch (cmd) {
 	case VIDIOC_QUERYCAP:
 		return querycap_ioctl(fd, cmd, arg);
@@ -534,13 +728,21 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 	case VIDIOC_G_PARM:
 		return SIMPLE_CONVERT_IOCTL(fd, cmd, arg, v4l2_streamparm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case VIDIOC_CROPCAP:
 		return SIMPLE_CONVERT_IOCTL(fd, cmd, arg, v4l2_cropcap);
 	case VIDIOC_S_CROP:
 	case VIDIOC_G_CROP:
 		return SIMPLE_CONVERT_IOCTL(fd, cmd, arg, v4l2_crop);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case VIDIOC_QBUF:
 	case VIDIOC_DQBUF:
 	case VIDIOC_QUERYBUF:
@@ -554,6 +756,7 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 	case VIDIOC_STREAMOFF:
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int type = *(int *)arg;
 
 		if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE ||
@@ -565,6 +768,8 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 
 		return SYS_IOCTL(fd, cmd, &type);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		int type, ret;
 
 		/*
@@ -585,7 +790,22 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 		}
 
 		return ret;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		int type = *(int *)arg;
+
+		if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE ||
+		    type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
+			errno = EINVAL;
+			return -1;
+		}
+		type = convert_type(type);
+
+		return SYS_IOCTL(fd, cmd, &type);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 	/* CASE VIDIOC_EXPBUF: */
 	default:
@@ -594,6 +814,10 @@ static int plugin_ioctl(void *dev_ops_priv, int fd,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static ssize_t plugin_read(void *dev_ops_priv, int fd, void *buf, size_t len)
 {
 	return SYS_READ(fd, buf, len);
@@ -605,15 +829,26 @@ static ssize_t plugin_write(void *dev_ops_priv, int fd, const void *buf,
 	return SYS_WRITE(fd, buf, len);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 PLUGIN_PUBLIC const struct libv4l_dev_ops libv4l2_plugin = {
 	.init = &plugin_init,
 	.close = &plugin_close,
 	.ioctl = &plugin_ioctl,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.read = &plugin_read,
 	.write = &plugin_write,
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	.read = &plugin_read,
+	.write = &plugin_write,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 };

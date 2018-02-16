@@ -3,19 +3,31 @@
  * Copyright (c) 2012-2014 - Andre Roth <neolynx@gmail.com>
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -25,6 +37,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -94,10 +116,17 @@ ssize_t dvb_table_pmt_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 		uint16_t desc_length = pmt->desc_length;
 		if (p + desc_length > endbuf) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dvb_logwarn("%s: descriptors short read %d/%zd bytes", __func__,
 =======
 			dvb_logwarn("%s: decsriptors short read %d/%zd bytes", __func__,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			dvb_logwarn("%s: decsriptors short read %d/%zd bytes", __func__,
+=======
+			dvb_logwarn("%s: descriptors short read %d/%zd bytes", __func__,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				   desc_length, endbuf - p);
 			desc_length = endbuf - p;
 		}
@@ -134,10 +163,17 @@ ssize_t dvb_table_pmt_init(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 			uint16_t desc_length = stream->desc_length;
 			if (p + desc_length > endbuf) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				dvb_logwarn("%s: descriptors short read %zd/%d bytes", __func__,
 =======
 				dvb_logwarn("%s: decsriptors short read %zd/%d bytes", __func__,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+				dvb_logwarn("%s: decsriptors short read %zd/%d bytes", __func__,
+=======
+				dvb_logwarn("%s: descriptors short read %zd/%d bytes", __func__,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 					   endbuf - p, desc_length);
 				desc_length = endbuf - p;
 			}
@@ -194,12 +230,21 @@ void dvb_table_pmt_print(struct dvb_v5_fe_parms *parms, const struct dvb_table_p
 
 const char *pmt_stream_name[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	[0x00 ... 0x7f] = "Reserved",
 	[0x80 ... 0xff] = "User Private",
 
 =======
 	[stream_reserved0]         = "Reserved",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	[stream_reserved0]         = "Reserved",
+=======
+	[0x00 ... 0x7f] = "Reserved",
+	[0x80 ... 0xff] = "User Private",
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	[stream_video]             = "Video ISO/IEC 11172",
 	[stream_video_h262]        = "Video ISO/IEC 13818-2",
 	[stream_audio]             = "Audio ISO/IEC 11172",
@@ -221,6 +266,12 @@ const char *pmt_stream_name[] = {
 	[stream_14496_1_iso]       = "ISO/IEC 14496-1 ISO",
 	[stream_download]          = "ISO/IEC 13818-6 Synchronized Download Protocol",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	[stream_reserved ... 0x7f] = "ISO/IEC 13818-1 Reserved",
+	[stream_private  ... 0xff] = "User Private"
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	[stream_video_h264]        = "H264",
 	[stream_audio_14496_3]     = "ISO/IEC 14496-3 Audio",
@@ -236,9 +287,13 @@ const char *pmt_stream_name[] = {
 	[stream_audio_a52_vls]     = "A52 vls",
 	[stream_spu_vls]           = "DVD_SPU vls",
 	[stream_audio_sdds2]       = "SDDS",
+<<<<<<< HEAD
 =======
 	[stream_reserved ... 0x7f] = "ISO/IEC 13818-1 Reserved",
 	[stream_private  ... 0xff] = "User Private"
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 };
 

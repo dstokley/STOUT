@@ -29,10 +29,17 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__OpenBSD__)
 =======
 #if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+=======
+#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__OpenBSD__)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -41,14 +48,23 @@
 /* end broken header workaround includes */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <linux/videodev2.h>
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #if defined(__OpenBSD__)
 #include <sys/videoio.h>
 #else
 #include <linux/videodev2.h>
 #endif
+<<<<<<< HEAD
 =======
 #include <linux/videodev2.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #ifdef __cplusplus
 extern "C" {
@@ -145,14 +161,22 @@ LIBV4L_PUBLIC int v4lconvert_vidioc_g_ctrl(struct v4lconvert_data *data,
 LIBV4L_PUBLIC int v4lconvert_vidioc_s_ctrl(struct v4lconvert_data *data,
 		void *arg);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 LIBV4L_PUBLIC int v4lconvert_vidioc_g_ext_ctrls(struct v4lconvert_data *data,
 		void *arg);
 LIBV4L_PUBLIC int v4lconvert_vidioc_try_ext_ctrls(struct v4lconvert_data *data,
 		void *arg);
 LIBV4L_PUBLIC int v4lconvert_vidioc_s_ext_ctrls(struct v4lconvert_data *data,
 		void *arg);
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 /* Is the passed in pixelformat supported as destination format? */
 LIBV4L_PUBLIC int v4lconvert_supported_dst_format(unsigned int pixelformat);
@@ -163,11 +187,19 @@ LIBV4L_PUBLIC int v4lconvert_get_fps(struct v4lconvert_data *data);
 LIBV4L_PUBLIC void v4lconvert_set_fps(struct v4lconvert_data *data, int fps);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Fixup bytesperline and sizeimage for supported destination formats */
 LIBV4L_PUBLIC void v4lconvert_fixup_fmt(struct v4l2_format *fmt);
 
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+/* Fixup bytesperline and sizeimage for supported destination formats */
+LIBV4L_PUBLIC void v4lconvert_fixup_fmt(struct v4l2_format *fmt);
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

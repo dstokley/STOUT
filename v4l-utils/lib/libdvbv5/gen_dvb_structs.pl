@@ -58,19 +58,33 @@ sub gen_fe($)
     # Mode FE_CAPS
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_caps\ \{/) {
 =======
     if (m/typedef enum fe_caps\ {/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_caps\ {/) {
+=======
+    if (m/enum fe_caps\ \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_CAPS;
       next;
     }
     if ($mode == FE_CAPS) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_caps_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_caps_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -85,19 +99,33 @@ sub gen_fe($)
     # Mode FE_STATUS
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_status\ \{/) {
 =======
     if (m/typedef enum fe_status\ {/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_status\ {/) {
+=======
+    if (m/enum fe_status\ \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_STATUS;
       next;
     }
     if ($mode == FE_STATUS) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_status_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_status_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -114,19 +142,33 @@ sub gen_fe($)
     # Mode FE_CODERATE
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_code_rate \{/) {
 =======
     if (m/typedef enum fe_code_rate \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_code_rate \{/) {
+=======
+    if (m/enum fe_code_rate \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_CODERATE;
       next;
     }
     if ($mode == FE_CODERATE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_code_rate_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_code_rate_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -142,19 +184,33 @@ sub gen_fe($)
     # Mode FE_MODULATION
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_modulation \{/) {
 =======
     if (m/typedef enum fe_modulation \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_modulation \{/) {
+=======
+    if (m/enum fe_modulation \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_MODULATION;
       next;
     }
     if ($mode == FE_MODULATION) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_modulation_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_modulation_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -170,19 +226,33 @@ sub gen_fe($)
     # Mode FE_TMODE
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_transmit_mode \{/) {
 =======
     if (m/typedef enum fe_transmit_mode \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_transmit_mode \{/) {
+=======
+    if (m/enum fe_transmit_mode \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_TMODE;
       next;
     }
     if ($mode == FE_TMODE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_transmit_mode_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_transmit_mode_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -198,19 +268,33 @@ sub gen_fe($)
     # Mode FE_BW
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_bandwidth \{/) {
 =======
     if (m/typedef enum fe_bandwidth \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_bandwidth \{/) {
+=======
+    if (m/enum fe_bandwidth \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_BW;
       next;
     }
     if ($mode == FE_BW) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_bandwidth_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_bandwidth_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -232,19 +316,33 @@ sub gen_fe($)
     # Mode FE_GINTERVAL
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_guard_interval \{/) {
 =======
     if (m/typedef enum fe_guard_interval \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_guard_interval \{/) {
+=======
+    if (m/enum fe_guard_interval \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_GINTERVAL;
       next;
     }
     if ($mode == FE_GINTERVAL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_guard_interval_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_guard_interval_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -260,19 +358,33 @@ sub gen_fe($)
     # Mode FE_HIERARCHY
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_hierarchy \{/) {
 =======
     if (m/typedef enum fe_hierarchy \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_hierarchy \{/) {
+=======
+    if (m/enum fe_hierarchy \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_HIERARCHY;
       next;
     }
     if ($mode == FE_HIERARCHY) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_hierarchy_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_hierarchy_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -288,19 +400,33 @@ sub gen_fe($)
     # Mode FE_VOLTAGE
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_sec_voltage \{/) {
 =======
     if (m/typedef enum fe_sec_voltage \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_sec_voltage \{/) {
+=======
+    if (m/enum fe_sec_voltage \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_VOLTAGE;
       next;
     }
     if ($mode == FE_VOLTAGE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_sec_voltage_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_sec_voltage_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -316,19 +442,33 @@ sub gen_fe($)
     # Mode FE_TONE
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_sec_tone_mode \{/) {
 =======
     if (m/typedef enum fe_sec_tone_mode \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_sec_tone_mode \{/) {
+=======
+    if (m/enum fe_sec_tone_mode \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_TONE;
       next;
     }
     if ($mode == FE_TONE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_sec_tone_mode_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_sec_tone_mode_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -344,19 +484,33 @@ sub gen_fe($)
     # Mode FE_INVERSION
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_spectral_inversion \{/) {
 =======
     if (m/typedef enum fe_spectral_inversion \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_spectral_inversion \{/) {
+=======
+    if (m/enum fe_spectral_inversion \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_INVERSION;
       next;
     }
     if ($mode == FE_INVERSION) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_spectral_inversion_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_spectral_inversion_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -372,19 +526,33 @@ sub gen_fe($)
     # Mode FE_PILOT
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_pilot \{/) {
 =======
     if (m/typedef enum fe_pilot \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_pilot \{/) {
+=======
+    if (m/enum fe_pilot \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_PILOT;
       next;
     }
     if ($mode == FE_PILOT) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_pilot_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_pilot_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -400,19 +568,33 @@ sub gen_fe($)
     # Mode FE_ROLLOFF
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_rolloff \{/) {
 =======
     if (m/typedef enum fe_rolloff \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_rolloff \{/) {
+=======
+    if (m/enum fe_rolloff \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode =FE_ROLLOFF;
       next;
     }
     if ($mode == FE_ROLLOFF) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_rolloff_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_rolloff_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -438,19 +620,33 @@ sub gen_fe($)
     # Mode FE_DTS
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (m/enum fe_delivery_system \{/) {
 =======
     if (m/typedef enum fe_delivery_system \{/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+    if (m/typedef enum fe_delivery_system \{/) {
+=======
+    if (m/enum fe_delivery_system \{/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
       $mode = FE_DTS;
       next;
     }
     if ($mode == FE_DTS) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (m/\};/) {
 =======
       if (m/\} fe_delivery_system_t;/) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+      if (m/\} fe_delivery_system_t;/) {
+=======
+      if (m/\};/) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         $mode = NORMAL;
         next;
       }
@@ -581,10 +777,17 @@ sub output_arrays($$$$$)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 my $fe_file = "$dir/linux/dvb/frontend.h";
 =======
 my $fe_file = "$dir/uapi/linux/dvb/frontend.h";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+my $fe_file = "$dir/uapi/linux/dvb/frontend.h";
+=======
+my $fe_file = "$dir/linux/dvb/frontend.h";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 copy $fe_file, "../include/dvb-frontend.h";
 
@@ -627,10 +830,17 @@ print OUT <<EOF;
 #include <stddef.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "dvb-v5.h"
 =======
 #include <libdvbv5/dvb-v5.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#include <libdvbv5/dvb-v5.h>
+=======
+#include "dvb-v5.h"
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 EOF
 output_arrays ("fe_caps_name", \%fe_caps, "unsigned", 1, 0);

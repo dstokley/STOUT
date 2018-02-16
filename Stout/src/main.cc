@@ -1,10 +1,9 @@
+  #include "execute.h"
+  #include <iostream>
 
-#include "microcontroller.h"
-
-int main() {
-  // Create object and start the system loop
-  RADIANCE::Microcontroller raspberry_pi;
-  raspberry_pi.StartLoop();
-
+int main()
+{
+  // Creat object and start the system loop
+  STOUT::execute UDOO;
+  UDOO.start_loop();
 }
-

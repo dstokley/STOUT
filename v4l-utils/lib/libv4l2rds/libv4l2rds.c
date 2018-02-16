@@ -28,14 +28,23 @@
 #include <sys/mman.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <linux/videodev2.h>
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #if defined(__OpenBSD__)
 #include <sys/videoio.h>
 #else
 #include <linux/videodev2.h>
 #endif
+<<<<<<< HEAD
 =======
 #include <linux/videodev2.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #include "../include/libv4l2rds.h"
 
@@ -816,47 +825,82 @@ static uint32_t rds_decode_group0(struct rds_private_state *priv_state)
 	/* bit 2 of block B contains 1 bit of the Decoder Control Information (DI)
 	 * the segment number defines the bit position
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * New bits are only accepted if the segments arrive in the correct order */
 =======
 	 * New bits are only accepted the segments arrive in the correct order */
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	 * New bits are only accepted the segments arrive in the correct order */
+=======
+	 * New bits are only accepted if the segments arrive in the correct order */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	bool bit2 = grp->data_b_lsb & 0x04;
 	if (segment == 0 || segment == priv_state->next_di_segment) {
 		switch (segment) {
 		case 0:
 			priv_state->new_di = set_bit(priv_state->new_di,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				V4L2_RDS_FLAG_DYNAMIC_PTY, bit2);
 =======
 				V4L2_RDS_FLAG_STEREO, bit2);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+				V4L2_RDS_FLAG_STEREO, bit2);
+=======
+				V4L2_RDS_FLAG_DYNAMIC_PTY, bit2);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			priv_state->next_di_segment = 1;
 			break;
 		case 1:
 			priv_state->new_di = set_bit(priv_state->new_di,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				V4L2_RDS_FLAG_COMPRESSED, bit2);
 =======
 				V4L2_RDS_FLAG_ARTIFICIAL_HEAD, bit2);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+				V4L2_RDS_FLAG_ARTIFICIAL_HEAD, bit2);
+=======
+				V4L2_RDS_FLAG_COMPRESSED, bit2);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			priv_state->next_di_segment = 2;
 			break;
 		case 2:
 			priv_state->new_di = set_bit(priv_state->new_di,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				V4L2_RDS_FLAG_ARTIFICIAL_HEAD, bit2);
 =======
 				V4L2_RDS_FLAG_COMPRESSED, bit2);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+				V4L2_RDS_FLAG_COMPRESSED, bit2);
+=======
+				V4L2_RDS_FLAG_ARTIFICIAL_HEAD, bit2);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			priv_state->next_di_segment = 3;
 			break;
 		case 3:
 			priv_state->new_di = set_bit(priv_state->new_di,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				V4L2_RDS_FLAG_STEREO, bit2);
 =======
 				V4L2_RDS_FLAG_DYNAMIC_PTY, bit2);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+				V4L2_RDS_FLAG_DYNAMIC_PTY, bit2);
+=======
+				V4L2_RDS_FLAG_STEREO, bit2);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			/* check if the value of DI has changed, and store
 			 * and signal DI update in case */
 			if (handle->di != priv_state->new_di) {
@@ -1051,16 +1095,25 @@ static time_t rds_decode_mjd(const struct rds_private_state *priv_state)
 	 * The offset is expressed in multiples of half hours */
 	if (priv_state->utc_offset & 0x20) { /* bit 5 indicates -/+ */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		local_hour -= offset / 2;
-		local_minute -= (offset % 2) * 30;
-	} else {
-		local_hour += offset / 2;
 =======
 		local_hour -= (offset * 2);
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		local_minute -= (offset % 2) * 30;
 	} else {
 		local_hour += (offset * 2);
+=======
+		local_hour -= offset / 2;
+		local_minute -= (offset % 2) * 30;
+	} else {
+<<<<<<< HEAD
+		local_hour += (offset * 2);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		local_hour += offset / 2;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		local_minute += (offset % 2) * 30;
 	}
 
@@ -1080,14 +1133,22 @@ static time_t rds_decode_mjd(const struct rds_private_state *priv_state)
 	new_time.tm_hour = local_hour;
 	new_time.tm_mday = d;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	new_time.tm_mon = m - 1;
 =======
 	new_time.tm_mon = m;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	new_time.tm_mon = m;
+=======
+	new_time.tm_mon = m - 1;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	new_time.tm_year = y;
 	/* offset (submitted by RDS) that was used to compute the local time,
 	 * expressed in multiples of half hours, bit 5 indicates -/+ */
 	if (priv_state->utc_offset & 0x20)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		new_time.tm_gmtoff = -offset * 1800;
 	else
@@ -1097,6 +1158,16 @@ static time_t rds_decode_mjd(const struct rds_private_state *priv_state)
 	else
 		new_time.tm_gmtoff = 2 * offset * 3600;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		new_time.tm_gmtoff = -2 * offset * 3600;
+	else
+		new_time.tm_gmtoff = 2 * offset * 3600;
+=======
+		new_time.tm_gmtoff = -offset * 1800;
+	else
+		new_time.tm_gmtoff = offset * 1800;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	/* convert tm struct to time_t value and return it */
 	return mktime(&new_time);
@@ -1434,11 +1505,19 @@ uint32_t v4l2_rds_add(struct v4l2_rds *handle, struct v4l2_rds_data *rds_data)
 	rds_stats->block_cnt++;
 	/* check for corrected / uncorrectable errors in the data */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((rds_data->block & V4L2_RDS_BLOCK_ERROR) ||
 	    block_id == V4L2_RDS_BLOCK_INVALID) {
 =======
 	if (rds_data->block & V4L2_RDS_BLOCK_ERROR) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (rds_data->block & V4L2_RDS_BLOCK_ERROR) {
+=======
+	if ((rds_data->block & V4L2_RDS_BLOCK_ERROR) ||
+	    block_id == V4L2_RDS_BLOCK_INVALID) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		block_id = -1;
 		rds_stats->block_error_cnt++;
 	} else if (rds_data->block & V4L2_RDS_BLOCK_CORRECTED) {
@@ -1634,11 +1713,19 @@ const char *v4l2_rds_get_coverage_str(const struct v4l2_rds *handle)
 {
 	/* bits 8-11 contain the area coverage code */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint8_t coverage = (handle->pi >> 8) & 0x0f;
 	uint8_t nibble = (handle->pi >> 12) & 0x0f;
 =======
 	uint8_t coverage = (handle->pi >> 8) & 0X0f;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	uint8_t coverage = (handle->pi >> 8) & 0X0f;
+=======
+	uint8_t coverage = (handle->pi >> 8) & 0x0f;
+	uint8_t nibble = (handle->pi >> 12) & 0x0f;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	static const char *coverage_lut[16] = {
 		"Local", "International", "National", "Supra-Regional",
 		"Regional 1", "Regional 2", "Regional 3", "Regional 4",
@@ -1647,6 +1734,11 @@ const char *v4l2_rds_get_coverage_str(const struct v4l2_rds *handle)
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	return coverage_lut[coverage];
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/*
 	 * Coverage area codes are restricted to the B, D and E PI code
 	 * blocks for RBDS.
@@ -1655,9 +1747,13 @@ const char *v4l2_rds_get_coverage_str(const struct v4l2_rds *handle)
 	    (nibble == 0xb || nibble == 0xd || nibble == 0xe))
 		return coverage_lut[coverage];
 	return "Not Available";
+<<<<<<< HEAD
 =======
 	return coverage_lut[coverage];
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 const struct v4l2_rds_group *v4l2_rds_get_group(const struct v4l2_rds *handle)

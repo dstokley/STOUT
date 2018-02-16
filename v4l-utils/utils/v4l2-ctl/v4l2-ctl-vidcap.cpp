@@ -20,10 +20,17 @@ static struct v4l2_frmsizeenum frmsize; /* list frame sizes */
 static struct v4l2_frmivalenum frmival; /* list frame intervals */
 static unsigned set_fmts;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static __u32 width, height, pixfmt, field, flags;
 =======
 static __u32 width, height, pixfmt, field;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+static __u32 width, height, pixfmt, field;
+=======
+static __u32 width, height, pixfmt, field, flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static __u32 bytesperline[VIDEO_MAX_PLANES];
 
 void vidcap_usage(void)
@@ -45,6 +52,18 @@ void vidcap_usage(void)
 	       "     		     query the video capture format [VIDIOC_G_FMT]\n"
 	       "  -v, --set-fmt-video\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	       "  --try-fmt-video=width=<w>,height=<h>,pixelformat=<pf>,field=<f>,bytesperline=<bpl>\n"
+	       "                     set/try the video capture format [VIDIOC_S/TRY_FMT]\n"
+	       "                     pixelformat is either the format index as reported by\n"
+	       "                     --list-formats, or the fourcc value as a string.\n"
+	       "                     The bytesperline option can be used multiple times, once for each plane.\n"
+	       "                     <f> can be one of:\n"
+	       "                     any, none, top, bottom, interlaced, seq_tb, seq_bt,\n"
+	       "                     alternate, interlaced_tb, interlaced_bt\n"
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	       "  --try-fmt-video=width=<w>,height=<h>,pixelformat=<pf>,field=<f>,colorspace=<c>,\n"
 	       "                  xfer=<xf>,ycbcr=<y>,quantization=<q>,premul-alpha,bytesperline=<bpl>\n"
 	       "                     set/try the video capture format [VIDIOC_S/TRY_FMT]\n"
@@ -64,6 +83,7 @@ void vidcap_usage(void)
 	       "                       default, 601, 709, xv601, xv709, bt2020, bt2020c, smpte240m\n"
 	       "                     <q> can be one of the following quantization methods:\n"
 	       "                       default, full-range, lim-range\n"
+<<<<<<< HEAD
 =======
 	       "  --try-fmt-video=width=<w>,height=<h>,pixelformat=<pf>,field=<f>,bytesperline=<bpl>\n"
 	       "                     set/try the video capture format [VIDIOC_S/TRY_FMT]\n"
@@ -74,6 +94,9 @@ void vidcap_usage(void)
 	       "                     any, none, top, bottom, interlaced, seq_tb, seq_bt,\n"
 	       "                     alternate, interlaced_tb, interlaced_bt\n"
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	       );
 }
 
@@ -131,14 +154,22 @@ static void print_frmival(const struct v4l2_frmivalenum &frmival, const char *pr
 		printf("%ss (%s fps)\n", fract2sec(frmival.discrete).c_str(),
 				fract2fps(frmival.discrete).c_str());
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	} else if (frmival.type == V4L2_FRMIVAL_TYPE_CONTINUOUS) {
 		printf("%ss - %ss (%s-%s fps)\n",
 				fract2sec(frmival.stepwise.min).c_str(),
 				fract2sec(frmival.stepwise.max).c_str(),
 				fract2fps(frmival.stepwise.max).c_str(),
 				fract2fps(frmival.stepwise.min).c_str());
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	} else if (frmival.type == V4L2_FRMIVAL_TYPE_STEPWISE) {
 		printf("%ss - %ss with step %ss (%s-%s fps)\n",
 				fract2sec(frmival.stepwise.min).c_str(),
@@ -192,10 +223,17 @@ static void print_video_fields(int fd)
 	struct v4l2_format tmp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memset(&fmt, 0, sizeof(fmt));
 	fmt.fmt.pix.priv = priv_magic;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	memset(&fmt, 0, sizeof(fmt));
+	fmt.fmt.pix.priv = priv_magic;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	fmt.type = vidcap_buftype;
 	if (test_ioctl(fd, VIDIOC_G_FMT, &fmt) < 0)
 		return;
@@ -223,24 +261,41 @@ static void print_video_fields(int fd)
 void vidcap_cmd(int ch, char *optarg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__u32 colorspace, xfer_func, ycbcr, quantization;
 =======
 	__u32 colorspace;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	__u32 colorspace;
+=======
+	__u32 colorspace, xfer_func, ycbcr, quantization;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	char *value, *subs;
 
 	switch (ch) {
 	case OptSetVideoFormat:
 	case OptTryVideoFormat:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		set_fmts = parse_fmt(optarg, width, height, pixfmt, field, colorspace, bytesperline);
+		if (!set_fmts || (set_fmts & FmtColorspace)) {
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		set_fmts = parse_fmt(optarg, width, height, pixfmt, field, colorspace,
 				xfer_func, ycbcr, quantization, flags, bytesperline);
 		if (!set_fmts ||
 		    (set_fmts & (FmtColorspace | FmtYCbCr | FmtQuantization | FmtXferFunc))) {
+<<<<<<< HEAD
 =======
 		set_fmts = parse_fmt(optarg, width, height, pixfmt, field, colorspace, bytesperline);
 		if (!set_fmts || (set_fmts & FmtColorspace)) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			vidcap_usage();
 			exit(1);
 		}
@@ -280,10 +335,17 @@ void vidcap_cmd(int ch, char *optarg)
 			default:
 				vidcap_usage();
 <<<<<<< HEAD
+<<<<<<< HEAD
 				exit(1);
 =======
 				break;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+				break;
+=======
+				exit(1);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			}
 		}
 		break;
@@ -298,10 +360,17 @@ void vidcap_set(int fd)
 		struct v4l2_format vfmt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memset(&vfmt, 0, sizeof(vfmt));
 		vfmt.fmt.pix.priv = priv_magic;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		memset(&vfmt, 0, sizeof(vfmt));
+		vfmt.fmt.pix.priv = priv_magic;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		vfmt.type = vidcap_buftype;
 
 		if (doioctl(fd, VIDIOC_G_FMT, &vfmt) == 0) {
@@ -321,10 +390,17 @@ void vidcap_set(int fd)
 				if (set_fmts & FmtField)
 					vfmt.fmt.pix_mp.field = field;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (set_fmts & FmtFlags)
 					vfmt.fmt.pix_mp.flags = flags;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+				if (set_fmts & FmtFlags)
+					vfmt.fmt.pix_mp.flags = flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				if (set_fmts & FmtBytesPerLine) {
 					for (unsigned i = 0; i < VIDEO_MAX_PLANES; i++)
 						vfmt.fmt.pix_mp.plane_fmt[i].bytesperline =
@@ -352,10 +428,17 @@ void vidcap_set(int fd)
 				if (set_fmts & FmtField)
 					vfmt.fmt.pix.field = field;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (set_fmts & FmtFlags)
 					vfmt.fmt.pix.flags = flags;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+				if (set_fmts & FmtFlags)
+					vfmt.fmt.pix.flags = flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				if (set_fmts & FmtBytesPerLine) {
 					vfmt.fmt.pix.bytesperline = bytesperline[0];
 				} else {
@@ -382,10 +465,17 @@ void vidcap_get(int fd)
 		struct v4l2_format vfmt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memset(&vfmt, 0, sizeof(vfmt));
 		vfmt.fmt.pix.priv = priv_magic;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		memset(&vfmt, 0, sizeof(vfmt));
+		vfmt.fmt.pix.priv = priv_magic;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		vfmt.type = vidcap_buftype;
 		if (doioctl(fd, VIDIOC_G_FMT, &vfmt) == 0)
 			printfmt(vfmt);

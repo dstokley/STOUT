@@ -2,19 +2,31 @@
  * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -24,6 +36,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -44,10 +66,17 @@ int dvb_desc_t2_delivery_init(struct dvb_v5_fe_parms *parms,
 	unsigned char *p = (unsigned char *) buf;
 	size_t desc_len = ext->length - 1, len, len2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, pos = 0;
 =======
 	int i;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	int i;
+=======
+	int i, pos = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	len = offsetof(struct dvb_desc_t2_delivery, bitfield);
 	len2 = offsetof(struct dvb_desc_t2_delivery, centre_frequency);
@@ -58,6 +87,57 @@ int dvb_desc_t2_delivery_init(struct dvb_v5_fe_parms *parms,
 	}
 	if (desc_len < len2) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		memcpy(p, buf, len);
+		bswap16(d->system_id);
+
+		if (desc_len != len)
+			dvb_logwarn("T2 delivery descriptor is truncated");
+
+		return -2;
+	}
+	memcpy(p, buf, len2);
+	p += len2;
+
+	len = desc_len - (p - buf);
+	memcpy(&d->centre_frequency, p, len);
+	p += len;
+
+	if (d->tfs_flag)
+		d->frequency_loop_length = 1;
+	else {
+		d->frequency_loop_length = *p;
+		p++;
+	}
+
+	d->centre_frequency = calloc(d->frequency_loop_length,
+				     sizeof(*d->centre_frequency));
+	if (!d->centre_frequency) {
+		dvb_logerr("%s: out of memory", __func__);
+		return -3;
+	}
+
+	memcpy(d->centre_frequency, p, sizeof(*d->centre_frequency) * d->frequency_loop_length);
+	p += sizeof(*d->centre_frequency) * d->frequency_loop_length;
+
+	for (i = 0; i < d->frequency_loop_length; i++)
+		bswap32(d->centre_frequency[i]);
+
+	d->subcel_info_loop_length = *p;
+	p++;
+
+	d->subcell = calloc(d->subcel_info_loop_length, sizeof(*d->subcell));
+	if (!d->subcell) {
+		dvb_logerr("%s: out of memory", __func__);
+		return -4;
+	}
+	memcpy(d->subcell, p, sizeof(*d->subcell) * d->subcel_info_loop_length);
+
+	for (i = 0; i < d->subcel_info_loop_length; i++)
+		bswap16(d->subcell[i].transposer_frequency);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		memcpy(d, buf, len);
 		bswap16(d->system_id);
 
@@ -152,6 +232,7 @@ int dvb_desc_t2_delivery_init(struct dvb_v5_fe_parms *parms,
 		d->num_cell++;
 	}
 
+<<<<<<< HEAD
 =======
 		memcpy(p, buf, len);
 		bswap16(d->system_id);
@@ -201,6 +282,9 @@ int dvb_desc_t2_delivery_init(struct dvb_v5_fe_parms *parms,
 	for (i = 0; i < d->subcel_info_loop_length; i++)
 		bswap16(d->subcell[i].transposer_frequency);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	return 0;
 }
 
@@ -210,16 +294,28 @@ void dvb_desc_t2_delivery_print(struct dvb_v5_fe_parms *parms,
 {
 	const struct dvb_desc_t2_delivery *d = desc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, j, k;
 
 	dvb_loginfo("|           plp_id                    0x%04x", d->plp_id);
 	dvb_loginfo("|           system_id                 0x%04x", d->system_id);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int i;
 
 	dvb_loginfo("|           plp_id                    %d", d->plp_id);
 	dvb_loginfo("|           system_id                 %d", d->system_id);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	int i, j, k;
+
+	dvb_loginfo("|           plp_id                    0x%04x", d->plp_id);
+	dvb_loginfo("|           system_id                 0x%04x", d->system_id);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (ext->length - 1 <= 4)
 		return;
@@ -227,6 +323,22 @@ void dvb_desc_t2_delivery_print(struct dvb_v5_fe_parms *parms,
 	dvb_loginfo("|           tfs_flag                  %d", d->tfs_flag);
 	dvb_loginfo("|           other_frequency_flag      %d", d->other_frequency_flag);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	dvb_loginfo("|           transmission_mode         %d", d->transmission_mode);
+	dvb_loginfo("|           guard_interval            %d", d->guard_interval);
+	dvb_loginfo("|           reserved                  %d", d->reserved);
+	dvb_loginfo("|           bandwidth                 %d", d->bandwidth);
+	dvb_loginfo("|           SISO MISO                 %d", d->SISO_MISO);
+
+	for (i = 0; i < d->frequency_loop_length; i++)
+		dvb_loginfo("|           centre frequency[%d]   %d", i, d->centre_frequency[i]);
+
+	for (i = 0; i < d->subcel_info_loop_length; i++) {
+		dvb_loginfo("|           cell_id_extension[%d]  %d", i, d->subcell[i].cell_id_extension);
+		dvb_loginfo("|           transposer frequency   %d", d->subcell[i].transposer_frequency);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	dvb_loginfo("|           transmission_mode         %s (%d)",
 		    fe_transmission_mode_name[dvbt2_transmission_mode[d->transmission_mode]], d->transmission_mode);
 	dvb_loginfo("|           guard_interval            %s (%d)",
@@ -257,6 +369,7 @@ void dvb_desc_t2_delivery_print(struct dvb_v5_fe_parms *parms,
 				dvb_loginfo("|              |- transposer  %.5f MHz", subcel->transposer_frequency / 100000.);
 			}
 		}
+<<<<<<< HEAD
 =======
 	dvb_loginfo("|           transmission_mode         %d", d->transmission_mode);
 	dvb_loginfo("|           guard_interval            %d", d->guard_interval);
@@ -271,6 +384,9 @@ void dvb_desc_t2_delivery_print(struct dvb_v5_fe_parms *parms,
 		dvb_loginfo("|           cell_id_extension[%d]  %d", i, d->subcell[i].cell_id_extension);
 		dvb_loginfo("|           transposer frequency   %d", d->subcell[i].transposer_frequency);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 }
 
@@ -278,14 +394,26 @@ void dvb_desc_t2_delivery_free(const void *desc)
 {
 	const struct dvb_desc_t2_delivery *d = desc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	int i;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (d->centre_frequency)
 		free(d->centre_frequency);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (d->subcell)
+		free(d->subcell);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (d->cell) {
 		for (i = 0; i < d->num_cell; i++)
 			if (d->cell[i].subcel)
@@ -294,10 +422,14 @@ void dvb_desc_t2_delivery_free(const void *desc)
 	}
 
 	// No need to free d->subcell, as it is always NULL
+<<<<<<< HEAD
 =======
 	if (d->subcell)
 		free(d->subcell);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 const unsigned dvbt2_bw[] = {
@@ -329,10 +461,18 @@ const unsigned dvbt2_transmission_mode[] = {
 	[6 ...7] = TRANSMISSION_MODE_AUTO,	/* Reserved */
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 const char *siso_miso[4] = {
 	[0] = "Single Input, Single Output (SISO)",
 	[1] = "Multiple Input, Single Output (MISO)",
 	[2 ...3] = "reserved",
 };
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

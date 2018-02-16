@@ -34,6 +34,11 @@
 #include <vector>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include "v4l2-api.h"
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 // Must come before cv4l-helpers.h
 #include <libv4l2.h>
 
@@ -41,18 +46,28 @@ extern "C" {
 #include <v4l2-tpg.h>
 }
 #include "cv4l-helpers.h"
+<<<<<<< HEAD
 =======
 #include "v4l2-api.h"
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include "raw2sliced.h"
 #include "capture-win.h"
 
 class QComboBox;
 class QSpinBox;
 <<<<<<< HEAD
+<<<<<<< HEAD
 class QCheckBox;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+class QCheckBox;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 class GeneralTab;
 class VbiTab;
 class QCloseEvent;
@@ -61,10 +76,17 @@ class CaptureWin;
 typedef std::vector<unsigned> ClassIDVec;
 typedef std::map<unsigned, ClassIDVec> ClassMap;
 <<<<<<< HEAD
+<<<<<<< HEAD
 typedef std::map<unsigned, struct v4l2_query_ext_ctrl> CtrlMap;
 =======
 typedef std::map<unsigned, struct v4l2_queryctrl> CtrlMap;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+typedef std::map<unsigned, struct v4l2_queryctrl> CtrlMap;
+=======
+typedef std::map<unsigned, struct v4l2_query_ext_ctrl> CtrlMap;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 typedef std::map<unsigned, QWidget *> WidgetMap;
 
 enum {
@@ -90,9 +112,15 @@ struct buffer {
 	void   *start[VIDEO_MAX_PLANES];
 	size_t  length[VIDEO_MAX_PLANES];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool clear;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	bool clear;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 };
 
 #define CTRL_FLAG_DISABLED	(V4L2_CTRL_FLAG_READ_ONLY | \
@@ -100,19 +128,29 @@ struct buffer {
 				 V4L2_CTRL_FLAG_GRABBED)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+class CaptureWin;
+
+class ApplicationWindow: public QMainWindow, cv4l_fd
+=======
+class ApplicationWindow: public QMainWindow, public v4l2
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+{
+	Q_OBJECT
+
+=======
 class CaptureWin;
 
 class ApplicationWindow: public QMainWindow, cv4l_fd
 {
 	Q_OBJECT
 
-	friend class CaptureWin;
-=======
-class ApplicationWindow: public QMainWindow, public v4l2
-{
-	Q_OBJECT
-
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	friend class CaptureWin;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 public:
 	ApplicationWindow();
 	virtual ~ApplicationWindow();
@@ -129,6 +167,7 @@ private:
 	CaptureWin *m_capture;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool startStreaming();
 	void stopStreaming();
 	void newCaptureWin();
@@ -141,6 +180,8 @@ private:
 	cv4l_fmt m_capSrcFormat;
 	cv4l_fmt m_capDestFormat;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	bool startCapture(unsigned buffer_size);
 	void stopCapture();
 	void startOutput(unsigned buffer_size);
@@ -152,7 +193,23 @@ private:
 	struct buffer *m_buffers;
 	struct v4l2_format m_capSrcFormat;
 	struct v4l2_format m_capDestFormat;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	bool startStreaming();
+	void stopStreaming();
+	void newCaptureWin();
+	void startAudio();
+	void stopAudio();
+	bool startOutput();
+	void stopOutput();
+
+	bool m_clear[64];
+	cv4l_fmt m_capSrcFormat;
+	cv4l_fmt m_capDestFormat;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	unsigned char *m_frameData;
 	unsigned m_nbuffers;
 	struct v4lconvert_data *m_convertData;
@@ -160,6 +217,20 @@ private:
 	CapMethod m_capMethod;
 	bool m_makeSnapshot;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	RenderMethod m_renderMethod;
+
+private slots:
+	void capStart(bool);
+	void capFrame();
+	void ctrlEvent();
+	void snapshot();
+	void capVbiFrame();
+	void saveRaw(bool);
+	void setRenderMethod();
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	bool m_singleStep;
 	RenderMethod m_renderMethod;
 	int m_overrideColorspace;
@@ -183,6 +254,7 @@ private slots:
 	void setBlending(bool);
 	void setLinearFilter(bool);
 	void traceIoctls(bool);
+<<<<<<< HEAD
 =======
 	RenderMethod m_renderMethod;
 
@@ -195,6 +267,9 @@ private slots:
 	void saveRaw(bool);
 	void setRenderMethod();
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	void changeAudioDevice();
 
 	// gui
@@ -209,6 +284,12 @@ private slots:
 	void updatePixelAspectRatio();
 	void updateCropping();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+	void about();
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	void clearBuffers();
 	void about();
 	void overrideColorspaceChanged(QAction *a);
@@ -232,10 +313,14 @@ private slots:
 	void applyToRedChanged(int val);
 	__u32 tpgDefaultColorspace();
 	void tpgColorspaceChanged();
+<<<<<<< HEAD
 =======
 
 	void about();
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 public:
 	virtual void error(const QString &text);
@@ -246,6 +331,25 @@ public:
 	void info(const QString &info);
 	virtual void closeEvent(QCloseEvent *event);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+private:
+	void addWidget(QGridLayout *grid, QWidget *w, Qt::Alignment align = Qt::AlignLeft);
+	void addLabel(QGridLayout *grid, const QString &text, Qt::Alignment align = Qt::AlignRight)
+	{
+		addWidget(grid, new QLabel(text, parentWidget()), align);
+	}
+	void addTabs();
+	void finishGrid(QGridLayout *grid, unsigned ctrl_class);
+	void addCtrl(QGridLayout *grid, const struct v4l2_queryctrl &qctrl);
+	void updateCtrl(unsigned id);
+	void refresh(unsigned ctrl_class);
+	void refresh();
+	void makeSnapshot(unsigned char *buf, unsigned size);
+	void setDefaults(unsigned ctrl_class);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	void updateLimRGBRange();
 	void updateColorspace();
 	QAction *m_resetScalingAct;
@@ -277,6 +381,7 @@ private:
 	void calculateFps();
 	void makeSnapshot(unsigned char *buf, unsigned size);
 	void setDefaults(unsigned which);
+<<<<<<< HEAD
 =======
 
 private:
@@ -294,6 +399,9 @@ private:
 	void makeSnapshot(unsigned char *buf, unsigned size);
 	void setDefaults(unsigned ctrl_class);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int getVal(unsigned id);
 	long long getVal64(unsigned id);
 	QString getString(unsigned id);
@@ -313,6 +421,21 @@ private:
 	bool showFrames();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	GeneralTab *m_genTab;
+	VbiTab *m_vbiTab;
+	QAction *m_capStartAct;
+	QAction *m_snapshotAct;
+	QAction *m_saveRawAct;
+	QAction *m_showFramesAct;
+	QAction *m_useGLAct;
+	QAction *m_showAllAudioAct;
+	QAction *m_audioBufferAct;
+	QAction *m_scalingAct;
+	QAction *m_resetScalingAct;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	// tpg
 	struct tpg_data m_tpg;
 	v4l2_std_id m_tpgStd;
@@ -344,6 +467,7 @@ private:
 	QAction *m_audioBufferAct;
 	QAction *m_scalingAct;
 	QAction *m_makeFullScreenAct;
+<<<<<<< HEAD
 =======
 	GeneralTab *m_genTab;
 	VbiTab *m_vbiTab;
@@ -357,41 +481,71 @@ private:
 	QAction *m_scalingAct;
 	QAction *m_resetScalingAct;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	QString m_filename;
 	QSignalMapper *m_sigMapper;
 	QTabWidget *m_tabs;
 	QSocketNotifier *m_capNotifier;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	QSocketNotifier *m_outNotifier;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	QSocketNotifier *m_outNotifier;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	QSocketNotifier *m_ctrlNotifier;
 	QImage *m_capImage;
 	int m_row, m_col, m_cols;
 	CtrlMap m_ctrlMap;
 	WidgetMap m_widgetMap;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WidgetMap m_sliderMap;
-	ClassMap m_classMap;
 =======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	ClassMap m_classMap;
 	bool m_haveExtendedUserCtrls;
+=======
+	WidgetMap m_sliderMap;
+	ClassMap m_classMap;
+<<<<<<< HEAD
+	bool m_haveExtendedUserCtrls;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int m_vbiSize;
 	unsigned m_vbiWidth;
 	unsigned m_vbiHeight;
 	struct vbi_handle m_vbiHandle;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int m_sdrSize;
 	unsigned m_frame;
 	double m_fps;
 	struct timespec m_startTimestamp;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	unsigned m_frame;
 	unsigned m_lastFrame;
 	unsigned m_fps;
 	struct timeval m_tv;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	int m_sdrSize;
+	unsigned m_frame;
+	double m_fps;
+	struct timespec m_startTimestamp;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct timeval m_totalAudioLatency;
 	QFile m_saveRaw;
 };

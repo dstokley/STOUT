@@ -2,19 +2,31 @@
  * Copyright (c) 2013 - Mauro Carvalho Chehab <m.chehab@samsung.com>
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -24,6 +36,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -129,12 +151,21 @@ const struct dvb_ext_descriptor dvb_ext_descriptors[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int dvb_extension_descriptor_init(struct dvb_v5_fe_parms *parms,
 				  const uint8_t *buf, struct dvb_desc *desc)
 =======
 int extension_descriptor_init(struct dvb_v5_fe_parms *parms,
 				     const uint8_t *buf, struct dvb_desc *desc)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+int extension_descriptor_init(struct dvb_v5_fe_parms *parms,
+				     const uint8_t *buf, struct dvb_desc *desc)
+=======
+int dvb_extension_descriptor_init(struct dvb_v5_fe_parms *parms,
+				  const uint8_t *buf, struct dvb_desc *desc)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	struct dvb_extension_descriptor *ext = (void *)desc;
 	unsigned char *p = (unsigned char *)buf;
@@ -159,10 +190,17 @@ int extension_descriptor_init(struct dvb_v5_fe_parms *parms,
 			dvb_ext_descriptors[desc_type].init ? "" : "Not handled ",
 			dvb_ext_descriptors[desc_type].name, desc_type, desc_len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dvb_hexdump(parms, "content: ", p, desc_len);
 =======
 		hexdump(parms, "content: ", p, desc_len);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		hexdump(parms, "content: ", p, desc_len);
+=======
+		dvb_hexdump(parms, "content: ", p, desc_len);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	init = dvb_ext_descriptors[desc_type].init;
@@ -183,10 +221,17 @@ int extension_descriptor_init(struct dvb_v5_fe_parms *parms,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void dvb_extension_descriptor_free(struct dvb_desc *descriptor)
 =======
 void extension_descriptor_free(struct dvb_desc *descriptor)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+void extension_descriptor_free(struct dvb_desc *descriptor)
+=======
+void dvb_extension_descriptor_free(struct dvb_desc *descriptor)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	struct dvb_extension_descriptor *ext = (void *)descriptor;
 	uint8_t type = ext->extension_code;
@@ -201,10 +246,17 @@ void extension_descriptor_free(struct dvb_desc *descriptor)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void dvb_extension_descriptor_print(struct dvb_v5_fe_parms *parms,
 =======
 void extension_descriptor_print(struct dvb_v5_fe_parms *parms,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+void extension_descriptor_print(struct dvb_v5_fe_parms *parms,
+=======
+void dvb_extension_descriptor_print(struct dvb_v5_fe_parms *parms,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				const struct dvb_desc *desc)
 {
 	struct dvb_extension_descriptor *ext = (void *)desc;

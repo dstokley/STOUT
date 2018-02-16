@@ -23,14 +23,23 @@
 
 #include "../libv4lsyscall-priv.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <linux/videodev2.h>
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #if defined(__OpenBSD__)
 #include <sys/videoio.h>
 #else
 #include <linux/videodev2.h>
 #endif
+<<<<<<< HEAD
 =======
 #include <linux/videodev2.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 struct v4lprocessing_data;
 struct v4lcontrol_data;

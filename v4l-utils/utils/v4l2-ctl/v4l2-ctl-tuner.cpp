@@ -72,6 +72,10 @@ static const char *audmode2s(int audmode)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static const char *ttype2s(int type)
 {
 	switch (type) {
@@ -84,8 +88,12 @@ static const char *ttype2s(int type)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static std::string rxsubchans2s(int rxsubchans)
 {
 	std::string s;
@@ -396,12 +404,21 @@ void tuner_get(int fd)
 		vf.tuner = tuner_index;
 		if (doioctl(fd, VIDIOC_G_FREQUENCY, &vf) == 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			printf("Frequency for %s %d: %d (%f MHz)\n",
 			       (capabilities & V4L2_CAP_MODULATOR) ?
 					"modulator" : "tuner",
 =======
 			printf("Frequency for tuner %d: %d (%f MHz)\n",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			printf("Frequency for tuner %d: %d (%f MHz)\n",
+=======
+			printf("Frequency for %s %d: %d (%f MHz)\n",
+			       (capabilities & V4L2_CAP_MODULATOR) ?
+					"modulator" : "tuner",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			       vf.tuner, vf.frequency, vf.frequency / fac);
 	}
 
@@ -414,9 +431,15 @@ void tuner_get(int fd)
 			printf("Tuner %d:\n", vt.index);
 			printf("\tName                 : %s\n", vt.name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			printf("\tType                 : %s\n", ttype2s(vt.type));
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+			printf("\tType                 : %s\n", ttype2s(vt.type));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			printf("\tCapabilities         : %s\n", tcap2s(vt.capability).c_str());
 			if (vt.capability & V4L2_TUNER_CAP_LOW)
 				printf("\tFrequency range      : %.3f MHz - %.3f MHz\n",
@@ -429,10 +452,17 @@ void tuner_get(int fd)
 				     vt.rangelow / 16.0, vt.rangehigh / 16.0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (vt.type != V4L2_TUNER_SDR && vt.type != V4L2_TUNER_RF) {
 =======
 			if (vt.type != V4L2_TUNER_ADC && vt.type != V4L2_TUNER_RF) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			if (vt.type != V4L2_TUNER_ADC && vt.type != V4L2_TUNER_RF) {
+=======
+			if (vt.type != V4L2_TUNER_SDR && vt.type != V4L2_TUNER_RF) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				printf("\tSignal strength/AFC  : %d%%/%d\n", (int)((vt.signal / 655.35)+0.5), vt.afc);
 				printf("\tCurrent audio mode   : %s\n", audmode2s(vt.audmode));
 				printf("\tAvailable subchannels: %s\n", rxsubchans2s(vt.rxsubchans).c_str());
@@ -449,19 +479,33 @@ void tuner_get(int fd)
 			printf("Modulator %d:\n", modulator.index);
 			printf("\tName                 : %s\n", mt.name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			printf("\tType                 : %s\n", ttype2s(mt.type));
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+			printf("\tType                 : %s\n", ttype2s(mt.type));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			printf("\tCapabilities         : %s\n", tcap2s(mt.capability).c_str());
 			if (mt.capability & V4L2_TUNER_CAP_LOW)
 				printf("\tFrequency range      : %.1f MHz - %.1f MHz\n",
 				     mt.rangelow / 16000.0, mt.rangehigh / 16000.0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 			else if (mt.capability & V4L2_TUNER_CAP_1HZ)
 				printf("\tFrequency range      : %.6f MHz - %.6f MHz\n",
 				     mt.rangelow / 1000000.0, mt.rangehigh / 1000000.0);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+			else if (mt.capability & V4L2_TUNER_CAP_1HZ)
+				printf("\tFrequency range      : %.6f MHz - %.6f MHz\n",
+				     mt.rangelow / 1000000.0, mt.rangehigh / 1000000.0);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			else
 				printf("\tFrequency range      : %.1f MHz - %.1f MHz\n",
 				     mt.rangelow / 16.0, mt.rangehigh / 16.0);

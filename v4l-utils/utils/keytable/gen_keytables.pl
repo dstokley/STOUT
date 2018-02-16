@@ -4,12 +4,15 @@ use File::Find;
 
 my @ir_files = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"drivers/media/usb/dvb-usb/af9005-remote.c",
 	"drivers/media/usb/dvb-usb/az6027.c",
 	"drivers/media/usb/dvb-usb/cinergyT2-core.c",
 	"drivers/media/usb/dvb-usb/dibusb-common.c",
 	"drivers/media/usb/dvb-usb/digitv.c",
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	"drivers/media/usb/dvb-usb/a800.c",
 	"drivers/media/usb/dvb-usb/af9005-remote.c",
 	"drivers/media/usb/dvb-usb-v2/af9015.c",
@@ -23,15 +26,31 @@ my @ir_files = (
 	"drivers/media/usb/dvb-usb/dvb-usb-remote.c",
 	"drivers/media/usb/dvb-usb/dvb-usb.h",
 	"drivers/media/usb/dvb-usb/dw2102.c",
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	"drivers/media/usb/dvb-usb/af9005-remote.c",
+	"drivers/media/usb/dvb-usb/az6027.c",
+	"drivers/media/usb/dvb-usb/cinergyT2-core.c",
+	"drivers/media/usb/dvb-usb/dibusb-common.c",
+	"drivers/media/usb/dvb-usb/digitv.c",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	"drivers/media/usb/dvb-usb/m920x.c",
 	"drivers/media/usb/dvb-usb/nova-t-usb2.c",
 	"drivers/media/usb/dvb-usb/opera1.c",
 	"drivers/media/usb/dvb-usb/vp702x.c",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	"drivers/media/usb/dvb-usb/vp7045.c",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	"drivers/media/usb/dvb-usb/vp7045.c",
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 );
 
 my $debug = 1;
@@ -51,15 +70,23 @@ my %rc_map_names;
 my $kernel_dir = shift or die "Need a file name to proceed.";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+sub flush($$)
+=======
+sub flush($)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+{
+	my $filename = shift;
+=======
 sub flush($$)
 {
 	my $filename = shift;
-	my $legacy = shift;
-=======
-sub flush($)
-{
-	my $filename = shift;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	my $legacy = shift;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	my $defined;
 
 	return if (!$keyname || !$out);
@@ -70,10 +97,17 @@ sub flush($)
 	close OUT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!$name && !$legacy) {
 =======
 	if (!$name) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (!$name) {
+=======
+	if (!$name && !$legacy) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		$warn++;
 	} else {
 		$defined = 1 if ($rc_map_names{$name});
@@ -94,6 +128,17 @@ sub flush($)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+sub parse_file($$)
+=======
+sub parse_file($)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+{
+	my $filename = shift;
+
+	$warn = 0;
+
+=======
 sub parse_file($$)
 {
 	my $filename = shift;
@@ -102,34 +147,44 @@ sub parse_file($$)
 	my $num_tables = 0;
 	$warn = 0;
 
+<<<<<<< HEAD
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
 	next if ($filename =~ m/\.mod.c/);
 
-=======
-sub parse_file($)
-{
-	my $filename = shift;
-
-	$warn = 0;
-
->>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	printf "processing file $filename\n" if ($debug);
 	open IN, "<$filename" or die "couldn't find $filename";
 	while (<IN>) {
 		if (m/struct\s+rc_map_table\s+(\w[\w\d_]+)/) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			flush($filename, $legacy);
 =======
 			flush($filename);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			flush($filename);
+=======
+			flush($filename, $legacy);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 			$keyname = $1;
 			$keyname =~ s/^rc_map_//;
 			$keyname =~ s/_table$//;
 			$read = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			$num_tables++;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+			$num_tables++;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			next;
 		}
 		if (m/struct\s+rc_map_list.*=\s+{/) {
@@ -150,6 +205,12 @@ sub parse_file($)
 				next;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+			if (m/RC_TYPE_([\w\d_]+)/) {
+				$type = $1;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			if (m/RC_PROTO_([\w\d_]+)/) {
 				$type = $1;
 
@@ -161,10 +222,14 @@ sub parse_file($)
 
 				# NECX protocol variant uses nec decoder
 				$type =~ s/^NECX$/NEC/;
+<<<<<<< HEAD
 =======
 			if (m/RC_TYPE_([\w\d_]+)/) {
 				$type = $1;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			}
 			next;
 		}
@@ -182,15 +247,23 @@ sub parse_file($)
 	close IN;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+	flush($filename, $legacy);
+=======
+	flush($filename);
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+
+	printf STDERR "WARNING: keyboard name not found on %d tables at file $filename\n", $warn if ($warn);
+=======
 	flush($filename, $legacy);
 
 	printf STDERR "WARNING: keyboard name not found on %d tables at file $filename\n", $warn if ($warn);
-	print STDERR "WARNING: no tables found at $filename\n" if (!$num_tables);
-=======
-	flush($filename);
-
-	printf STDERR "WARNING: keyboard name not found on %d tables at file $filename\n", $warn if ($warn);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	print STDERR "WARNING: no tables found at $filename\n" if (!$num_tables);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	$warn_all += $warn;
 }
@@ -204,15 +277,24 @@ sub parse_dir()
 	return if (! ($file =~ m/\.c$/));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	parse_file $file;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	parse_file $file, 0;
 }
 
 sub sort_dir()
 {
 	sort @_;
+<<<<<<< HEAD
 =======
 	parse_file $file;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 sub parse_rc_map_names($)
@@ -272,16 +354,25 @@ print OUT_MAP << "EOF";
 EOF
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 find({wanted => \&parse_dir, preprocess => \&sort_dir, no_chdir => 1}, "$kernel_dir/drivers/media/rc/keymaps");
-
-foreach my $file (@ir_files) {
-	parse_file "$kernel_dir/$file", 1;
 =======
 find({wanted => \&parse_dir, no_chdir => 1}, "$kernel_dir/drivers/media/rc/keymaps");
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 foreach my $file (@ir_files) {
 	parse_file "$kernel_dir/$file";
+=======
+find({wanted => \&parse_dir, preprocess => \&sort_dir, no_chdir => 1}, "$kernel_dir/drivers/media/rc/keymaps");
+
+foreach my $file (@ir_files) {
+<<<<<<< HEAD
+	parse_file "$kernel_dir/$file";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	parse_file "$kernel_dir/$file", 1;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 printf STDERR "WARNING: there are %d tables not defined at rc_maps.h\n", $warn_all if ($warn_all);

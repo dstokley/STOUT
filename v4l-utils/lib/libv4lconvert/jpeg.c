@@ -17,14 +17,23 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <config.h>
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifdef ANDROID
 #include <android-config.h>
 #else
 #include <config.h>
 #endif
+<<<<<<< HEAD
 =======
 #include <config.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <errno.h>
 #include <stdlib.h>
 #include "libv4lconvert-priv.h"
@@ -251,6 +260,27 @@ static int decode_libjpeg_h_samp2(struct v4lconvert_data *data,
 			ydest += width;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		for (y = 0; y < 8; y++) {
+			u_rows[y] = udest;
+			v_rows[y] = vdest;
+			udest += width / 2;
+			vdest += width / 2;
+		}
+		y = jpeg_read_raw_data(cinfo, rows, 8 * v_samp);
+		if (y != 8 * v_samp)
+			return -1;
+
+		/* For v_samp == 1 were going to get another set of uv values,
+		   but we need only 1 set since our output has v_samp == 2, so
+		   rewind u and vdest and overwrite the previous set. */
+		if (cinfo->output_scanline % 16) {
+			udest -= width * 8 / 2;
+			vdest -= width * 8 / 2;
+		}
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		/*
 		 * For v_samp == 1 were going to get 1 set of uv values per
 		 * line, but we need only 1 set per 2 lines since our output
@@ -279,6 +309,7 @@ static int decode_libjpeg_h_samp2(struct v4lconvert_data *data,
 		y = jpeg_read_raw_data(cinfo, rows, 8 * v_samp);
 		if (y != 8 * v_samp)
 			return -1;
+<<<<<<< HEAD
 =======
 		for (y = 0; y < 8; y++) {
 			u_rows[y] = udest;
@@ -298,6 +329,9 @@ static int decode_libjpeg_h_samp2(struct v4lconvert_data *data,
 			vdest -= width * 8 / 2;
 		}
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 	return 0;
 }

@@ -47,9 +47,15 @@
 #include <map>
 #include <algorithm>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <fstream>
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#include <fstream>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 char options[OptLast];
 
@@ -59,10 +65,17 @@ int verbose;
 unsigned capabilities;
 unsigned out_capabilities;
 <<<<<<< HEAD
+<<<<<<< HEAD
 unsigned priv_magic;
 unsigned out_priv_magic;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+unsigned priv_magic;
+unsigned out_priv_magic;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 bool is_multiplanar;
 __u32 vidcap_buftype;
 __u32 vidout_buftype;
@@ -89,9 +102,15 @@ static struct option long_options[] = {
 	{"help-vbi", no_argument, 0, OptHelpVbi},
 	{"help-sdr", no_argument, 0, OptHelpSdr},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{"help-meta", no_argument, 0, OptHelpMeta},
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	{"help-meta", no_argument, 0, OptHelpMeta},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"help-selection", no_argument, 0, OptHelpSelection},
 	{"help-misc", no_argument, 0, OptHelpMisc},
 	{"help-streaming", no_argument, 0, OptHelpStreaming},
@@ -122,12 +141,20 @@ static struct option long_options[] = {
 	{"list-formats-overlay", no_argument, 0, OptListOverlayFormats},
 	{"list-formats-sdr", no_argument, 0, OptListSdrFormats},
 <<<<<<< HEAD
+<<<<<<< HEAD
+	{"list-formats-sdr-out", no_argument, 0, OptListSdrOutFormats},
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+	{"list-formats-out", no_argument, 0, OptListOutFormats},
+=======
 	{"list-formats-sdr-out", no_argument, 0, OptListSdrOutFormats},
 	{"list-formats-out", no_argument, 0, OptListOutFormats},
-	{"list-formats-meta", no_argument, 0, OptListMetaFormats},
-=======
-	{"list-formats-out", no_argument, 0, OptListOutFormats},
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	{"list-formats-meta", no_argument, 0, OptListMetaFormats},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"list-fields-out", no_argument, 0, OptListOutFields},
 	{"clear-clips", no_argument, 0, OptClearClips},
 	{"clear-bitmap", no_argument, 0, OptClearBitmap},
@@ -135,9 +162,15 @@ static struct option long_options[] = {
 	{"add-bitmap", required_argument, 0, OptAddBitmap},
 	{"find-fb", no_argument, 0, OptFindFb},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{"subset", required_argument, 0, OptSubset},
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	{"subset", required_argument, 0, OptSubset},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"get-standard", no_argument, 0, OptGetStandard},
 	{"set-standard", required_argument, 0, OptSetStandard},
 	{"get-detected-standard", no_argument, 0, OptQueryStandard},
@@ -167,6 +200,14 @@ static struct option long_options[] = {
 	{"try-fmt-sliced-vbi-out", required_argument, 0, OptTrySlicedVbiOutFormat},
 	{"get-fmt-vbi", no_argument, 0, OptGetVbiFormat},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	{"get-fmt-vbi-out", no_argument, 0, OptGetVbiOutFormat},
+	{"get-fmt-sdr", no_argument, 0, OptGetSdrFormat},
+	{"set-fmt-sdr", required_argument, 0, OptSetSdrFormat},
+	{"try-fmt-sdr", required_argument, 0, OptTrySdrFormat},
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"set-fmt-vbi", required_argument, 0, OptSetVbiFormat},
 	{"try-fmt-vbi", required_argument, 0, OptTryVbiFormat},
 	{"get-fmt-vbi-out", no_argument, 0, OptGetVbiOutFormat},
@@ -181,12 +222,16 @@ static struct option long_options[] = {
 	{"get-fmt-meta", no_argument, 0, OptGetMetaFormat},
 	{"set-fmt-meta", required_argument, 0, OptSetMetaFormat},
 	{"try-fmt-meta", required_argument, 0, OptTryMetaFormat},
+<<<<<<< HEAD
 =======
 	{"get-fmt-vbi-out", no_argument, 0, OptGetVbiOutFormat},
 	{"get-fmt-sdr", no_argument, 0, OptGetSdrFormat},
 	{"set-fmt-sdr", required_argument, 0, OptSetSdrFormat},
 	{"try-fmt-sdr", required_argument, 0, OptTrySdrFormat},
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"get-sliced-vbi-cap", no_argument, 0, OptGetSlicedVbiCap},
 	{"get-sliced-vbi-out-cap", no_argument, 0, OptGetSlicedVbiOutCap},
 	{"get-fbuf", no_argument, 0, OptGetFBuf},
@@ -232,10 +277,17 @@ static struct option long_options[] = {
 	{"clear-edid", optional_argument, 0, OptClearEdid},
 	{"get-edid", optional_argument, 0, OptGetEdid},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{"info-edid", optional_argument, 0, OptInfoEdid},
 	{"fix-edid-checksums", no_argument, 0, OptFixEdidChecksums},
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	{"info-edid", optional_argument, 0, OptInfoEdid},
+	{"fix-edid-checksums", no_argument, 0, OptFixEdidChecksums},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"tuner-index", required_argument, 0, OptTunerIndex},
 	{"list-buffers", no_argument, 0, OptListBuffers},
 	{"list-buffers-out", no_argument, 0, OptListBuffersOut},
@@ -245,6 +297,15 @@ static struct option long_options[] = {
 	{"list-buffers-sliced-vbi-out", no_argument, 0, OptListBuffersSlicedVbiOut},
 	{"list-buffers-sdr", no_argument, 0, OptListBuffersSdr},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	{"stream-count", required_argument, 0, OptStreamCount},
+	{"stream-skip", required_argument, 0, OptStreamSkip},
+	{"stream-loop", no_argument, 0, OptStreamLoop},
+	{"stream-poll", no_argument, 0, OptStreamPoll},
+	{"stream-to", required_argument, 0, OptStreamTo},
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"list-buffers-sdr-out", no_argument, 0, OptListBuffersSdrOut},
 	{"list-buffers-meta", no_argument, 0, OptListBuffersMeta},
 	{"stream-count", required_argument, 0, OptStreamCount},
@@ -257,6 +318,7 @@ static struct option long_options[] = {
 	{"stream-to", required_argument, 0, OptStreamTo},
 	{"stream-to-host", required_argument, 0, OptStreamToHost},
 #endif
+<<<<<<< HEAD
 =======
 	{"stream-count", required_argument, 0, OptStreamCount},
 	{"stream-skip", required_argument, 0, OptStreamSkip},
@@ -264,11 +326,22 @@ static struct option long_options[] = {
 	{"stream-poll", no_argument, 0, OptStreamPoll},
 	{"stream-to", required_argument, 0, OptStreamTo},
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"stream-mmap", optional_argument, 0, OptStreamMmap},
 	{"stream-user", optional_argument, 0, OptStreamUser},
 	{"stream-dmabuf", no_argument, 0, OptStreamDmaBuf},
 	{"stream-from", required_argument, 0, OptStreamFrom},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	{"stream-pattern", required_argument, 0, OptStreamPattern},
+	{"stream-out-mmap", optional_argument, 0, OptStreamOutMmap},
+	{"stream-out-user", optional_argument, 0, OptStreamOutUser},
+	{"stream-out-dmabuf", no_argument, 0, OptStreamOutDmaBuf},
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"stream-from-host", required_argument, 0, OptStreamFromHost},
 	{"stream-out-pattern", required_argument, 0, OptStreamOutPattern},
 	{"stream-out-square", no_argument, 0, OptStreamOutSquare},
@@ -287,12 +360,16 @@ static struct option long_options[] = {
 	{"stream-out-user", optional_argument, 0, OptStreamOutUser},
 	{"stream-out-dmabuf", no_argument, 0, OptStreamOutDmaBuf},
 	{"list-patterns", no_argument, 0, OptListPatterns},
+<<<<<<< HEAD
 =======
 	{"stream-pattern", required_argument, 0, OptStreamPattern},
 	{"stream-out-mmap", optional_argument, 0, OptStreamOutMmap},
 	{"stream-out-user", optional_argument, 0, OptStreamOutUser},
 	{"stream-out-dmabuf", no_argument, 0, OptStreamOutDmaBuf},
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{0, 0, 0, 0}
 };
 
@@ -308,9 +385,15 @@ static void usage_all(void)
        vbi_usage();
        sdr_usage();
 <<<<<<< HEAD
+<<<<<<< HEAD
        meta_usage();
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+       meta_usage();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
        selection_usage();
        misc_usage();
        streaming_usage();
@@ -383,12 +466,20 @@ std::string buftype2s(int type)
 	case V4L2_BUF_TYPE_SDR_CAPTURE:
 		return "SDR Capture";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case V4L2_BUF_TYPE_SDR_OUTPUT:
 		return "SDR Output";
 	case V4L2_BUF_TYPE_META_CAPTURE:
 		return "Metadata Capture";
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	default:
 		return "Unknown (" + num2s(type) + ")";
 	}
@@ -399,18 +490,30 @@ std::string fcc2s(unsigned int val)
 	std::string s;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	s += val & 0xff;
+	s += (val >> 8) & 0xff;
+	s += (val >> 16) & 0xff;
+	s += (val >> 24) & 0xff;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	s += val & 0x7f;
 	s += (val >> 8) & 0x7f;
 	s += (val >> 16) & 0x7f;
 	s += (val >> 24) & 0x7f;
 	if (val & (1 << 31))
 		s += "-BE";
+<<<<<<< HEAD
 =======
 	s += val & 0xff;
 	s += (val >> 8) & 0xff;
 	s += (val >> 16) & 0xff;
 	s += (val >> 24) & 0xff;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	return s;
 }
 
@@ -446,6 +549,26 @@ std::string colorspace2s(int val)
 {
 	switch (val) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	case V4L2_COLORSPACE_SMPTE170M:
+		return "Broadcast NTSC/PAL (SMPTE170M/ITU601)";
+	case V4L2_COLORSPACE_SMPTE240M:
+		return "1125-Line (US) HDTV (SMPTE240M)";
+	case V4L2_COLORSPACE_REC709:
+		return "HDTV and modern devices (ITU709)";
+	case V4L2_COLORSPACE_BT878:
+		return "Broken Bt878";
+	case V4L2_COLORSPACE_470_SYSTEM_M:
+		return "NTSC/M (ITU470/ITU601)";
+	case V4L2_COLORSPACE_470_SYSTEM_BG:
+		return "PAL/SECAM BG (ITU470/ITU601)";
+	case V4L2_COLORSPACE_JPEG:
+		return "JPEG (JFIF/ITU601)";
+	case V4L2_COLORSPACE_SRGB:
+		return "SRGB";
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case V4L2_COLORSPACE_DEFAULT:
 		return "Default";
 	case V4L2_COLORSPACE_SMPTE170M:
@@ -538,6 +661,7 @@ static std::string quantization2s(int val)
 		return "Full Range";
 	case V4L2_QUANTIZATION_LIM_RANGE:
 		return "Limited Range";
+<<<<<<< HEAD
 =======
 	case V4L2_COLORSPACE_SMPTE170M:
 		return "Broadcast NTSC/PAL (SMPTE170M/ITU601)";
@@ -556,6 +680,9 @@ static std::string quantization2s(int val)
 	case V4L2_COLORSPACE_SRGB:
 		return "SRGB";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	default:
 		return "Unknown (" + num2s(val) + ")";
 	}
@@ -582,6 +709,10 @@ std::string flags2s(unsigned val, const flag_def *def)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static const flag_def pixflags_def[] = {
 	{ V4L2_PIX_FMT_FLAG_PREMUL_ALPHA,  "premultiplied-alpha" },
 	{ 0, NULL }
@@ -592,8 +723,12 @@ std::string pixflags2s(unsigned flags)
 	return flags2s(flags, pixflags_def);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static const flag_def service_def[] = {
 	{ V4L2_SLICED_TELETEXT_B,  "teletext" },
 	{ V4L2_SLICED_VPS,         "vps" },
@@ -608,6 +743,10 @@ std::string service2s(unsigned service)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /*
  * Any pixelformat that is not a YUV format is assumed to be
  * RGB or HSV.
@@ -665,8 +804,12 @@ static bool is_rgb_or_hsv(__u32 pixelformat)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void printfmt(const struct v4l2_format &vfmt)
 {
 	const flag_def vbi_def[] = {
@@ -675,17 +818,37 @@ void printfmt(const struct v4l2_format &vfmt)
 		{ 0, NULL }
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__u32 colsp = vfmt.fmt.pix.colorspace;
 	__u32 ycbcr_enc = vfmt.fmt.pix.ycbcr_enc;
 
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	__u32 colsp = vfmt.fmt.pix.colorspace;
+	__u32 ycbcr_enc = vfmt.fmt.pix.ycbcr_enc;
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	printf("Format %s:\n", buftype2s(vfmt.type).c_str());
 
 	switch (vfmt.type) {
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		printf("\tWidth/Height  : %u/%u\n", vfmt.fmt.pix.width, vfmt.fmt.pix.height);
+		printf("\tPixel Format  : '%s'\n", fcc2s(vfmt.fmt.pix.pixelformat).c_str());
+		printf("\tField         : %s\n", field2s(vfmt.fmt.pix.field).c_str());
+		printf("\tBytes per Line: %u\n", vfmt.fmt.pix.bytesperline);
+		printf("\tSize Image    : %u\n", vfmt.fmt.pix.sizeimage);
+		printf("\tColorspace    : %s\n", colorspace2s(vfmt.fmt.pix.colorspace).c_str());
+		if (vfmt.fmt.pix.priv)
+			printf("\tCustom Info   : %08x\n", vfmt.fmt.pix.priv);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		printf("\tWidth/Height      : %u/%u\n", vfmt.fmt.pix.width, vfmt.fmt.pix.height);
 		printf("\tPixel Format      : '%s'\n", fcc2s(vfmt.fmt.pix.pixelformat).c_str());
 		printf("\tField             : %s\n", field2s(vfmt.fmt.pix.field).c_str());
@@ -711,6 +874,7 @@ void printfmt(const struct v4l2_format &vfmt)
 		printf("\n");
 		if (vfmt.fmt.pix.priv == V4L2_PIX_FMT_PRIV_MAGIC)
 			printf("\tFlags             : %s\n", pixflags2s(vfmt.fmt.pix.flags).c_str());
+<<<<<<< HEAD
 =======
 		printf("\tWidth/Height  : %u/%u\n", vfmt.fmt.pix.width, vfmt.fmt.pix.height);
 		printf("\tPixel Format  : '%s'\n", fcc2s(vfmt.fmt.pix.pixelformat).c_str());
@@ -721,6 +885,9 @@ void printfmt(const struct v4l2_format &vfmt)
 		if (vfmt.fmt.pix.priv)
 			printf("\tCustom Info   : %08x\n", vfmt.fmt.pix.priv);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
@@ -729,14 +896,23 @@ void printfmt(const struct v4l2_format &vfmt)
 		printf("\tField             : %s\n", field2s(vfmt.fmt.pix_mp.field).c_str());
 		printf("\tNumber of planes  : %u\n", vfmt.fmt.pix_mp.num_planes);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		printf("\tColorspace        : %s\n", colorspace2s(vfmt.fmt.pix_mp.colorspace).c_str());
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		printf("\tFlags             : %s\n", pixflags2s(vfmt.fmt.pix_mp.flags).c_str());
 		printf("\tColorspace        : %s\n", colorspace2s(vfmt.fmt.pix_mp.colorspace).c_str());
 		printf("\tTransfer Function : %s\n", xfer_func2s(vfmt.fmt.pix_mp.xfer_func).c_str());
 		printf("\tYCbCr Encoding    : %s\n", ycbcr_enc2s(vfmt.fmt.pix_mp.ycbcr_enc).c_str());
 		printf("\tQuantization      : %s\n", quantization2s(vfmt.fmt.pix_mp.quantization).c_str());
+<<<<<<< HEAD
 =======
 		printf("\tColorspace        : %s\n", colorspace2s(vfmt.fmt.pix_mp.colorspace).c_str());
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		for (int i = 0; i < vfmt.fmt.pix_mp.num_planes && i < VIDEO_MAX_PLANES; i++) {
 			printf("\tPlane %d           :\n", i);
 			printf("\t   Bytes per Line : %u\n", vfmt.fmt.pix_mp.plane_fmt[i].bytesperline);
@@ -802,6 +978,11 @@ void printfmt(const struct v4l2_format &vfmt)
 		break;
 	case V4L2_BUF_TYPE_SDR_CAPTURE:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		printf("\tSample Format   : %s\n", fcc2s(vfmt.fmt.sdr.pixelformat).c_str());
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case V4L2_BUF_TYPE_SDR_OUTPUT:
 		printf("\tSample Format   : %s\n", fcc2s(vfmt.fmt.sdr.pixelformat).c_str());
 		printf("\tBuffer Size     : %u\n", vfmt.fmt.sdr.buffersize);
@@ -809,9 +990,13 @@ void printfmt(const struct v4l2_format &vfmt)
 	case V4L2_BUF_TYPE_META_CAPTURE:
 		printf("\tSample Format   : %s\n", fcc2s(vfmt.fmt.meta.dataformat).c_str());
 		printf("\tBuffer Size     : %u\n", vfmt.fmt.meta.buffersize);
+<<<<<<< HEAD
 =======
 		printf("\tSample Format   : %s\n", fcc2s(vfmt.fmt.sdr.pixelformat).c_str());
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	}
 }
@@ -875,15 +1060,28 @@ static std::string cap2s(unsigned cap)
 	if (cap & V4L2_CAP_SLICED_VBI_OUTPUT)
 		s += "\t\tSliced VBI Output\n";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (cap & V4L2_CAP_SDR_CAPTURE)
 		s += "\t\tSDR Capture\n";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (cap & V4L2_CAP_SDR_CAPTURE)
+		s += "\t\tSDR Capture\n";
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_RDS_CAPTURE)
 		s += "\t\tRDS Capture\n";
 	if (cap & V4L2_CAP_RDS_OUTPUT)
 		s += "\t\tRDS Output\n";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (cap & V4L2_CAP_TUNER)
+		s += "\t\tTuner\n";
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_SDR_CAPTURE)
 		s += "\t\tSDR Capture\n";
 	if (cap & V4L2_CAP_SDR_OUTPUT)
@@ -896,10 +1094,14 @@ static std::string cap2s(unsigned cap)
 		s += "\t\tTouch Device\n";
 	if (cap & V4L2_CAP_HW_FREQ_SEEK)
 		s += "\t\tHW Frequency Seek\n";
+<<<<<<< HEAD
 =======
 	if (cap & V4L2_CAP_TUNER)
 		s += "\t\tTuner\n";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_MODULATOR)
 		s += "\t\tModulator\n";
 	if (cap & V4L2_CAP_AUDIO)
@@ -913,10 +1115,17 @@ static std::string cap2s(unsigned cap)
 	if (cap & V4L2_CAP_STREAMING)
 		s += "\t\tStreaming\n";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (cap & V4L2_CAP_EXT_PIX_FORMAT)
 		s += "\t\tExtended Pix Format\n";
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (cap & V4L2_CAP_EXT_PIX_FORMAT)
+		s += "\t\tExtended Pix Format\n";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_DEVICE_CAPS)
 		s += "\t\tDevice Capabilities\n";
 	return s;
@@ -1033,14 +1242,29 @@ static __u32 parse_colorspace(const char *s)
 	if (!strcmp(s, "smpte240m")) return V4L2_COLORSPACE_SMPTE240M;
 	if (!strcmp(s, "rec709")) return V4L2_COLORSPACE_REC709;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!strcmp(s, "bt878")) return V4L2_COLORSPACE_BT878;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (!strcmp(s, "bt878")) return V4L2_COLORSPACE_BT878;
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (!strcmp(s, "470m")) return V4L2_COLORSPACE_470_SYSTEM_M;
 	if (!strcmp(s, "470bg")) return V4L2_COLORSPACE_470_SYSTEM_BG;
 	if (!strcmp(s, "jpeg")) return V4L2_COLORSPACE_JPEG;
 	if (!strcmp(s, "srgb")) return V4L2_COLORSPACE_SRGB;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	return 0;
+}
+
+int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
+	      __u32 &field, __u32 &colorspace, __u32 *bytesperline)
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (!strcmp(s, "adobergb")) return V4L2_COLORSPACE_ADOBERGB;
 	if (!strcmp(s, "bt2020")) return V4L2_COLORSPACE_BT2020;
 	if (!strcmp(s, "dcip3")) return V4L2_COLORSPACE_DCI_P3;
@@ -1084,6 +1308,7 @@ static __u32 parse_quantization(const char *s)
 int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 	      __u32 &field, __u32 &colorspace, __u32 &xfer_func, __u32 &ycbcr,
 	      __u32 &quantization, __u32 &flags, __u32 *bytesperline)
+<<<<<<< HEAD
 =======
 	return 0;
 }
@@ -1091,19 +1316,30 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 	      __u32 &field, __u32 &colorspace, __u32 *bytesperline)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	char *value, *subs;
 	int fmts = 0;
 	unsigned bpl_index = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+	bool be_pixfmt;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+
+	field = V4L2_FIELD_ANY;
+=======
 	bool be_pixfmt;
 
 	field = V4L2_FIELD_ANY;
-	flags = 0;
-=======
-
-	field = V4L2_FIELD_ANY;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	flags = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	subs = optarg;
 	while (*subs != '\0') {
 		static const char *const subopts[] = {
@@ -1113,14 +1349,23 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			"field",
 			"colorspace",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+			"bytesperline",
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			"ycbcr",
 			"bytesperline",
 			"premul-alpha",
 			"quantization",
 			"xfer",
+<<<<<<< HEAD
 =======
 			"bytesperline",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			NULL
 		};
 
@@ -1135,6 +1380,16 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			break;
 		case 2:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+			if (strlen(value) == 4)
+				pixelformat =
+					v4l2_fourcc(value[0], value[1],
+							value[2], value[3]);
+			else
+				pixelformat = strtol(value, 0L, 0);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			be_pixfmt = strlen(value) == 7 && !memcmp(value + 4, "-BE", 3);
 			if (be_pixfmt)
 				value[4] = 0;
@@ -1147,6 +1402,7 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			} else {
 				pixelformat = strtol(value, 0L, 0);
 			}
+<<<<<<< HEAD
 =======
 			if (strlen(value) == 4)
 				pixelformat =
@@ -1155,6 +1411,9 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			else
 				pixelformat = strtol(value, 0L, 0);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			fmts |= FmtPixelFormat;
 			break;
 		case 3:
@@ -1170,12 +1429,20 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			break;
 		case 5:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			ycbcr = parse_ycbcr(value);
 			fmts |= FmtYCbCr;
 			break;
 		case 6:
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			bytesperline[bpl_index] = strtoul(value, 0L, 0);
 			if (bytesperline[bpl_index] > 0xffff) {
 				fprintf(stderr, "bytesperline can't be more than 65535\n");
@@ -1185,6 +1452,10 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			fmts |= FmtBytesPerLine;
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		case 7:
 			flags |= V4L2_PIX_FMT_FLAG_PREMUL_ALPHA;
 			fmts |= FmtFlags;
@@ -1197,8 +1468,12 @@ int parse_fmt(char *optarg, __u32 &width, __u32 &height, __u32 &pixelformat,
 			xfer_func = parse_xfer_func(value);
 			fmts |= FmtXferFunc;
 			break;
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		default:
 			return 0;
 		}
@@ -1226,6 +1501,10 @@ static void print_event(const struct v4l2_event *ev)
 		printf("frame_sync %d\n", ev->u.frame_sync.frame_sequence);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case V4L2_EVENT_SOURCE_CHANGE:
 		printf("source_change: pad/input=%d changes: %x\n", ev->id, ev->u.src_change.changes);
 		break;
@@ -1237,8 +1516,12 @@ static void print_event(const struct v4l2_event *ev)
 		else
 			printf("motion_det regions 0x%x\n", ev->u.motion_det.region_mask);
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	default:
 		if (ev->type >= V4L2_EVENT_PRIVATE_START)
 			printf("unknown private event (%08x)\n", ev->type);
@@ -1262,6 +1545,13 @@ static __u32 parse_event(const char *e, const char **name)
 	else if (!strcmp(e, "frame_sync"))
 		event = V4L2_EVENT_FRAME_SYNC;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	else if (!strncmp(e, "ctrl=", 5)) {
+		event = V4L2_EVENT_CTRL;
+		*name = e + 5;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	else if (!strcmp(e, "motion_det"))
 		event = V4L2_EVENT_MOTION_DET;
 	else if (!strncmp(e, "ctrl=", 5)) {
@@ -1270,11 +1560,15 @@ static __u32 parse_event(const char *e, const char **name)
 	} else if (!strncmp(e, "source_change=", 14)) {
 		event = V4L2_EVENT_SOURCE_CHANGE;
 		*name = e + 14;
+<<<<<<< HEAD
 =======
 	else if (!strncmp(e, "ctrl=", 5)) {
 		event = V4L2_EVENT_CTRL;
 		*name = e + 5;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	if (event == 0) {
@@ -1303,6 +1597,10 @@ __u32 find_pixel_format(int fd, unsigned index, bool output, bool mplane)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static bool is_subdevice(int fd)
 {
 	struct stat sb;
@@ -1356,8 +1654,12 @@ static bool is_subdevice(int fd)
 	exit(1);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int main(int argc, char **argv)
 {
 	int i;
@@ -1434,11 +1736,19 @@ int main(int argc, char **argv)
 			sdr_usage();
 			return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case OptHelpMeta:
 			meta_usage();
 			return 0;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		case OptHelpMeta:
+			meta_usage();
+			return 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		case OptHelpSelection:
 			selection_usage();
 			return 0;
@@ -1506,9 +1816,15 @@ int main(int argc, char **argv)
 			vbi_cmd(ch, optarg);
 			sdr_cmd(ch, optarg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			meta_cmd(ch, optarg);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+			meta_cmd(ch, optarg);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			selection_cmd(ch, optarg);
 			misc_cmd(ch, optarg);
 			streaming_cmd(ch, optarg);
@@ -1533,10 +1849,17 @@ int main(int argc, char **argv)
 
 	verbose = options[OptVerbose];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!is_subdevice(fd) && doioctl(fd, VIDIOC_QUERYCAP, &vcap)) {
 =======
 	if (doioctl(fd, VIDIOC_QUERYCAP, &vcap)) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (doioctl(fd, VIDIOC_QUERYCAP, &vcap)) {
+=======
+	if (!is_subdevice(fd) && doioctl(fd, VIDIOC_QUERYCAP, &vcap)) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		fprintf(stderr, "%s: not a v4l2 node\n", device);
 		exit(1);
 	}
@@ -1545,10 +1868,17 @@ int main(int argc, char **argv)
 		capabilities = vcap.device_caps;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	priv_magic = (capabilities & V4L2_CAP_EXT_PIX_FORMAT) ?
 			V4L2_PIX_FMT_PRIV_MAGIC : 0;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	priv_magic = (capabilities & V4L2_CAP_EXT_PIX_FORMAT) ?
+			V4L2_PIX_FMT_PRIV_MAGIC : 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	is_multiplanar = capabilities & (V4L2_CAP_VIDEO_CAPTURE_MPLANE |
 					 V4L2_CAP_VIDEO_M2M_MPLANE |
 					 V4L2_CAP_VIDEO_OUTPUT_MPLANE);
@@ -1572,10 +1902,17 @@ int main(int argc, char **argv)
 		if (out_capabilities & V4L2_CAP_DEVICE_CAPS)
 			out_capabilities = vcap.device_caps;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		out_priv_magic = (out_capabilities & V4L2_CAP_EXT_PIX_FORMAT) ?
 				V4L2_PIX_FMT_PRIV_MAGIC : 0;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		out_priv_magic = (out_capabilities & V4L2_CAP_EXT_PIX_FORMAT) ?
+				V4L2_PIX_FMT_PRIV_MAGIC : 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	common_process_controls(fd);
@@ -1613,9 +1950,15 @@ int main(int argc, char **argv)
 		options[OptGetSlicedVbiOutFormat] = 1;
 		options[OptGetSdrFormat] = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		options[OptGetSdrOutFormat] = 1;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		options[OptGetSdrOutFormat] = 1;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		options[OptGetFBuf] = 1;
 		options[OptGetCropCap] = 1;
 		options[OptGetOutputCropCap] = 1;
@@ -1661,9 +2004,15 @@ int main(int argc, char **argv)
 	vbi_set(fd);
 	sdr_set(fd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	meta_set(fd);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	meta_set(fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	selection_set(fd);
 	streaming_set(fd, out_fd);
 	misc_set(fd);
@@ -1681,9 +2030,15 @@ int main(int argc, char **argv)
 	vbi_get(fd);
 	sdr_get(fd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	meta_get(fd);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	meta_get(fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	selection_get(fd);
 	misc_get(fd);
 	edid_get(fd);
@@ -1699,9 +2054,15 @@ int main(int argc, char **argv)
 	vbi_list(fd);
 	sdr_list(fd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	meta_list(fd);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	meta_list(fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	streaming_list(fd, out_fd);
 
 	if (options[OptWaitForEvent]) {
@@ -1713,10 +2074,17 @@ int main(int argc, char **argv)
 		if (wait_for_event == V4L2_EVENT_CTRL)
 			sub.id = common_find_ctrl_id(wait_event_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		else if (wait_for_event == V4L2_EVENT_SOURCE_CHANGE)
 			sub.id = strtoul(wait_event_id, 0L, 0);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		else if (wait_for_event == V4L2_EVENT_SOURCE_CHANGE)
+			sub.id = strtoul(wait_event_id, 0L, 0);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (!doioctl(fd, VIDIOC_SUBSCRIBE_EVENT, &sub))
 			if (!doioctl(fd, VIDIOC_DQEVENT, &ev))
 				print_event(&ev);
@@ -1732,10 +2100,17 @@ int main(int argc, char **argv)
 		if (poll_for_event == V4L2_EVENT_CTRL)
 			sub.id = common_find_ctrl_id(poll_event_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		else if (poll_for_event == V4L2_EVENT_SOURCE_CHANGE)
 			sub.id = strtoul(poll_event_id, 0L, 0);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		else if (poll_for_event == V4L2_EVENT_SOURCE_CHANGE)
+			sub.id = strtoul(poll_event_id, 0L, 0);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (!doioctl(fd, VIDIOC_SUBSCRIBE_EVENT, &sub)) {
 			fd_set fds;
 			__u32 seq = 0;
@@ -1773,12 +2148,21 @@ int main(int argc, char **argv)
 	if (out_device)
 		test_close(out_fd);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	exit(app_result);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	// --all sets --silent to avoid ioctl errors to be shown when an ioctl
 	// is not implemented by the driver. Which is fine, but we shouldn't
 	// return an application error in that specific case.
 	exit(options[OptAll] ? 0 : app_result);
+<<<<<<< HEAD
 =======
 	exit(app_result);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }

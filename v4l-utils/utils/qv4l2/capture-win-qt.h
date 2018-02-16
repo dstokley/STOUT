@@ -28,6 +28,7 @@
 #include <QResizeEvent>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 class CaptureWinQt : public CaptureWin
 {
 public:
@@ -47,6 +48,8 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 	void setRenderFrame();
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct CropInfo {
 	int cropH;
 	int cropW;
@@ -71,11 +74,35 @@ public:
 
 protected:
 	void resizeEvent(QResizeEvent *event);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+class CaptureWinQt : public CaptureWin
+{
+public:
+	CaptureWinQt(ApplicationWindow *aw);
+	~CaptureWinQt();
+
+	void stop();
+	bool hasNativeFormat(__u32 format);
+	static bool isSupported() { return true; }
+	void setColorspace(unsigned colorspace, unsigned xfer_func,
+			unsigned ycbcr_enc, unsigned quantization, bool is_sdtv) {}
+	void setField(unsigned field) {}
+	void setBlending(bool enable) {}
+	void setLinearFilter(bool enable) {}
+
+protected:
+	void resizeEvent(QResizeEvent *event);
+	void setRenderFrame();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 private:
 	bool findNativeFormat(__u32 format, QImage::Format &dstFmt);
 	void paintFrame();
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	QImage *m_image;
@@ -86,6 +113,8 @@ private:
 	int m_cropBytes;
 	int m_cropOffset;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	void resizeScaleCrop();
 
 	QImage *m_frame;
@@ -95,6 +124,19 @@ private:
 	QSize m_scaledSize;
 	bool m_supportedFormat;
 	bool m_filled;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+
+	QImage *m_image;
+	unsigned char *m_data;
+	QLabel *m_videoSurface;
+	bool m_supportedFormat;
+	bool m_filled;
+	int m_cropBytes;
+	int m_cropOffset;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 };
 #endif

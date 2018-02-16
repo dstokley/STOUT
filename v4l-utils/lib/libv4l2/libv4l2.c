@@ -56,14 +56,23 @@
    preserved.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <config.h>
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifdef ANDROID
 #include <android-config.h>
 #else
 #include <config.h>
 #endif
+<<<<<<< HEAD
 =======
 #include <config.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -93,10 +102,17 @@
 
 static void v4l2_adjust_src_fmt_to_fps(int index, int fps);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void v4l2_set_src_and_dest_format(int index,
 		struct v4l2_format *src_fmt, struct v4l2_format *dest_fmt);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+static void v4l2_set_src_and_dest_format(int index,
+		struct v4l2_format *src_fmt, struct v4l2_format *dest_fmt);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 static pthread_mutex_t v4l2_open_mutex = PTHREAD_MUTEX_INITIALIZER;
 static struct v4l2_dev_info devices[V4L2_MAX_DEVICES] = {
@@ -108,6 +124,10 @@ static struct v4l2_dev_info devices[V4L2_MAX_DEVICES] = {
 static int devices_used;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static int v4l2_ensure_convert_mmap_buf(int index)
 {
 	if (devices[index].convert_mmap_buf != MAP_FAILED) {
@@ -134,8 +154,12 @@ static int v4l2_ensure_convert_mmap_buf(int index)
 
 	return 0;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 static int v4l2_request_read_buffers(int index)
 {
@@ -201,9 +225,15 @@ static int v4l2_map_buffers(int index)
 		buf.memory = V4L2_MEMORY_MMAP;
 		buf.index = i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		buf.reserved = buf.reserved2 = 0;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		buf.reserved = buf.reserved2 = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		result = devices[index].dev_ops->ioctl(
 				devices[index].dev_ops_priv,
 				devices[index].fd, VIDIOC_QUERYBUF, &buf);
@@ -329,10 +359,17 @@ static int v4l2_dequeue_and_convert(int index, struct v4l2_buffer *buf,
 {
 	const int max_tries = V4L2_IGNORE_FIRST_FRAME_ERRORS + 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int result, tries = max_tries, frame_info_gen;
 =======
 	int result, tries = max_tries;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	int result, tries = max_tries;
+=======
+	int result, tries = max_tries, frame_info_gen;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	/* Make sure we have the real v4l2 buffers mapped */
 	result = v4l2_map_buffers(index);
@@ -341,17 +378,26 @@ static int v4l2_dequeue_and_convert(int index, struct v4l2_buffer *buf,
 
 	do {
 <<<<<<< HEAD
+<<<<<<< HEAD
+		frame_info_gen = devices[index].frame_info_generation;
+		pthread_mutex_unlock(&devices[index].stream_lock);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+		result = devices[index].dev_ops->ioctl(
+				devices[index].dev_ops_priv,
+				devices[index].fd, VIDIOC_DQBUF, buf);
+=======
 		frame_info_gen = devices[index].frame_info_generation;
 		pthread_mutex_unlock(&devices[index].stream_lock);
 		result = devices[index].dev_ops->ioctl(
 				devices[index].dev_ops_priv,
 				devices[index].fd, VIDIOC_DQBUF, buf);
-		pthread_mutex_lock(&devices[index].stream_lock);
-=======
-		result = devices[index].dev_ops->ioctl(
-				devices[index].dev_ops_priv,
-				devices[index].fd, VIDIOC_DQBUF, buf);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		pthread_mutex_lock(&devices[index].stream_lock);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (result) {
 			if (errno != EAGAIN) {
 				int saved_err = errno;
@@ -365,23 +411,39 @@ static int v4l2_dequeue_and_convert(int index, struct v4l2_buffer *buf,
 		devices[index].frame_queued &= ~(1 << buf->index);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (frame_info_gen != devices[index].frame_info_generation) {
 			errno = -EINVAL;
 			return -1;
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		result = v4lconvert_convert(devices[index].convert,
 				&devices[index].src_fmt, &devices[index].dest_fmt,
 				devices[index].frame_pointers[buf->index],
 				buf->bytesused, dest ? dest : (devices[index].convert_mmap_buf +
+<<<<<<< HEAD
 <<<<<<< HEAD
 					buf->index * devices[index].convert_mmap_frame_size),
 				dest_size);
 =======
 					buf->index * V4L2_FRAME_BUF_SIZE), dest_size);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+					buf->index * V4L2_FRAME_BUF_SIZE), dest_size);
+=======
+					buf->index * devices[index].convert_mmap_frame_size),
+				dest_size);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		if (devices[index].first_frame) {
 			/* Always treat convert errors as EAGAIN during the first few frames, as
@@ -591,10 +653,17 @@ static void v4l2_set_conversion_buf_params(int index, struct v4l2_buffer *buf)
 
 	buf->m.offset = V4L2_MMAP_OFFSET_MAGIC | buf->index;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	buf->length = devices[index].convert_mmap_frame_size;
 =======
 	buf->length = V4L2_FRAME_BUF_SIZE;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	buf->length = V4L2_FRAME_BUF_SIZE;
+=======
+	buf->length = devices[index].convert_mmap_frame_size;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (devices[index].frame_map_count[buf->index])
 		buf->flags |= V4L2_BUF_FLAG_MAPPED;
 	else
@@ -614,9 +683,15 @@ static int v4l2_buffers_mapped(int index)
 			buf.memory = V4L2_MEMORY_MMAP;
 			buf.index = i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			buf.reserved = buf.reserved2 = 0;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+			buf.reserved = buf.reserved2 = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			if (devices[index].dev_ops->ioctl(
 					devices[index].dev_ops_priv,
 					devices[index].fd, VIDIOC_QUERYBUF,
@@ -701,9 +776,15 @@ int v4l2_fd_open(int fd, int v4l2_flags)
 	void *dev_ops_priv;
 	const struct libv4l_dev_ops *dev_ops;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	long page_size;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	long page_size;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	v4l2_plugin_init(fd, &plugin_library, &dev_ops_priv, &dev_ops);
 
@@ -716,6 +797,10 @@ int v4l2_fd_open(int fd, int v4l2_flags)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* Get page_size (for mmap emulation) */
 	page_size = sysconf(_SC_PAGESIZE);
 	if (page_size < 0) {
@@ -727,8 +812,12 @@ int v4l2_fd_open(int fd, int v4l2_flags)
 		return -1;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* check that this is a v4l2 device */
 	if (dev_ops->ioctl(dev_ops_priv, fd, VIDIOC_QUERYCAP, &cap)) {
 		int saved_err = errno;
@@ -807,12 +896,15 @@ no_capture:
 		devices[index].flags |= V4L2_SUPPORTS_TIMEPERFRAME;
 	devices[index].open_count = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	devices[index].page_size = page_size;
 	devices[index].src_fmt  = fmt;
 	devices[index].dest_fmt = fmt;
 	v4l2_set_src_and_dest_format(index, &devices[index].src_fmt,
 				     &devices[index].dest_fmt);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	devices[index].src_fmt = fmt;
 	devices[index].dest_fmt = fmt;
 
@@ -825,7 +917,17 @@ no_capture:
 		devices[index].dest_fmt.fmt.pix.width &= ~7;
 		devices[index].dest_fmt.fmt.pix.height &= ~1;
 	}
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	devices[index].page_size = page_size;
+	devices[index].src_fmt  = fmt;
+	devices[index].dest_fmt = fmt;
+	v4l2_set_src_and_dest_format(index, &devices[index].src_fmt,
+				     &devices[index].dest_fmt);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	pthread_mutex_init(&devices[index].stream_lock, NULL);
 
@@ -834,9 +936,15 @@ no_capture:
 	devices[index].convert = convert;
 	devices[index].convert_mmap_buf = MAP_FAILED;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	devices[index].convert_mmap_buf_size = 0;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	devices[index].convert_mmap_buf_size = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	for (i = 0; i < V4L2_MAX_NO_FRAMES; i++) {
 		devices[index].frame_pointers[i] = MAP_FAILED;
 		devices[index].frame_map_count[i] = 0;
@@ -851,10 +959,17 @@ no_capture:
 	/* Note we always tell v4lconvert to optimize src fmt selection for
 	   our default fps, the only exception is the app explicitly selecting
 <<<<<<< HEAD
+<<<<<<< HEAD
 	   a frame rate using the S_PARM ioctl after a S_FMT */
 =======
 	   a fram erate using the S_PARM ioctl after a S_FMT */
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	   a fram erate using the S_PARM ioctl after a S_FMT */
+=======
+	   a frame rate using the S_PARM ioctl after a S_FMT */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (devices[index].convert)
 		v4lconvert_set_fps(devices[index].convert, V4L2_DEFAULT_FPS);
 	v4l2_update_fps(index, &parm);
@@ -915,15 +1030,23 @@ int v4l2_close(int fd)
 		} else {
 			SYS_MUNMAP(devices[index].convert_mmap_buf,
 <<<<<<< HEAD
+<<<<<<< HEAD
+					devices[index].convert_mmap_buf_size);
+=======
+					devices[index].no_frames * V4L2_FRAME_BUF_SIZE);
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+		}
+		devices[index].convert_mmap_buf = MAP_FAILED;
+=======
 					devices[index].convert_mmap_buf_size);
 		}
 		devices[index].convert_mmap_buf = MAP_FAILED;
-		devices[index].convert_mmap_buf_size = 0;
-=======
-					devices[index].no_frames * V4L2_FRAME_BUF_SIZE);
-		}
-		devices[index].convert_mmap_buf = MAP_FAILED;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		devices[index].convert_mmap_buf_size = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 	v4lconvert_destroy(devices[index].convert);
 	free(devices[index].readbuf);
@@ -961,9 +1084,15 @@ int v4l2_dup(int fd)
 static int v4l2_check_buffer_change_ok(int index)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	devices[index].frame_info_generation++;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	devices[index].frame_info_generation++;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	v4l2_unmap_buffers(index);
 
 	/* Check if the app itself still is using the stream */
@@ -981,13 +1110,21 @@ static int v4l2_check_buffer_change_ok(int index)
 	   convert mmap buffer */
 	SYS_MUNMAP(devices[index].convert_mmap_buf,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			devices[index].convert_mmap_buf_size);
-	devices[index].convert_mmap_buf = MAP_FAILED;
-	devices[index].convert_mmap_buf_size = 0;
 =======
 			devices[index].no_frames * V4L2_FRAME_BUF_SIZE);
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	devices[index].convert_mmap_buf = MAP_FAILED;
+=======
+			devices[index].convert_mmap_buf_size);
+	devices[index].convert_mmap_buf = MAP_FAILED;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	devices[index].convert_mmap_buf_size = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (devices[index].flags & V4L2_STREAM_CONTROLLED_BY_READ) {
 		V4L2_LOG("deactivating read-stream for settings change\n");
@@ -1022,6 +1159,10 @@ static void v4l2_set_src_and_dest_format(int index,
 		struct v4l2_format *src_fmt, struct v4l2_format *dest_fmt)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/*
 	 * When a user does a try_fmt with the current dest_fmt and the
 	 * dest_fmt is a supported one we will align the resolution (see
@@ -1034,8 +1175,12 @@ static void v4l2_set_src_and_dest_format(int index,
 		dest_fmt->fmt.pix.height &= ~1;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* Sigh some drivers (pwc) do not properly reflect what one really gets
 	   after a s_fmt in their try_fmt answer. So update dest format (which we
 	   report as result from s_fmt / g_fmt to the app) with all info from the src
@@ -1043,16 +1188,32 @@ static void v4l2_set_src_and_dest_format(int index,
 	dest_fmt->fmt.pix.field = src_fmt->fmt.pix.field;
 	dest_fmt->fmt.pix.colorspace = src_fmt->fmt.pix.colorspace;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dest_fmt->fmt.pix.xfer_func = src_fmt->fmt.pix.xfer_func;
 	dest_fmt->fmt.pix.ycbcr_enc = src_fmt->fmt.pix.ycbcr_enc;
 	dest_fmt->fmt.pix.quantization = src_fmt->fmt.pix.quantization;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	dest_fmt->fmt.pix.xfer_func = src_fmt->fmt.pix.xfer_func;
+	dest_fmt->fmt.pix.ycbcr_enc = src_fmt->fmt.pix.ycbcr_enc;
+	dest_fmt->fmt.pix.quantization = src_fmt->fmt.pix.quantization;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* When we're not converting use bytesperline and imagesize from src_fmt */
 	if (v4l2_pix_fmt_compat(src_fmt, dest_fmt)) {
 		dest_fmt->fmt.pix.bytesperline = src_fmt->fmt.pix.bytesperline;
 		dest_fmt->fmt.pix.sizeimage = src_fmt->fmt.pix.sizeimage;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	}
+
+	devices[index].src_fmt = *src_fmt;
+	devices[index].dest_fmt = *dest_fmt;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	} else
 		v4lconvert_fixup_fmt(dest_fmt);
 
@@ -1062,12 +1223,16 @@ static void v4l2_set_src_and_dest_format(int index,
 	devices[index].convert_mmap_frame_size =
 		(((dest_fmt->fmt.pix.sizeimage + devices[index].page_size - 1)
 		/ devices[index].page_size) * devices[index].page_size);
+<<<<<<< HEAD
 =======
 	}
 
 	devices[index].src_fmt = *src_fmt;
 	devices[index].dest_fmt = *dest_fmt;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 static int v4l2_s_fmt(int index, struct v4l2_format *dest_fmt)
@@ -1178,11 +1343,19 @@ int v4l2_ioctl(int fd, unsigned long int request, ...)
 	case VIDIOC_G_CTRL:
 	case VIDIOC_S_CTRL:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case VIDIOC_G_EXT_CTRLS:
 	case VIDIOC_TRY_EXT_CTRLS:
 	case VIDIOC_S_EXT_CTRLS:
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	case VIDIOC_G_EXT_CTRLS:
+	case VIDIOC_TRY_EXT_CTRLS:
+	case VIDIOC_S_EXT_CTRLS:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case VIDIOC_ENUM_FRAMESIZES:
 	case VIDIOC_ENUM_FRAMEINTERVALS:
 		is_capture_request = 1;
@@ -1291,6 +1464,10 @@ no_capture_request:
 		break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case VIDIOC_G_EXT_CTRLS:
 		result = v4lconvert_vidioc_g_ext_ctrls(devices[index].convert, arg);
 		break;
@@ -1303,8 +1480,12 @@ no_capture_request:
 		result = v4lconvert_vidioc_s_ext_ctrls(devices[index].convert, arg);
 		break;
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case VIDIOC_QUERYCAP: {
 		struct v4l2_capability *cap = arg;
 
@@ -1355,12 +1536,21 @@ no_capture_request:
 	case VIDIOC_S_INPUT:
 	case VIDIOC_S_DV_TIMINGS: {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct v4l2_format src_fmt = { 0 };
 		unsigned int orig_dest_pixelformat =
 			devices[index].dest_fmt.fmt.pix.pixelformat;
 =======
 		struct v4l2_format src_fmt;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		struct v4l2_format src_fmt;
+=======
+		struct v4l2_format src_fmt = { 0 };
+		unsigned int orig_dest_pixelformat =
+			devices[index].dest_fmt.fmt.pix.pixelformat;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		result = devices[index].dev_ops->ioctl(
 				devices[index].dev_ops_priv,
@@ -1390,15 +1580,26 @@ no_capture_request:
 		devices[index].src_fmt  = src_fmt;
 		devices[index].dest_fmt = src_fmt;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		/* and try to restore the last set destination pixelformat. */
+		src_fmt.fmt.pix.pixelformat =
+			devices[index].dest_fmt.fmt.pix.pixelformat;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		v4l2_set_src_and_dest_format(index, &devices[index].src_fmt,
 					     &devices[index].dest_fmt);
 		/* and try to restore the last set destination pixelformat. */
 		src_fmt.fmt.pix.pixelformat = orig_dest_pixelformat;
+<<<<<<< HEAD
 =======
 		/* and try to restore the last set destination pixelformat. */
 		src_fmt.fmt.pix.pixelformat =
 			devices[index].dest_fmt.fmt.pix.pixelformat;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		result = v4l2_s_fmt(index, &src_fmt);
 		if (result) {
 			V4L2_LOG_WARN("restoring destination pixelformat after %s failed\n",
@@ -1493,16 +1694,24 @@ no_capture_request:
 
 		if (!v4l2_needs_conversion(index)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+			pthread_mutex_unlock(&devices[index].stream_lock);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+			result = devices[index].dev_ops->ioctl(
+					devices[index].dev_ops_priv,
+					fd, VIDIOC_DQBUF, buf);
+=======
 			pthread_mutex_unlock(&devices[index].stream_lock);
 			result = devices[index].dev_ops->ioctl(
 					devices[index].dev_ops_priv,
 					fd, VIDIOC_DQBUF, buf);
-			pthread_mutex_lock(&devices[index].stream_lock);
-=======
-			result = devices[index].dev_ops->ioctl(
-					devices[index].dev_ops_priv,
-					fd, VIDIOC_DQBUF, buf);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			pthread_mutex_lock(&devices[index].stream_lock);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			if (result) {
 				saved_err = errno;
 				V4L2_PERROR("dequeuing buf");
@@ -1515,6 +1724,7 @@ no_capture_request:
 		   but we need the buffer _now_ to write our converted data
 		   to it! */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		result = v4l2_ensure_convert_mmap_buf(index);
 		if (result)
 			break;
@@ -1522,6 +1732,8 @@ no_capture_request:
 		result = v4l2_dequeue_and_convert(index, buf, 0,
 				devices[index].convert_mmap_frame_size);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (devices[index].convert_mmap_buf == MAP_FAILED) {
 			devices[index].convert_mmap_buf = (void *)SYS_MMAP(NULL,
 				(size_t)(devices[index].no_frames * V4L2_FRAME_BUF_SIZE),
@@ -1539,7 +1751,18 @@ no_capture_request:
 
 		result = v4l2_dequeue_and_convert(index, buf, 0,
 						  V4L2_FRAME_BUF_SIZE);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		result = v4l2_ensure_convert_mmap_buf(index);
+		if (result)
+			break;
+
+		result = v4l2_dequeue_and_convert(index, buf, 0,
+				devices[index].convert_mmap_frame_size);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (result >= 0) {
 			buf->bytesused = result;
 			result = 0;
@@ -1765,10 +1988,17 @@ void *v4l2_mmap(void *start, size_t length, int prot, int flags, int fd,
 			/* Check if the mmap data matches our answer to QUERY_BUF. If it doesn't,
 			   let the kernel handle it (to allow for mmap-based non capture use) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			start || length != devices[index].convert_mmap_frame_size ||
 =======
 			start || length != V4L2_FRAME_BUF_SIZE ||
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			start || length != V4L2_FRAME_BUF_SIZE ||
+=======
+			start || length != devices[index].convert_mmap_frame_size ||
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			((unsigned int)offset & ~0xFFu) != V4L2_MMAP_OFFSET_MAGIC) {
 		if (index != -1)
 			V4L2_LOG("Passing mmap(%p, %d, ..., %x, through to the driver\n",
@@ -1794,11 +2024,14 @@ void *v4l2_mmap(void *start, size_t length, int prot, int flags, int fd,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (v4l2_ensure_convert_mmap_buf(index)) {
 		errno = EINVAL;
 		result = MAP_FAILED;
 		goto leave;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (devices[index].convert_mmap_buf == MAP_FAILED) {
 		devices[index].convert_mmap_buf = (void *)SYS_MMAP(NULL,
 			(size_t)(devices[index].no_frames * V4L2_FRAME_BUF_SIZE),
@@ -1813,17 +2046,33 @@ void *v4l2_mmap(void *start, size_t length, int prot, int flags, int fd,
 			result = MAP_FAILED;
 			goto leave;
 		}
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (v4l2_ensure_convert_mmap_buf(index)) {
+		errno = EINVAL;
+		result = MAP_FAILED;
+		goto leave;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	devices[index].frame_map_count[buffer_index]++;
 
 	result = devices[index].convert_mmap_buf +
 <<<<<<< HEAD
+<<<<<<< HEAD
 		buffer_index * devices[index].convert_mmap_frame_size;
 =======
 		buffer_index * V4L2_FRAME_BUF_SIZE;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		buffer_index * V4L2_FRAME_BUF_SIZE;
+=======
+		buffer_index * devices[index].convert_mmap_frame_size;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	V4L2_LOG("Fake (conversion) mmap buf %u, seen by app at: %p\n",
 			buffer_index, result);
@@ -1842,17 +2091,25 @@ int v4l2_munmap(void *_start, size_t length)
 
 	/* Is this memory ours? */
 <<<<<<< HEAD
+<<<<<<< HEAD
+	if (start != MAP_FAILED) {
+=======
+	if (start != MAP_FAILED && length == V4L2_FRAME_BUF_SIZE) {
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+		for (index = 0; index < devices_used; index++)
+			if (devices[index].fd != -1 &&
+					devices[index].convert_mmap_buf != MAP_FAILED &&
+=======
 	if (start != MAP_FAILED) {
 		for (index = 0; index < devices_used; index++)
 			if (devices[index].fd != -1 &&
 					devices[index].convert_mmap_buf != MAP_FAILED &&
-					length == devices[index].convert_mmap_frame_size &&
-=======
-	if (start != MAP_FAILED && length == V4L2_FRAME_BUF_SIZE) {
-		for (index = 0; index < devices_used; index++)
-			if (devices[index].fd != -1 &&
-					devices[index].convert_mmap_buf != MAP_FAILED &&
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+					length == devices[index].convert_mmap_frame_size &&
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 					start >= devices[index].convert_mmap_buf &&
 					(start - devices[index].convert_mmap_buf) % length == 0)
 				break;
@@ -1867,9 +2124,15 @@ int v4l2_munmap(void *_start, size_t length)
 			/* Re-do our checks now that we have the lock, things may have changed */
 			if (devices[index].convert_mmap_buf != MAP_FAILED &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 					length == devices[index].convert_mmap_frame_size &&
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+					length == devices[index].convert_mmap_frame_size &&
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 					start >= devices[index].convert_mmap_buf &&
 					(start - devices[index].convert_mmap_buf) % length == 0 &&
 					buffer_index < devices[index].no_frames) {
@@ -1916,10 +2179,17 @@ int v4l2_set_control(int fd, int cid, int value)
 			ctrl.value = value ? 1 : 0;
 		else
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ctrl.value = ((long long) value * (qctrl.maximum - qctrl.minimum) + 32767) / 65535 +
 =======
 			ctrl.value = (value * (qctrl.maximum - qctrl.minimum) + 32767) / 65535 +
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			ctrl.value = (value * (qctrl.maximum - qctrl.minimum) + 32767) / 65535 +
+=======
+			ctrl.value = ((long long) value * (qctrl.maximum - qctrl.minimum) + 32767) / 65535 +
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				qctrl.minimum;
 
 		result = v4lconvert_vidioc_s_ctrl(devices[index].convert, &ctrl);
@@ -1952,10 +2222,17 @@ int v4l2_get_control(int fd, int cid)
 		return -1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return (((long long) ctrl.value - qctrl.minimum) * 65535 +
 =======
 	return ((ctrl.value - qctrl.minimum) * 65535 +
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	return ((ctrl.value - qctrl.minimum) * 65535 +
+=======
+	return (((long long) ctrl.value - qctrl.minimum) * 65535 +
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			(qctrl.maximum - qctrl.minimum) / 2) /
 		(qctrl.maximum - qctrl.minimum);
 }

@@ -1,8 +1,15 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef __V4L_ANDROID_CONFIG_H__
 #define __V4L_ANDROID_CONFIG_H__
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#ifndef __V4L_ANDROID_CONFIG_H__
+#define __V4L_ANDROID_CONFIG_H__
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
@@ -364,6 +371,12 @@ getsubopt (char **optionp, char *const *tokens, char **valuep)
   return -1;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

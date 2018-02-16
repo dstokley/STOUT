@@ -18,8 +18,11 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef ENABLE_ALSA
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include "qv4l2.h"
 #include "general-tab.h"
 #include "vbi-tab.h"
@@ -28,7 +31,13 @@
 #include "capture-win-gl.h"
 
 #ifdef ENABLE_ASLA
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#ifdef ENABLE_ALSA
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 extern "C" {
 #include "alsa_stream.h"
 }
@@ -62,6 +71,15 @@ extern "C" {
 #include <sys/time.h>
 #include <errno.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <dirent.h>
+#include <libv4l2.h>
+
+ApplicationWindow::ApplicationWindow() :
+	m_capture(NULL),
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <sys/ioctl.h>
 #include <dirent.h>
 
@@ -92,6 +110,7 @@ ApplicationWindow::ApplicationWindow() :
 	m_minWidth(175),
 	m_vMargin(15),
 	m_hMargin(5),
+<<<<<<< HEAD
 =======
 #include <dirent.h>
 #include <libv4l2.h>
@@ -99,6 +118,9 @@ ApplicationWindow::ApplicationWindow() :
 ApplicationWindow::ApplicationWindow() :
 	m_capture(NULL),
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_genTab(NULL),
 	m_sigMapper(NULL)
 {
@@ -106,14 +128,26 @@ ApplicationWindow::ApplicationWindow() :
 
 	m_capNotifier = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_outNotifier = NULL;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	m_outNotifier = NULL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_ctrlNotifier = NULL;
 	m_capImage = NULL;
 	m_frameData = NULL;
 	m_nbuffers = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_buffers = NULL;
+	m_makeSnapshot = false;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_makeSnapshot = false;
 	m_singleStep = false;
 	m_tpgColorspace = 0;
@@ -123,10 +157,14 @@ ApplicationWindow::ApplicationWindow() :
 	m_tpgLimRGBRange = NULL;
 	for (unsigned b = 0; b < sizeof(m_clear); b++)
 		m_clear[b] = false;
+<<<<<<< HEAD
 =======
 	m_buffers = NULL;
 	m_makeSnapshot = false;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	QAction *openAct = new QAction(QIcon(":/fileopen.png"), "&Open Device", this);
 	openAct->setStatusTip("Open a v4l device, use libv4l2 wrapper if possible");
@@ -139,10 +177,17 @@ ApplicationWindow::ApplicationWindow() :
 	connect(openRawAct, SIGNAL(triggered()), this, SLOT(openrawdev()));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_capStartAct = new QAction(QIcon(":/start.png"), "Start &Capturing", this);
 =======
 	m_capStartAct = new QAction(QIcon(":/record.png"), "Start &Capturing", this);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	m_capStartAct = new QAction(QIcon(":/record.png"), "Start &Capturing", this);
+=======
+	m_capStartAct = new QAction(QIcon(":/start.png"), "Start &Capturing", this);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_capStartAct->setStatusTip("Start capturing");
 	m_capStartAct->setCheckable(true);
 	m_capStartAct->setDisabled(true);
@@ -150,12 +195,20 @@ ApplicationWindow::ApplicationWindow() :
 	connect(m_capStartAct, SIGNAL(toggled(bool)), this, SLOT(capStart(bool)));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_capStepAct = new QAction(QIcon(":/step.png"), "Single Step", this);
 	m_capStepAct->setDisabled(true);
 	connect(m_capStepAct, SIGNAL(triggered(bool)), this, SLOT(capStep(bool)));
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_snapshotAct = new QAction(QIcon(":/snapshot.png"), "&Make Snapshot", this);
 	m_snapshotAct->setStatusTip("Make snapshot");
 	m_snapshotAct->setDisabled(true);
@@ -173,22 +226,37 @@ ApplicationWindow::ApplicationWindow() :
 	m_showFramesAct->setChecked(true);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	QAction *closeAct = new QAction(QIcon(":/fileclose.png"), "&Close Device", this);
 =======
 	QAction *closeAct = new QAction(QIcon(":/fileclose.png"), "&Close", this);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	QAction *closeAct = new QAction(QIcon(":/fileclose.png"), "&Close", this);
+=======
+	QAction *closeAct = new QAction(QIcon(":/fileclose.png"), "&Close Device", this);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	closeAct->setStatusTip("Close");
 	closeAct->setShortcut(Qt::CTRL+Qt::Key_W);
 	connect(closeAct, SIGNAL(triggered()), this, SLOT(closeDevice()));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	QAction *traceAct = new QAction("&Trace IOCTLs", this);
 	traceAct->setStatusTip("All V4L2 IOCTLs are traced on the console");
 	traceAct->setCheckable(true);
 	connect(traceAct, SIGNAL(toggled(bool)), this, SLOT(traceIoctls(bool)));
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	QAction *quitAct = new QAction(QIcon(":/exit.png"), "&Quit", this);
 	quitAct->setStatusTip("Exit the application");
 	quitAct->setShortcut(Qt::CTRL+Qt::Key_Q);
@@ -202,10 +270,17 @@ ApplicationWindow::ApplicationWindow() :
 	fileMenu->addAction(m_saveRawAct);
 	fileMenu->addSeparator();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fileMenu->addAction(traceAct);
 	fileMenu->addSeparator();
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	fileMenu->addAction(traceAct);
+	fileMenu->addSeparator();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	fileMenu->addAction(quitAct);
 
 	QToolBar *toolBar = addToolBar("File");
@@ -213,16 +288,27 @@ ApplicationWindow::ApplicationWindow() :
 	toolBar->addAction(openAct);
 	toolBar->addAction(m_capStartAct);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	toolBar->addAction(m_capStepAct);
 	toolBar->addAction(m_snapshotAct);
 	toolBar->addAction(m_saveRawAct);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	toolBar->addAction(m_snapshotAct);
 	toolBar->addAction(m_saveRawAct);
 	toolBar->addAction(m_showFramesAct);
 	toolBar->addSeparator();
 	toolBar->addAction(quitAct);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	toolBar->addAction(m_capStepAct);
+	toolBar->addAction(m_snapshotAct);
+	toolBar->addAction(m_saveRawAct);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	m_scalingAct = new QAction("&Enable Video Scaling", this);
 	m_scalingAct->setStatusTip("Scale video frames to match window size if set");
@@ -230,14 +316,29 @@ ApplicationWindow::ApplicationWindow() :
 	m_scalingAct->setChecked(true);
 	connect(m_scalingAct, SIGNAL(toggled(bool)), this, SLOT(enableScaling(bool)));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_resetScalingAct = new QAction("Resize to &Frame Size", this);
 	m_resetScalingAct->setStatusTip("Resizes the capture window to match frame size");
 	m_resetScalingAct->setShortcut(Qt::CTRL+Qt::Key_F);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	QMenu *captureMenu = menuBar()->addMenu("&Capture");
+	captureMenu->addAction(m_capStartAct);
+	captureMenu->addAction(m_showFramesAct);
+	captureMenu->addAction(m_scalingAct);
+	captureMenu->addAction(m_resetScalingAct);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_overrideColorspace = -1;
 	QMenu *menu = new QMenu("Override Colorspace");
 	m_overrideColorspaceMenu = menu;
@@ -303,6 +404,7 @@ ApplicationWindow::ApplicationWindow() :
 	m_capMenu->addMenu(m_overrideQuantizationMenu);
 	m_capMenu->addAction(m_showFramesAct);
 	m_capMenu->addAction(m_scalingAct);
+<<<<<<< HEAD
 =======
 	QMenu *captureMenu = menuBar()->addMenu("&Capture");
 	captureMenu->addAction(m_capStartAct);
@@ -310,6 +412,9 @@ ApplicationWindow::ApplicationWindow() :
 	captureMenu->addAction(m_scalingAct);
 	captureMenu->addAction(m_resetScalingAct);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (CaptureWinGL::isSupported()) {
 		m_renderMethod = QV4L2_RENDER_GL;
@@ -319,6 +424,29 @@ ApplicationWindow::ApplicationWindow() :
 		m_useGLAct->setCheckable(true);
 		m_useGLAct->setChecked(true);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		connect(m_useGLAct, SIGNAL(triggered()), this, SLOT(setRenderMethod()));
+		captureMenu->addAction(m_useGLAct);
+	} else {
+		m_renderMethod = QV4L2_RENDER_QT;
+	}
+
+#ifdef HAVE_ALSA
+	captureMenu->addSeparator();
+
+	m_showAllAudioAct = new QAction("Show All Audio &Devices", this);
+	m_showAllAudioAct->setStatusTip("Show all audio input and output devices if set");
+	m_showAllAudioAct->setCheckable(true);
+	m_showAllAudioAct->setChecked(false);
+	captureMenu->addAction(m_showAllAudioAct);
+
+	m_audioBufferAct = new QAction("Set Audio &Buffer Capacity...", this);
+	m_audioBufferAct->setStatusTip("Set audio buffer capacity in amout of ms than can be stored");
+	connect(m_audioBufferAct, SIGNAL(triggered()), this, SLOT(setAudioBufferSize()));
+	captureMenu->addAction(m_audioBufferAct);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		connect(m_useGLAct, SIGNAL(toggled(bool)), this, SLOT(setRenderMethod(bool)));
 		m_capMenu->addAction(m_useGLAct);
 
@@ -356,6 +484,7 @@ ApplicationWindow::ApplicationWindow() :
 	m_audioBufferAct->setStatusTip("Set audio buffer capacity in amount of ms than can be stored");
 	connect(m_audioBufferAct, SIGNAL(triggered()), this, SLOT(setAudioBufferSize()));
 	m_capMenu->addAction(m_audioBufferAct);
+<<<<<<< HEAD
 =======
 		connect(m_useGLAct, SIGNAL(triggered()), this, SLOT(setRenderMethod()));
 		captureMenu->addAction(m_useGLAct);
@@ -377,6 +506,9 @@ ApplicationWindow::ApplicationWindow() :
 	connect(m_audioBufferAct, SIGNAL(triggered()), this, SLOT(setAudioBufferSize()));
 	captureMenu->addAction(m_audioBufferAct);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #endif
 
 	QMenu *helpMenu = menuBar()->addMenu("&Help");
@@ -390,9 +522,15 @@ ApplicationWindow::ApplicationWindow() :
 
 	m_tabs = new QTabWidget;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	m_tabs->setMinimumSize(300, 200);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	m_tabs->setMinimumSize(300, 200);
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	setCentralWidget(m_tabs);
 }
 
@@ -403,6 +541,10 @@ ApplicationWindow::~ApplicationWindow()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::updateColorspace()
 {
 	if (!m_capture)
@@ -453,8 +595,12 @@ void ApplicationWindow::overrideQuantChanged(QAction *a)
 	m_overrideQuantization = a->data().toInt();
 	updateColorspace();
 }
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 {
@@ -463,17 +609,28 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 	connect(m_sigMapper, SIGNAL(mapped(int)), this, SLOT(ctrlAction(int)));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (!open(device, !rawOpen)) {
+		m_showAllAudioAct->setEnabled(false);
+		m_audioBufferAct->setEnabled(false);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	s_direct(rawOpen);
 
 	if (open(device.toLatin1(), true) < 0) {
 #ifdef HAVE_ALSA
 		m_audioBufferAct->setEnabled(false);
 #endif
+<<<<<<< HEAD
 =======
 	if (!open(device, !rawOpen)) {
 		m_showAllAudioAct->setEnabled(false);
 		m_audioBufferAct->setEnabled(false);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return;
 	}
 
@@ -481,16 +638,12 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 
 	QWidget *w = new QWidget(m_tabs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_genTab = new GeneralTab(device, this, 4, w);
 	int m_winWidth = m_genTab->getWidth();
-
-#ifdef HAVE_ALSA
-	if (m_genTab->hasAlsaAudio()) {
-		connect(m_genTab, SIGNAL(audioDeviceChanged()), this, SLOT(changeAudioDevice()));
-		m_audioBufferAct->setEnabled(true);
-	} else {
 =======
 	m_genTab = new GeneralTab(device, *this, 4, w);
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #ifdef HAVE_ALSA
 	if (m_genTab->hasAlsaAudio()) {
@@ -500,12 +653,34 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 		m_audioBufferAct->setEnabled(true);
 	} else {
 		m_showAllAudioAct->setEnabled(false);
+=======
+	m_genTab = new GeneralTab(device, this, 4, w);
+	int m_winWidth = m_genTab->getWidth();
+
+#ifdef HAVE_ALSA
+	if (m_genTab->hasAlsaAudio()) {
+		connect(m_genTab, SIGNAL(audioDeviceChanged()), this, SLOT(changeAudioDevice()));
+		m_audioBufferAct->setEnabled(true);
+	} else {
+<<<<<<< HEAD
+		m_showAllAudioAct->setEnabled(false);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_audioBufferAct->setEnabled(false);
 	}
 #endif
 	connect(m_genTab, SIGNAL(pixelAspectRatioChanged()), this, SLOT(updatePixelAspectRatio()));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	connect(m_genTab, SIGNAL(cropChanged()), this, SLOT(updateCropping()));
+	m_tabs->addTab(w, "General");
+	addTabs();
+	if (caps() & (V4L2_CAP_VBI_CAPTURE | V4L2_CAP_SLICED_VBI_CAPTURE)) {
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	connect(m_genTab, SIGNAL(croppingChanged()), this, SLOT(updateCropping()));
 	connect(m_genTab, SIGNAL(clearBuffers()), this, SLOT(clearBuffers()));
 	m_tabs->addTab(w, "General Settings");
@@ -519,12 +694,16 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 	addTabs(m_winWidth);
 	m_vbiTab = NULL;
 	if (has_vbi_cap()) {
+<<<<<<< HEAD
 =======
 	connect(m_genTab, SIGNAL(cropChanged()), this, SLOT(updateCropping()));
 	m_tabs->addTab(w, "General");
 	addTabs();
 	if (caps() & (V4L2_CAP_VBI_CAPTURE | V4L2_CAP_SLICED_VBI_CAPTURE)) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		w = new QWidget(m_tabs);
 		m_vbiTab = new VbiTab(w);
 		m_tabs->addTab(w, "VBI");
@@ -536,6 +715,13 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 	m_tabs->show();
 	m_tabs->setFocus();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_convertData = v4lconvert_create(fd());
+	m_capStartAct->setEnabled(fd() >= 0);
+	m_ctrlNotifier = new QSocketNotifier(fd(), QSocketNotifier::Exception, m_tabs);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_convertData = v4lconvert_create(g_fd());
 	bool canStream = has_rw() || has_streaming();
 	bool isCapture = v4l_type_is_capture(g_type());
@@ -550,11 +736,15 @@ void ApplicationWindow::setDevice(const QString &device, bool rawOpen)
 	m_genTab->sourceChangeSubscribe();
 	subscribeCtrlEvents();
 	m_ctrlNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Exception, m_tabs);
+<<<<<<< HEAD
 =======
 	m_convertData = v4lconvert_create(fd());
 	m_capStartAct->setEnabled(fd() >= 0);
 	m_ctrlNotifier = new QSocketNotifier(fd(), QSocketNotifier::Exception, m_tabs);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	connect(m_ctrlNotifier, SIGNAL(activated(int)), this, SLOT(ctrlEvent()));
 }
 
@@ -579,10 +769,17 @@ void ApplicationWindow::openrawdev()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void ApplicationWindow::setRenderMethod(bool checked)
 =======
 void ApplicationWindow::setRenderMethod()
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+void ApplicationWindow::setRenderMethod()
+=======
+void ApplicationWindow::setRenderMethod(bool checked)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	if (m_capStartAct->isChecked()) {
 		m_useGLAct->setChecked(m_renderMethod == QV4L2_RENDER_GL);
@@ -590,19 +787,33 @@ void ApplicationWindow::setRenderMethod()
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_renderMethod = checked ? QV4L2_RENDER_GL : QV4L2_RENDER_QT;
 	m_useBlendingAct->setEnabled(m_renderMethod == QV4L2_RENDER_GL);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_useGLAct->isChecked())
 		m_renderMethod = QV4L2_RENDER_GL;
 	else
 		m_renderMethod = QV4L2_RENDER_QT;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	m_renderMethod = checked ? QV4L2_RENDER_GL : QV4L2_RENDER_QT;
+	m_useBlendingAct->setEnabled(m_renderMethod == QV4L2_RENDER_GL);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	newCaptureWin();
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::setBlending(bool checked)
 {
 	if (m_capture)
@@ -615,8 +826,12 @@ void ApplicationWindow::setLinearFilter(bool checked)
 		m_capture->setLinearFilter(checked);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::setAudioBufferSize()
 {
 	bool ok;
@@ -635,14 +850,23 @@ void ApplicationWindow::ctrlEvent()
 	v4l2_event ev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	while (dqevent(ev)) {
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	while (dqevent(ev) == 0) {
 		if (ev.type == V4L2_EVENT_SOURCE_CHANGE) {
 			m_genTab->sourceChange(ev);
 			continue;
 		}
+<<<<<<< HEAD
 =======
 	while (dqevent(ev)) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (ev.type != V4L2_EVENT_CTRL)
 			continue;
 		m_ctrlMap[ev.id].flags = ev.u.ctrl.flags;
@@ -651,6 +875,11 @@ void ApplicationWindow::ctrlEvent()
 		m_ctrlMap[ev.id].step = ev.u.ctrl.step;
 		m_ctrlMap[ev.id].default_value = ev.u.ctrl.default_value;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		m_widgetMap[ev.id]->setDisabled(m_ctrlMap[ev.id].flags & CTRL_FLAG_DISABLED);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		bool disabled = m_ctrlMap[ev.id].flags & CTRL_FLAG_DISABLED;
 
@@ -662,9 +891,13 @@ void ApplicationWindow::ctrlEvent()
 			m_sliderMap[ev.id]->setDisabled(disabled);
 		if (ev.u.ctrl.changes & V4L2_EVENT_CTRL_CH_RANGE)
 			updateCtrlRange(ev.id, ev.u.ctrl.value);
+<<<<<<< HEAD
 =======
 		m_widgetMap[ev.id]->setDisabled(m_ctrlMap[ev.id].flags & CTRL_FLAG_DISABLED);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		switch (m_ctrlMap[ev.id].type) {
 		case V4L2_CTRL_TYPE_INTEGER:
 		case V4L2_CTRL_TYPE_INTEGER_MENU:
@@ -682,10 +915,17 @@ void ApplicationWindow::ctrlEvent()
 		if (m_ctrlMap[ev.id].type != V4L2_CTRL_TYPE_STRING)
 			continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		query_ext_ctrl(m_ctrlMap[ev.id]);
 =======
 		queryctrl(m_ctrlMap[ev.id]);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		queryctrl(m_ctrlMap[ev.id]);
+=======
+		query_ext_ctrl(m_ctrlMap[ev.id]);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		struct v4l2_ext_control c;
 		struct v4l2_ext_controls ctrls;
@@ -696,6 +936,7 @@ void ApplicationWindow::ctrlEvent()
 		memset(&ctrls, 0, sizeof(ctrls));
 		ctrls.count = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ctrls.which = 0;
 		ctrls.controls = &c;
 		if (!g_ext_ctrls(ctrls))
@@ -704,6 +945,16 @@ void ApplicationWindow::ctrlEvent()
 		ctrls.controls = &c;
 		if (!ioctl(VIDIOC_G_EXT_CTRLS, &ctrls))
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		ctrls.ctrl_class = 0;
+		ctrls.controls = &c;
+		if (!ioctl(VIDIOC_G_EXT_CTRLS, &ctrls))
+=======
+		ctrls.which = 0;
+		ctrls.controls = &c;
+		if (!g_ext_ctrls(ctrls))
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			setString(ev.id, c.string);
 		free(c.string);
 	}
@@ -719,16 +970,25 @@ void ApplicationWindow::newCaptureWin()
 	switch (m_renderMethod) {
 	case QV4L2_RENDER_GL:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		m_capture = new CaptureWinGL(this);
-		break;
-	default:
-		m_capture = new CaptureWinQt(this);
 =======
 		m_capture = new CaptureWinGL;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	default:
 		m_capture = new CaptureWinQt;
+=======
+		m_capture = new CaptureWinGL(this);
+		break;
+	default:
+<<<<<<< HEAD
+		m_capture = new CaptureWinQt;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		m_capture = new CaptureWinQt(this);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	}
 
@@ -736,6 +996,11 @@ void ApplicationWindow::newCaptureWin()
 	m_capture->enableScaling(m_scalingAct->isChecked());
         connect(m_capture, SIGNAL(close()), this, SLOT(closeCaptureWin()));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	connect(m_resetScalingAct, SIGNAL(triggered()), m_capture, SLOT(resetSize()));
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 bool ApplicationWindow::startStreaming()
@@ -860,20 +1125,34 @@ void ApplicationWindow::calculateFps()
 			last_sec = res.tv_sec;
 		}
 	}
+<<<<<<< HEAD
 =======
 	connect(m_resetScalingAct, SIGNAL(triggered()), m_capture, SLOT(resetSize()));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void ApplicationWindow::capVbiFrame()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	__u32 buftype = m_genTab->bufType();
+	v4l2_buffer buf;
+	__u8 *data = NULL;
+	int s = 0;
+	bool again;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	cv4l_buffer buf(m_queue);
 	__u8 *data = NULL;
 	int s = 0;
 
 	if (m_singleStep)
 		m_capNotifier->setEnabled(false);
+<<<<<<< HEAD
 =======
 	__u32 buftype = m_genTab->bufType();
 	v4l2_buffer buf;
@@ -881,6 +1160,9 @@ void ApplicationWindow::capVbiFrame()
 	int s = 0;
 	bool again;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	switch (m_capMethod) {
 	case methodRead:
@@ -897,11 +1179,14 @@ void ApplicationWindow::capVbiFrame()
 
 	case methodMmap:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case methodUser:
 		if (dqbuf(buf)) {
 			if (errno == EAGAIN)
 				return;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (!dqbuf_mmap(buf, buftype, again)) {
 			error("dqbuf");
 			m_capStartAct->setChecked(false);
@@ -919,12 +1204,36 @@ void ApplicationWindow::capVbiFrame()
 
 	case methodUser:
 		if (!dqbuf_user(buf, buftype, again)) {
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	case methodUser:
+		if (dqbuf(buf)) {
+			if (errno == EAGAIN)
+				return;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			error("dqbuf");
 			m_capStartAct->setChecked(false);
 			return;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		if (again)
+			return;
+		if (buf.flags & V4L2_BUF_FLAG_ERROR) {
+			qbuf(buf);
+			return;
+		}
+		data = (__u8 *)buf.m.userptr;
+		s = buf.bytesused;
+		break;
+	}
+	if (buftype == V4L2_BUF_TYPE_VBI_CAPTURE && s != m_vbiSize) {
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (buf.g_flags() & V4L2_BUF_FLAG_ERROR) {
 			if (qbuf(buf)) {
 				error("Couldn't queue buffer\n");
@@ -937,6 +1246,7 @@ void ApplicationWindow::capVbiFrame()
 		break;
 	}
 	if (g_type() == V4L2_BUF_TYPE_VBI_CAPTURE && s != m_vbiSize) {
+<<<<<<< HEAD
 =======
 		if (again)
 			return;
@@ -950,15 +1260,25 @@ void ApplicationWindow::capVbiFrame()
 	}
 	if (buftype == V4L2_BUF_TYPE_VBI_CAPTURE && s != m_vbiSize) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		error("incorrect vbi size");
 		m_capStartAct->setChecked(false);
 		return;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (showFrames() && g_type() == V4L2_BUF_TYPE_VBI_CAPTURE) {
 =======
 	if (showFrames()) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (showFrames()) {
+=======
+	if (showFrames() && g_type() == V4L2_BUF_TYPE_VBI_CAPTURE) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		for (unsigned y = 0; y < m_vbiHeight; y++) {
 			__u8 *p = data + y * m_vbiWidth;
 			__u8 *q = m_capImage->bits() + y * m_capImage->bytesPerLine();
@@ -976,10 +1296,17 @@ void ApplicationWindow::capVbiFrame()
 	struct v4l2_sliced_vbi_data *p;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (g_type() == V4L2_BUF_TYPE_SLICED_VBI_CAPTURE) {
 =======
 	if (buftype == V4L2_BUF_TYPE_SLICED_VBI_CAPTURE) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (buftype == V4L2_BUF_TYPE_SLICED_VBI_CAPTURE) {
+=======
+	if (g_type() == V4L2_BUF_TYPE_SLICED_VBI_CAPTURE) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		p = (struct v4l2_sliced_vbi_data *)data;
 	} else {
 		vbi_parse(&m_vbiHandle, data, &sfmt, sdata);
@@ -988,6 +1315,12 @@ void ApplicationWindow::capVbiFrame()
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (m_capMethod != methodRead)
+		qbuf(buf);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_capMethod != methodRead) {
 		if (qbuf(buf)) {
 			error("Couldn't queue buffer\n");
@@ -995,14 +1328,19 @@ void ApplicationWindow::capVbiFrame()
 			return;
 		}
 	}
+<<<<<<< HEAD
 =======
 	if (m_capMethod != methodRead)
 		qbuf(buf);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	m_vbiTab->slicedData(p, s / sizeof(p[0]));
 
 	QString status, curStatus;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	calculateFps();
@@ -1012,6 +1350,8 @@ void ApplicationWindow::capVbiFrame()
 				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(),
 				    NULL, NULL);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct timeval tv, res;
 
 	if (m_frame == 0)
@@ -1028,7 +1368,19 @@ void ApplicationWindow::capVbiFrame()
 	if (showFrames())
 		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
 				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(), NULL, status);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+
+	calculateFps();
+	status = QString("Frame: %1 Fps: %2").arg(++m_frame).arg(m_fps, 0, 'f', 2, '0');
+	if (showFrames() && g_type() == V4L2_BUF_TYPE_VBI_CAPTURE)
+		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
+				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(),
+				    NULL, NULL);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
 	curStatus = statusBar()->currentMessage();
 	if (curStatus.isEmpty() || curStatus.startsWith("Frame: "))
@@ -1037,6 +1389,7 @@ void ApplicationWindow::capVbiFrame()
 		refresh();
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 void ApplicationWindow::capSdrFrame()
 {
@@ -1051,6 +1404,8 @@ void ApplicationWindow::capSdrFrame()
 	case methodRead:
 		s = read(m_frameData, m_sdrSize);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::capFrame()
 {
 	__u32 buftype = m_genTab->bufType();
@@ -1073,7 +1428,24 @@ void ApplicationWindow::capFrame()
 		alsa_thread_timestamp(&tv_alsa);
 #endif
 
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+void ApplicationWindow::capSdrFrame()
+{
+	cv4l_buffer buf(m_queue);
+	__u8 *data = NULL;
+	int s = 0;
+
+	if (m_singleStep)
+		m_capNotifier->setEnabled(false);
+
+	switch (m_capMethod) {
+	case methodRead:
+		s = read(m_frameData, m_sdrSize);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (s < 0) {
 			if (errno != EAGAIN) {
 				error("read");
@@ -1081,6 +1453,7 @@ void ApplicationWindow::capFrame()
 			}
 			return;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		data = m_frameData;
 		break;
@@ -1091,6 +1464,8 @@ void ApplicationWindow::capFrame()
 			if (errno == EAGAIN)
 				return;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (m_makeSnapshot)
 			makeSnapshot((unsigned char *)m_frameData, s);
 		if (m_saveRaw.openMode())
@@ -1113,6 +1488,7 @@ void ApplicationWindow::capFrame()
 		buf.length = VIDEO_MAX_PLANES;
 		buf.m.planes = planes;
 		if (!dqbuf_mmap(buf, buftype, again)) {
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 			error("dqbuf");
 			m_capStartAct->setChecked(false);
@@ -1128,62 +1504,23 @@ void ApplicationWindow::capFrame()
 		}
 		data = (__u8 *)m_queue.g_dataptr(buf.g_index(), 0);
 		s = buf.g_bytesused();
+=======
+=======
+		data = m_frameData;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
-	}
-	if (s != m_sdrSize) {
-		error("incorrect sdr size");
-		m_capStartAct->setChecked(false);
-		return;
-	}
-	if (showFrames()) {
-		unsigned width = m_sdrSize / 2 - 1;
 
-		if (SDR_WIDTH < width)
-			width = SDR_WIDTH;
-
-		m_capImage->fill(0);
-		/*
-		 * Draw two waveforms, each consisting of the first 'width + 1' samples
-		 * of the buffer, the top is for the I, the bottom is for the Q values.
-		 */
-		for (unsigned i = 0; i < 2; i++) {
-			unsigned start = 255 - data[i];
-
-			for (unsigned x = 0; x < width; x++) {
-				unsigned next = 255 - data[2 + 2 * x + i];
-				unsigned low = start < next ? start : next;
-				unsigned high = start > next ? start : next;
-				__u8 *q = m_capImage->bits() + x * 3 +
-					(i * 256 + low) * m_capImage->bytesPerLine();
-
-				while (low++ <= high) {
-					q[0] = 255;
-					q[1] = 255;
-					q[2] = 255;
-					q += m_capImage->bytesPerLine();
-				}
-				start = next;
-			}
-		}
-	}
-
-	if (m_capMethod != methodRead) {
-		if (qbuf(buf)) {
-			error("Couldn't queue buffer\n");
+	case methodMmap:
+	case methodUser:
+		if (dqbuf(buf)) {
+			if (errno == EAGAIN)
+				return;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+			error("dqbuf");
 			m_capStartAct->setChecked(false);
 			return;
 		}
-	}
-
-	QString status, curStatus;
-
-	calculateFps();
-	status = QString("Frame: %1 Fps: %2").arg(++m_frame).arg(m_fps, 0, 'f', 2, '0');
-	if (showFrames())
-		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
-				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(),
-				    NULL, NULL);
-=======
+<<<<<<< HEAD
 
 		if (again)
 			return;
@@ -1303,7 +1640,76 @@ void ApplicationWindow::capFrame()
 
 	if (m_capMethod == methodMmap || m_capMethod == methodUser)
 		qbuf(buf);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		if (buf.g_flags() & V4L2_BUF_FLAG_ERROR) {
+			if (qbuf(buf)) {
+				error("Couldn't queue buffer\n");
+				m_capStartAct->setChecked(false);
+			}
+			return;
+		}
+		data = (__u8 *)m_queue.g_dataptr(buf.g_index(), 0);
+		s = buf.g_bytesused();
+		break;
+	}
+	if (s != m_sdrSize) {
+		error("incorrect sdr size");
+		m_capStartAct->setChecked(false);
+		return;
+	}
+	if (showFrames()) {
+		unsigned width = m_sdrSize / 2 - 1;
+
+		if (SDR_WIDTH < width)
+			width = SDR_WIDTH;
+
+		m_capImage->fill(0);
+		/*
+		 * Draw two waveforms, each consisting of the first 'width + 1' samples
+		 * of the buffer, the top is for the I, the bottom is for the Q values.
+		 */
+		for (unsigned i = 0; i < 2; i++) {
+			unsigned start = 255 - data[i];
+
+			for (unsigned x = 0; x < width; x++) {
+				unsigned next = 255 - data[2 + 2 * x + i];
+				unsigned low = start < next ? start : next;
+				unsigned high = start > next ? start : next;
+				__u8 *q = m_capImage->bits() + x * 3 +
+					(i * 256 + low) * m_capImage->bytesPerLine();
+
+				while (low++ <= high) {
+					q[0] = 255;
+					q[1] = 255;
+					q[2] = 255;
+					q += m_capImage->bytesPerLine();
+				}
+				start = next;
+			}
+		}
+	}
+
+	if (m_capMethod != methodRead) {
+		if (qbuf(buf)) {
+			error("Couldn't queue buffer\n");
+			m_capStartAct->setChecked(false);
+			return;
+		}
+	}
+
+	QString status, curStatus;
+
+	calculateFps();
+	status = QString("Frame: %1 Fps: %2").arg(++m_frame).arg(m_fps, 0, 'f', 2, '0');
+	if (showFrames())
+		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
+				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(),
+				    NULL, NULL);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	curStatus = statusBar()->currentMessage();
 	if (curStatus.isEmpty() || curStatus.startsWith("Frame: "))
@@ -1313,6 +1719,225 @@ void ApplicationWindow::capFrame()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+bool ApplicationWindow::startCapture(unsigned buffer_size)
+{
+	startAudio();
+
+	if (m_genTab->isRadio())
+		return true;
+
+	__u32 buftype = m_genTab->bufType();
+	v4l2_requestbuffers req;
+	unsigned int i;
+
+	memset(&req, 0, sizeof(req));
+
+	switch (m_capMethod) {
+	case methodRead:
+		m_snapshotAct->setEnabled(true);
+		m_genTab->setHaveBuffers(true);
+		/* Nothing to do. */
+		return true;
+
+	case methodMmap:
+		if (!reqbufs_mmap(req, buftype, 3)) {
+			error("Cannot capture");
+			break;
+		}
+
+		if (req.count < 2) {
+			error("Too few buffers");
+			reqbufs_mmap(req, buftype);
+			break;
+		}
+
+		m_buffers = (buffer *)calloc(req.count, sizeof(*m_buffers));
+
+		if (!m_buffers) {
+			error("Out of memory");
+			reqbufs_mmap(req, buftype);
+			break;
+		}
+
+		for (m_nbuffers = 0; m_nbuffers < req.count; ++m_nbuffers) {
+			v4l2_plane planes[VIDEO_MAX_PLANES];
+			v4l2_buffer buf;
+
+			memset(&buf, 0, sizeof(buf));
+
+			buf.type        = buftype;
+			buf.memory      = V4L2_MEMORY_MMAP;
+			buf.index       = m_nbuffers;
+			buf.length      = VIDEO_MAX_PLANES;
+			buf.m.planes    = planes;
+
+			if (-1 == ioctl(VIDIOC_QUERYBUF, &buf)) {
+				perror("VIDIOC_QUERYBUF");
+				goto error;
+			}
+
+			if (V4L2_TYPE_IS_MULTIPLANAR(buftype)) {
+				m_buffers[m_nbuffers].planes = buf.length;
+				for (unsigned p = 0; p < buf.length; p++) {
+					m_buffers[m_nbuffers].length[p] = planes[p].length;
+					m_buffers[m_nbuffers].start[p] = mmap(planes[p].length, planes[p].m.mem_offset);
+					if (MAP_FAILED == m_buffers[m_nbuffers].start[p]) {
+						perror("mmap");
+						goto error;
+					}
+				}
+			} else {
+				m_buffers[m_nbuffers].planes = 1;
+				m_buffers[m_nbuffers].length[0] = buf.length;
+				m_buffers[m_nbuffers].start[0] = mmap(buf.length, buf.m.offset);
+				if (MAP_FAILED == m_buffers[m_nbuffers].start[0]) {
+					perror("mmap");
+					goto error;
+				}
+			}
+		}
+		for (i = 0; i < m_nbuffers; ++i) {
+			if (!qbuf_mmap(i, buftype)) {
+				perror("VIDIOC_QBUF");
+				goto error;
+			}
+		}
+		if (!streamon(buftype)) {
+			perror("VIDIOC_STREAMON");
+			goto error;
+		}
+		m_snapshotAct->setEnabled(true);
+		m_genTab->setHaveBuffers(true);
+		return true;
+
+	case methodUser:
+		if (!reqbufs_user(req, buftype, 3)) {
+			error("Cannot capture");
+			break;
+		}
+
+		if (req.count < 2) {
+			error("Too few buffers");
+			reqbufs_user(req, buftype);
+			break;
+		}
+
+		m_buffers = (buffer *)calloc(req.count, sizeof(*m_buffers));
+
+		if (!m_buffers) {
+			error("Out of memory");
+			break;
+		}
+
+		for (m_nbuffers = 0; m_nbuffers < req.count; ++m_nbuffers) {
+			v4l2_plane planes[VIDEO_MAX_PLANES];
+			v4l2_buffer buf;
+
+			memset(&buf, 0, sizeof(buf));
+
+			buf.type        = buftype;
+			buf.memory      = V4L2_MEMORY_USERPTR;
+			buf.index       = m_nbuffers;
+			buf.length      = VIDEO_MAX_PLANES;
+			buf.m.planes    = planes;
+
+			if (-1 == ioctl(VIDIOC_QUERYBUF, &buf)) {
+				perror("VIDIOC_QUERYBUF");
+				goto error;
+			}
+
+			if (V4L2_TYPE_IS_MULTIPLANAR(buftype)) {
+				m_buffers[m_nbuffers].planes = buf.length;
+				for (unsigned p = 0; p < buf.length; p++) {
+					m_buffers[m_nbuffers].length[p] = planes[p].length;
+					m_buffers[m_nbuffers].start[p] = malloc(planes[p].length);
+					if (m_buffers[m_nbuffers].start[p] == NULL) {
+						error("Out of memory");
+						goto error;
+					}
+				}
+			} else {
+				m_buffers[m_nbuffers].planes = 1;
+				m_buffers[m_nbuffers].length[0] = buffer_size;
+				m_buffers[m_nbuffers].start[0] = malloc(buffer_size);
+
+				if (!m_buffers[m_nbuffers].start[0]) {
+					error("Out of memory");
+					goto error;
+				}
+			}
+		}
+		for (i = 0; i < m_nbuffers; ++i)
+			if (!qbuf_user(i, buftype, m_buffers[i].start, m_buffers[i].length)) {
+				perror("VIDIOC_QBUF");
+				goto error;
+			}
+		if (!streamon(buftype)) {
+			perror("VIDIOC_STREAMON");
+			goto error;
+		}
+		m_snapshotAct->setEnabled(true);
+		m_genTab->setHaveBuffers(true);
+		return true;
+	}
+
+error:
+	m_capStartAct->setChecked(false);
+	return false;
+}
+
+void ApplicationWindow::stopCapture()
+{
+	stopAudio();
+
+	if (m_genTab->isRadio())
+		return;
+
+	__u32 buftype = m_genTab->bufType();
+	v4l2_requestbuffers reqbufs;
+	v4l2_encoder_cmd cmd;
+	unsigned i;
+
+	m_capture->stop();
+	m_snapshotAct->setDisabled(true);
+	switch (m_capMethod) {
+	case methodRead:
+		memset(&cmd, 0, sizeof(cmd));
+		cmd.cmd = V4L2_ENC_CMD_STOP;
+		ioctl(VIDIOC_ENCODER_CMD, &cmd);
+		break;
+
+	case methodMmap:
+		if (m_buffers == NULL)
+			break;
+		if (!streamoff(buftype))
+			perror("VIDIOC_STREAMOFF");
+		for (i = 0; i < m_nbuffers; ++i)
+			for (unsigned p = 0; p < m_buffers[i].planes; p++)
+				if (-1 == munmap(m_buffers[i].start[p], m_buffers[i].length[p]))
+					perror("munmap");
+		// Free all buffers.
+		reqbufs_mmap(reqbufs, buftype, 1);  // videobuf workaround
+		reqbufs_mmap(reqbufs, buftype, 0);
+		break;
+
+	case methodUser:
+		if (!streamoff(buftype))
+			perror("VIDIOC_STREAMOFF");
+		// Free all buffers.
+		reqbufs_user(reqbufs, buftype, 1);  // videobuf workaround
+		reqbufs_user(reqbufs, buftype, 0);
+		for (i = 0; i < m_nbuffers; ++i)
+			for (unsigned p = 0; p < m_buffers[i].planes; p++)
+				free(m_buffers[i].start[p]);
+		break;
+	}
+	free(m_buffers);
+	m_buffers = NULL;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::outFrame()
 {
 	cv4l_buffer buf(m_queue);
@@ -1576,6 +2201,7 @@ void ApplicationWindow::stopStreaming()
 	subscribeCtrlEvents();
 	m_ctrlNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Exception, m_tabs);
 	connect(m_ctrlNotifier, SIGNAL(activated(int)), this, SLOT(ctrlEvent()));
+<<<<<<< HEAD
 =======
 bool ApplicationWindow::startCapture(unsigned buffer_size)
 {
@@ -1793,6 +2419,9 @@ void ApplicationWindow::stopCapture()
 	free(m_buffers);
 	m_buffers = NULL;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_genTab->setHaveBuffers(false);
 	refresh();
 }
@@ -1800,32 +2429,54 @@ void ApplicationWindow::stopCapture()
 bool ApplicationWindow::showFrames()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (m_showFramesAct->isChecked() && !m_capture->isVisible())
+		m_capture->show();
+	if (!m_showFramesAct->isChecked() && m_capture->isVisible())
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_showFramesAct->isChecked() && !m_capture->isVisible() &&
 	    !m_genTab->isSlicedVbi())
 		m_capture->show();
 	if ((!m_showFramesAct->isChecked() && m_capture->isVisible()) ||
 	    m_genTab->isSlicedVbi())
+<<<<<<< HEAD
 =======
 	if (m_showFramesAct->isChecked() && !m_capture->isVisible())
 		m_capture->show();
 	if (!m_showFramesAct->isChecked() && m_capture->isVisible())
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_capture->hide();
 	return m_showFramesAct->isChecked();
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void ApplicationWindow::traceIoctls(bool enable)
 {
 	s_trace(enable);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::startOutput(unsigned)
 {
 }
 
 void ApplicationWindow::stopOutput()
 {
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+void ApplicationWindow::traceIoctls(bool enable)
+{
+	s_trace(enable);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void ApplicationWindow::enableScaling(bool enable)
@@ -1847,6 +2498,10 @@ void ApplicationWindow::updateCropping()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::clearBuffers()
 {
 	if (m_capture)
@@ -1854,8 +2509,12 @@ void ApplicationWindow::clearBuffers()
 			m_clear[b] = true;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::startAudio()
 {
 #ifdef HAVE_ALSA
@@ -1867,10 +2526,17 @@ void ApplicationWindow::startAudio()
 
 	if (audIn != NULL && audOut != NULL && audIn.compare("None") && audIn.compare(audOut) != 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		alsa_thread_startup(audOut.toLatin1().data(), audIn.toLatin1().data(),
 =======
 		alsa_thread_startup(audOut.toAscii().data(), audIn.toAscii().data(),
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		alsa_thread_startup(audOut.toAscii().data(), audIn.toAscii().data(),
+=======
+		alsa_thread_startup(audOut.toLatin1().data(), audIn.toLatin1().data(),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				    m_genTab->getAudioDeviceBufferSize(), NULL, 0);
 
 		if (m_genTab->isRadio())
@@ -1902,6 +2568,17 @@ void ApplicationWindow::closeCaptureWin()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+void ApplicationWindow::capStart(bool start)
+{
+	if (m_genTab->isRadio()) {
+		if (start)
+			startCapture(0);
+		else
+			stopCapture();
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::outStart(bool start)
 {
 	if (start) {
@@ -2003,6 +2680,7 @@ void ApplicationWindow::capStart(bool start)
 			startStreaming();
 		else
 			stopStreaming();
+<<<<<<< HEAD
 =======
 void ApplicationWindow::capStart(bool start)
 {
@@ -2012,6 +2690,9 @@ void ApplicationWindow::capStart(bool start)
 		else
 			stopCapture();
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		return;
 	}
@@ -2019,12 +2700,15 @@ void ApplicationWindow::capStart(bool start)
 	QImage::Format dstFmt = QImage::Format_RGB888;
 	struct v4l2_fract interval;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__u32 width, height, pixfmt;
 	unsigned field;
 
 	if (!start) {
 		stopStreaming();
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	v4l2_pix_format &srcPix = m_capSrcFormat.fmt.pix;
 	v4l2_pix_format &dstPix = m_capDestFormat.fmt.pix;
 	v4l2_pix_format_mplane &srcMPix = m_capSrcFormat.fmt.pix_mp;
@@ -2035,7 +2719,17 @@ void ApplicationWindow::capStart(bool start)
 
 	if (!start) {
 		stopCapture();
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	__u32 width, height, pixfmt;
+	unsigned field;
+
+	if (!start) {
+		stopStreaming();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		delete m_capNotifier;
 		m_capNotifier = NULL;
 		delete m_capImage;
@@ -2043,6 +2737,21 @@ void ApplicationWindow::capStart(bool start)
 		return;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_frame = m_lastFrame = m_fps = 0;
+	m_capMethod = m_genTab->capMethod();
+
+	if (m_genTab->isSlicedVbi()) {
+		v4l2_format fmt;
+		v4l2_std_id std;
+
+		g_fmt_sliced_vbi(fmt);
+		g_std(std);
+		fmt.fmt.sliced.service_set = (std & V4L2_STD_625_50) ?
+			V4L2_SLICED_VBI_625 : V4L2_SLICED_VBI_525;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_frame = m_fps = 0;
 	m_capMethod = m_genTab->capMethod();
 
@@ -2061,6 +2770,7 @@ void ApplicationWindow::capStart(bool start)
 		}
 		fmt.fmt.sliced.service_set = (std & V4L2_STD_525_60) ?
 			V4L2_SLICED_VBI_525 : V4L2_SLICED_VBI_625;
+<<<<<<< HEAD
 =======
 	m_frame = m_lastFrame = m_fps = 0;
 	m_capMethod = m_genTab->capMethod();
@@ -2074,11 +2784,15 @@ void ApplicationWindow::capStart(bool start)
 		fmt.fmt.sliced.service_set = (std & V4L2_STD_625_50) ?
 			V4L2_SLICED_VBI_625 : V4L2_SLICED_VBI_525;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		s_fmt(fmt);
 		memset(&m_vbiHandle, 0, sizeof(m_vbiHandle));
 		m_vbiTab->slicedFormat(fmt.fmt.sliced);
 		m_vbiSize = fmt.fmt.sliced.io_size;
 		m_frameData = new unsigned char[m_vbiSize];
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (startStreaming()) {
 			m_capNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Read, m_tabs);
@@ -2087,12 +2801,29 @@ void ApplicationWindow::capStart(bool start)
 		if (startCapture(m_vbiSize)) {
 			m_capNotifier = new QSocketNotifier(fd(), QSocketNotifier::Read, m_tabs);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		updatePixelAspectRatio();
+		if (startCapture(m_vbiSize)) {
+			m_capNotifier = new QSocketNotifier(fd(), QSocketNotifier::Read, m_tabs);
+=======
+		if (startStreaming()) {
+			m_capNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Read, m_tabs);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			connect(m_capNotifier, SIGNAL(activated(int)), this, SLOT(capVbiFrame()));
 		}
 		return;
 	}
 	if (m_genTab->isVbi()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		v4l2_format fmt;
+		v4l2_std_id std;
+
+		g_fmt_vbi(fmt);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		cv4l_fmt fmt;
 		v4l2_std_id std;
 
@@ -2105,25 +2836,36 @@ void ApplicationWindow::capStart(bool start)
 			error("could not obtain an VBI format\n");
 			return;
 		}
+<<<<<<< HEAD
 =======
 		v4l2_format fmt;
 		v4l2_std_id std;
 
 		g_fmt_vbi(fmt);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (fmt.fmt.vbi.sample_format != V4L2_PIX_FMT_GREY) {
 			error("non-grey pixelformat not supported for VBI\n");
 			return;
 		}
 		s_fmt(fmt);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		g_std(std);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		g_std(std);
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (!vbi_prepare(&m_vbiHandle, &fmt.fmt.vbi, std)) {
 			error("no services possible\n");
 			return;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		m_capDestFormat.s_type(V4L2_BUF_TYPE_VIDEO_CAPTURE);
 		m_capDestFormat.s_pixelformat(V4L2_PIX_FMT_RGB24);
@@ -2131,17 +2873,30 @@ void ApplicationWindow::capStart(bool start)
 		m_vbiWidth = fmt.fmt.vbi.samples_per_line;
 		m_vbiHeight = fmt.fmt.vbi.count[0] + fmt.fmt.vbi.count[1];
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_vbiTab->rawFormat(fmt.fmt.vbi);
 		m_vbiWidth = fmt.fmt.vbi.samples_per_line;
 		if (fmt.fmt.vbi.flags & V4L2_VBI_INTERLACED)
 			m_vbiHeight = fmt.fmt.vbi.count[0];
 		else
 			m_vbiHeight = fmt.fmt.vbi.count[0] + fmt.fmt.vbi.count[1];
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		m_capDestFormat.s_type(V4L2_BUF_TYPE_VIDEO_CAPTURE);
+		m_capDestFormat.s_pixelformat(V4L2_PIX_FMT_RGB24);
+		m_vbiTab->rawFormat(fmt.fmt.vbi);
+		m_vbiWidth = fmt.fmt.vbi.samples_per_line;
+		m_vbiHeight = fmt.fmt.vbi.count[0] + fmt.fmt.vbi.count[1];
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_vbiSize = m_vbiWidth * m_vbiHeight;
 		m_frameData = new unsigned char[m_vbiSize];
 		m_capImage = new QImage(m_vbiWidth, m_vbiHeight, dstFmt);
 		m_capImage->fill(0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		m_capture->setWindowSize(QSize(m_vbiWidth, m_vbiHeight));
 		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
@@ -2151,10 +2906,21 @@ void ApplicationWindow::capStart(bool start)
 				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(), NULL, "No frame");
 		m_capture->resize(m_vbiWidth, m_vbiHeight);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
+				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(), NULL, "No frame");
+		m_capture->resize(m_vbiWidth, m_vbiHeight);
+=======
+		m_capture->setWindowSize(QSize(m_vbiWidth, m_vbiHeight));
+		m_capture->setFrame(m_capImage->width(), m_capImage->height(),
+				    m_capDestFormat.fmt.pix.pixelformat, m_capImage->bits(), NULL, NULL);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (showFrames())
 			m_capture->show();
 
 		statusBar()->showMessage("No frame");
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (startStreaming()) {
 			m_capNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Read, m_tabs);
@@ -2162,12 +2928,46 @@ void ApplicationWindow::capStart(bool start)
 		if (startCapture(m_vbiSize)) {
 			m_capNotifier = new QSocketNotifier(fd(), QSocketNotifier::Read, m_tabs);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		if (startCapture(m_vbiSize)) {
+			m_capNotifier = new QSocketNotifier(fd(), QSocketNotifier::Read, m_tabs);
+=======
+		if (startStreaming()) {
+			m_capNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Read, m_tabs);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			connect(m_capNotifier, SIGNAL(activated(int)), this, SLOT(capVbiFrame()));
 		}
 		return;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	g_fmt_cap(buftype, m_capSrcFormat);
+	s_fmt(m_capSrcFormat);
+	if (m_genTab->get_interval(interval))
+		set_interval(buftype, interval);
+
+	if (!isPlanar)
+		m_frameData = new unsigned char[srcPix.sizeimage];
+	else
+		m_frameData = new unsigned char[srcMPix.plane_fmt[0].sizeimage + srcMPix.plane_fmt[1].sizeimage];
+	m_capDestFormat = m_capSrcFormat;
+
+	if (isPlanar) {
+		dstMPix.pixelformat = srcMPix.pixelformat;
+		width = srcMPix.width;
+		height = srcMPix.height;
+		pixfmt = srcMPix.pixelformat;
+		m_mustConvert = false;
+	} else if (m_capture->hasNativeFormat(srcPix.pixelformat)) {
+		dstPix.pixelformat = srcPix.pixelformat;
+		width = srcPix.width;
+		height = srcPix.height;
+		pixfmt = srcPix.pixelformat;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_genTab->isSDR()) {
 		cv4l_fmt fmt;
 
@@ -2217,6 +3017,7 @@ void ApplicationWindow::capStart(bool start)
 		height = m_capSrcFormat.g_height();
 		pixfmt = m_capSrcFormat.g_pixelformat();
 		field = m_capSrcFormat.g_field();
+<<<<<<< HEAD
 =======
 	g_fmt_cap(buftype, m_capSrcFormat);
 	s_fmt(m_capSrcFormat);
@@ -2241,27 +3042,52 @@ void ApplicationWindow::capStart(bool start)
 		height = srcPix.height;
 		pixfmt = srcPix.pixelformat;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_mustConvert = false;
 	} else {
 		m_mustConvert = true;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		dstPix.pixelformat = V4L2_PIX_FMT_RGB24;
+		v4l2_format copy = m_capSrcFormat;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_capDestFormat.s_pixelformat(V4L2_PIX_FMT_RGB24);
 		// Make sure sizeimage is large enough. This is necessary if the mplane
 		// plugin is in use since v4lconvert_try_format() bypasses the plugin.
 		m_capDestFormat.s_sizeimage(m_capDestFormat.g_width() *
 					    m_capDestFormat.g_height() * 3);
 		cv4l_fmt copy = m_capSrcFormat;
+<<<<<<< HEAD
 =======
 		dstPix.pixelformat = V4L2_PIX_FMT_RGB24;
 		v4l2_format copy = m_capSrcFormat;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		v4lconvert_try_format(m_convertData, &m_capDestFormat, &m_capSrcFormat);
 		// v4lconvert_try_format sometimes modifies the source format if it thinks
 		// that there is a better format available. Restore our selected source
 		// format since we do not want that happening.
 		m_capSrcFormat = copy;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		width = dstPix.width;
+		height = dstPix.height;
+		pixfmt = dstPix.pixelformat;
+	}
+
+	// Ensure that the initial image is large enough for native 32 bit per pixel formats
+	if (pixfmt == V4L2_PIX_FMT_RGB32 || pixfmt == V4L2_PIX_FMT_BGR32)
+		dstFmt = QImage::Format_ARGB32;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		width = m_capDestFormat.g_width();
 		height = m_capDestFormat.g_height();
 		pixfmt = m_capDestFormat.g_pixelformat();
@@ -2285,6 +3111,7 @@ void ApplicationWindow::capStart(bool start)
 		height *= 2;
 		break;
 	}
+<<<<<<< HEAD
 =======
 		width = dstPix.width;
 		height = dstPix.height;
@@ -2295,11 +3122,22 @@ void ApplicationWindow::capStart(bool start)
 	if (pixfmt == V4L2_PIX_FMT_RGB32 || pixfmt == V4L2_PIX_FMT_BGR32)
 		dstFmt = QImage::Format_ARGB32;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_capImage = new QImage(width, height, dstFmt);
 	m_capImage->fill(0);
 	
 	updatePixelAspectRatio();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	
+	m_capture->setFrame(m_capImage->width(), m_capImage->height(),
+			    pixfmt, m_capImage->bits(), NULL, "No frame");
+	m_capture->resize(width, height);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_capture->setField(field);
 
 	m_capture->setWindowSize(QSize(width, height));
@@ -2307,16 +3145,21 @@ void ApplicationWindow::capStart(bool start)
 			    pixfmt, m_capImage->bits(), NULL, NULL);
 	m_capture->makeFullScreen(m_makeFullScreenAct->isChecked());
 	updateColorspace();
+<<<<<<< HEAD
 =======
 	
 	m_capture->setFrame(m_capImage->width(), m_capImage->height(),
 			    pixfmt, m_capImage->bits(), NULL, "No frame");
 	m_capture->resize(width, height);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (showFrames())
 		m_capture->show();
 
 	statusBar()->showMessage("No frame");
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (startStreaming()) {
 		m_capNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Read, m_tabs);
@@ -2324,19 +3167,35 @@ void ApplicationWindow::capStart(bool start)
 	if (startCapture(srcPix.sizeimage)) {
 		m_capNotifier = new QSocketNotifier(fd(), QSocketNotifier::Read, m_tabs);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (startCapture(srcPix.sizeimage)) {
+		m_capNotifier = new QSocketNotifier(fd(), QSocketNotifier::Read, m_tabs);
+=======
+	if (startStreaming()) {
+		m_capNotifier = new QSocketNotifier(g_fd(), QSocketNotifier::Read, m_tabs);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		connect(m_capNotifier, SIGNAL(activated(int)), this, SLOT(capFrame()));
 	}
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::makeFullScreen(bool checked)
 {
 	if (m_capture && m_capStartAct->isChecked())
 		m_capture->makeFullScreen(checked);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void ApplicationWindow::closeDevice()
 {
 	stopAudio();
@@ -2345,12 +3204,21 @@ void ApplicationWindow::closeDevice()
 	m_capStartAct->setEnabled(false);
 	m_capStartAct->setChecked(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_capStepAct->setEnabled(false);
 	m_saveRawAct->setEnabled(false);
 	if (g_fd() >= 0) {
 =======
 	if (fd() >= 0) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (fd() >= 0) {
+=======
+	m_capStepAct->setEnabled(false);
+	m_saveRawAct->setEnabled(false);
+	if (g_fd() >= 0) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (m_capNotifier) {
 			delete m_capNotifier;
 			delete m_capImage;
@@ -2358,27 +3226,44 @@ void ApplicationWindow::closeDevice()
 			m_capImage = NULL;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (m_outNotifier) {
 			delete m_outNotifier;
 			m_outNotifier = NULL;
 		}
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (m_ctrlNotifier) {
 			delete m_ctrlNotifier;
 			m_ctrlNotifier = NULL;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		delete [] m_frameData;
-		m_frameData = NULL;
-		v4lconvert_destroy(m_convertData);
-		cv4l_fd::close();
 =======
 		delete m_frameData;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_frameData = NULL;
 		v4lconvert_destroy(m_convertData);
 		v4l2::close();
+=======
+		delete [] m_frameData;
+		m_frameData = NULL;
+		v4lconvert_destroy(m_convertData);
+<<<<<<< HEAD
+		v4l2::close();
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		cv4l_fd::close();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		delete m_capture;
 		m_capture = NULL;
 	}
@@ -2387,17 +3272,25 @@ void ApplicationWindow::closeDevice()
 		delete page;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+	m_genTab = NULL;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+	m_ctrlMap.clear();
+	m_widgetMap.clear();
+	m_classMap.clear();
+=======
 	m_genTab = NULL;
 	m_ctrlMap.clear();
 	m_widgetMap.clear();
 	m_sliderMap.clear();
 	m_classMap.clear();
-	m_tpgLimRGBRange = NULL;
-=======
-	m_ctrlMap.clear();
-	m_widgetMap.clear();
-	m_classMap.clear();
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	m_tpgLimRGBRange = NULL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 bool SaveDialog::setBuffer(unsigned char *buf, unsigned size)
@@ -2505,10 +3398,17 @@ void ApplicationWindow::error(const QString &error)
 	statusBar()->showMessage(error, 20000);
 	if (!error.isEmpty())
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fprintf(stderr, "%s\n", error.toLatin1().data());
 =======
 		fprintf(stderr, "%s\n", error.toAscii().data());
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		fprintf(stderr, "%s\n", error.toAscii().data());
+=======
+		fprintf(stderr, "%s\n", error.toLatin1().data());
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void ApplicationWindow::error(int err)
@@ -2552,10 +3452,17 @@ static void usage()
 {
 	printf("  Usage:\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	       "  qv4l2 [-R] [-h] [-d <dev>] [-r <dev>] [-V <dev>] [-S <dev>]\n"
 =======
 	       "  qv4l2 [-R] [-h] [-d <dev>] [-r <dev>] [-V <dev>]\n"
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	       "  qv4l2 [-R] [-h] [-d <dev>] [-r <dev>] [-V <dev>]\n"
+=======
+	       "  qv4l2 [-R] [-h] [-d <dev>] [-r <dev>] [-V <dev>] [-S <dev>]\n"
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	       "\n  -d, --device=<dev> use device <dev> as the video device\n"
 	       "                     if <dev> is a number, then /dev/video<dev> is used\n"
 	       "  -V, --vbi-device=<dev> use device <dev> as the vbi device\n"
@@ -2582,6 +3489,10 @@ static QString getDeviceName(QString dev, QString &name)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static bool processShortOption(const QStringList &args, int &i, QString &dev)
 {
 	if (args[i].length() < 2)
@@ -2618,8 +3529,12 @@ static bool processLongOption(const QStringList &args, int &i, QString &dev)
 	return true;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int main(int argc, char **argv)
 {
 	QApplication a(argc, argv);
@@ -2636,6 +3551,7 @@ int main(int argc, char **argv)
 
 	QStringList args = a.arguments();
 	for (int i = 1; i < args.size(); i++) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (args[i].startsWith("-d")) {
 			if (!processShortOption(args, i, video_device))
@@ -2662,6 +3578,8 @@ int main(int argc, char **argv)
 			if (!processLongOption(args, i, sdr_device))
 				return 0;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (args[i] == "-d" || args[i] == "--device") {
 			++i;
 			if (i >= args.size()) {
@@ -2742,7 +3660,36 @@ int main(int argc, char **argv)
 				usageError("--sdr-device");
 				return 0;
 			}
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		if (args[i].startsWith("-d")) {
+			if (!processShortOption(args, i, video_device))
+				return 0;
+		} else if (args[i].startsWith("--device")) {
+			if (!processLongOption(args, i, video_device))
+				return 0;
+		} else if (args[i].startsWith("-V")) {
+			if (!processShortOption(args, i, vbi_device))
+				return 0;
+		} else if (args[i].startsWith("--vbi-device")) {
+			if (!processLongOption(args, i, vbi_device))
+				return 0;
+		} else if (args[i].startsWith("-r")) {
+			if (!processShortOption(args, i, radio_device))
+				return 0;
+		} else if (args[i].startsWith("--radio-device")) {
+			if (!processLongOption(args, i, radio_device))
+				return 0;
+		} else if (args[i].startsWith("-S")) {
+			if (!processShortOption(args, i, sdr_device))
+				return 0;
+		} else if (args[i].startsWith("--sdr-device")) {
+			if (!processLongOption(args, i, sdr_device))
+				return 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		} else if (args[i] == "-h" || args[i] == "--help") {
 			usage();
 			return 0;
@@ -2750,14 +3697,24 @@ int main(int argc, char **argv)
 		} else if (args[i] == "-R" || args[i] == "--raw") {
 			raw = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else {
 			printf("Invalid argument %s\n", args[i].toLatin1().data());
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 
 		} else {
 			printf("Invalid argument %s\n", args[i].toAscii().data());
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		} else {
+			printf("Invalid argument %s\n", args[i].toLatin1().data());
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			return 0;
 		}
 	}

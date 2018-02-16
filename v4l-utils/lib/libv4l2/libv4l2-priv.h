@@ -32,9 +32,15 @@
 #define V4L2_MAX_NO_FRAMES 32
 #define V4L2_DEFAULT_NREADBUFFERS 4
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define V4L2_FRAME_BUF_SIZE (4096 * 4096)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#define V4L2_FRAME_BUF_SIZE (4096 * 4096)
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define V4L2_IGNORE_FIRST_FRAME_ERRORS 3
 #define V4L2_DEFAULT_FPS 30
 
@@ -81,9 +87,15 @@ struct v4l2_dev_info {
 	int open_count;
 	int gone; /* Set to 1 when a device is detached (ENODEV encountered) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	long page_size;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	long page_size;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* actual format of the cam */
 	struct v4l2_format src_fmt;
 	/* fmt as seen by the application (iow after conversion) */
@@ -96,18 +108,31 @@ struct v4l2_dev_info {
 	struct v4lconvert_data *convert;
 	unsigned char *convert_mmap_buf;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size_t convert_mmap_buf_size;
 	size_t convert_mmap_frame_size;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	size_t convert_mmap_buf_size;
+	size_t convert_mmap_frame_size;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* Frame bookkeeping is only done when in read or mmap-conversion mode */
 	unsigned char *frame_pointers[V4L2_MAX_NO_FRAMES];
 	int frame_sizes[V4L2_MAX_NO_FRAMES];
 	int frame_queued; /* 1 status bit per frame */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int frame_info_generation;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	int frame_info_generation;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* mapping tracking of our fake (converting mmap) frame buffers */
 	unsigned char frame_map_count[V4L2_MAX_NO_FRAMES];
 	/* buffer when doing conversion and using read() for read() */
@@ -121,14 +146,24 @@ struct v4l2_dev_info {
 
 /* From v4l2-plugin.c */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(HAVE_V4L_PLUGINS)
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#if defined(HAVE_V4L_PLUGINS)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void v4l2_plugin_init(int fd, void **plugin_lib_ret, void **plugin_priv_ret,
 		      const struct libv4l_dev_ops **dev_ops_ret);
 void v4l2_plugin_cleanup(void *plugin_lib, void *plugin_priv,
 			 const struct libv4l_dev_ops *dev_ops);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #else
 static inline void v4l2_plugin_init(int fd, void **plugin_lib_ret, void **plugin_priv_ret,
 				    const struct libv4l_dev_ops **dev_ops_ret)
@@ -142,8 +177,12 @@ static inline void v4l2_plugin_cleanup(void *plugin_lib, void *plugin_priv,
 {
 }
 #endif /* WITH_V4L_PLUGINS */
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 /* From log.c */
 extern const char *v4l2_ioctls[];

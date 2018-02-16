@@ -197,6 +197,12 @@ static std::string cap2s(unsigned cap)
 	if (cap & V4L2_CAP_VIDEO_CAPTURE)
 		s += "\t\tVideo Capture\n";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (cap & V4L2_CAP_VIDEO_OUTPUT)
+		s += "\t\tVideo Output\n";
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_VIDEO_CAPTURE_MPLANE)
 		s += "\t\tVideo Capture Multiplanar\n";
 	if (cap & V4L2_CAP_VIDEO_OUTPUT)
@@ -207,10 +213,14 @@ static std::string cap2s(unsigned cap)
 		s += "\t\tVideo Memory-to-Memory\n";
 	if (cap & V4L2_CAP_VIDEO_M2M_MPLANE)
 		s += "\t\tVideo Memory-to-Memory Multiplanar\n";
+<<<<<<< HEAD
 =======
 	if (cap & V4L2_CAP_VIDEO_OUTPUT)
 		s += "\t\tVideo Output\n";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_VIDEO_OVERLAY)
 		s += "\t\tVideo Overlay\n";
 	if (cap & V4L2_CAP_VIDEO_OUTPUT_OVERLAY)
@@ -226,6 +236,12 @@ static std::string cap2s(unsigned cap)
 	if (cap & V4L2_CAP_RDS_CAPTURE)
 		s += "\t\tRDS Capture\n";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (cap & V4L2_CAP_TUNER)
+		s += "\t\tTuner\n";
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_RDS_OUTPUT)
 		s += "\t\tRDS Output\n";
 	if (cap & V4L2_CAP_SDR_CAPTURE)
@@ -238,10 +254,14 @@ static std::string cap2s(unsigned cap)
 		s += "\t\tHW Frequency Seek\n";
 	if (cap & V4L2_CAP_MODULATOR)
 		s += "\t\tModulator\n";
+<<<<<<< HEAD
 =======
 	if (cap & V4L2_CAP_TUNER)
 		s += "\t\tTuner\n";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_AUDIO)
 		s += "\t\tAudio\n";
 	if (cap & V4L2_CAP_RADIO)
@@ -253,18 +273,34 @@ static std::string cap2s(unsigned cap)
 	if (cap & V4L2_CAP_STREAMING)
 		s += "\t\tStreaming\n";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_EXT_PIX_FORMAT)
 		s += "\t\tExtended Pix Format\n";
 	if (cap & V4L2_CAP_DEVICE_CAPS)
 		s += "\t\tDevice Capabilities\n";
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	return s;
 }
 
 static void print_regs(int fd, struct v4l2_dbg_register *reg, unsigned long min, unsigned long max, int stride)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	unsigned long mask = stride > 1 ? 0x1f : 0x0f;
+	unsigned long i;
+	int line = 0;
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	unsigned long mask;
 	unsigned long i;
 	int line = 0;
@@ -279,21 +315,32 @@ static void print_regs(int fd, struct v4l2_dbg_register *reg, unsigned long min,
 
 	mask = stride > 2 ? 0x1f : 0x0f;
 
+<<<<<<< HEAD
 =======
 	unsigned long mask = stride > 1 ? 0x1f : 0x0f;
 	unsigned long i;
 	int line = 0;
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	for (i = min & ~mask; i <= max; i += stride) {
 		if ((i & mask) == 0 && line % 32 == 0) {
 			if (stride == 4)
 				printf("\n                00       04       08       0C       10       14       18       1C");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			else if (stride == 2)
 				printf("\n            00   02   04   06   08   0A   0C   0E");
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+			else if (stride == 2)
+				printf("\n            00   02   04   06   08   0A   0C   0E");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			else
 				printf("\n          00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F");
 		}
@@ -612,14 +659,22 @@ int main(int argc, char **argv)
 		set_reg.reg = parse_reg(curr_bd, reg_set_arg);
 		while (optind < argc) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			unsigned size = 0;
 
 			if (doioctl(fd, VIDIOC_DBG_G_REGISTER, &set_reg,
 				    "VIDIOC_DBG_G_REGISTER") >= 0)
 				size = set_reg.size;
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			set_reg.val = strtoull(argv[optind++], NULL, 0);
 			if (doioctl(fd, VIDIOC_DBG_S_REGISTER, &set_reg,
 						"VIDIOC_DBG_S_REGISTER") >= 0) {
@@ -638,10 +693,17 @@ int main(int argc, char **argv)
 					set_reg.reg, set_reg.val, strerror(errno));
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			set_reg.reg += size ? : (forcedstride ? : 1);
 =======
 			set_reg.reg++;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			set_reg.reg++;
+=======
+			set_reg.reg += size ? : (forcedstride ? : 1);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		}
 	}
 

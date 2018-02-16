@@ -22,6 +22,18 @@ void sdr_usage(void)
 {
 	printf("\nSDR Formats options:\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	       "  --list-formats-sdr display supported SDR formats [VIDIOC_ENUM_FMT]\n"
+	       "  --get-fmt-sdr      query the SDR capture format [VIDIOC_G_FMT]\n"
+	       "  --set-fmt-sdr=<f>  set the SDR capture format [VIDIOC_S_FMT]\n"
+	       "                     parameter is either the format index as reported by\n"
+	       "                     --list-formats-sdr, or the fourcc value as a string\n"
+	       "  --try-fmt-sdr=<f>  try the SDR capture format [VIDIOC_TRY_FMT]\n"
+	       "                     parameter is either the format index as reported by\n"
+	       "                     --list-formats-sdr, or the fourcc value as a string\n"
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	       "  --list-formats-sdr display supported SDR capture formats [VIDIOC_ENUM_FMT]\n"
 	       "  --get-fmt-sdr      query the SDR capture format [VIDIOC_G_FMT]\n"
 	       "  --set-fmt-sdr=<f>  set the SDR capture format [VIDIOC_S_FMT]\n"
@@ -41,6 +53,7 @@ void sdr_usage(void)
 	       "                     try the SDR output format [VIDIOC_TRY_FMT]\n"
 	       "                     parameter is either the format index as reported by\n"
 	       "                     --list-formats-sdr-out, or the fourcc value as a string\n"
+<<<<<<< HEAD
 =======
 	       "  --list-formats-sdr display supported SDR formats [VIDIOC_ENUM_FMT]\n"
 	       "  --get-fmt-sdr      query the SDR capture format [VIDIOC_G_FMT]\n"
@@ -51,6 +64,9 @@ void sdr_usage(void)
 	       "                     parameter is either the format index as reported by\n"
 	       "                     --list-formats-sdr, or the fourcc value as a string\n"
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	       );
 }
 
@@ -60,10 +76,17 @@ void sdr_cmd(int ch, char *optarg)
 	case OptSetSdrFormat:
 	case OptTrySdrFormat:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case OptSetSdrOutFormat:
 	case OptTrySdrOutFormat:
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	case OptSetSdrOutFormat:
+	case OptTrySdrOutFormat:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (strlen(optarg) == 0) {
 			sdr_usage();
 			exit(1);
@@ -107,6 +130,10 @@ void sdr_set(int fd)
 			printfmt(in_vfmt);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (options[OptSetSdrOutFormat] || options[OptTrySdrOutFormat]) {
 		struct v4l2_format in_vfmt;
 
@@ -132,8 +159,12 @@ void sdr_set(int fd)
 		if (ret == 0 && (verbose || options[OptTrySdrOutFormat]))
 			printfmt(in_vfmt);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void sdr_get(int fd)
@@ -144,13 +175,21 @@ void sdr_get(int fd)
 			printfmt(vfmt);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (options[OptGetSdrOutFormat]) {
 		vfmt.type = V4L2_BUF_TYPE_SDR_OUTPUT;
 		if (doioctl(fd, VIDIOC_G_FMT, &vfmt) == 0)
 			printfmt(vfmt);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void sdr_list(int fd)
@@ -160,10 +199,18 @@ void sdr_list(int fd)
 		print_video_formats(fd, V4L2_BUF_TYPE_SDR_CAPTURE);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (options[OptListSdrOutFormats]) {
 		printf("ioctl: VIDIOC_ENUM_FMT\n");
 		print_video_formats(fd, V4L2_BUF_TYPE_SDR_OUTPUT);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }

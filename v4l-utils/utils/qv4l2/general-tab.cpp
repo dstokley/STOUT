@@ -23,6 +23,17 @@
 
 #include <QSpinBox>
 <<<<<<< HEAD
+<<<<<<< HEAD
+#include <QSlider>
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+#include <QComboBox>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QDoubleValidator>
+
+=======
 #include <QSlider>
 #include <QComboBox>
 #include <QPushButton>
@@ -30,15 +41,12 @@
 #include <QLineEdit>
 #include <QDoubleValidator>
 
-#include <math.h>
-=======
-#include <QComboBox>
-#include <QCheckBox>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QDoubleValidator>
-
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#include <math.h>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <stdio.h>
 #include <errno.h>
 #include <QRegExp>
@@ -53,6 +61,22 @@ enum audioDeviceAdd {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) :
+	QGridLayout(parent),
+	v4l2(fd),
+	m_row(0),
+	m_col(0),
+	m_cols(n),
+	m_isRadio(false),
+	m_isSDR(false),
+	m_isVbi(false),
+	m_freqFac(16),
+	m_freqRfFac(16),
+	m_isPlanar(false),
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static QString pixfmt2s(unsigned id)
 {
 	QString pixfmt;
@@ -86,6 +110,7 @@ GeneralTab::GeneralTab(const QString &device, cv4l_fd *fd, int n, QWidget *paren
 	m_isPlanar(false),
 	m_haveBuffers(false),
 	m_discreteSizes(false),
+<<<<<<< HEAD
 =======
 GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) :
 	QGridLayout(parent),
@@ -100,6 +125,9 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 	m_freqRfFac(16),
 	m_isPlanar(false),
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_videoInput(NULL),
 	m_videoOutput(NULL),
 	m_audioInput(NULL),
@@ -109,14 +137,23 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 	m_videoTimings(NULL),
 	m_pixelAspectRatio(NULL),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_crop(NULL),
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_colorspace(NULL),
 	m_xferFunc(NULL),
 	m_ycbcrEnc(NULL),
 	m_quantRange(NULL),
 	m_cropping(NULL),
+<<<<<<< HEAD
 =======
 	m_crop(NULL),
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_qryTimings(NULL),
 	m_freq(NULL),
 	m_freqTable(NULL),
@@ -129,10 +166,17 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 	m_detectSubchans(NULL),
 	m_vidCapFormats(NULL),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_vidFields(NULL),
 =======
 	m_vidCapFields(NULL),
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	m_vidCapFields(NULL),
+=======
+	m_vidFields(NULL),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_frameSize(NULL),
 	m_frameWidth(NULL),
 	m_frameHeight(NULL),
@@ -140,6 +184,33 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 	m_vidOutFormats(NULL),
 	m_capMethods(NULL),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_vbiMethods(NULL),
+	m_audioInDevice(NULL),
+	m_audioOutDevice(NULL)
+{
+	m_device.append(device);
+	setSpacing(3);
+
+	setSizeConstraint(QLayout::SetMinimumSize);
+
+
+	if (querycap(m_querycap)) {
+		addLabel("Device:");
+		addLabel(device + (useWrapper() ? " (wrapped)" : ""), Qt::AlignLeft);
+
+		addLabel("Driver:");
+		addLabel((char *)m_querycap.driver, Qt::AlignLeft);
+
+		addLabel("Card:");
+		addLabel((char *)m_querycap.card, Qt::AlignLeft);
+
+		addLabel("Bus:");
+		addLabel((char *)m_querycap.bus_info, Qt::AlignLeft);
+	}
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_numBuffers(NULL),
 	m_vbiMethods(NULL),
 	m_audioInDevice(NULL),
@@ -177,6 +248,7 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 
 	addLabel("Bus");
 	addLabel((char *)m_querycap.bus_info);
+<<<<<<< HEAD
 =======
 	m_vbiMethods(NULL),
 	m_audioInDevice(NULL),
@@ -202,6 +274,9 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 		addLabel((char *)m_querycap.bus_info, Qt::AlignLeft);
 	}
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	g_tuner(m_tuner);
 	g_tuner(m_tuner_rf, 1);
@@ -209,14 +284,24 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 
 	v4l2_input vin;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	bool needsStd = false;
+	bool needsTimings = false;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	v4l2_output vout;
 	v4l2_audio vaudio;
 	v4l2_audioout vaudout;
 	v4l2_fmtdesc fmt;
+<<<<<<< HEAD
 =======
 	bool needsStd = false;
 	bool needsTimings = false;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (m_tuner.capability &&
 	    (m_tuner.capability & (V4L2_TUNER_CAP_LOW | V4L2_TUNER_CAP_1HZ)))
@@ -226,6 +311,19 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 		m_isRadio = true;
 	if (m_querycap.capabilities & V4L2_CAP_DEVICE_CAPS) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		m_isVbi = caps() & (V4L2_CAP_VBI_CAPTURE | V4L2_CAP_SLICED_VBI_CAPTURE);
+		m_isSDR = caps() & V4L2_CAP_SDR_CAPTURE;
+		if (m_isSDR)
+			m_isRadio = true;
+	}
+	if (m_querycap.capabilities & V4L2_CAP_VIDEO_CAPTURE_MPLANE)
+		m_isPlanar = true;
+	m_buftype = (isPlanar() ? V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE :
+		  V4L2_BUF_TYPE_VIDEO_CAPTURE);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_isVbi = g_caps() & (V4L2_CAP_VBI_CAPTURE | V4L2_CAP_SLICED_VBI_CAPTURE |
 				      V4L2_CAP_VBI_OUTPUT | V4L2_CAP_SLICED_VBI_OUTPUT);
 		m_isSDR = g_caps() & V4L2_CAP_SDR_CAPTURE;
@@ -253,6 +351,7 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 		addTitle("Output Settings");
 		outputSection(vout);
 	}
+<<<<<<< HEAD
 =======
 		m_isVbi = caps() & (V4L2_CAP_VBI_CAPTURE | V4L2_CAP_SLICED_VBI_CAPTURE);
 		m_isSDR = caps() & V4L2_CAP_SDR_CAPTURE;
@@ -264,11 +363,83 @@ GeneralTab::GeneralTab(const QString &device, v4l2 &fd, int n, QWidget *parent) 
 	m_buftype = (isPlanar() ? V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE :
 		  V4L2_BUF_TYPE_VIDEO_CAPTURE);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (hasAlsaAudio()) {
 		m_audioInDevice = new QComboBox(parent);
 		m_audioOutDevice = new QComboBox(parent);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		m_audioInDevice->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+		m_audioOutDevice->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+
+		if (createAudioDeviceList()) {
+			addLabel("Audio Input Device");
+			connect(m_audioInDevice, SIGNAL(activated(int)), SLOT(changeAudioDevice()));
+			addWidget(m_audioInDevice);
+
+			addLabel("Audio Output Device");
+			connect(m_audioOutDevice, SIGNAL(activated(int)), SLOT(changeAudioDevice()));
+			addWidget(m_audioOutDevice);
+
+			if (isRadio()) {
+				setAudioDeviceBufferSize(75);
+			} else {
+				v4l2_fract fract;
+				if (!v4l2::get_interval(m_buftype, fract)) {
+					// Default values are for 30 FPS
+					fract.numerator = 33;
+					fract.denominator = 1000;
+				}
+				// Standard capacity is two frames
+				setAudioDeviceBufferSize((fract.numerator * 2000) / fract.denominator);
+			}
+		} else {
+			delete m_audioInDevice;
+			delete m_audioOutDevice;
+			m_audioInDevice = NULL;
+			m_audioOutDevice = NULL;
+		}
+	}
+
+	if (!isRadio() && !isVbi()) {
+		m_pixelAspectRatio = new QComboBox(parent);
+		m_pixelAspectRatio->addItem("Autodetect");
+		m_pixelAspectRatio->addItem("Square");
+		m_pixelAspectRatio->addItem("NTSC/PAL-M/PAL-60");
+		m_pixelAspectRatio->addItem("NTSC/PAL-M/PAL-60, Anamorphic");
+		m_pixelAspectRatio->addItem("PAL/SECAM");
+		m_pixelAspectRatio->addItem("PAL/SECAM, Anamorphic");
+
+		// Update hints by calling a get
+		getPixelAspectRatio();
+
+		addLabel("Pixel Aspect Ratio");
+		addWidget(m_pixelAspectRatio);
+		connect(m_pixelAspectRatio, SIGNAL(activated(int)), SLOT(changePixelAspectRatio()));
+
+		m_crop = new QComboBox(parent);
+		m_crop->addItem("None");
+		m_crop->addItem("Top and Bottom Line");
+		m_crop->addItem("Widescreen 14:9 (Letterbox)");
+		m_crop->addItem("Widescreen 16:9 (Letterbox)");
+		m_crop->addItem("Cinema 1.85:1 (Letterbox)");
+		m_crop->addItem("Cinema 2.39:1 (Letterbox)");
+		m_crop->addItem("Traditional 4:3 (Pillarbox)");
+
+		addLabel("Cropping");
+		addWidget(m_crop);
+		connect(m_crop, SIGNAL(activated(int)), SIGNAL(cropChanged()));
+	}
+
+	if (!isRadio() && enum_input(vin, true)) {
+		addLabel("Input");
+		m_videoInput = new QComboBox(parent);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	if (!isVbi() && (createAudioDeviceList() || (!isRadio() && !enum_audio(vaudio, true)) ||
@@ -397,6 +568,7 @@ void GeneralTab::inputSection(v4l2_input vin)
 	if (!isRadio() && !enum_input(vin, true)) {
 		addLabel("Input");
 		m_videoInput = new QComboBox(parentWidget());
+<<<<<<< HEAD
 =======
 		m_audioInDevice->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 		m_audioOutDevice->setSizeAdjustPolicy(QComboBox::AdjustToContents);
@@ -464,12 +636,16 @@ void GeneralTab::inputSection(v4l2_input vin)
 		addLabel("Input");
 		m_videoInput = new QComboBox(parent);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		do {
 			m_videoInput->addItem((char *)vin.name);
 			if (vin.capabilities & V4L2_IN_CAP_STD)
 				needsStd = true;
 			if (vin.capabilities & V4L2_IN_CAP_DV_TIMINGS)
 				needsTimings = true;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		} while (!enum_input(vin));
 		addWidget(m_videoInput);
@@ -482,6 +658,8 @@ void GeneralTab::inputSection(v4l2_input vin)
 	QGridLayout *m_stdRow = new QGridLayout(wStd);
 	m_grids.append(m_stdRow);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		} while (enum_input(vin));
 		addWidget(m_videoInput);
 		connect(m_videoInput, SIGNAL(activated(int)), SLOT(inputChanged(int)));
@@ -524,12 +702,41 @@ void GeneralTab::inputSection(v4l2_input vin)
 		connect(m_audioOutput, SIGNAL(activated(int)), SLOT(outputAudioChanged(int)));
 		updateAudioOutput();
 	}
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		} while (!enum_input(vin));
+		addWidget(m_videoInput);
+		connect(m_videoInput, SIGNAL(activated(int)), SLOT(inputChanged(int)));
+		m_row++;
+		m_col = 0;
+	}
+
+	QWidget *wStd = new QWidget();
+	QGridLayout *m_stdRow = new QGridLayout(wStd);
+	m_grids.append(m_stdRow);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (needsStd) {
 		v4l2_std_id tmp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		addLabel("TV Standard");
+		m_tvStandard = new QComboBox(parent);
+		m_tvStandard->setMinimumContentsLength(10);
+		addWidget(m_tvStandard);
+		connect(m_tvStandard, SIGNAL(activated(int)), SLOT(standardChanged(int)));
+		refreshStandards();
+		if (ioctl_exists(VIDIOC_QUERYSTD, &tmp)) {
+			addLabel("");
+			m_qryStandard = new QPushButton("Query Standard", parent);
+			addWidget(m_qryStandard);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_tvStandard = new QComboBox(parentWidget());
 		m_stdRow->addWidget(new QLabel("TV Standard", parentWidget()), 0, 0, Qt::AlignLeft);
 		m_stdRow->addWidget(m_tvStandard, 0, 1, Qt::AlignLeft);
@@ -541,6 +748,7 @@ void GeneralTab::inputSection(v4l2_input vin)
 			m_qryStandard->setIcon(QIcon(":/enterbutt.png"));
 			m_stdRow->addWidget(new QLabel("Query Standard", parentWidget()), 0, 2, Qt::AlignLeft);
 			m_stdRow->addWidget(m_qryStandard, 0, 3, Qt::AlignLeft);
+<<<<<<< HEAD
 =======
 		addLabel("TV Standard");
 		m_tvStandard = new QComboBox(parent);
@@ -553,11 +761,37 @@ void GeneralTab::inputSection(v4l2_input vin)
 			m_qryStandard = new QPushButton("Query Standard", parent);
 			addWidget(m_qryStandard);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			connect(m_qryStandard, SIGNAL(clicked()), SLOT(qryStdClicked()));
 		}
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (needsTimings) {
+		addLabel("Video Timings");
+		m_videoTimings = new QComboBox(parent);
+		m_videoTimings->setMinimumContentsLength(15);
+		addWidget(m_videoTimings);
+		connect(m_videoTimings, SIGNAL(activated(int)), SLOT(timingsChanged(int)));
+		refreshTimings();
+		addLabel("");
+		m_qryTimings = new QPushButton("Query Timings", parent);
+		addWidget(m_qryTimings);
+		connect(m_qryTimings, SIGNAL(clicked()), SLOT(qryTimingsClicked()));
+	}
+
+	if (m_tuner.capability) {
+		const char *unit = (m_tuner.capability & V4L2_TUNER_CAP_LOW) ? " kHz" :
+			(m_tuner.capability & V4L2_TUNER_CAP_1HZ ? " Hz" : " MHz");
+
+		m_freqFac = (m_tuner.capability & V4L2_TUNER_CAP_1HZ) ? 1 : 16;
+		m_freq = new QDoubleSpinBox(parent);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	QWidget *wTim = new QWidget();
 	QGridLayout *m_timRow = new QGridLayout(wTim);
 	m_grids.append(m_timRow);
@@ -591,6 +825,7 @@ void GeneralTab::inputSection(v4l2_input vin)
 
 		m_freqFac = (m_tuner.capability & V4L2_TUNER_CAP_1HZ) ? 1 : 16;
 		m_freq = new QDoubleSpinBox(parentWidget());
+<<<<<<< HEAD
 =======
 	if (needsTimings) {
 		addLabel("Video Timings");
@@ -612,17 +847,28 @@ void GeneralTab::inputSection(v4l2_input vin)
 		m_freqFac = (m_tuner.capability & V4L2_TUNER_CAP_1HZ) ? 1 : 16;
 		m_freq = new QDoubleSpinBox(parent);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_freq->setMinimum(m_tuner.rangelow / m_freqFac);
 		m_freq->setMaximum(m_tuner.rangehigh / m_freqFac);
 		m_freq->setSingleStep(1.0 / m_freqFac);
 		m_freq->setSuffix(unit);
 		m_freq->setDecimals((m_tuner.capability & V4L2_TUNER_CAP_1HZ) ? 0 : 4);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		m_freq->setWhatsThis(QString("%1\nLow: %2 %4\nHigh: %3 %4")
 				     .arg(name)
 =======
 		m_freq->setWhatsThis(QString("Frequency\nLow: %1 %3\nHigh: %2 %3")
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		m_freq->setWhatsThis(QString("Frequency\nLow: %1 %3\nHigh: %2 %3")
+=======
+		m_freq->setWhatsThis(QString("%1\nLow: %2 %4\nHigh: %3 %4")
+				     .arg(name)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				     .arg((double)m_tuner.rangelow / m_freqFac, 0, 'f', 2)
 				     .arg((double)m_tuner.rangehigh / m_freqFac, 0, 'f', 2)
 				     .arg(unit));
@@ -630,9 +876,12 @@ void GeneralTab::inputSection(v4l2_input vin)
 		connect(m_freq, SIGNAL(valueChanged(double)), SLOT(freqChanged(double)));
 		updateFreq();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		m_freqRows->addWidget(new QLabel(name, parentWidget()), 0, 0, Qt::AlignLeft);
 		m_freqRows->addWidget(m_freq, 0, 1, Qt::AlignLeft);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		addLabel("Frequency");
 		addWidget(m_freq);
 	}
@@ -690,7 +939,14 @@ void GeneralTab::inputSection(v4l2_input vin)
 		addWidget(m_detectSubchans);
 		connect(m_detectSubchans, SIGNAL(clicked()), SLOT(detectSubchansClicked()));
 		detectSubchansClicked();
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		m_freqRows->addWidget(new QLabel(name, parentWidget()), 0, 0, Qt::AlignLeft);
+		m_freqRows->addWidget(m_freq, 0, 1, Qt::AlignLeft);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	if (m_tuner_rf.capability) {
@@ -699,10 +955,17 @@ void GeneralTab::inputSection(v4l2_input vin)
 
 		m_freqRfFac = (m_tuner_rf.capability & V4L2_TUNER_CAP_1HZ) ? 1 : 16;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		m_freqRf = new QDoubleSpinBox(parentWidget());
 =======
 		m_freqRf = new QDoubleSpinBox(parent);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		m_freqRf = new QDoubleSpinBox(parent);
+=======
+		m_freqRf = new QDoubleSpinBox(parentWidget());
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_freqRf->setMinimum(m_tuner_rf.rangelow / m_freqRfFac);
 		m_freqRf->setMaximum(m_tuner_rf.rangehigh / m_freqRfFac);
 		m_freqRf->setSingleStep(1.0 / m_freqRfFac);
@@ -710,6 +973,20 @@ void GeneralTab::inputSection(v4l2_input vin)
 		m_freqRf->setDecimals((m_tuner_rf.capability & V4L2_TUNER_CAP_1HZ) ? 0 : 4);
 		m_freqRf->setWhatsThis(QString("RF Frequency\nLow: %1 %3\nHigh: %2 %3")
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+				     .arg((double)m_tuner_rf.rangelow / m_freqRfFac, 0, 'f', 2)
+				     .arg((double)m_tuner_rf.rangehigh / m_freqRfFac, 0, 'f', 2)
+				     .arg(unit));
+		m_freqRf->setStatusTip(m_freqRf->whatsThis());
+		connect(m_freqRf, SIGNAL(valueChanged(double)), SLOT(freqRfChanged(double)));
+		updateFreqRf();
+		addLabel("RF Frequency");
+		addWidget(m_freqRf);
+	}
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				    .arg((double)m_tuner_rf.rangelow / m_freqRfFac, 0, 'f', 2)
 				    .arg((double)m_tuner_rf.rangehigh / m_freqRfFac, 0, 'f', 2)
 				    .arg(unit));
@@ -844,34 +1121,35 @@ void GeneralTab::outputSection(v4l2_output vout)
 	QGridLayout::addWidget(m_stackedStandards, m_row, 0, 1, m_cols, Qt::AlignVCenter);
 	m_row++;
 
-=======
-				     .arg((double)m_tuner_rf.rangelow / m_freqRfFac, 0, 'f', 2)
-				     .arg((double)m_tuner_rf.rangehigh / m_freqRfFac, 0, 'f', 2)
-				     .arg(unit));
-		m_freqRf->setStatusTip(m_freqRf->whatsThis());
-		connect(m_freqRf, SIGNAL(valueChanged(double)), SLOT(freqRfChanged(double)));
-		updateFreqRf();
-		addLabel("RF Frequency");
-		addWidget(m_freqRf);
-	}
-
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_modulator.capability) {
 		const char *unit = (m_modulator.capability & V4L2_TUNER_CAP_LOW) ? " kHz" :
 			(m_modulator.capability & V4L2_TUNER_CAP_1HZ ? " Hz" : " MHz");
 
 		m_freqFac = (m_modulator.capability & V4L2_TUNER_CAP_1HZ) ? 1 : 16;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		m_freq = new QDoubleSpinBox(parentWidget());
 =======
 		m_freq = new QDoubleSpinBox(parent);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		m_freq = new QDoubleSpinBox(parent);
+=======
+		m_freq = new QDoubleSpinBox(parentWidget());
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_freq->setMinimum(m_modulator.rangelow / m_freqFac);
 		m_freq->setMaximum(m_modulator.rangehigh / m_freqFac);
 		m_freq->setSingleStep(1.0 / m_freqFac);
 		m_freq->setSuffix(unit);
 		m_freq->setDecimals((m_modulator.capability & V4L2_TUNER_CAP_1HZ) ? 0 : 4);
 		m_freq->setWhatsThis(QString("Frequency\nLow: %1 %3\nHigh: %2 %3")
+<<<<<<< HEAD
 <<<<<<< HEAD
 				    .arg((double)m_modulator.rangelow / m_freqFac, 0, 'f', 2)
 				    .arg((double)m_modulator.rangehigh / m_freqFac, 0, 'f', 2)
@@ -881,23 +1159,45 @@ void GeneralTab::outputSection(v4l2_output vout)
 				     .arg((double)m_modulator.rangehigh / m_freqFac, 0, 'f', 2)
 				     .arg(unit));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+				     .arg((double)m_modulator.rangelow / m_freqFac, 0, 'f', 2)
+				     .arg((double)m_modulator.rangehigh / m_freqFac, 0, 'f', 2)
+				     .arg(unit));
+=======
+				    .arg((double)m_modulator.rangelow / m_freqFac, 0, 'f', 2)
+				    .arg((double)m_modulator.rangehigh / m_freqFac, 0, 'f', 2)
+				    .arg(unit));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_freq->setStatusTip(m_freq->whatsThis());
 		connect(m_freq, SIGNAL(valueChanged(double)), SLOT(freqChanged(double)));
 		updateFreq();
 		addLabel("Frequency");
 		addWidget(m_freq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (m_modulator.capability & V4L2_TUNER_CAP_STEREO) {
 			addLabel("Stereo");
 			m_stereoMode = new QCheckBox(parentWidget());
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 	if (m_modulator.capability && !isSDR()) {
 		if (m_modulator.capability & V4L2_TUNER_CAP_STEREO) {
 			addLabel("Stereo");
 			m_stereoMode = new QCheckBox(parent);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+
+		if (m_modulator.capability & V4L2_TUNER_CAP_STEREO) {
+			addLabel("Stereo");
+			m_stereoMode = new QCheckBox(parentWidget());
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			m_stereoMode->setCheckState((m_modulator.txsubchans & V4L2_TUNER_SUB_STEREO) ?
 					Qt::Checked : Qt::Unchecked);
 			addWidget(m_stereoMode);
@@ -906,10 +1206,17 @@ void GeneralTab::outputSection(v4l2_output vout)
 		if (m_modulator.capability & V4L2_TUNER_CAP_RDS) {
 			addLabel("RDS");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			m_rdsMode = new QCheckBox(parentWidget());
 =======
 			m_rdsMode = new QCheckBox(parent);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			m_rdsMode = new QCheckBox(parent);
+=======
+			m_rdsMode = new QCheckBox(parentWidget());
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			m_rdsMode->setCheckState((m_modulator.txsubchans & V4L2_TUNER_SUB_RDS) ?
 					Qt::Checked : Qt::Unchecked);
 			addWidget(m_rdsMode);
@@ -919,6 +1226,123 @@ void GeneralTab::outputSection(v4l2_output vout)
 
 	if (isRadio())
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		goto done;
+
+	if (isVbi()) {
+		addLabel("VBI Capture Method");
+		m_vbiMethods = new QComboBox(parent);
+		if (caps() & V4L2_CAP_VBI_CAPTURE)
+			m_vbiMethods->addItem("Raw");
+		if (caps() & V4L2_CAP_SLICED_VBI_CAPTURE)
+			m_vbiMethods->addItem("Sliced");
+		addWidget(m_vbiMethods);
+		connect(m_vbiMethods, SIGNAL(activated(int)), SLOT(vbiMethodsChanged(int)));
+		updateVideoInput();
+		goto capture_method;
+	}
+
+	v4l2_fmtdesc fmt;
+	addLabel("Capture Image Formats");
+	m_vidCapFormats = new QComboBox(parent);
+	m_vidCapFormats->setMinimumContentsLength(20);
+	if (enum_fmt_cap(fmt, m_buftype, true)) {
+		do {
+			QString s(pixfmt2s(fmt.pixelformat) + " (");
+
+			if (fmt.flags & V4L2_FMT_FLAG_EMULATED)
+				m_vidCapFormats->addItem(s + "Emulated)");
+			else
+				m_vidCapFormats->addItem(s + (const char *)fmt.description + ")");
+		} while (enum_fmt_cap(fmt, m_buftype));
+	}
+	addWidget(m_vidCapFormats);
+	connect(m_vidCapFormats, SIGNAL(activated(int)), SLOT(vidCapFormatChanged(int)));
+
+	addLabel("Frame Width");
+	m_frameWidth = new QSpinBox(parent);
+	addWidget(m_frameWidth);
+	connect(m_frameWidth, SIGNAL(editingFinished()), SLOT(frameWidthChanged()));
+	addLabel("Frame Height");
+	m_frameHeight = new QSpinBox(parent);
+	addWidget(m_frameHeight);
+	connect(m_frameHeight, SIGNAL(editingFinished()), SLOT(frameHeightChanged()));
+
+	addLabel("Frame Size");
+	m_frameSize = new QComboBox(parent);
+	m_frameSize->setMinimumContentsLength(10);
+	m_frameSize->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	addWidget(m_frameSize);
+	connect(m_frameSize, SIGNAL(activated(int)), SLOT(frameSizeChanged(int)));
+
+	addLabel("Frame Interval");
+	m_frameInterval = new QComboBox(parent);
+	m_frameInterval->setMinimumContentsLength(6);
+	m_frameInterval->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	addWidget(m_frameInterval);
+	connect(m_frameInterval, SIGNAL(activated(int)), SLOT(frameIntervalChanged(int)));
+
+	addLabel("Field");
+	m_vidCapFields = new QComboBox(parent);
+	m_vidCapFields->setMinimumContentsLength(21);
+	addWidget(m_vidCapFields);
+	connect(m_vidCapFields, SIGNAL(activated(int)), SLOT(vidCapFieldChanged(int)));
+
+	updateVideoInput();
+	updateVidCapFormat();
+
+	if (caps() & V4L2_CAP_VIDEO_OUTPUT) {
+		addLabel("Output Image Formats");
+		m_vidOutFormats = new QComboBox(parent);
+		if (enum_fmt_out(fmt, true)) {
+			do {
+				m_vidOutFormats->addItem(pixfmt2s(fmt.pixelformat) +
+						" - " + (const char *)fmt.description);
+			} while (enum_fmt_out(fmt));
+		}
+		addWidget(m_vidOutFormats);
+		connect(m_vidOutFormats, SIGNAL(activated(int)), SLOT(vidOutFormatChanged(int)));
+	}
+
+capture_method:
+	addLabel("Capture Method");
+	m_capMethods = new QComboBox(parent);
+	m_buftype = isSlicedVbi() ? V4L2_BUF_TYPE_SLICED_VBI_CAPTURE :
+		(isVbi() ? V4L2_BUF_TYPE_VBI_CAPTURE : 
+		 (isPlanar() ? V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE :
+		  V4L2_BUF_TYPE_VIDEO_CAPTURE));
+	if (caps() & V4L2_CAP_STREAMING) {
+		v4l2_requestbuffers reqbuf;
+
+		// Yuck. The videobuf framework does not accept a count of 0.
+		// This is out-of-spec, but it means that the only way to test which
+		// method is supported is to give it a non-zero count. But non-videobuf
+		// drivers like uvc do not allow e.g. S_FMT calls after a REQBUFS call
+		// with non-zero counts unless there is a REQBUFS call with count == 0
+		// in between. This is actual proper behavior, although somewhat
+		// unexpected. So the only way at the moment to do this that works
+		// everywhere is to call REQBUFS with a count of 1, and then again with
+		// a count of 0.
+		if (reqbufs_user(reqbuf, 1)) {
+			m_capMethods->addItem("User pointer I/O", QVariant(methodUser));
+			reqbufs_user(reqbuf, 0);
+		}
+		if (reqbufs_mmap(reqbuf, 1)) {
+			m_capMethods->addItem("Memory mapped I/O", QVariant(methodMmap));
+			reqbufs_mmap(reqbuf, 0);
+		}
+	}
+	if (caps() & V4L2_CAP_READWRITE) {
+		m_capMethods->addItem("read()", QVariant(methodRead));
+	}
+	addWidget(m_capMethods);
+
+done:
+	QGridLayout::addWidget(new QWidget(parent), rowCount(), 0, 1, n);
+	setRowStretch(rowCount() - 1, 1);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return;
 
 	QWidget *wFrameWH = new QWidget();
@@ -1281,133 +1705,33 @@ void GeneralTab::fixWidth()
 	}
 }
 
-unsigned GeneralTab::getNumBuffers() const
-{
-	return m_numBuffers ? m_numBuffers->value() : 4;
-=======
-		goto done;
-
-	if (isVbi()) {
-		addLabel("VBI Capture Method");
-		m_vbiMethods = new QComboBox(parent);
-		if (caps() & V4L2_CAP_VBI_CAPTURE)
-			m_vbiMethods->addItem("Raw");
-		if (caps() & V4L2_CAP_SLICED_VBI_CAPTURE)
-			m_vbiMethods->addItem("Sliced");
-		addWidget(m_vbiMethods);
-		connect(m_vbiMethods, SIGNAL(activated(int)), SLOT(vbiMethodsChanged(int)));
-		updateVideoInput();
-		goto capture_method;
-	}
-
-	v4l2_fmtdesc fmt;
-	addLabel("Capture Image Formats");
-	m_vidCapFormats = new QComboBox(parent);
-	m_vidCapFormats->setMinimumContentsLength(20);
-	if (enum_fmt_cap(fmt, m_buftype, true)) {
-		do {
-			QString s(pixfmt2s(fmt.pixelformat) + " (");
-
-			if (fmt.flags & V4L2_FMT_FLAG_EMULATED)
-				m_vidCapFormats->addItem(s + "Emulated)");
-			else
-				m_vidCapFormats->addItem(s + (const char *)fmt.description + ")");
-		} while (enum_fmt_cap(fmt, m_buftype));
-	}
-	addWidget(m_vidCapFormats);
-	connect(m_vidCapFormats, SIGNAL(activated(int)), SLOT(vidCapFormatChanged(int)));
-
-	addLabel("Frame Width");
-	m_frameWidth = new QSpinBox(parent);
-	addWidget(m_frameWidth);
-	connect(m_frameWidth, SIGNAL(editingFinished()), SLOT(frameWidthChanged()));
-	addLabel("Frame Height");
-	m_frameHeight = new QSpinBox(parent);
-	addWidget(m_frameHeight);
-	connect(m_frameHeight, SIGNAL(editingFinished()), SLOT(frameHeightChanged()));
-
-	addLabel("Frame Size");
-	m_frameSize = new QComboBox(parent);
-	m_frameSize->setMinimumContentsLength(10);
-	m_frameSize->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	addWidget(m_frameSize);
-	connect(m_frameSize, SIGNAL(activated(int)), SLOT(frameSizeChanged(int)));
-
-	addLabel("Frame Interval");
-	m_frameInterval = new QComboBox(parent);
-	m_frameInterval->setMinimumContentsLength(6);
-	m_frameInterval->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	addWidget(m_frameInterval);
-	connect(m_frameInterval, SIGNAL(activated(int)), SLOT(frameIntervalChanged(int)));
-
-	addLabel("Field");
-	m_vidCapFields = new QComboBox(parent);
-	m_vidCapFields->setMinimumContentsLength(21);
-	addWidget(m_vidCapFields);
-	connect(m_vidCapFields, SIGNAL(activated(int)), SLOT(vidCapFieldChanged(int)));
-
-	updateVideoInput();
-	updateVidCapFormat();
-
-	if (caps() & V4L2_CAP_VIDEO_OUTPUT) {
-		addLabel("Output Image Formats");
-		m_vidOutFormats = new QComboBox(parent);
-		if (enum_fmt_out(fmt, true)) {
-			do {
-				m_vidOutFormats->addItem(pixfmt2s(fmt.pixelformat) +
-						" - " + (const char *)fmt.description);
-			} while (enum_fmt_out(fmt));
-		}
-		addWidget(m_vidOutFormats);
-		connect(m_vidOutFormats, SIGNAL(activated(int)), SLOT(vidOutFormatChanged(int)));
-	}
-
-capture_method:
-	addLabel("Capture Method");
-	m_capMethods = new QComboBox(parent);
-	m_buftype = isSlicedVbi() ? V4L2_BUF_TYPE_SLICED_VBI_CAPTURE :
-		(isVbi() ? V4L2_BUF_TYPE_VBI_CAPTURE : 
-		 (isPlanar() ? V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE :
-		  V4L2_BUF_TYPE_VIDEO_CAPTURE));
-	if (caps() & V4L2_CAP_STREAMING) {
-		v4l2_requestbuffers reqbuf;
-
-		// Yuck. The videobuf framework does not accept a count of 0.
-		// This is out-of-spec, but it means that the only way to test which
-		// method is supported is to give it a non-zero count. But non-videobuf
-		// drivers like uvc do not allow e.g. S_FMT calls after a REQBUFS call
-		// with non-zero counts unless there is a REQBUFS call with count == 0
-		// in between. This is actual proper behavior, although somewhat
-		// unexpected. So the only way at the moment to do this that works
-		// everywhere is to call REQBUFS with a count of 1, and then again with
-		// a count of 0.
-		if (reqbufs_user(reqbuf, 1)) {
-			m_capMethods->addItem("User pointer I/O", QVariant(methodUser));
-			reqbufs_user(reqbuf, 0);
-		}
-		if (reqbufs_mmap(reqbuf, 1)) {
-			m_capMethods->addItem("Memory mapped I/O", QVariant(methodMmap));
-			reqbufs_mmap(reqbuf, 0);
-		}
-	}
-	if (caps() & V4L2_CAP_READWRITE) {
-		m_capMethods->addItem("read()", QVariant(methodRead));
-	}
-	addWidget(m_capMethods);
-
+<<<<<<< HEAD
 done:
 	QGridLayout::addWidget(new QWidget(parent), rowCount(), 0, 1, n);
 	setRowStretch(rowCount() - 1, 1);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+unsigned GeneralTab::getNumBuffers() const
+{
+	return m_numBuffers ? m_numBuffers->value() : 4;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::setHaveBuffers(bool haveBuffers)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_haveBuffers = haveBuffers;
 
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	m_haveBuffers = haveBuffers;
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_videoInput)
 		m_videoInput->setDisabled(haveBuffers);
 	if (m_videoOutput)
@@ -1419,6 +1743,7 @@ void GeneralTab::setHaveBuffers(bool haveBuffers)
 	if (m_vidCapFormats)
 		m_vidCapFormats->setDisabled(haveBuffers);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (m_vidFields)
 		m_vidFields->setDisabled(haveBuffers);
 	if (m_frameSize && m_discreteSizes)
@@ -1427,6 +1752,8 @@ void GeneralTab::setHaveBuffers(bool haveBuffers)
 		m_frameWidth->setDisabled(haveBuffers);
 	if (m_frameHeight && !m_discreteSizes)
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_vidCapFields)
 		m_vidCapFields->setDisabled(haveBuffers);
 	if (m_frameSize)
@@ -1434,7 +1761,19 @@ void GeneralTab::setHaveBuffers(bool haveBuffers)
 	if (m_frameWidth)
 		m_frameWidth->setDisabled(haveBuffers);
 	if (m_frameHeight)
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (m_vidFields)
+		m_vidFields->setDisabled(haveBuffers);
+	if (m_frameSize && m_discreteSizes)
+		m_frameSize->setDisabled(haveBuffers);
+	if (m_frameWidth && !m_discreteSizes)
+		m_frameWidth->setDisabled(haveBuffers);
+	if (m_frameHeight && !m_discreteSizes)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		m_frameHeight->setDisabled(haveBuffers);
 	if (m_vidOutFormats)
 		m_vidOutFormats->setDisabled(haveBuffers);
@@ -1445,11 +1784,14 @@ void GeneralTab::setHaveBuffers(bool haveBuffers)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool GeneralTab::filterAudioDevice(QString &deviceName)
 {
 	// Only show hw devices
 	return deviceName.contains("hw") && !deviceName.contains("plughw");
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void GeneralTab::showAllAudioDevices(bool use)
 {
 	QString oldIn(m_audioInDevice->currentText());
@@ -1509,7 +1851,16 @@ bool GeneralTab::filterAudioOutDevice(QString &deviceName)
 	}
 
 	return true;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+bool GeneralTab::filterAudioDevice(QString &deviceName)
+{
+	// Only show hw devices
+	return deviceName.contains("hw") && !deviceName.contains("plughw");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 int GeneralTab::addAudioDevice(void *hint, int deviceNum)
@@ -1555,6 +1906,21 @@ int GeneralTab::addAudioDevice(void *hint, int deviceNum)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+	if ((iotype == NULL || strncmp(iotype, "Input", 5) == 0) && filterAudioDevice(deviceName)) {
+		m_audioInDeviceMap[m_audioInDevice->count()] = snd_device_name_get_hint(hint, "NAME");
+=======
+	if ((iotype == NULL || strncmp(iotype, "Input", 5) == 0) && filterAudioInDevice(deviceName)) {
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+		m_audioInDevice->addItem(listName);
+		m_audioInDeviceMap[listName] = snd_device_name_get_hint(hint, "NAME");
+		added += AUDIO_ADD_READ;
+	}
+
+	if ((iotype == NULL || strncmp(iotype, "Output", 6) == 0)  && filterAudioOutDevice(deviceName)) {
+		m_audioOutDevice->addItem(listName);
+		m_audioOutDeviceMap[listName] = snd_device_name_get_hint(hint, "NAME");
+=======
 	if ((iotype == NULL || strncmp(iotype, "Input", 5) == 0) && filterAudioDevice(deviceName)) {
 		m_audioInDeviceMap[m_audioInDevice->count()] = snd_device_name_get_hint(hint, "NAME");
 		m_audioInDevice->addItem(listName);
@@ -1564,17 +1930,12 @@ int GeneralTab::addAudioDevice(void *hint, int deviceNum)
 	if ((iotype == NULL || strncmp(iotype, "Output", 6) == 0)  && filterAudioDevice(deviceName)) {
 		m_audioOutDeviceMap[m_audioOutDevice->count()] = snd_device_name_get_hint(hint, "NAME");
 		m_audioOutDevice->addItem(listName);
-=======
-	if ((iotype == NULL || strncmp(iotype, "Input", 5) == 0) && filterAudioInDevice(deviceName)) {
-		m_audioInDevice->addItem(listName);
-		m_audioInDeviceMap[listName] = snd_device_name_get_hint(hint, "NAME");
-		added += AUDIO_ADD_READ;
-	}
-
-	if ((iotype == NULL || strncmp(iotype, "Output", 6) == 0)  && filterAudioOutDevice(deviceName)) {
-		m_audioOutDevice->addItem(listName);
+<<<<<<< HEAD
 		m_audioOutDeviceMap[listName] = snd_device_name_get_hint(hint, "NAME");
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		added += AUDIO_ADD_WRITE;
 	}
 #endif
@@ -1585,10 +1946,17 @@ bool GeneralTab::createAudioDeviceList()
 {
 #ifdef HAVE_ALSA
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (m_audioInDevice == NULL || m_audioOutDevice == NULL || m_isOutput)
 =======
 	if (m_audioInDevice == NULL || m_audioOutDevice == NULL)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (m_audioInDevice == NULL || m_audioOutDevice == NULL)
+=======
+	if (m_audioInDevice == NULL || m_audioOutDevice == NULL || m_isOutput)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return false;
 
 	m_audioInDevice->clear();
@@ -1599,12 +1967,21 @@ bool GeneralTab::createAudioDeviceList()
 	m_audioInDevice->addItem("None");
 	m_audioOutDevice->addItem("Default");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_audioInDeviceMap[0] = "None";
 	m_audioOutDeviceMap[0] = "default";
 =======
 	m_audioInDeviceMap["None"] = "None";
 	m_audioOutDeviceMap["Default"] = "default";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	m_audioInDeviceMap["None"] = "None";
+	m_audioOutDeviceMap["Default"] = "default";
+=======
+	m_audioInDeviceMap[0] = "None";
+	m_audioOutDeviceMap[0] = "default";
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	int deviceNum = -1;
 	int audioDevices = 0;
@@ -1649,12 +2026,20 @@ void GeneralTab::changeAudioDevice()
 void GeneralTab::addWidget(QWidget *w, Qt::Alignment align)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_col % 2 && !qobject_cast<QToolButton*>(w))
 		w->setMinimumWidth(m_minWidth);
 	if (w->sizeHint().width() > m_maxw[m_col])
 		m_maxw[m_col] = w->sizeHint().width();
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	QGridLayout::addWidget(w, m_row, m_col, align | Qt::AlignVCenter);
 	m_col++;
 	if (m_col == m_cols) {
@@ -1664,6 +2049,10 @@ void GeneralTab::addWidget(QWidget *w, Qt::Alignment align)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void GeneralTab::addTitle(const QString &titlename)
 {
 	m_row++;
@@ -1693,8 +2082,12 @@ int GeneralTab::getWidth()
 	return total;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 bool GeneralTab::isSlicedVbi() const
 {
 	return m_vbiMethods && m_vbiMethods->currentText() == "Sliced";
@@ -1706,6 +2099,13 @@ CapMethod GeneralTab::capMethod()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+void GeneralTab::inputChanged(int input)
+{
+	s_input(input);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void GeneralTab::updateGUIInput(__u32 input)
 {
 	v4l2_input in;
@@ -1782,11 +2182,15 @@ void GeneralTab::updateGUIOutput(__u32 output)
 void GeneralTab::inputChanged(int input)
 {
 	s_input((__u32)input);
+<<<<<<< HEAD
 =======
 void GeneralTab::inputChanged(int input)
 {
 	s_input(input);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (m_audioInput)
 		updateAudioInput();
@@ -1794,14 +2198,26 @@ void GeneralTab::inputChanged(int input)
 	updateVideoInput();
 	updateVidCapFormat();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	updateGUIInput(input);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	updateGUIInput(input);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::outputChanged(int output)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	s_output(output);
+	updateVideoOutput();
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	s_output((__u32)output);
 
 	if (m_audioOutput)
@@ -1810,29 +2226,47 @@ void GeneralTab::outputChanged(int output)
 	updateVideoOutput();
 	updateVidOutFormat();
 	updateGUIOutput(output);
+<<<<<<< HEAD
 =======
 	s_output(output);
 	updateVideoOutput();
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::inputAudioChanged(int input)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	s_audio((__u32)input);
 =======
 	s_audio(input);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	s_audio(input);
+=======
+	s_audio((__u32)input);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	updateAudioInput();
 }
 
 void GeneralTab::outputAudioChanged(int output)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	s_audout((__u32)output);
 =======
 	s_audout(output);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	s_audout(output);
+=======
+	s_audout((__u32)output);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	updateAudioOutput();
 }
 
@@ -1920,12 +2354,20 @@ void GeneralTab::detectSubchansClicked()
 		chans += m_tuner.afc < 0 ? " too low" : " too high";
 	chans += ")";
 <<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+	m_subchannels->setText(chans);
+=======
 
 	m_subchannels->setText(chans);
-	fixWidth();
-=======
-	m_subchannels->setText(chans);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	fixWidth();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::stereoModeChanged()
@@ -1951,6 +2393,10 @@ void GeneralTab::rdsModeChanged()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void GeneralTab::colorspaceChanged(int idx)
 {
 	cv4l_fmt fmt;
@@ -2019,12 +2465,17 @@ void GeneralTab::clearColorspace(cv4l_fmt &fmt)
 		fmt.s_quantization(V4L2_QUANTIZATION_DEFAULT);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void GeneralTab::vidCapFormatChanged(int idx)
 {
 	v4l2_fmtdesc desc;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	enum_fmt(desc, true, idx);
 
@@ -2035,6 +2486,8 @@ void GeneralTab::vidCapFormatChanged(int idx)
 	clearColorspace(fmt);
 	if (try_fmt(fmt) == 0)
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	enum_fmt_cap(desc, m_buftype, true, idx);
 
 	v4l2_format fmt;
@@ -2045,7 +2498,20 @@ void GeneralTab::vidCapFormatChanged(int idx)
 	else
 		fmt.fmt.pix.pixelformat = desc.pixelformat;
 	if (try_fmt(fmt))
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	enum_fmt(desc, true, idx);
+
+	cv4l_fmt fmt;
+
+	g_fmt(fmt);
+	fmt.s_pixelformat(desc.pixelformat);
+	clearColorspace(fmt);
+	if (try_fmt(fmt) == 0)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		s_fmt(fmt);
 
 	updateVidCapFormat();
@@ -2080,6 +2546,7 @@ static const char *field2s(int val)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void GeneralTab::vidFieldChanged(int idx)
 {
 	cv4l_fmt fmt;
@@ -2090,6 +2557,8 @@ void GeneralTab::vidFieldChanged(int idx)
 			fmt.s_field(f);
 			clearColorspace(fmt);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void GeneralTab::vidCapFieldChanged(int idx)
 {
 	v4l2_format fmt;
@@ -2101,20 +2570,42 @@ void GeneralTab::vidCapFieldChanged(int idx)
 				fmt.fmt.pix_mp.field = f;
 			else
 				fmt.fmt.pix.field = f;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+void GeneralTab::vidFieldChanged(int idx)
+{
+	cv4l_fmt fmt;
+
+	g_fmt(fmt);
+	for (__u32 f = V4L2_FIELD_NONE; f <= V4L2_FIELD_INTERLACED_BT; f++) {
+		if (m_vidFields->currentText() == QString(field2s(f))) {
+			fmt.s_field(f);
+			clearColorspace(fmt);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			s_fmt(fmt);
 			break;
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	updateVidFormat();
 =======
 	updateVidCapFormat();
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	updateVidCapFormat();
+=======
+	updateVidFormat();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::frameWidthChanged()
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	cv4l_fmt fmt;
 	int val = m_frameWidth->value();
@@ -2129,6 +2620,8 @@ void GeneralTab::frameWidthChanged()
 
 	updateVidFormat();
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	v4l2_format fmt;
 	int val = m_frameWidth->value();
 
@@ -2143,25 +2636,34 @@ void GeneralTab::frameWidthChanged()
 		s_fmt(fmt);
 
 	updateVidCapFormat();
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
 void GeneralTab::frameHeightChanged()
 {
 <<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	cv4l_fmt fmt;
-	int val = m_frameHeight->value();
+	int val = m_frameWidth->value();
 
-	if (m_frameHeight->isEnabled()) {
+	if (m_frameWidth->isEnabled()) {
 		g_fmt(fmt);
-		fmt.s_height(val);
+		fmt.s_width(val);
 		clearColorspace(fmt);
 		if (try_fmt(fmt) == 0)
 			s_fmt(fmt);
 	}
 
 	updateVidFormat();
-=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+}
+
+void GeneralTab::frameHeightChanged()
+{
+<<<<<<< HEAD
 	v4l2_format fmt;
 	int val = m_frameHeight->value();
 
@@ -2176,6 +2678,7 @@ void GeneralTab::frameHeightChanged()
 		s_fmt(fmt);
 
 	updateVidCapFormat();
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 }
 
@@ -2186,16 +2689,27 @@ void GeneralTab::frameSizeChanged(int idx)
 
 	if (!enum_framesizes(frmsize, m_pixelformat, idx)) {
 		cv4l_fmt fmt;
+=======
+=======
+	cv4l_fmt fmt;
+	int val = m_frameHeight->value();
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
+	if (m_frameHeight->isEnabled()) {
 		g_fmt(fmt);
-		fmt.s_width(frmsize.discrete.width);
-		fmt.s_height(frmsize.discrete.height);
+		fmt.s_height(val);
 		clearColorspace(fmt);
 		if (try_fmt(fmt) == 0)
 			s_fmt(fmt);
 	}
+
 	updateVidFormat();
-=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+}
+
+void GeneralTab::frameSizeChanged(int idx)
+{
+<<<<<<< HEAD
 	v4l2_frmsizeenum frmsize;
 
 	if (enum_framesizes(frmsize, m_pixelformat, idx)) {
@@ -2213,11 +2727,30 @@ void GeneralTab::frameSizeChanged(int idx)
 			s_fmt(fmt);
 	}
 	updateVidCapFormat();
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	v4l2_frmsizeenum frmsize = { 0 };
+
+	if (!enum_framesizes(frmsize, m_pixelformat, idx)) {
+		cv4l_fmt fmt;
+
+		g_fmt(fmt);
+		fmt.s_width(frmsize.discrete.width);
+		fmt.s_height(frmsize.discrete.height);
+		clearColorspace(fmt);
+		if (try_fmt(fmt) == 0)
+			s_fmt(fmt);
+	}
+	updateVidFormat();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::frameIntervalChanged(int idx)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	v4l2_frmivalenum frmival = { 0 };
 
@@ -2225,12 +2758,24 @@ void GeneralTab::frameIntervalChanged(int idx)
 	    && frmival.type == V4L2_FRMIVAL_TYPE_DISCRETE) {
 		if (!set_interval(frmival.discrete))
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	v4l2_frmivalenum frmival;
 
 	if (enum_frameintervals(frmival, m_pixelformat, m_width, m_height, idx)
 	    && frmival.type == V4L2_FRMIVAL_TYPE_DISCRETE) {
 		if (set_interval(m_buftype, frmival.discrete))
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	v4l2_frmivalenum frmival = { 0 };
+
+	if (!enum_frameintervals(frmival, m_pixelformat, m_width, m_height, idx)
+	    && frmival.type == V4L2_FRMIVAL_TYPE_DISCRETE) {
+		if (!set_interval(frmival.discrete))
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			m_interval = frmival.discrete;
 	}
 }
@@ -2240,6 +2785,17 @@ void GeneralTab::vidOutFormatChanged(int idx)
 	v4l2_fmtdesc desc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	enum_fmt_out(desc, true, idx);
+
+	v4l2_format fmt;
+
+	g_fmt_out(fmt);
+	fmt.fmt.pix.pixelformat = desc.pixelformat;
+	if (try_fmt(fmt))
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	enum_fmt(desc, true, idx);
 
 	cv4l_fmt fmt;
@@ -2248,6 +2804,7 @@ void GeneralTab::vidOutFormatChanged(int idx)
 	fmt.s_pixelformat(desc.pixelformat);
 	clearColorspace(fmt);
 	if (try_fmt(fmt) == 0)
+<<<<<<< HEAD
 =======
 	enum_fmt_out(desc, true, idx);
 
@@ -2257,6 +2814,9 @@ void GeneralTab::vidOutFormatChanged(int idx)
 	fmt.fmt.pix.pixelformat = desc.pixelformat;
 	if (try_fmt(fmt))
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		s_fmt(fmt);
 	updateVidOutFormat();
 }
@@ -2264,6 +2824,14 @@ void GeneralTab::vidOutFormatChanged(int idx)
 void GeneralTab::vbiMethodsChanged(int idx)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_buftype = isSlicedVbi() ? V4L2_BUF_TYPE_SLICED_VBI_CAPTURE :
+		(isVbi() ? V4L2_BUF_TYPE_VBI_CAPTURE :
+		 (isPlanar() ? V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE :
+		  V4L2_BUF_TYPE_VIDEO_CAPTURE));
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (isSlicedVbi())
 		s_type(m_isOutput ? V4L2_BUF_TYPE_SLICED_VBI_OUTPUT :
 				    V4L2_BUF_TYPE_SLICED_VBI_CAPTURE);
@@ -2308,17 +2876,33 @@ void GeneralTab::composeChanged()
 	sel.r.top = m_composeTop->value();
 	s_selection(sel);
 	updateVidFormat();
+<<<<<<< HEAD
 =======
 	m_buftype = isSlicedVbi() ? V4L2_BUF_TYPE_SLICED_VBI_CAPTURE :
 		(isVbi() ? V4L2_BUF_TYPE_VBI_CAPTURE :
 		 (isPlanar() ? V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE :
 		  V4L2_BUF_TYPE_VIDEO_CAPTURE));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::updateVideoInput()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+	__u32 input;
+=======
+	int input;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+	v4l2_input in;
+
+	if (!g_input(input))
+		return;
+	enum_input(in, true, input);
+	m_videoInput->setCurrentIndex(input);
+=======
 	__u32 input;
 	v4l2_input in;
 
@@ -2326,16 +2910,12 @@ void GeneralTab::updateVideoInput()
 		return;
 	enum_input(in, true, input);
 	m_videoInput->setCurrentIndex(input);
-	m_isSDTV = false;
-=======
-	int input;
-	v4l2_input in;
-
-	if (!g_input(input))
-		return;
-	enum_input(in, true, input);
-	m_videoInput->setCurrentIndex(input);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	m_isSDTV = false;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_tvStandard) {
 		refreshStandards();
 		updateStandard();
@@ -2343,10 +2923,17 @@ void GeneralTab::updateVideoInput()
 		if (m_qryStandard)
 			m_qryStandard->setEnabled(in.capabilities & V4L2_IN_CAP_STD);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (in.capabilities & V4L2_IN_CAP_STD)
 			m_isSDTV = true;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		if (in.capabilities & V4L2_IN_CAP_STD)
+			m_isSDTV = true;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		bool enableFreq = in.type == V4L2_INPUT_TYPE_TUNER;
 		if (m_freq)
 			m_freq->setEnabled(enableFreq);
@@ -2357,14 +2944,24 @@ void GeneralTab::updateVideoInput()
 		if (m_detectSubchans) {
 			m_detectSubchans->setEnabled(enableFreq);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+			if (!enableFreq)
+				m_subchannels->setText("");
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			if (!enableFreq) {
 				m_subchannels->setText("");
 				fixWidth();
 			}
+<<<<<<< HEAD
 =======
 			if (!enableFreq)
 				m_subchannels->setText("");
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			else
 				detectSubchansClicked();
 		}
@@ -2374,6 +2971,14 @@ void GeneralTab::updateVideoInput()
 		updateTimings();
 		m_videoTimings->setEnabled(in.capabilities & V4L2_IN_CAP_DV_TIMINGS);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		m_qryTimings->setEnabled(in.capabilities & V4L2_IN_CAP_DV_TIMINGS);
+	}
+	if (m_audioInput)
+		m_audioInput->setEnabled(in.audioset);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (m_qryTimings)
 			m_qryTimings->setEnabled(in.capabilities & V4L2_IN_CAP_DV_TIMINGS);
 	}
@@ -2395,17 +3000,41 @@ void GeneralTab::updateVideoInput()
 		m_composeHeight->setEnabled(has_compose);
 		m_composeTop->setEnabled(has_compose);
 	}
+<<<<<<< HEAD
 =======
 		m_qryTimings->setEnabled(in.capabilities & V4L2_IN_CAP_DV_TIMINGS);
 	}
 	if (m_audioInput)
 		m_audioInput->setEnabled(in.audioset);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::updateVideoOutput()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	int output;
+	v4l2_output out;
+
+	if (!g_output(output))
+		return;
+	enum_output(out, true, output);
+	m_videoOutput->setCurrentIndex(output);
+	if (m_tvStandard) {
+		m_tvStandard->setEnabled(out.capabilities & V4L2_OUT_CAP_STD);
+		if (m_qryStandard)
+			m_qryStandard->setEnabled(out.capabilities & V4L2_OUT_CAP_STD);
+	}
+	if (m_videoTimings) {
+		m_videoTimings->setEnabled(out.capabilities & V4L2_OUT_CAP_DV_TIMINGS);
+		m_qryTimings->setEnabled(out.capabilities & V4L2_OUT_CAP_DV_TIMINGS);
+	}
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	__u32 output;
 	v4l2_output out;
 
@@ -2447,6 +3076,7 @@ void GeneralTab::updateVideoOutput()
 		m_composeTop->setEnabled(has_compose);
 	}
 	g_mw->updateLimRGBRange();
+<<<<<<< HEAD
 =======
 	int output;
 	v4l2_output out;
@@ -2465,6 +3095,9 @@ void GeneralTab::updateVideoOutput()
 		m_qryTimings->setEnabled(out.capabilities & V4L2_OUT_CAP_DV_TIMINGS);
 	}
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::updateAudioInput()
@@ -2499,16 +3132,25 @@ void GeneralTab::refreshStandards()
 	v4l2_standard vs;
 	m_tvStandard->clear();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!enum_std(vs, true)) {
-		do {
-			m_tvStandard->addItem((char *)vs.name);
-		} while (!enum_std(vs));
 =======
 	if (enum_std(vs, true)) {
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		do {
 			m_tvStandard->addItem((char *)vs.name);
 		} while (enum_std(vs));
+=======
+	if (!enum_std(vs, true)) {
+		do {
+			m_tvStandard->addItem((char *)vs.name);
+<<<<<<< HEAD
+		} while (enum_std(vs));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		} while (!enum_std(vs));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 }
 
@@ -2519,6 +3161,23 @@ void GeneralTab::updateStandard()
 	QString what;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	g_std(std);
+	if (enum_std(vs, true)) {
+		do {
+			if (vs.id == std)
+				break;
+		} while (enum_std(vs));
+	}
+	if (vs.id != std) {
+		if (enum_std(vs, true)) {
+			do {
+				if (vs.id & std)
+					break;
+			} while (enum_std(vs));
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (g_std(std))
 		return;
 	if (enum_std(vs, true))
@@ -2533,6 +3192,7 @@ void GeneralTab::updateStandard()
 				if (vs.id & std)
 					break;
 			} while (!enum_std(vs));
+<<<<<<< HEAD
 =======
 	g_std(std);
 	if (enum_std(vs, true)) {
@@ -2548,6 +3208,9 @@ void GeneralTab::updateStandard()
 					break;
 			} while (enum_std(vs));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		}
 	}
 	if ((vs.id & std) == 0)
@@ -2562,12 +3225,21 @@ void GeneralTab::updateStandard()
 	m_tvStandard->setStatusTip(what);
 	m_tvStandard->setWhatsThis(what);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	updateVidFormat();
 	if (!isVbi() && !m_isOutput)
 =======
 	updateVidCapFormat();
 	if (!isVbi())
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	updateVidCapFormat();
+	if (!isVbi())
+=======
+	updateVidFormat();
+	if (!isVbi() && !m_isOutput)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		changePixelAspectRatio();
 }
 
@@ -2576,10 +3248,17 @@ void GeneralTab::qryStdClicked()
 	v4l2_std_id std;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (query_std(std))
 =======
 	if (!query_std(std))
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (!query_std(std))
+=======
+	if (query_std(std))
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return;
 
 	if (std == V4L2_STD_UNKNOWN) {
@@ -2595,10 +3274,17 @@ void GeneralTab::refreshTimings()
 	v4l2_enum_dv_timings timings;
 	m_videoTimings->clear();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!enum_dv_timings(timings, true)) {
 =======
 	if (enum_dv_timings(timings, true)) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (enum_dv_timings(timings, true)) {
+=======
+	if (!enum_dv_timings(timings, true)) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		do {
 			v4l2_bt_timings &bt = timings.timings.bt;
 			double tot_height = bt.height +
@@ -2616,10 +3302,17 @@ void GeneralTab::refreshTimings()
 					(double)bt.pixelclock / (tot_width * tot_height));
 			m_videoTimings->addItem(buf);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} while (!enum_dv_timings(timings));
 =======
 		} while (enum_dv_timings(timings));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		} while (enum_dv_timings(timings));
+=======
+		} while (!enum_dv_timings(timings));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 }
 
@@ -2630,6 +3323,17 @@ void GeneralTab::updateTimings()
 	QString what;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	g_dv_timings(timings);
+	if (enum_dv_timings(p, true)) {
+		do {
+			if (!memcmp(&timings, &p.timings, sizeof(timings)))
+				break;
+		} while (enum_dv_timings(p));
+	}
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (g_dv_timings(timings))
 		return;
 	if (enum_dv_timings(p, true))
@@ -2638,6 +3342,7 @@ void GeneralTab::updateTimings()
 		if (!memcmp(&timings, &p.timings, sizeof(timings)))
 			break;
 	} while (!enum_dv_timings(p));
+<<<<<<< HEAD
 =======
 	g_dv_timings(timings);
 	if (enum_dv_timings(p, true)) {
@@ -2647,6 +3352,9 @@ void GeneralTab::updateTimings()
 		} while (enum_dv_timings(p));
 	}
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (memcmp(&timings, &p.timings, sizeof(timings)))
 		return;
 	m_videoTimings->setCurrentIndex(p.index);
@@ -2654,22 +3362,42 @@ void GeneralTab::updateTimings()
 		"Frame %ux%u\n",
 		p.index, p.timings.bt.width, p.timings.bt.height);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_isSDTV = p.timings.bt.width <= 720 && p.timings.bt.height <= 576;
-	m_videoTimings->setStatusTip(what);
-	m_videoTimings->setWhatsThis(what);
-	updateVidFormat();
-	g_mw->updateLimRGBRange();
 =======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_videoTimings->setStatusTip(what);
 	m_videoTimings->setWhatsThis(what);
 	updateVidCapFormat();
+=======
+	m_isSDTV = p.timings.bt.width <= 720 && p.timings.bt.height <= 576;
+	m_videoTimings->setStatusTip(what);
+	m_videoTimings->setWhatsThis(what);
+<<<<<<< HEAD
+	updateVidCapFormat();
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	updateVidFormat();
+	g_mw->updateLimRGBRange();
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::qryTimingsClicked()
 {
 	v4l2_dv_timings timings;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+	if (query_dv_timings(timings)) {
+		s_dv_timings(timings);
+		updateTimings();
+	}
+}
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int err = query_dv_timings(timings);
 
 	switch (err) {
@@ -2704,6 +3432,7 @@ void GeneralTab::sourceChange(const v4l2_event &ev)
 		updateColorspace();
 }
 
+<<<<<<< HEAD
 =======
 
 	if (query_dv_timings(timings)) {
@@ -2713,6 +3442,9 @@ void GeneralTab::sourceChange(const v4l2_event &ev)
 }
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void GeneralTab::updateFreq()
 {
 	v4l2_frequency f;
@@ -2745,6 +3477,85 @@ void GeneralTab::updateFreqRf()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+void GeneralTab::updateVidCapFormat()
+{
+	v4l2_fmtdesc desc;
+	v4l2_format fmt;
+
+	if (isVbi())
+		return;
+	g_fmt_cap(m_buftype, fmt);
+	if (isPlanar()) {
+		m_pixelformat = fmt.fmt.pix_mp.pixelformat;
+		m_width       = fmt.fmt.pix_mp.width;
+		m_height      = fmt.fmt.pix_mp.height;
+	} else {
+		m_pixelformat = fmt.fmt.pix.pixelformat;
+		m_width       = fmt.fmt.pix.width;
+		m_height      = fmt.fmt.pix.height;
+	}
+	updateFrameSize();
+	updateFrameInterval();
+	if (enum_fmt_cap(desc, m_buftype, true)) {
+		do {
+			if (isPlanar()) {
+				if (desc.pixelformat == fmt.fmt.pix_mp.pixelformat)
+					break;
+			} else {
+				if (desc.pixelformat == fmt.fmt.pix.pixelformat)
+					break;
+			}
+		} while (enum_fmt_cap(desc, m_buftype));
+	}
+	if (isPlanar()) {
+		if (desc.pixelformat != fmt.fmt.pix_mp.pixelformat)
+			return;
+	} else {
+		if (desc.pixelformat != fmt.fmt.pix.pixelformat)
+			return;
+	}
+	m_vidCapFormats->setCurrentIndex(desc.index);
+	updateVidCapFields();
+}
+
+void GeneralTab::updateVidCapFields()
+{
+	v4l2_format fmt;
+	v4l2_format tmp;
+	bool first = true;
+
+	g_fmt_cap(m_buftype, fmt);
+
+	for (__u32 f = V4L2_FIELD_NONE; f <= V4L2_FIELD_INTERLACED_BT; f++) {
+		tmp = fmt;
+		if (isPlanar()) {
+			tmp.fmt.pix_mp.field = f;
+			if (!try_fmt(tmp) || tmp.fmt.pix_mp.field != f)
+				continue;
+			if (first) {
+				m_vidCapFields->clear();
+				first = false;
+			}
+			m_vidCapFields->addItem(field2s(f));
+			if (fmt.fmt.pix_mp.field == f)
+				m_vidCapFields->setCurrentIndex(m_vidCapFields->count() - 1);
+		} else {
+			tmp.fmt.pix.field = f;
+			if (!try_fmt(tmp) || tmp.fmt.pix.field != f)
+				continue;
+			if (first) {
+				m_vidCapFields->clear();
+				first = false;
+			}
+			m_vidCapFields->addItem(field2s(f));
+			if (fmt.fmt.pix.field == f)
+				m_vidCapFields->setCurrentIndex(m_vidCapFields->count() - 1);
+		}
+	}
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void GeneralTab::updateColorspace()
 {
 	cv4l_fmt fmt;
@@ -2931,6 +3742,7 @@ void GeneralTab::updateCompose()
 	m_composeHeight->blockSignals(false);
 	m_composeTop->blockSignals(false);
 	emit clearBuffers();
+<<<<<<< HEAD
 =======
 void GeneralTab::updateVidCapFormat()
 {
@@ -3008,6 +3820,9 @@ void GeneralTab::updateVidCapFields()
 		}
 	}
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::updateFrameSize()
@@ -3016,15 +3831,26 @@ void GeneralTab::updateFrameSize()
 	bool ok = false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_frameSize->clear();
+
+	ok = enum_framesizes(frmsize, m_pixelformat);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (m_frameSize)
 		m_frameSize->clear();
 
 	ok = !enum_framesizes(frmsize, m_pixelformat);
+<<<<<<< HEAD
 =======
 	m_frameSize->clear();
 
 	ok = enum_framesizes(frmsize, m_pixelformat);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (ok && frmsize.type == V4L2_FRMSIZE_TYPE_DISCRETE) {
 		do {
 			m_frameSize->addItem(QString("%1x%2")
@@ -3033,6 +3859,22 @@ void GeneralTab::updateFrameSize()
 			    frmsize.discrete.height == m_height)
 				m_frameSize->setCurrentIndex(frmsize.index);
 <<<<<<< HEAD
+<<<<<<< HEAD
+		} while (!enum_framesizes(frmsize));
+=======
+		} while (enum_framesizes(frmsize));
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+
+		m_frameWidth->setEnabled(false);
+		m_frameHeight->setEnabled(false);
+		m_frameWidth->setMinimum(m_width);
+		m_frameWidth->setMaximum(m_width);
+		m_frameWidth->setValue(m_width);
+		m_frameHeight->setMinimum(m_height);
+		m_frameHeight->setMaximum(m_height);
+		m_frameHeight->setValue(m_height);
+		m_frameSize->setEnabled(true);
+=======
 		} while (!enum_framesizes(frmsize));
 
 		m_discreteSizes = true;
@@ -3048,21 +3890,14 @@ void GeneralTab::updateFrameSize()
 		m_frameHeight->setMinimum(m_height);
 		m_frameHeight->setMaximum(m_height);
 		m_frameHeight->setValue(m_height);
-		m_frameHeight->blockSignals(false);
-		m_frameSize->setEnabled(!m_haveBuffers);
-=======
-		} while (enum_framesizes(frmsize));
-
-		m_frameWidth->setEnabled(false);
-		m_frameHeight->setEnabled(false);
-		m_frameWidth->setMinimum(m_width);
-		m_frameWidth->setMaximum(m_width);
-		m_frameWidth->setValue(m_width);
-		m_frameHeight->setMinimum(m_height);
-		m_frameHeight->setMaximum(m_height);
-		m_frameHeight->setValue(m_height);
+<<<<<<< HEAD
 		m_frameSize->setEnabled(true);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		m_frameHeight->blockSignals(false);
+		m_frameSize->setEnabled(!m_haveBuffers);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		updateFrameInterval();
 		return;
 	}
@@ -3075,6 +3910,13 @@ void GeneralTab::updateFrameSize()
 		frmsize.stepwise.step_height = 1;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_frameWidth->setEnabled(true);
+	m_frameHeight->setEnabled(true);
+	m_frameSize->setEnabled(false);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_discreteSizes = false;
 	if (m_frameSize)
 		m_frameSize->setEnabled(false);
@@ -3085,36 +3927,72 @@ void GeneralTab::updateFrameSize()
 
 	m_frameWidth->setEnabled(!m_haveBuffers);
 	m_frameWidth->blockSignals(true);
+<<<<<<< HEAD
 =======
 	m_frameWidth->setEnabled(true);
 	m_frameHeight->setEnabled(true);
 	m_frameSize->setEnabled(false);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_frameWidth->setMinimum(frmsize.stepwise.min_width);
 	m_frameWidth->setMaximum(frmsize.stepwise.max_width);
 	m_frameWidth->setSingleStep(frmsize.stepwise.step_width);
 	m_frameWidth->setValue(m_width);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_frameWidth->blockSignals(false);
 
 	m_frameHeight->setEnabled(!m_haveBuffers);
 	m_frameHeight->blockSignals(true);
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_frameHeight->setMinimum(frmsize.stepwise.min_height);
 	m_frameHeight->setMaximum(frmsize.stepwise.max_height);
 	m_frameHeight->setSingleStep(frmsize.stepwise.step_height);
 	m_frameHeight->setValue(m_height);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_frameHeight->blockSignals(false);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	m_frameHeight->blockSignals(false);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	updateFrameInterval();
 }
 
 CropMethod GeneralTab::getCropMethod()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+	switch (m_cropping->currentIndex()) {
+=======
+	switch (m_crop->currentIndex()) {
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+	case 1:
+		return QV4L2_CROP_TB;
+	case 2:
+		return QV4L2_CROP_W149;
+	case 3:
+		return QV4L2_CROP_W169;
+	case 4:
+		return QV4L2_CROP_C185;
+	case 5:
+		return QV4L2_CROP_C239;
+	case 6:
+		return QV4L2_CROP_P43;
+=======
 	switch (m_cropping->currentIndex()) {
 	case 1:
 		return QV4L2_CROP_TB;
@@ -3127,22 +4005,13 @@ CropMethod GeneralTab::getCropMethod()
 	case 5:
 		return QV4L2_CROP_C185;
 	case 6:
-		return QV4L2_CROP_C239;
-=======
-	switch (m_crop->currentIndex()) {
-	case 1:
-		return QV4L2_CROP_TB;
-	case 2:
-		return QV4L2_CROP_W149;
-	case 3:
-		return QV4L2_CROP_W169;
-	case 4:
-		return QV4L2_CROP_C185;
-	case 5:
-		return QV4L2_CROP_C239;
-	case 6:
+<<<<<<< HEAD
 		return QV4L2_CROP_P43;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		return QV4L2_CROP_C239;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	default:
 		return QV4L2_CROP_NONE;
 	}
@@ -3160,6 +4029,14 @@ double GeneralTab::getPixelAspectRatio()
 {
 	v4l2_fract ratio = { 1, 1 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+	switch (m_pixelAspectRatio->currentIndex()) {
+	case 0:
+		ratio = g_pixel_aspect(m_buftype);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	unsigned w = 0, h = 0;
 
 	ratio = g_pixel_aspect(w, h);
@@ -3168,12 +4045,16 @@ double GeneralTab::getPixelAspectRatio()
 	case 1:
 		ratio.numerator = 1;
 		ratio.denominator = 1;
+<<<<<<< HEAD
 =======
 
 	switch (m_pixelAspectRatio->currentIndex()) {
 	case 0:
 		ratio = g_pixel_aspect(m_buftype);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	case 2:
 		ratio.numerator = 11;
@@ -3185,6 +4066,7 @@ double GeneralTab::getPixelAspectRatio()
 		break;
 	case 4:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ratio.numerator = 54;
 		ratio.denominator = 59;
 		break;
@@ -3192,19 +4074,42 @@ double GeneralTab::getPixelAspectRatio()
 		ratio.numerator = 81;
 		ratio.denominator = 118;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		ratio.numerator = 11;
 		ratio.denominator = 12;
 		break;
 	case 5:
 		ratio.numerator = 11;
 		ratio.denominator = 16;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		ratio.numerator = 54;
+		ratio.denominator = 59;
+		break;
+	case 5:
+		ratio.numerator = 81;
+		ratio.denominator = 118;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	default:
 		break;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_pixelAspectRatio->setWhatsThis(QString("Pixel Aspect Ratio %1:%2")
+			 .arg(ratio.denominator).arg(ratio.numerator));
+	m_pixelAspectRatio->setStatusTip(m_pixelAspectRatio->whatsThis());
+	// Note: ratio is y / x, whereas we want x / y, so we return
+	// denominator / numerator.
+	return (double)ratio.denominator / ratio.numerator;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_pixelAspectRatio->setWhatsThis(QString("Pixel Aspect Ratio y:x = %1:%2")
 			 .arg(ratio.numerator).arg(ratio.denominator));
 	m_pixelAspectRatio->setStatusTip(m_pixelAspectRatio->whatsThis());
@@ -3239,6 +4144,7 @@ double GeneralTab::getPixelAspectRatio()
 	// compensate for the current scaling factor.
 	return (((double)ratio.denominator * w) / cur_width) /
 	       (((double)ratio.numerator * h) / cur_height);
+<<<<<<< HEAD
 =======
 	m_pixelAspectRatio->setWhatsThis(QString("Pixel Aspect Ratio %1:%2")
 			 .arg(ratio.denominator).arg(ratio.numerator));
@@ -3247,11 +4153,25 @@ double GeneralTab::getPixelAspectRatio()
 	// denominator / numerator.
 	return (double)ratio.denominator / ratio.numerator;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::updateFrameInterval()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	v4l2_frmivalenum frmival;
+	v4l2_fract curr;
+	bool curr_ok, ok;
+
+	m_frameInterval->clear();
+
+	ok = enum_frameintervals(frmival, m_pixelformat, m_width, m_height);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	v4l2_frmivalenum frmival = { 0 };
 	v4l2_fract curr = { 1, 1 };
 	bool curr_ok, ok;
@@ -3262,6 +4182,7 @@ void GeneralTab::updateFrameInterval()
 	m_frameInterval->clear();
 
 	ok = !enum_frameintervals(frmival, m_pixelformat, m_width, m_height);
+<<<<<<< HEAD
 =======
 	v4l2_frmivalenum frmival;
 	v4l2_fract curr;
@@ -3271,15 +4192,25 @@ void GeneralTab::updateFrameInterval()
 
 	ok = enum_frameintervals(frmival, m_pixelformat, m_width, m_height);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	m_has_interval = ok && frmival.type == V4L2_FRMIVAL_TYPE_DISCRETE;
 	m_frameInterval->setEnabled(m_has_interval);
 	if (m_has_interval) {
 	        m_interval = frmival.discrete;
 <<<<<<< HEAD
+<<<<<<< HEAD
         	curr_ok = !m_fd->get_interval(curr);
 =======
         	curr_ok = v4l2::get_interval(m_buftype, curr);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+        	curr_ok = v4l2::get_interval(m_buftype, curr);
+=======
+        	curr_ok = !m_fd->get_interval(curr);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		do {
 			m_frameInterval->addItem(QString("%1 fps")
 				.arg((double)frmival.discrete.denominator / frmival.discrete.numerator));
@@ -3290,9 +4221,12 @@ void GeneralTab::updateFrameInterval()
 				m_interval = frmival.discrete;
                         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} while (!enum_frameintervals(frmival));
 	}
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		} while (enum_frameintervals(frmival));
 	}
 }
@@ -3312,7 +4246,14 @@ void GeneralTab::updateVidOutFormat()
 	if (desc.pixelformat != fmt.fmt.pix.pixelformat)
 		return;
 	m_vidCapFormats->setCurrentIndex(desc.index);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		} while (!enum_frameintervals(frmival));
+	}
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 bool GeneralTab::get_interval(struct v4l2_fract &interval)
@@ -3329,10 +4270,17 @@ QString GeneralTab::getAudioInDevice()
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return m_audioInDeviceMap[m_audioInDevice->currentIndex()];
 =======
 	return m_audioInDeviceMap[m_audioInDevice->currentText()];
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	return m_audioInDeviceMap[m_audioInDevice->currentText()];
+=======
+	return m_audioInDeviceMap[m_audioInDevice->currentIndex()];
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 QString GeneralTab::getAudioOutDevice()
@@ -3341,10 +4289,17 @@ QString GeneralTab::getAudioOutDevice()
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return m_audioOutDeviceMap[m_audioOutDevice->currentIndex()];
 =======
 	return m_audioOutDeviceMap[m_audioOutDevice->currentText()];
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	return m_audioOutDeviceMap[m_audioOutDevice->currentText()];
+=======
+	return m_audioOutDeviceMap[m_audioOutDevice->currentIndex()];
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void GeneralTab::setAudioDeviceBufferSize(int size)
@@ -3359,19 +4314,28 @@ int GeneralTab::getAudioDeviceBufferSize()
 
 #ifdef HAVE_ALSA
 <<<<<<< HEAD
+<<<<<<< HEAD
+int GeneralTab::checkMatchAudioDevice(void *md, const char *vid, enum device_type type)
+=======
+int GeneralTab::checkMatchAudioDevice(void *md, const char *vid, const enum device_type type)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+{
+	const char *devname = NULL;
+
+	while ((devname = get_associated_device(md, devname, type, vid, MEDIA_V4L_VIDEO)) != NULL) {
+=======
 int GeneralTab::checkMatchAudioDevice(void *md, const char *vid, enum device_type type)
 {
 	const char *devname = NULL;
 	enum device_type dtype = isRadio() ? MEDIA_V4L_RADIO : MEDIA_V4L_VIDEO;
 
-	while ((devname = get_associated_device(md, devname, type, vid, dtype)) != NULL) {
-=======
-int GeneralTab::checkMatchAudioDevice(void *md, const char *vid, const enum device_type type)
-{
-	const char *devname = NULL;
-
+<<<<<<< HEAD
 	while ((devname = get_associated_device(md, devname, type, vid, MEDIA_V4L_VIDEO)) != NULL) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	while ((devname = get_associated_device(md, devname, type, vid, dtype)) != NULL) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (type == MEDIA_SND_CAP) {
 			QStringList devAddr = QString(devname).split(QRegExp("[:,]"));
 			return devAddr.value(1).toInt();
@@ -3385,27 +4349,46 @@ int GeneralTab::matchAudioDevice()
 	QStringList devPath = m_device.split("/");
 	QString curDev = devPath.value(devPath.count() - 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void *media;
 =======
 
 	void *media;
 	const char *video = NULL;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+
+	void *media;
+	const char *video = NULL;
+=======
+	void *media;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int match;
 
 	media = discover_media_devices();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((match = checkMatchAudioDevice(media, curDev.toLatin1(), MEDIA_SND_CAP)) != -1)
 		return match;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	while ((video = get_associated_device(media, video, MEDIA_V4L_VIDEO, NULL, NONE)) != NULL)
 		if (curDev.compare(video) == 0)
 			for (int i = 0; i <= MEDIA_SND_HW; i++)
 				if ((match = checkMatchAudioDevice(media, video, static_cast<device_type>(i))) != -1)
 					return match;
 
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if ((match = checkMatchAudioDevice(media, curDev.toLatin1(), MEDIA_SND_CAP)) != -1)
+		return match;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	return -1;
 }
 #endif

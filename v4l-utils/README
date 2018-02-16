@@ -2,6 +2,24 @@ v4l-utils
 ---------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+Linux V4L2 and DVB API utilities and v4l libraries (libv4l).
+You can always find the latest development v4l-utils in the git repo:
+http://git.linuxtv.org/v4l-utils.git
+
+
+v4l libraries (libv4l, libdvbv5)
+--------------------------------
+
+See README.libv4l for more information on libv4l, libv4l is released
+under the GNU Lesser General Public License.
+
+
+v4l-utils
+---------
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 Linux utilities and libraries to handle media devices (TV devices,
 capture devices, radio devices, remote controllers).
 
@@ -184,6 +202,7 @@ Utilities
 
 The utilities are stored under /util directory.
 
+<<<<<<< HEAD
 =======
 Linux V4L2 and DVB API utilities and v4l libraries (libv4l).
 You can always find the latest development v4l-utils in the git repo:
@@ -200,6 +219,9 @@ under the GNU Lesser General Public License.
 v4l-utils
 ---------
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 The (for now for v4l-utils private use only) libv4l2util library is
 released under the GNU Lesser General Public License, all other code is
 released under the GNU General Public License.
@@ -211,10 +233,17 @@ Decodes tm6000 proprietary format streams.
 Installed by make install under <prefix>/bin.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ir-keytable:
 =======
 v4l-keytable:
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+v4l-keytable:
+=======
+ir-keytable:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 Dump, Load or Modify ir receiver input tables.
 The ir tables for remotes which are known by the kernel
 (and loaded by default depending on dvb card type) can be found
@@ -222,11 +251,19 @@ under utils/keytable/keycodes.
 v4l-keytable does not get installed by make install.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ir-ctl:
 A swiss-knife tool to handle raw IR and to set lirc options
 
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ir-ctl:
+A swiss-knife tool to handle raw IR and to set lirc options
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 qv4l2:
 QT v4l2 control panel application.
 Installed by make install under <prefix>/bin.
@@ -258,6 +295,10 @@ xc3028-firmware:
 Xceive XC2028/3028 tuner module firmware manipulation tool.
 xc3028-firmware does not get installed by make install.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 -------------------
 Syncing with Kernel
@@ -300,5 +341,9 @@ export KERNEL_DIR=location/of/the/kernel/tree && (cd $KERNEL_DIR && make headers
 step 4)
 
 Remove the usr/ from the Kernel tree.
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

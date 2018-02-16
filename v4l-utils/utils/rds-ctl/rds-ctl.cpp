@@ -300,19 +300,33 @@ static std::string cap2s(unsigned cap)
 	if (cap & V4L2_CAP_MODULATOR)
 		s += "\t\tModulator\n";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (cap & V4L2_CAP_AUDIO)
 		s += "\t\tAudio\n";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (cap & V4L2_CAP_AUDIO)
+		s += "\t\tAudio\n";
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_RADIO)
 		s += "\t\tRadio\n";
 	if (cap & V4L2_CAP_READWRITE)
 		s += "\t\tRead/Write\n";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (cap & V4L2_CAP_ASYNCIO)
 		s += "\t\tAsync I/O\n";
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (cap & V4L2_CAP_ASYNCIO)
+		s += "\t\tAsync I/O\n";
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cap & V4L2_CAP_STREAMING)
 		s += "\t\tStreaming\n";
 	if (cap & V4L2_CAP_DEVICE_CAPS)
@@ -389,6 +403,20 @@ static dev_vec list_devices(void)
 	 * and all devices that don't offer the RDS_BLOCK_IO capability */
 	for (dev_vec::iterator iter = files.begin();
 <<<<<<< HEAD
+<<<<<<< HEAD
+			iter != files.end();) {
+=======
+			iter != files.end(); ++iter) {
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+		int fd = open(iter->c_str(), O_RDONLY | O_NONBLOCK);
+		std::string bus_info;
+
+		if (fd < 0)
+			continue;
+		memset(&vt, 0, sizeof(vt));
+		if (ioctl(fd, VIDIOC_G_TUNER, &vt) != 0) {
+			close(fd);
+=======
 			iter != files.end();) {
 		int fd = open(iter->c_str(), O_RDONLY | O_NONBLOCK);
 		std::string bus_info;
@@ -400,27 +428,28 @@ static dev_vec list_devices(void)
 		memset(&vt, 0, sizeof(vt));
 		if (ioctl(fd, VIDIOC_G_TUNER, &vt) != 0) {
 			close(fd);
-			iter++;
-=======
-			iter != files.end(); ++iter) {
-		int fd = open(iter->c_str(), O_RDONLY | O_NONBLOCK);
-		std::string bus_info;
-
-		if (fd < 0)
-			continue;
-		memset(&vt, 0, sizeof(vt));
-		if (ioctl(fd, VIDIOC_G_TUNER, &vt) != 0) {
-			close(fd);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			iter++;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			continue;
 		}
 		/* remove device if it doesn't support rds block I/O */
 		if (vt.capability & V4L2_TUNER_CAP_RDS_BLOCK_IO)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			valid_devices.push_back(*iter++);
 =======
 			valid_devices.push_back(*iter);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			valid_devices.push_back(*iter);
+=======
+			valid_devices.push_back(*iter++);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		else
 			iter = files.erase(iter);
 		close(fd);
@@ -640,6 +669,10 @@ static void print_rds_eon(const struct v4l2_rds_eon_set *eon_set)
 static void print_rds_pi(const struct v4l2_rds *handle)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	uint16_t pi = handle->pi;
 
 	if (handle->is_rbds) {
@@ -671,8 +704,12 @@ static void print_rds_pi(const struct v4l2_rds *handle)
 		if (nibble != 0x0b && nibble != 0x0d && nibble != 0x0e)
 			return;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	printf("\nArea Coverage: %s", v4l2_rds_get_coverage_str(handle));
 }
 
@@ -694,10 +731,17 @@ static void print_rds_data(const struct v4l2_rds *handle, uint32_t updated_field
 
 	if (updated_fields & V4L2_RDS_PTY && handle->valid_fields & V4L2_RDS_PTY)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		printf("\nPTY: %0u -> %s", handle->pty, v4l2_rds_get_pty_str(handle));
 =======
 		printf("\nPTY: %0u -> %s",handle->pty, v4l2_rds_get_pty_str(handle));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		printf("\nPTY: %0u -> %s",handle->pty, v4l2_rds_get_pty_str(handle));
+=======
+		printf("\nPTY: %0u -> %s", handle->pty, v4l2_rds_get_pty_str(handle));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (updated_fields & V4L2_RDS_PTYN && handle->valid_fields & V4L2_RDS_PTYN) {
 		printf("\nPTYN: %s", handle->ptyn);
@@ -711,12 +755,22 @@ static void print_rds_data(const struct v4l2_rds *handle, uint32_t updated_field
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (updated_fields & V4L2_RDS_TP && handle->valid_fields & V4L2_RDS_TP)
+		printf("\nTP: %s  TA: %s", (handle->tp)? "yes":"no",
+			handle->ta? "yes":"no");
+	if (updated_fields & V4L2_RDS_MS && handle->valid_fields & V4L2_RDS_MS)
+		printf("\nMS Flag: %s", (handle->ms)? "Music" : "Speech");
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if ((updated_fields & (V4L2_RDS_TP | V4L2_RDS_TA)) &&
 	    (handle->valid_fields & (V4L2_RDS_TP | V4L2_RDS_TA)))
 		printf("\nTP: %s  TA: %s", (handle->tp) ? "yes" : "no",
 			handle->ta ? "yes" : "no");
 	if (updated_fields & V4L2_RDS_MS && handle->valid_fields & V4L2_RDS_MS)
 		printf("\nMS Flag: %s", (handle->ms) ? "Music" : "Speech");
+<<<<<<< HEAD
 =======
 	if (updated_fields & V4L2_RDS_TP && handle->valid_fields & V4L2_RDS_TP)
 		printf("\nTP: %s  TA: %s", (handle->tp)? "yes":"no",
@@ -724,6 +778,9 @@ static void print_rds_data(const struct v4l2_rds *handle, uint32_t updated_field
 	if (updated_fields & V4L2_RDS_MS && handle->valid_fields & V4L2_RDS_MS)
 		printf("\nMS Flag: %s", (handle->ms)? "Music" : "Speech");
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (updated_fields & V4L2_RDS_ECC && handle->valid_fields & V4L2_RDS_ECC)
 		printf("\nECC: %X%x, Country: %u -> %s",
 		handle->ecc >> 4, handle->ecc & 0x0f, handle->pi >> 12,
@@ -737,10 +794,17 @@ static void print_rds_data(const struct v4l2_rds *handle, uint32_t updated_field
 			handle->decode_information & V4L2_RDS_ODA) {
 		for (int i = 0; i < handle->rds_oda.size; ++i)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			printf("\nODA Group: %02u%c, AID: %08x", handle->rds_oda.oda[i].group_id,
 =======
 			printf("\nODA Group: %02u%c, AID: %08x",handle->rds_oda.oda[i].group_id,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			printf("\nODA Group: %02u%c, AID: %08x",handle->rds_oda.oda[i].group_id,
+=======
+			printf("\nODA Group: %02u%c, AID: %08x", handle->rds_oda.oda[i].group_id,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			handle->rds_oda.oda[i].group_version, handle->rds_oda.oda[i].aid);
 	}
 	if (updated_fields & V4L2_RDS_AF && handle->valid_fields & V4L2_RDS_AF)

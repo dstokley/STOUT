@@ -37,21 +37,36 @@
 #ifdef linux
 #include <sys/time.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <sys/syscall.h>
 =======
 #include <syscall.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#include <syscall.h>
+=======
+#include <sys/syscall.h>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <linux/types.h>
 #include <linux/ioctl.h>
 /* On 32 bits archs we always use mmap2, on 64 bits archs there is no mmap2 */
 #ifdef __NR_mmap2
 <<<<<<< HEAD
+<<<<<<< HEAD
+#if !defined(SYS_mmap2)
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+#define	SYS_mmap2 __NR_mmap2
+=======
 #if !defined(SYS_mmap2)
 #define	SYS_mmap2 __NR_mmap2
-#endif
-=======
-#define	SYS_mmap2 __NR_mmap2
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define	MMAP2_PAGE_SHIFT 12
 #else
 #define	SYS_mmap2 SYS_mmap
@@ -70,6 +85,11 @@
 #define	MAP_ANONYMOUS MAP_ANON
 #define	MMAP2_PAGE_SHIFT 0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+typedef off_t __off_t;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #endif
 
 #if defined(__OpenBSD__)
@@ -79,9 +99,13 @@
 #define	_IOC_NR(cmd) ((cmd) & 0xFF)
 #define	_IOC_TYPE(cmd) IOCGROUP(cmd)
 #define	MMAP2_PAGE_SHIFT 0
+<<<<<<< HEAD
 =======
 typedef off_t __off_t;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #endif
 
 #undef SYS_OPEN
@@ -114,6 +138,19 @@ typedef off_t __off_t;
 #define SYS_MMAP(addr, len, prot, flags, fd, off) \
 	__syscall(SYS_mmap, (void *)(addr), (size_t)(len), \
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+			(int)(prot), (int)(flags), (int)(fd), (__off_t)(off))
+#elif defined(__FreeBSD_kernel__)
+#define SYS_MMAP(addr, len, prot, flags, fd, off) \
+	syscall(SYS_mmap, (void *)(addr), (size_t)(len), \
+			(int)(prot), (int)(flags), (int)(fd), (__off_t)(off))
+#else
+#define SYS_MMAP(addr, len, prot, flags, fd, off) \
+	syscall(SYS_mmap2, (void *)(addr), (size_t)(len), \
+			(int)(prot), (int)(flags), (int)(fd), (__off_t)((off) >> MMAP2_PAGE_SHIFT))
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			(int)(prot), (int)(flags), (int)(fd), (off_t)(off))
 #elif defined(__FreeBSD_kernel__)
 #define SYS_MMAP(addr, len, prot, flags, fd, off) \
@@ -128,6 +165,7 @@ register_t __syscall(quad_t, ...);
 #define SYS_MMAP(addr, len, prot, flags, fd, off) \
 	syscall(SYS_mmap2, (void *)(addr), (size_t)(len), \
 			(int)(prot), (int)(flags), (int)(fd), (off_t)((off) >> MMAP2_PAGE_SHIFT))
+<<<<<<< HEAD
 =======
 			(int)(prot), (int)(flags), (int)(fd), (__off_t)(off))
 #elif defined(__FreeBSD_kernel__)
@@ -139,6 +177,9 @@ register_t __syscall(quad_t, ...);
 	syscall(SYS_mmap2, (void *)(addr), (size_t)(len), \
 			(int)(prot), (int)(flags), (int)(fd), (__off_t)((off) >> MMAP2_PAGE_SHIFT))
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #endif
 
 #define SYS_MUNMAP(addr, len) \

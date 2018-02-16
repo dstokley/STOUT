@@ -1,22 +1,36 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (c) 2013-2014 - Andre Roth <neolynx@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * Copyright (c) 2013 - Andre Roth <neolynx@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * Copyright (c) 2013-2014 - Andre Roth <neolynx@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -26,6 +40,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -36,6 +60,16 @@
 #define _MPEG_TS_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <stdint.h>
+#include <unistd.h> /* ssize_t */
+
+#define DVB_MPEG_TS  0x47
+#define DVB_MPEG_TS_PACKET_SIZE  188
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @file mpeg_ts.h
  * @ingroup dvb_table
@@ -83,6 +117,7 @@
  * @param extension		1 bit	Adaptation field extension flag
  * @param data			Pointer to data
  */
+<<<<<<< HEAD
 =======
 #include <stdint.h>
 #include <unistd.h> /* ssize_t */
@@ -91,6 +126,9 @@
 #define DVB_MPEG_TS_PACKET_SIZE  188
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct dvb_mpeg_ts_adaption {
 	uint8_t length;
 	struct {
@@ -107,6 +145,12 @@ struct dvb_mpeg_ts_adaption {
 } __attribute__((packed));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+struct dvb_mpeg_ts {
+	uint8_t sync_byte; // DVB_MPEG_TS
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @struct dvb_mpeg_ts
  * @brief MPEG TS header
@@ -125,10 +169,14 @@ struct dvb_mpeg_ts_adaption {
  */
 struct dvb_mpeg_ts {
 	uint8_t sync_byte;
+<<<<<<< HEAD
 =======
 struct dvb_mpeg_ts {
 	uint8_t sync_byte; // DVB_MPEG_TS
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	union {
 		uint16_t bitfield;
 		struct {
@@ -154,6 +202,12 @@ extern "C" {
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+ssize_t dvb_mpeg_ts_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, uint8_t *table, ssize_t *table_length);
+void dvb_mpeg_ts_free(struct dvb_mpeg_ts *ts);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief Initialize a struct dvb_mpeg_ts from buffer
  * @ingroup dvb_table
@@ -193,10 +247,14 @@ void dvb_mpeg_ts_free(struct dvb_mpeg_ts *ts);
  *
  * This function prints the fields of struct dvb_mpeg_ts
  */
+<<<<<<< HEAD
 =======
 ssize_t dvb_mpeg_ts_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, uint8_t *table, ssize_t *table_length);
 void dvb_mpeg_ts_free(struct dvb_mpeg_ts *ts);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void dvb_mpeg_ts_print(struct dvb_v5_fe_parms *parms, struct dvb_mpeg_ts *ts);
 
 #ifdef __cplusplus

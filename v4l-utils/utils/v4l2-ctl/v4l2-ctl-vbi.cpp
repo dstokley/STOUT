@@ -17,16 +17,28 @@
 #include "v4l2-ctl.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct v4l2_format vbi_fmt;	/* set_format/get_format for sliced VBI */
 static struct v4l2_format vbi_fmt_out;	/* set_format/get_format for sliced VBI output */
 static struct v4l2_format raw_fmt;	/* set_format/get_format for VBI */
 static struct v4l2_format raw_fmt_out;	/* set_format/get_format for VBI output */
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct v4l2_format vbi_fmt;	/* set_format/get_format for sliced VBI */
 	struct v4l2_format vbi_fmt_out;	/* set_format/get_format for sliced VBI output */
 	struct v4l2_format raw_fmt;	/* set_format/get_format for VBI */
 	struct v4l2_format raw_fmt_out;	/* set_format/get_format for VBI output */
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+static struct v4l2_format vbi_fmt;	/* set_format/get_format for sliced VBI */
+static struct v4l2_format vbi_fmt_out;	/* set_format/get_format for sliced VBI output */
+static struct v4l2_format raw_fmt;	/* set_format/get_format for VBI */
+static struct v4l2_format raw_fmt_out;	/* set_format/get_format for VBI output */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 void vbi_usage(void)
 {
@@ -56,6 +68,10 @@ void vbi_usage(void)
 	       "  --get-fmt-vbi      query the VBI capture format [VIDIOC_G_FMT]\n"
 	       "  --get-fmt-vbi-out  query the VBI output format [VIDIOC_G_FMT]\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	       "  --set-fmt-vbi\n"
 	       "  --try-fmt-vbi\n"
 	       "  --set-fmt-vbi-out\n"
@@ -69,8 +85,12 @@ void vbi_usage(void)
 	       "                     count0: number of lines in the first field\n"
 	       "                     start1: start line number of the second field\n"
 	       "                     count1: number of lines in the second field\n"
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	       );
 }
 
@@ -92,9 +112,15 @@ void vbi_cmd(int ch, char *optarg)
 	bool found_off = false;
 	v4l2_format *fmt = &vbi_fmt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	v4l2_format *raw = &raw_fmt;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	v4l2_format *raw = &raw_fmt;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	switch (ch) {
 	case OptSetSlicedVbiOutFormat:
@@ -105,6 +131,18 @@ void vbi_cmd(int ch, char *optarg)
 	case OptTrySlicedVbiFormat:
 		fmt->fmt.sliced.service_set = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		subs = optarg;
+		while (*subs != '\0') {
+			static const char *const subopts[] = {
+				"off",
+				"teletext",
+				"cc",
+				"wss",
+				"vps",
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (optarg[0] == 0) {
 			fprintf(stderr, "empty string\n");
 			vbi_usage();
@@ -158,6 +196,7 @@ void vbi_cmd(int ch, char *optarg)
 				"start1",
 				"count0",
 				"count1",
+<<<<<<< HEAD
 =======
 		subs = optarg;
 		while (*subs != '\0') {
@@ -168,12 +207,36 @@ void vbi_cmd(int ch, char *optarg)
 				"wss",
 				"vps",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				NULL
 			};
 
 			switch (parse_subopt(&subs, subopts, &value)) {
 			case 0:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+				found_off = true;
+				break;
+			case 1:
+				fmt->fmt.sliced.service_set |=
+					V4L2_SLICED_TELETEXT_B;
+				break;
+			case 2:
+				fmt->fmt.sliced.service_set |=
+					V4L2_SLICED_CAPTION_525;
+				break;
+			case 3:
+				fmt->fmt.sliced.service_set |=
+					V4L2_SLICED_WSS_625;
+				break;
+			case 4:
+				fmt->fmt.sliced.service_set |=
+					V4L2_SLICED_VPS;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				raw->fmt.vbi.sampling_rate = strtoul(value, NULL, 0);
 				break;
 			case 1:
@@ -193,6 +256,7 @@ void vbi_cmd(int ch, char *optarg)
 				break;
 			case 6:
 				raw->fmt.vbi.count[1] = strtoul(value, NULL, 0);
+<<<<<<< HEAD
 =======
 				found_off = true;
 				break;
@@ -212,6 +276,9 @@ void vbi_cmd(int ch, char *optarg)
 				fmt->fmt.sliced.service_set |=
 					V4L2_SLICED_VPS;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				break;
 			default:
 				vbi_usage();
@@ -219,18 +286,30 @@ void vbi_cmd(int ch, char *optarg)
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (found_off && fmt->fmt.sliced.service_set) {
 			fprintf(stderr, "Sliced VBI mode 'off' cannot be combined with other modes\n");
 			vbi_usage();
 			exit(1);
 		}
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	}
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static void fill_raw_vbi(v4l2_vbi_format &dst, const v4l2_vbi_format &src)
 {
 	if (src.sampling_rate)
@@ -249,8 +328,12 @@ static void fill_raw_vbi(v4l2_vbi_format &dst, const v4l2_vbi_format &src)
 		dst.count[1] = src.count[1];
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void vbi_set(int fd)
 {
 	int ret;
@@ -275,6 +358,10 @@ void vbi_set(int fd)
 			printfmt(vbi_fmt_out);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (options[OptSetVbiFormat] || options[OptTryVbiFormat]) {
 		v4l2_format fmt;
@@ -303,8 +390,12 @@ void vbi_set(int fd)
 		if (ret == 0 && (verbose || options[OptTryVbiOutFormat]))
 			printfmt(vbi_fmt);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void vbi_get(int fd)

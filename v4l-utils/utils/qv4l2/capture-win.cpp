@@ -20,11 +20,19 @@
 #include "capture-win.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #undef min
 #undef max
 
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#undef min
+#undef max
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <QCloseEvent>
 #include <QLabel>
 #include <QImage>
@@ -33,19 +41,30 @@
 #include <QDesktopWidget>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#define MIN_WIN_SIZE_WIDTH 160
+#define MIN_WIN_SIZE_HEIGHT 120
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <math.h>
 
 #define MIN_WIN_SIZE_WIDTH 16
 #define MIN_WIN_SIZE_HEIGHT 12
+<<<<<<< HEAD
 =======
 #define MIN_WIN_SIZE_WIDTH 160
 #define MIN_WIN_SIZE_HEIGHT 120
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 bool CaptureWin::m_enableScaling = true;
 double CaptureWin::m_pixelAspectRatio = 1.0;
 CropMethod CaptureWin::m_cropMethod = QV4L2_CROP_NONE;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 CaptureWin::CaptureWin(ApplicationWindow *aw) :
 	m_appWin(aw)
@@ -54,11 +73,26 @@ CaptureWin::CaptureWin() :
 	m_curWidth(-1),
 	m_curHeight(-1)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+CaptureWin::CaptureWin() :
+	m_curWidth(-1),
+	m_curHeight(-1)
+=======
+CaptureWin::CaptureWin(ApplicationWindow *aw) :
+	m_appWin(aw)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	setWindowTitle("V4L2 Capture");
 	m_hotkeyClose = new QShortcut(Qt::CTRL+Qt::Key_W, this);
 	connect(m_hotkeyClose, SIGNAL(activated()), this, SLOT(close()));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	m_hotkeyScaleReset = new QShortcut(Qt::CTRL+Qt::Key_F, this);
+	connect(m_hotkeyScaleReset, SIGNAL(activated()), this, SLOT(resetSize()));
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	connect(new QShortcut(Qt::Key_Q, this), SIGNAL(activated()), this, SLOT(close()));
 	m_hotkeyScaleReset = new QShortcut(Qt::CTRL+Qt::Key_F, this);
 	connect(m_hotkeyScaleReset, SIGNAL(activated()), this, SLOT(resetSize()));
@@ -88,10 +122,14 @@ CaptureWin::CaptureWin() :
 	m_origFrameSize.setHeight(0);
 	m_windowSize.setWidth(0);
 	m_windowSize.setHeight(0);
+<<<<<<< HEAD
 =======
 	m_hotkeyScaleReset = new QShortcut(Qt::CTRL+Qt::Key_F, this);
 	connect(m_hotkeyScaleReset, SIGNAL(activated()), this, SLOT(resetSize()));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 CaptureWin::~CaptureWin()
@@ -106,6 +144,19 @@ CaptureWin::~CaptureWin()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+void CaptureWin::buildWindow(QWidget *videoSurface)
+{
+	int l, t, r, b;
+	QVBoxLayout *vbox = new QVBoxLayout(this);
+	m_information.setText("No Frame");
+	vbox->addWidget(videoSurface, 2000);
+	vbox->addWidget(&m_information, 1, Qt::AlignBottom);
+	vbox->getContentsMargins(&l, &t, &r, &b);
+	vbox->setSpacing(b);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void CaptureWin::setFrame(int width, int height, __u32 format,
 	  unsigned char *data, unsigned char *data2, unsigned char *data3)
 {
@@ -136,6 +187,7 @@ void CaptureWin::buildWindow(QWidget *videoSurface)
 
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(this, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
+<<<<<<< HEAD
 =======
 void CaptureWin::buildWindow(QWidget *videoSurface)
 {
@@ -147,11 +199,70 @@ void CaptureWin::buildWindow(QWidget *videoSurface)
 	vbox->getContentsMargins(&l, &t, &r, &b);
 	vbox->setSpacing(b);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void CaptureWin::resetSize()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (isMaximized())
+		showNormal();
+
+	int w = m_curWidth;
+	int h = m_curHeight;
+	m_curWidth = -1;
+	m_curHeight = -1;
+	resize(w, h);
+}
+
+int CaptureWin::cropHeight(int width, int height)
+{
+	double realWidth = width * m_pixelAspectRatio;
+	int validHeight;
+
+	switch (m_cropMethod) {
+	case QV4L2_CROP_W149:
+		validHeight = realWidth / (14.0 / 9.0);
+		break;
+	case QV4L2_CROP_W169:
+		validHeight = realWidth / (16.0 / 9.0);
+		break;
+	case QV4L2_CROP_C185:
+		validHeight = realWidth / 1.85;
+		break;
+	case QV4L2_CROP_C239:
+		validHeight = realWidth / 2.39;
+		break;
+	case QV4L2_CROP_TB:
+		validHeight = height - 2;
+		break;
+	default:
+		return 0;
+	}
+
+	if (validHeight < MIN_WIN_SIZE_HEIGHT || validHeight >= height)
+		return 0;
+
+	return (height - validHeight) / 2;
+}
+
+int CaptureWin::cropWidth(int width, int height)
+{
+	if (m_cropMethod != QV4L2_CROP_P43)
+		return 0;
+
+	int validWidth = (height * 4.0 / 3.0) / m_pixelAspectRatio;
+
+	if (validWidth < MIN_WIN_SIZE_WIDTH || validWidth >= width)
+		return 0;
+
+	return (width - validWidth) / 2;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
         // Force resize even if no size change
 	QSize resetFrameSize = m_origFrameSize;
 	m_origFrameSize.setWidth(0);
@@ -218,66 +329,42 @@ void CaptureWin::updateSize()
 		m_crop.delta = (m_frame.size - m_crop.size) / 2;
 		m_crop.updated = true;
 	}
-=======
-	if (isMaximized())
-		showNormal();
-
-	int w = m_curWidth;
-	int h = m_curHeight;
-	m_curWidth = -1;
-	m_curHeight = -1;
-	resize(w, h);
-}
-
-int CaptureWin::cropHeight(int width, int height)
-{
-	double realWidth = width * m_pixelAspectRatio;
-	int validHeight;
-
-	switch (m_cropMethod) {
-	case QV4L2_CROP_W149:
-		validHeight = realWidth / (14.0 / 9.0);
-		break;
-	case QV4L2_CROP_W169:
-		validHeight = realWidth / (16.0 / 9.0);
-		break;
-	case QV4L2_CROP_C185:
-		validHeight = realWidth / 1.85;
-		break;
-	case QV4L2_CROP_C239:
-		validHeight = realWidth / 2.39;
-		break;
-	case QV4L2_CROP_TB:
-		validHeight = height - 2;
-		break;
-	default:
-		return 0;
-	}
-
-	if (validHeight < MIN_WIN_SIZE_HEIGHT || validHeight >= height)
-		return 0;
-
-	return (height - validHeight) / 2;
-}
-
-int CaptureWin::cropWidth(int width, int height)
-{
-	if (m_cropMethod != QV4L2_CROP_P43)
-		return 0;
-
-	int validWidth = (height * 4.0 / 3.0) / m_pixelAspectRatio;
-
-	if (validWidth < MIN_WIN_SIZE_WIDTH || validWidth >= width)
-		return 0;
-
-	return (width - validWidth) / 2;
->>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 void CaptureWin::setCropMethod(CropMethod crop)
 {
 	m_cropMethod = crop;
 <<<<<<< HEAD
+	QResizeEvent event (QSize(width(), height()), QSize(width(), height()));
+	QCoreApplication::sendEvent(this, &event);
+}
+
+int CaptureWin::actualFrameWidth(int width)
+{
+	if (m_enableScaling && m_pixelAspectRatio > 1)
+		return width * m_pixelAspectRatio;
+
+<<<<<<< HEAD
+	return (width - validWidth) / 2;
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	return width;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+}
+
+int CaptureWin::actualFrameHeight(int height)
+{
+<<<<<<< HEAD
+	m_cropMethod = crop;
+<<<<<<< HEAD
+=======
+	if (m_enableScaling && m_pixelAspectRatio < 1)
+		return height / m_pixelAspectRatio;
+
+	return height;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	resetSize();
 }
 
@@ -293,6 +380,7 @@ QSize CaptureWin::pixelAspectFrameSize(QSize size)
 		size.rheight() /= m_pixelAspectRatio;
 
 	return size;
+<<<<<<< HEAD
 =======
 	QResizeEvent event (QSize(width(), height()), QSize(width(), height()));
 	QCoreApplication::sendEvent(this, &event);
@@ -313,6 +401,9 @@ int CaptureWin::actualFrameHeight(int height)
 
 	return height;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 QSize CaptureWin::getMargins()
@@ -320,10 +411,17 @@ QSize CaptureWin::getMargins()
 	int l, t, r, b;
 	layout()->getContentsMargins(&l, &t, &r, &b);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return QSize(l + r, t + b);
 =======
 	return QSize(l + r, t + b + m_information.minimumSizeHint().height() + layout()->spacing());
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	return QSize(l + r, t + b + m_information.minimumSizeHint().height() + layout()->spacing());
+=======
+	return QSize(l + r, t + b);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void CaptureWin::enableScaling(bool enable)
@@ -331,15 +429,24 @@ void CaptureWin::enableScaling(bool enable)
 	if (!enable) {
 		QSize margins = getMargins();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		QWidget::setMinimumSize(m_origFrameSize.width() + margins.width(),
 					m_origFrameSize.height() + margins.height());
 =======
 		QWidget::setMinimumSize(m_curWidth + margins.width(), m_curHeight + margins.height());
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		QWidget::setMinimumSize(m_curWidth + margins.width(), m_curHeight + margins.height());
+=======
+		QWidget::setMinimumSize(m_origFrameSize.width() + margins.width(),
+					m_origFrameSize.height() + margins.height());
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	} else {
 		QWidget::setMinimumSize(MIN_WIN_SIZE_WIDTH, MIN_WIN_SIZE_HEIGHT);
 	}
 	m_enableScaling = enable;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	resetSize();
 }
@@ -375,6 +482,8 @@ void CaptureWin::setWindowSize(QSize frameSize)
 
 	QWidget::resize(windowSize);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	QResizeEvent event (QSize(width(), height()), QSize(width(), height()));
 	QCoreApplication::sendEvent(this, &event);
 }
@@ -412,31 +521,55 @@ void CaptureWin::resize(int width, int height)
 
 	QWidget::setMinimumSize(MIN_WIN_SIZE_WIDTH, MIN_WIN_SIZE_HEIGHT);
 	QWidget::resize(width, height);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	resetSize();
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+}
+
+void CaptureWin::setWindowSize(QSize frameSize)
+{
+<<<<<<< HEAD
+<<<<<<< HEAD
+	QSize actualSize = pixelAspectFrameSize(cropSize(frame));
+=======
+	// Dont resize window if the frame size is the same in
+	// the event the window has been paused when beeing resized.
+	if (frameSize == m_origFrameSize)
+		return;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+
+	m_origFrameSize = frameSize;
+
+	QSize margins = getMargins();
+	QDesktopWidget *screen = QApplication::desktop();
+	QRect resolution = screen->screenGeometry();
+
+	QSize windowSize =  pixelAspectFrameSize(cropSize(frameSize)) + margins;
+
+	if (windowSize.width() > resolution.width())
+		windowSize.setWidth(resolution.width());
+	if (windowSize.width() < MIN_WIN_SIZE_WIDTH)
+		windowSize.setWidth(MIN_WIN_SIZE_WIDTH);
+
+	if (windowSize.height() > resolution.height())
+		windowSize.setHeight(resolution.height());
+	if (windowSize.height() < MIN_WIN_SIZE_HEIGHT)
+		windowSize.setHeight(MIN_WIN_SIZE_HEIGHT);
+
+	QWidget::setMinimumSize(MIN_WIN_SIZE_WIDTH, MIN_WIN_SIZE_HEIGHT);
+
+	m_frame.size = frameSize;
+
+	QWidget::resize(windowSize);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 }
 
 QSize CaptureWin::scaleFrameSize(QSize window, QSize frame)
 {
 <<<<<<< HEAD
-	QSize actualSize = pixelAspectFrameSize(cropSize(frame));
-
-	if (!m_enableScaling) {
-		window.setWidth(actualSize.width());
-		window.setHeight(actualSize.height());
-	}
-
-	qreal newW, newH;
-	if (window.width() >= window.height()) {
-		newW = (qreal)window.width() / actualSize.width();
-		newH = (qreal)window.height() / actualSize.height();
-	} else {
-		newH = (qreal)window.width() / actualSize.width();
-		newW = (qreal)window.height() / actualSize.height();
-	}
-	qreal resized = (qreal)std::min(newW, newH);
-
-	return (actualSize * resized);
-=======
 	int actualWidth = actualFrameWidth(frame.width() - cropWidth(frame.width(), frame.height()) * 2);
 	int actualHeight = actualFrameHeight(frame.height() - cropHeight(frame.width(), frame.height()) * 2);
 
@@ -456,13 +589,42 @@ QSize CaptureWin::scaleFrameSize(QSize window, QSize frame)
 	double resized = std::min(newW, newH);
 
 	return QSize((int)(actualWidth * resized), (int)(actualHeight * resized));
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	QSize actualSize = pixelAspectFrameSize(cropSize(frame));
+
+	if (!m_enableScaling) {
+		window.setWidth(actualSize.width());
+		window.setHeight(actualSize.height());
+	}
+
+	qreal newW, newH;
+	if (window.width() >= window.height()) {
+		newW = (qreal)window.width() / actualSize.width();
+		newH = (qreal)window.height() / actualSize.height();
+	} else {
+		newH = (qreal)window.width() / actualSize.width();
+		newW = (qreal)window.height() / actualSize.height();
+	}
+	qreal resized = (qreal)std::min(newW, newH);
+
+	return (actualSize * resized);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void CaptureWin::setPixelAspectRatio(double ratio)
 {
 	m_pixelAspectRatio = ratio;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	QResizeEvent event(QSize(width(), height()), QSize(width(), height()));
+	QCoreApplication::sendEvent(this, &event);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	resetSize();
 }
 
@@ -543,10 +705,14 @@ void CaptureWin::customMenuRequested(QPoint pos)
 	menu->addMenu(m_appWin->m_overrideQuantizationMenu);
 	
 	menu->popup(mapToGlobal(pos));
+<<<<<<< HEAD
 =======
 	QResizeEvent event(QSize(width(), height()), QSize(width(), height()));
 	QCoreApplication::sendEvent(this, &event);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void CaptureWin::closeEvent(QCloseEvent *event)

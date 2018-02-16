@@ -40,19 +40,32 @@ struct fe_caps_name fe_caps_name[31] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct fe_status_name fe_status_name[8] = {
 =======
 struct fe_status_name fe_status_name[7] = {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+struct fe_status_name fe_status_name[7] = {
+=======
+struct fe_status_name fe_status_name[8] = {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{ FE_HAS_CARRIER, "CARRIER" },
 	{ FE_HAS_LOCK,    "LOCK" },
 	{ FE_HAS_SIGNAL,  "SIGNAL" },
 	{ FE_HAS_SYNC,    "SYNC" },
 	{ FE_HAS_VITERBI, "VITERBI" },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ FE_NONE,        "NONE" },
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	{ FE_NONE,        "NONE" },
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{ FE_REINIT,      "REINIT" },
 	{ FE_TIMEDOUT,    "TIMEDOUT" },
 };

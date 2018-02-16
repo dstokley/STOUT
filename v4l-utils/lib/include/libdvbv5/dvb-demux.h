@@ -1,25 +1,40 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation version 2
+ * of the License.
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * Copyright (c) 2011-2014 - Mauro Carvalho Chehab
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
+<<<<<<< HEAD
 =======
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 <<<<<<< HEAD
+<<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
  * These routines were originally written as part of the dvb-apps, as:
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -28,7 +43,15 @@
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * These routines were written as part of the dvb-apps, as:
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * These routines were originally written as part of the dvb-apps, as:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *	util functions for various ?zap implementations
  *
  *	Copyright (C) 2001 Johannes Stezenbach (js@convergence.de)
@@ -36,6 +59,15 @@
  *
  *	Originally licensed as GPLv2 or upper
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+ *
+ * All subsequent changes are under GPLv2 only and are:
+ *	Copyright (c) 2011-2012 - Mauro Carvalho Chehab
+ *
+ */
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  */
 
 /**
@@ -49,6 +81,7 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+<<<<<<< HEAD
 =======
  *
  * All subsequent changes are under GPLv2 only and are:
@@ -56,6 +89,9 @@
  *
  */
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifndef _DVB_DEMUX_H
 #define _DVB_DEMUX_H
 
@@ -66,6 +102,17 @@ extern "C" {
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+int dvb_dmx_open(int adapter, int demux);
+void dvb_dmx_close(int dmx_fd);
+void dvb_dmx_stop(int dmx_fd);
+
+int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
+		      dmx_output_t output, int buffersize);
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief Opens a DVB demux in read/write mode
  * @ingroup demux
@@ -154,6 +201,7 @@ int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
  * @return Retuns zero on success, -1 otherwise.
  *
  */
+<<<<<<< HEAD
 =======
 int dvb_dmx_open(int adapter, int demux);
 void dvb_dmx_close(int dmx_fd);
@@ -163,6 +211,9 @@ int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
 		      dmx_output_t output, int buffersize);
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
 			   unsigned char *filter,
 			   unsigned char *mask,
@@ -170,6 +221,11 @@ int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
 			   unsigned int flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+int get_pmt_pid(const char *dmxdev, int sid);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief read the contents of the MPEG-TS PAT table, seeking for
  *		      	an specific service ID
@@ -186,9 +242,13 @@ int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
  * @warning This function currently assumes that the PAT fits into one session.
  */
 int dvb_get_pmt_pid(int dmxfd, int sid);
+<<<<<<< HEAD
 =======
 int get_pmt_pid(const char *dmxdev, int sid);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #ifdef __cplusplus
 }

@@ -2,19 +2,31 @@
  * Copyright (c) 2013 - Andre Roth <neolynx@gmail.com>
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -24,6 +36,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -31,6 +53,10 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @file atsc_eit.h
  * @ingroup dvb_table
@@ -50,8 +76,12 @@
  * Please submit bug reports and patches to linux-media@vger.kernel.org
  */
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifndef _ATSC_EIT_H
 #define _ATSC_EIT_H
 
@@ -62,6 +92,12 @@
 #include <libdvbv5/atsc_header.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#define ATSC_TABLE_EIT        0xCB
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @def ATSC_TABLE_EIT
  *	@brief ATSC EIT table ID
@@ -95,10 +131,14 @@
  * be bit-mapped to the data parsed from the MPEG TS. So, metadata are added
  * there.
  */
+<<<<<<< HEAD
 =======
 #define ATSC_TABLE_EIT        0xCB
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct atsc_table_eit_event {
 	union {
 		uint16_t bitfield;
@@ -125,6 +165,10 @@ struct atsc_table_eit_event {
 } __attribute__((packed));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @union atsc_table_eit_desc_length
  * @brief ATSC EIT descriptor length
@@ -140,8 +184,12 @@ struct atsc_table_eit_event {
  * are fields that are reserved. They shouldn't be used, as they may change
  * on future API releases.
  */
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 union atsc_table_eit_desc_length {
 	uint16_t bitfield;
 	struct {
@@ -151,6 +199,12 @@ union atsc_table_eit_desc_length {
 } __attribute__((packed));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+struct atsc_table_eit {
+	ATSC_HEADER();
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @struct atsc_table_eit
  * @brief ATSC EIT table
@@ -171,15 +225,25 @@ union atsc_table_eit_desc_length {
 struct atsc_table_eit {
 	struct dvb_table_header header;
 	uint8_t  protocol_version;
+<<<<<<< HEAD
 =======
 struct atsc_table_eit {
 	ATSC_HEADER();
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	uint8_t events;
 	struct atsc_table_eit_event *event;
 } __attribute__((packed));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#define atsc_eit_event_foreach(_event, _eit) \
+	for( struct atsc_table_eit_event *_event = _eit->event; _event; _event = _event->next ) \
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief Macro used to find event on an ATSC EIT table
  * @ingroup dvb_table
@@ -190,10 +254,14 @@ struct atsc_table_eit {
 #define atsc_eit_event_foreach(_event, _eit) \
 	if (_eit && _eit->event) \
 		for( struct atsc_table_eit_event *_event = _eit->event; _event; _event = _event->next ) \
+<<<<<<< HEAD
 =======
 #define atsc_eit_event_foreach(_event, _eit) \
 	for( struct atsc_table_eit_event *_event = _eit->event; _event; _event = _event->next ) \
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 struct dvb_v5_fe_parms;
 
@@ -202,6 +270,13 @@ extern "C" {
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+ssize_t atsc_table_eit_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, struct atsc_table_eit **table);
+void atsc_table_eit_free(struct atsc_table_eit *eit);
+void atsc_table_eit_print(struct dvb_v5_fe_parms *parms, struct atsc_table_eit *eit);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief Initializes and parses ATSC EIT table
  * @ingroup dvb_table
@@ -247,11 +322,15 @@ void atsc_table_eit_print(struct dvb_v5_fe_parms *parms,
  * @param tm		pointer to struct tm where the converted timestamp will
  *			be stored.
  */
+<<<<<<< HEAD
 =======
 ssize_t atsc_table_eit_init (struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, struct atsc_table_eit **table);
 void atsc_table_eit_free(struct atsc_table_eit *eit);
 void atsc_table_eit_print(struct dvb_v5_fe_parms *parms, struct atsc_table_eit *eit);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void atsc_time(const uint32_t start_time, struct tm *tm);
 
 #ifdef __cplusplus

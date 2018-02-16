@@ -1,8 +1,15 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # table streamzap, type: RC-5-SZ
 =======
 # table streamzap, type: RC5_SZ
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+# table streamzap, type: RC5_SZ
+=======
+# table streamzap, type: RC-5-SZ
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 0x28c0 KEY_NUMERIC_0
 0x28c1 KEY_NUMERIC_1
 0x28c2 KEY_NUMERIC_2

@@ -1,22 +1,36 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (c) 2013-2014 - Andre Roth <neolynx@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * Copyright (c) 2013 - Andre Roth <neolynx@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * Copyright (c) 2013-2014 - Andre Roth <neolynx@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -26,6 +40,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -36,6 +60,13 @@
 #define _MPEG_ES_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <stdint.h>
+#include <unistd.h> /* ssize_t */
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @file mpeg_es.h
  * @ingroup dvb_table
@@ -76,11 +107,15 @@
  *	@brief Slices
  *	@ingroup dvb_table
  */
+<<<<<<< HEAD
 =======
 #include <stdint.h>
 #include <unistd.h> /* ssize_t */
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define DVB_MPEG_ES_PIC_START  0x00
 #define DVB_MPEG_ES_USER_DATA  0xb2
 #define DVB_MPEG_ES_SEQ_START  0xb3
@@ -89,6 +124,10 @@
 #define DVB_MPEG_ES_SLICES     0x01 ... 0xaf
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @struct dvb_mpeg_es_seq_start
  * @brief MPEG ES Sequence header
@@ -107,8 +146,12 @@
  * @param one		Should be 1
  * @param bitrate	Bitrate
  */
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct dvb_mpeg_es_seq_start {
 	union {
 		uint32_t bitfield;
@@ -140,6 +183,10 @@ struct dvb_mpeg_es_seq_start {
 } __attribute__((packed));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @struct dvb_mpeg_es_pic_start
  * @brief MPEG ES Picture start header
@@ -152,8 +199,12 @@ struct dvb_mpeg_es_seq_start {
  * @param coding_type	Frame type (enum dvb_mpeg_es_frame_t)
  * @param temporal_ref	Temporal sequence number
  */
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct dvb_mpeg_es_pic_start {
 	union {
 		uint32_t bitfield;
@@ -174,6 +225,10 @@ struct dvb_mpeg_es_pic_start {
 } __attribute__((packed));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @enum dvb_mpeg_es_frame_t
  * @brief MPEG frame types
@@ -190,8 +245,12 @@ struct dvb_mpeg_es_pic_start {
  * @var DVB_MPEG_ES_FRAME_D
  *	@brief	D frame
  */
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 enum dvb_mpeg_es_frame_t
 {
 	DVB_MPEG_ES_FRAME_UNKNOWN,
@@ -201,13 +260,21 @@ enum dvb_mpeg_es_frame_t
 	DVB_MPEG_ES_FRAME_D
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 /**
  * @brief Vector that translates from enum dvb_mpeg_es_frame_t to string.
  * @ingroup dvb_table
  */
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 extern const char *dvb_mpeg_es_frame_names[5];
 
 struct dvb_v5_fe_parms;
@@ -217,6 +284,15 @@ extern "C" {
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+int  dvb_mpeg_es_seq_start_init (const uint8_t *buf, ssize_t buflen, struct dvb_mpeg_es_seq_start *seq_start);
+void dvb_mpeg_es_seq_start_print(struct dvb_v5_fe_parms *parms, struct dvb_mpeg_es_seq_start *seq_start);
+
+int  dvb_mpeg_es_pic_start_init (const uint8_t *buf, ssize_t buflen, struct dvb_mpeg_es_pic_start *pic_start);
+void dvb_mpeg_es_pic_start_print(struct dvb_v5_fe_parms *parms, struct dvb_mpeg_es_pic_start *pic_start);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief Initialize a struct dvb_mpeg_es_seq_start from buffer
  * @ingroup dvb_table
@@ -274,6 +350,7 @@ int  dvb_mpeg_es_pic_start_init (const uint8_t *buf, ssize_t buflen,
  */
 void dvb_mpeg_es_pic_start_print(struct dvb_v5_fe_parms *parms,
 		struct dvb_mpeg_es_pic_start *pic_start);
+<<<<<<< HEAD
 =======
 int  dvb_mpeg_es_seq_start_init (const uint8_t *buf, ssize_t buflen, struct dvb_mpeg_es_seq_start *seq_start);
 void dvb_mpeg_es_seq_start_print(struct dvb_v5_fe_parms *parms, struct dvb_mpeg_es_seq_start *seq_start);
@@ -281,6 +358,9 @@ void dvb_mpeg_es_seq_start_print(struct dvb_v5_fe_parms *parms, struct dvb_mpeg_
 int  dvb_mpeg_es_pic_start_init (const uint8_t *buf, ssize_t buflen, struct dvb_mpeg_es_pic_start *pic_start);
 void dvb_mpeg_es_pic_start_print(struct dvb_v5_fe_parms *parms, struct dvb_mpeg_es_pic_start *pic_start);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #ifdef __cplusplus
 }

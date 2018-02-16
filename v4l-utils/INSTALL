@@ -9,6 +9,16 @@ Building:
 
 If you checked out the source repository you need to install the autotools
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+environment and gettext first. Then type "autoreconf -vfi" to generate the
+configure script.
+
+Then execute "configure" with any desired options. You can get a summary via
+the --help option.
+After configuration simply type "make" to start the build process.
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 environment and gettext first.
 
 The autotools/gettext should be updated to the version that are shipped
@@ -23,6 +33,7 @@ If used without arguments, it will set the install prefix to /usr/local/.
 
 After configuration you need to start the build process with:
 	$ make
+<<<<<<< HEAD
 =======
 environment and gettext first. Then type "autoreconf -vfi" to generate the
 configure script.
@@ -31,24 +42,37 @@ Then execute "configure" with any desired options. You can get a summary via
 the --help option.
 After configuration simply type "make" to start the build process.
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 Installing:
 -----------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+To install it at the prefix configured by ./configure, do, as root:
+	# make install
+=======
+To install do "make install". The configured paths will be used.
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+
+Note that v4l-utils' "make install" supports DESTDIR for installing into
+a build root for example:
+make install DESTDIR=/mnt/sysimage
+=======
 To install it at the prefix configured by ./configure, do, as root:
 	# make install
 
 Note that v4l-utils' "make install" supports DESTDIR for installing into
 a build root for example:
-	# make install DESTDIR=/mnt/sysimage
-=======
-To install do "make install". The configured paths will be used.
-
-Note that v4l-utils' "make install" supports DESTDIR for installing into
-a build root for example:
+<<<<<<< HEAD
 make install DESTDIR=/mnt/sysimage
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	# make install DESTDIR=/mnt/sysimage
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 Cross Compiling:
 ----------------

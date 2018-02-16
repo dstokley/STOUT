@@ -1,7 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+/* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /*
  *  User level driver support for input subsystem
  *
@@ -25,6 +31,10 @@
  *
  * Changes/Revisions:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *	0.5	08/13/2015 (David Herrmann <dh.herrmann@gmail.com> &
  *			    Benjamin Tissoires <benjamin.tissoires@redhat.com>)
  *		- add UI_DEV_SETUP ioctl
@@ -32,8 +42,12 @@
  *		- add UI_GET_VERSION ioctl
  *	0.4	01/09/2014 (Benjamin Tissoires <benjamin.tissoires@redhat.com>)
  *		- add UI_GET_SYSNAME ioctl
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *	0.3	24/05/2006 (Anssi Hannula <anssi.hannulagmail.com>)
  *		- update ff support for the changes in kernel interface
  *		- add UINPUT_VERSION
@@ -44,6 +58,7 @@
  *		- first public version
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef __UINPUT_H_
 #define __UINPUT_H_
 
@@ -52,6 +67,8 @@
 #define UINPUT_VERSION		5
 #define UINPUT_MAX_NAME_SIZE	80
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifndef _UAPI__UINPUT_H_
 #define _UAPI__UINPUT_H_
 
@@ -59,7 +76,19 @@
 
 #define UINPUT_VERSION		3
 
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#ifndef __UINPUT_H_
+#define __UINPUT_H_
+
+#include <linux/input.h>
+
+#define UINPUT_VERSION		5
+#define UINPUT_MAX_NAME_SIZE	80
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 struct uinput_ff_upload {
 	uint32_t			request_id;
@@ -80,6 +109,10 @@ struct uinput_ff_erase {
 #define UI_DEV_DESTROY		_IO(UINPUT_IOCTL_BASE, 2)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct uinput_setup {
 	struct input_id id;
 	char name[UINPUT_MAX_NAME_SIZE];
@@ -150,8 +183,12 @@ struct uinput_abs_setup {
  */
 #define UI_ABS_SETUP _IOW(UINPUT_IOCTL_BASE, 4, struct uinput_abs_setup)
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define UI_SET_EVBIT		_IOW(UINPUT_IOCTL_BASE, 100, int)
 #define UI_SET_KEYBIT		_IOW(UINPUT_IOCTL_BASE, 101, int)
 #define UI_SET_RELBIT		_IOW(UINPUT_IOCTL_BASE, 102, int)
@@ -170,6 +207,10 @@ struct uinput_abs_setup {
 #define UI_END_FF_ERASE		_IOW(UINPUT_IOCTL_BASE, 203, struct uinput_ff_erase)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * UI_GET_SYSNAME - get the sysfs name of the created uinput device
  *
@@ -188,8 +229,12 @@ struct uinput_abs_setup {
  */
 #define UI_GET_VERSION		_IOR(UINPUT_IOCTL_BASE, 45, unsigned int)
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /*
  * To write a force-feedback-capable driver, the upload_effect
  * and erase_effect callbacks in input_dev must be implemented.
@@ -242,9 +287,15 @@ struct uinput_abs_setup {
 #define UI_FF_ERASE		2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define UINPUT_MAX_NAME_SIZE	80
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#define UINPUT_MAX_NAME_SIZE	80
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct uinput_user_dev {
 	char name[UINPUT_MAX_NAME_SIZE];
 	struct input_id id;
@@ -255,7 +306,14 @@ struct uinput_user_dev {
 	int32_t absflat[ABS_CNT];
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* __UINPUT_H_ */
 =======
 #endif /* _UAPI__UINPUT_H_ */
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#endif /* _UAPI__UINPUT_H_ */
+=======
+#endif /* __UINPUT_H_ */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

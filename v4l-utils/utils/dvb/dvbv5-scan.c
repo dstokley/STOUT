@@ -33,6 +33,15 @@
 #include <config.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <linux/dvb/dmx.h>
+#include "libdvbv5/dvb-file.h"
+#include "libdvbv5/dvb-demux.h"
+#include "libdvbv5/dvb-v5-std.h"
+#include "libdvbv5/dvb-scan.h"
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifdef ENABLE_NLS
 # define _(string) gettext(string)
 # include "gettext.h"
@@ -52,6 +61,7 @@
 #include "libdvbv5/dvb-v5-std.h"
 #include "libdvbv5/dvb-scan.h"
 #include "libdvbv5/countries.h"
+<<<<<<< HEAD
 =======
 #include <linux/dvb/dmx.h>
 #include "libdvbv5/dvb-file.h"
@@ -59,6 +69,9 @@
 #include "libdvbv5/dvb-v5-std.h"
 #include "libdvbv5/dvb-scan.h"
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #define PROGRAM_NAME	"dvbv5-scan"
 #define DEFAULT_OUTPUT  "dvb_channel.conf"
@@ -70,17 +83,26 @@ struct arguments {
 	char *confname, *lnb_name, *output, *demux_dev;
 	unsigned adapter, n_adapter, adapter_fe, adapter_dmx, frontend, demux, get_detected, get_nit;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int lna, lnb, sat_number, freq_bpf;
-	unsigned diseqc_wait, dont_add_new_freqs, timeout_multiply;
-	unsigned other_nit;
-	enum dvb_file_formats input_format, output_format;
-	const char *cc;
 =======
 	int force_dvbv3, lna, lnb, sat_number, freq_bpf;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	unsigned diseqc_wait, dont_add_new_freqs, timeout_multiply;
 	unsigned other_nit;
 	enum file_formats input_format, output_format;
+=======
+	int lna, lnb, sat_number, freq_bpf;
+	unsigned diseqc_wait, dont_add_new_freqs, timeout_multiply;
+	unsigned other_nit;
+<<<<<<< HEAD
+	enum file_formats input_format, output_format;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	enum dvb_file_formats input_format, output_format;
+	const char *cc;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	/* Used by status print */
 	unsigned n_status_lines;
@@ -88,6 +110,28 @@ struct arguments {
 
 static const struct argp_option options[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	{"adapter",	'a',	"adapter#",		0, "use given adapter (default 0)", 0},
+	{"frontend",	'f',	"frontend#",		0, "use given frontend (default 0)", 0},
+	{"demux",	'd',	"demux#",		0, "use given demux (default 0)", 0},
+	{"lnbf",	'l',	"LNBf_type",		0, "type of LNBf to use. 'help' lists the available ones", 0},
+	{"lna",		'w',	"LNA (0, 1, -1)",	0, "enable/disable/auto LNA power", 0},
+	{"sat_number",	'S',	"satellite_number",	0, "satellite number. If not specified, disable DISEqC", 0},
+	{"freq_bpf",	'U',	"frequency",		0, "SCR/Unicable band-pass filter frequency to use, in kHz", 0},
+	{"wait",	'W',	"time",			0, "adds additional wait time for DISEqC command completion", 0},
+	{"nit",		'N',	NULL,			0, "use data from NIT table on the output file", 0},
+	{"get_frontend",'G',	NULL,			0, "use data from get_frontend on the output file", 0},
+	{"verbose",	'v',	NULL,			0, "be (very) verbose", 0},
+	{"output",	'o',	"file",			0, "output filename (default: " DEFAULT_OUTPUT ")", 0},
+	{"file-freqs-only", 'F', NULL,			0, "don't use the other frequencies discovered during scan", 0},
+	{"timeout-multiply", 'T', "factor",		0, "Multiply scan timeouts by this factor", 0},
+	{"parse-other-nit", 'p', NULL,			0, "Parse the other NIT/SDT tables", 0},
+	{"input-format", 'I',	"format",		0, "Input format: CHANNEL, DVBV5 (default: DVBV5)", 0},
+	{"output-format", 'O',	"format",		0, "Output format: CHANNEL, ZAP, DVBV5 (default: DVBV5)", 0},
+	{"dvbv3",	'3',	0,			0, "Use DVBv3 only", 0},
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{"adapter",	'a',	N_("adapter#"),		0, N_("use given adapter (default 0)"), 0},
 	{"frontend",	'f',	N_("frontend#"),	0, N_("use given frontend (default 0)"), 0},
 	{"demux",	'd',	N_("demux#"),		0, N_("use given demux (default 0)"), 0},
@@ -109,6 +153,7 @@ static const struct argp_option options[] = {
 	{"help",        '?',	0,		0,	N_("Give this help list"), -1},
 	{"usage",	-3,	0,		0,	N_("Give a short usage message")},
 	{"version",	'V',	0,		0,	N_("Print program version"), -1},
+<<<<<<< HEAD
 =======
 	{"adapter",	'a',	"adapter#",		0, "use given adapter (default 0)", 0},
 	{"frontend",	'f',	"frontend#",		0, "use given frontend (default 0)", 0},
@@ -129,6 +174,9 @@ static const struct argp_option options[] = {
 	{"output-format", 'O',	"format",		0, "Output format: CHANNEL, ZAP, DVBV5 (default: DVBV5)", 0},
 	{"dvbv3",	'3',	0,			0, "Use DVBv3 only", 0},
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{ 0, 0, 0, 0, 0, 0 }
 };
 
@@ -138,10 +186,17 @@ static int verbose = 0;
 #define ERROR(x...)                                                     \
 	do {                                                            \
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fprintf(stderr, _("ERROR: "));                             \
 =======
 		fprintf(stderr, "ERROR: ");                             \
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		fprintf(stderr, "ERROR: ");                             \
+=======
+		fprintf(stderr, _("ERROR: "));                             \
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		fprintf(stderr, x);                                     \
 		fprintf(stderr, "\n");                                 \
 	} while (0)
@@ -149,10 +204,17 @@ static int verbose = 0;
 #define PERROR(x...)                                                    \
 	do {                                                            \
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fprintf(stderr, _("ERROR: "));                             \
 =======
 		fprintf(stderr, "ERROR: ");                             \
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		fprintf(stderr, "ERROR: ");                             \
+=======
+		fprintf(stderr, _("ERROR: "));                             \
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		fprintf(stderr, x);                                     \
 		fprintf(stderr, " (%s)\n", strerror(errno));		\
 	} while (0)
@@ -188,27 +250,11 @@ static int print_frontend_stats(struct arguments *args,
 		show = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dvb_fe_snprintf_stat(parms, DTV_QUALITY, _("Quality"),
-				     i, &p, &len, &show);
-
-		dvb_fe_snprintf_stat(parms, DTV_STAT_SIGNAL_STRENGTH, _("Signal"),
-				     i, &p, &len, &show);
-
-		dvb_fe_snprintf_stat(parms, DTV_STAT_CNR, _("C/N"),
-				     i, &p, &len, &show);
-
-		dvb_fe_snprintf_stat(parms, DTV_STAT_ERROR_BLOCK_COUNT, _("UCB"),
-				     i,  &p, &len, &show);
-
-		dvb_fe_snprintf_stat(parms, DTV_BER, _("postBER"),
-				     i,  &p, &len, &show);
-
-		dvb_fe_snprintf_stat(parms, DTV_PRE_BER, _("preBER"),
-				     i,  &p, &len, &show);
-
-		dvb_fe_snprintf_stat(parms, DTV_PER, _("PER"),
 =======
 		dvb_fe_snprintf_stat(parms, DTV_QUALITY, "Quality",
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				     i, &p, &len, &show);
 
 		dvb_fe_snprintf_stat(parms, DTV_STAT_SIGNAL_STRENGTH, "Signal",
@@ -227,7 +273,32 @@ static int print_frontend_stats(struct arguments *args,
 				     i,  &p, &len, &show);
 
 		dvb_fe_snprintf_stat(parms, DTV_PER, "PER",
+=======
+		dvb_fe_snprintf_stat(parms, DTV_QUALITY, _("Quality"),
+				     i, &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_STAT_SIGNAL_STRENGTH, _("Signal"),
+				     i, &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_STAT_CNR, _("C/N"),
+				     i, &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_STAT_ERROR_BLOCK_COUNT, _("UCB"),
+				     i,  &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_BER, _("postBER"),
+				     i,  &p, &len, &show);
+
+		dvb_fe_snprintf_stat(parms, DTV_PRE_BER, _("preBER"),
+				     i,  &p, &len, &show);
+
+<<<<<<< HEAD
+		dvb_fe_snprintf_stat(parms, DTV_PER, "PER",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		dvb_fe_snprintf_stat(parms, DTV_PER, _("PER"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				     i,  &p, &len, &show);
 
 		if (p != buf) {
@@ -262,10 +333,17 @@ static int check_frontend(void *__args,
 		rc = dvb_fe_get_stats(parms);
 		if (rc)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			PERROR(_("dvb_fe_get_stats failed"));
 =======
 			PERROR("dvb_fe_get_stats failed");
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			PERROR("dvb_fe_get_stats failed");
+=======
+			PERROR(_("dvb_fe_get_stats failed"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		rc = dvb_fe_retrieve_stats(parms, DTV_STATUS, &status);
 		if (rc)
@@ -284,21 +362,30 @@ static int check_frontend(void *__args,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+static int run_scan(struct arguments *args, struct dvb_device *dvb)
+=======
+static int run_scan(struct arguments *args,
+		    struct dvb_v5_fe_parms *parms)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+{
+	struct dvb_file *dvb_file = NULL, *dvb_file_new = NULL;
+	struct dvb_entry *entry;
+	int count = 0, dmx_fd, shift;
+=======
 static int run_scan(struct arguments *args, struct dvb_device *dvb)
 {
 	struct dvb_v5_fe_parms *parms = dvb->fe_parms;
 	struct dvb_file *dvb_file = NULL, *dvb_file_new = NULL;
 	struct dvb_entry *entry;
-	struct dvb_open_descriptor *dmx_fd;
-	int count = 0, shift;
-=======
-static int run_scan(struct arguments *args,
-		    struct dvb_v5_fe_parms *parms)
-{
-	struct dvb_file *dvb_file = NULL, *dvb_file_new = NULL;
-	struct dvb_entry *entry;
+<<<<<<< HEAD
 	int count = 0, dmx_fd, shift;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_open_descriptor *dmx_fd;
+	int count = 0, shift;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	uint32_t freq, sys;
 	enum dvb_sat_polarization pol;
 
@@ -318,9 +405,15 @@ static int run_scan(struct arguments *args,
 		break;
 	case SYS_ISDBT:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case SYS_DTMB:
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	case SYS_DTMB:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		sys = SYS_DVBT;
 		break;
 	default:
@@ -333,30 +426,65 @@ static int run_scan(struct arguments *args,
 		return -2;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	dmx_fd = open(args->demux_dev, O_RDWR);
+	if (dmx_fd < 0) {
+		perror("openening pat demux failed");
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* FIXME: should be replaced by dvb_dev_open() */
 	dmx_fd = dvb_dev_open(dvb, args->demux_dev, O_RDWR);
 	if (!dmx_fd) {
 		perror(_("opening demux failed"));
+<<<<<<< HEAD
 =======
 	dmx_fd = open(args->demux_dev, O_RDWR);
 	if (dmx_fd < 0) {
 		perror("openening pat demux failed");
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return -3;
 	}
 
 	for (entry = dvb_file->first_entry; entry != NULL; entry = entry->next) {
 		struct dvb_v5_descriptors *dvb_scan_handler = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		uint32_t stream_id;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		uint32_t stream_id;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		/*
 		 * If the channel file has duplicated frequencies, or some
 		 * entries without any frequency at all, discard.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		if (retrieve_entry_prop(entry, DTV_FREQUENCY, &freq))
+			continue;
+
+		shift = estimate_freq_shift(parms);
+
+		if (retrieve_entry_prop(entry, DTV_POLARIZATION, &pol))
+			pol = POLARIZATION_OFF;
+
+		if (!new_freq_is_needed(dvb_file->first_entry, entry,
+					freq, pol, shift))
+			continue;
+
+		count++;
+		dvb_log("Scanning frequency #%d %d", count, freq);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (dvb_retrieve_entry_prop(entry, DTV_FREQUENCY, &freq))
 			continue;
 		shift = dvb_estimate_freq_shift(parms);
@@ -382,6 +510,7 @@ static int run_scan(struct arguments *args,
 		if (!args->lnb_name && entry->lnb &&
 		    (!parms->lnb || strcasecmp(entry->lnb, parms->lnb->alias)))
 			parms->lnb = dvb_sat_get_lnb(dvb_sat_search_lnb(entry->lnb));
+<<<<<<< HEAD
 =======
 		if (retrieve_entry_prop(entry, DTV_FREQUENCY, &freq))
 			continue;
@@ -398,22 +527,37 @@ static int run_scan(struct arguments *args,
 		count++;
 		dvb_log("Scanning frequency #%d %d", count, freq);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		/*
 		 * Run the scanning logic
 		 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dvb_scan_handler = dvb_dev_scan(dmx_fd, entry,
 						&check_frontend, args,
 						args->other_nit,
 						args->timeout_multiply);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		dvb_scan_handler = dvb_scan_transponder(parms, entry, dmx_fd,
 							&check_frontend, args,
 							args->other_nit,
 							args->timeout_multiply);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		dvb_scan_handler = dvb_dev_scan(dmx_fd, entry,
+						&check_frontend, args,
+						args->other_nit,
+						args->timeout_multiply);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		if (parms->abort) {
 			dvb_scan_free_handler_table(dvb_scan_handler);
@@ -426,10 +570,17 @@ static int run_scan(struct arguments *args,
 		 * Store the service entry
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dvb_store_channel(&dvb_file_new, parms, dvb_scan_handler,
 =======
 		store_dvb_channel(&dvb_file_new, parms, dvb_scan_handler,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		store_dvb_channel(&dvb_file_new, parms, dvb_scan_handler,
+=======
+		dvb_store_channel(&dvb_file_new, parms, dvb_scan_handler,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				  args->get_detected, args->get_nit);
 
 		/*
@@ -448,22 +599,38 @@ static int run_scan(struct arguments *args,
 
 	if (dvb_file_new)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dvb_write_file_format(args->output, dvb_file_new,
 				      parms->current_sys, args->output_format);
 =======
 		write_file_format(args->output, dvb_file_new,
 				  parms->current_sys, args->output_format);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		write_file_format(args->output, dvb_file_new,
+				  parms->current_sys, args->output_format);
+=======
+		dvb_write_file_format(args->output, dvb_file_new,
+				      parms->current_sys, args->output_format);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	dvb_file_free(dvb_file);
 	if (dvb_file_new)
 		dvb_file_free(dvb_file_new);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dvb_dev_close(dmx_fd);
 =======
 	close(dmx_fd);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	close(dmx_fd);
+=======
+	dvb_dev_close(dmx_fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	return 0;
 }
 
@@ -532,21 +699,37 @@ static error_t parse_opt(int k, char *optarg, struct argp_state *state)
 		break;
 	case 'I':
 <<<<<<< HEAD
+<<<<<<< HEAD
 		args->input_format = dvb_parse_format(optarg);
-		break;
-	case 'O':
-		args->output_format = dvb_parse_format(optarg);
 =======
 		args->input_format = parse_format(optarg);
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	case 'O':
 		args->output_format = parse_format(optarg);
+=======
+		args->input_format = dvb_parse_format(optarg);
+		break;
+	case 'O':
+<<<<<<< HEAD
+		args->output_format = parse_format(optarg);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		args->output_format = dvb_parse_format(optarg);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	case 'o':
 		args->output = optarg;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	case '3':
+		args->force_dvbv3 = 1;
+		break;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case 'C':
 		args->cc = strndup(optarg, 2);
 		break;
@@ -562,11 +745,15 @@ static error_t parse_opt(int k, char *optarg, struct argp_state *state)
 	case -3:
 		argp_state_help(state, state->out_stream, ARGP_HELP_USAGE);
 		exit(0);
+<<<<<<< HEAD
 =======
 	case '3':
 		args->force_dvbv3 = 1;
 		break;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	default:
 		return ARGP_ERR_UNKNOWN;
 	};
@@ -594,6 +781,18 @@ int main(int argc, char **argv)
 	struct arguments args;
 	int err, lnb = -1,idx = -1;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	int r;
+	const struct argp argp = {
+		.options = options,
+		.parser = parse_opt,
+		.doc = "scan DVB services using the channel file",
+		.args_doc = "<initial file>",
+	};
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct dvb_device *dvb;
 	struct dvb_dev_list *dvb_dev;
 	struct dvb_v5_fe_parms *parms;
@@ -610,6 +809,7 @@ int main(int argc, char **argv)
 	textdomain (PACKAGE);
 #endif
 
+<<<<<<< HEAD
 =======
 	int r;
 	const struct argp argp = {
@@ -620,6 +820,9 @@ int main(int argc, char **argv)
 	};
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	memset(&args, 0, sizeof(args));
 	args.sat_number = -1;
 	args.output = DEFAULT_OUTPUT;
@@ -630,14 +833,23 @@ int main(int argc, char **argv)
 	args.lna = LNA_AUTO;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	argp_parse(&argp, argc, argv, 0, &idx, &args);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (argp_parse(&argp, argc, argv, ARGP_NO_HELP | ARGP_NO_EXIT, &idx, &args)) {
 		argp_help(&argp, stderr, ARGP_HELP_SHORT_USAGE, PROGRAM_NAME);
 		return -1;
 	}
 
+<<<<<<< HEAD
 =======
 	argp_parse(&argp, argc, argv, 0, &idx, &args);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (args.timeout_multiply == 0)
 		args.timeout_multiply = 1;
 
@@ -650,6 +862,7 @@ int main(int argc, char **argv)
 		lnb = dvb_sat_search_lnb(args.lnb_name);
 		if (lnb < 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			printf(_("Please select one of the LNBf's below:\n"));
 			dvb_print_all_lnb();
 			exit(1);
@@ -657,13 +870,26 @@ int main(int argc, char **argv)
 			printf(_("Using LNBf "));
 			dvb_print_lnb(lnb);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			printf("Please select one of the LNBf's below:\n");
 			print_all_lnb();
 			exit(1);
 		} else {
 			printf("Using LNBf ");
 			print_lnb(lnb);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+			printf(_("Please select one of the LNBf's below:\n"));
+			dvb_print_all_lnb();
+			exit(1);
+		} else {
+			printf(_("Using LNBf "));
+			dvb_print_lnb(lnb);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		}
 	}
 
@@ -678,15 +904,40 @@ int main(int argc, char **argv)
 		   (args.input_format == FILE_UNKNOWN) ||
 		   (args.output_format == FILE_UNKNOWN)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fprintf(stderr, _("ERROR: Please specify a valid format\n"));
 =======
 		fprintf(stderr, "ERROR: Please specify a valid format\n");
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		fprintf(stderr, "ERROR: Please specify a valid format\n");
+=======
+		fprintf(stderr, _("ERROR: Please specify a valid format\n"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		argp_help(&argp, stderr, ARGP_HELP_STD_HELP, PROGRAM_NAME);
 		return -1;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	r = asprintf(&args.demux_dev,
+		 "/dev/dvb/adapter%i/demux%i", args.adapter_dmx, args.demux);
+	if (r < 0) {
+		fprintf(stderr, "asprintf error\n" );
+		return -1;
+	}
+
+	if (verbose)
+		fprintf(stderr, "using demux '%s'\n", args.demux_dev);
+
+	struct dvb_v5_fe_parms *parms = dvb_fe_open(args.adapter_fe,
+						    args.frontend,
+						    verbose, args.force_dvbv3);
+	if (!parms) {
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	dvb = dvb_dev_alloc();
 	if (!dvb)
 		return -1;
@@ -711,6 +962,7 @@ int main(int argc, char **argv)
 		return -1;
 
 	if (!dvb_dev_open(dvb, dvb_dev->sysname, O_RDWR)) {
+<<<<<<< HEAD
 =======
 	r = asprintf(&args.demux_dev,
 		 "/dev/dvb/adapter%i/demux%i", args.adapter_dmx, args.demux);
@@ -727,6 +979,9 @@ int main(int argc, char **argv)
 						    verbose, args.force_dvbv3);
 	if (!parms) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		free(args.demux_dev);
 		return -1;
 	}
@@ -734,34 +989,53 @@ int main(int argc, char **argv)
 		parms->lnb = dvb_sat_get_lnb(lnb);
 	if (args.sat_number >= 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
+		parms->sat_number = args.sat_number;
+=======
+		parms->sat_number = args.sat_number % 3;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+	parms->diseqc_wait = args.diseqc_wait;
+	parms->freq_bpf = args.freq_bpf;
+	parms->lna = args.lna;
+=======
 		parms->sat_number = args.sat_number;
 	parms->diseqc_wait = args.diseqc_wait;
 	parms->freq_bpf = args.freq_bpf;
 	parms->lna = args.lna;
+<<<<<<< HEAD
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
 	err = dvb_fe_set_default_country(parms, args.cc);
 	if (err < 0)
 		fprintf(stderr, _("Failed to set the country code:%s\n"), args.cc);
-=======
-		parms->sat_number = args.sat_number % 3;
-	parms->diseqc_wait = args.diseqc_wait;
-	parms->freq_bpf = args.freq_bpf;
-	parms->lna = args.lna;
->>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	timeout_flag = &parms->abort;
 	signal(SIGTERM, do_timeout);
 	signal(SIGINT, do_timeout);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = run_scan(&args, dvb);
 
 	dvb_dev_free(dvb);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	err = run_scan(&args, parms);
 
 	dvb_fe_close(parms);
 	free(args.demux_dev);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	err = run_scan(&args, dvb);
+
+	dvb_dev_free(dvb);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return err;
 }

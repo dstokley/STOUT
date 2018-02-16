@@ -1,22 +1,36 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (c) 2011-2014 - Mauro Carvalho Chehab
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * Copyright (c) 2011-2014 - Mauro Carvalho Chehab
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -26,6 +40,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -48,6 +72,23 @@
 #include "dvb-log.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#define ARRAY_SIZE(x)	(sizeof(x)/sizeof((x)[0]))
+
+#define MAX_DELIVERY_SYSTEMS	20
+
+/*
+ * Implement the stats properties as if they were defined via S2API style.
+ * This simplifies the addition of newer stats, and helps to port the
+ * code to v5 style, if such change gets merged upstream.
+ */
+
+/*
+ * Those are needed to avoid breaking apps that depend on the library
+ * but shoudn't be used anymore
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @file dvb-fe.h
  * @ingroup frontend
@@ -91,6 +132,7 @@
  * There are a few aliases for other properties. Those are needed just
  * to avoid breaking apps that depend on the library but shoudn't be used
  * anymore on newer apps.
+<<<<<<< HEAD
 =======
 #define ARRAY_SIZE(x)	(sizeof(x)/sizeof((x)[0]))
 
@@ -106,12 +148,16 @@
  * Those are needed to avoid breaking apps that depend on the library
  * but shoudn't be used anymore
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  */
 #define DTV_MAX_STATS			DTV_NUM_STATS_PROPS
 #define DTV_SIGNAL_STRENGTH		DTV_STAT_SIGNAL_STRENGTH
 #define DTV_SNR				DTV_STAT_CNR
 #define DTV_UNCORRECTED_BLOCKS		DTV_STAT_ERROR_BLOCK_COUNT
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #endif
 
@@ -149,6 +195,8 @@
 struct dvb_v5_fe_parms {
 	/* Information visible to the client - don't override those values */
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 enum dvbv3_emulation_type {
 	DVBV3_UNKNOWN = -1,
 	DVBV3_QPSK,
@@ -184,7 +232,47 @@ struct dvb_v5_fe_parms {
 	int				fd;
 	char				*fname;
 	unsigned			verbose;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#endif
+
+/**
+ * @struct dvb_v5_fe_parms
+ * @ingroup frontend
+ * @brief Keeps data needed to handle the DVB frontend
+ *
+ * @param info			Contains the DVB info properties (RO)
+ * @param version		Version of the Linux DVB API (RO)
+ * @param has_v5_stats		A value different than 0 indicates that the
+ *				frontend supports DVBv5 stats (RO)
+ * @param current_sys		Currently selected delivery system (RO)
+ * @param num_systems		Number of delivery systems  (RO)
+ * @param systems		Delivery systems supported by the hardware (RO)
+ * @param legacy_fe		A value different than 0 indicates a legacy
+ *				Kernel driver using DVBv3 API only, or that
+ *				DVBv3 only mode was forced by the client (RO)
+ * @param abort			Client should set it to abort a pending
+ *				operation like DTV scan (RW)
+ * @param lna:			Sets the LNA mode 0 disables; 1 enables, -1 uses
+ *				auto mode (RW)
+ * @param lnb			LNBf description (RW)
+ * @param sat_number		Number of the satellite (used by DISEqC setup) (RW)
+ * @param freq_bpf		SCR/Unicable band-pass filter frequency to use, in kHz
+ * @param verbose		Verbosity level of the library (RW)
+ * @param dvb_logfunc		Function used to write log messages (RO)
+ * @param default_charset	Name of the charset used by the DVB standard (RW)
+ * @param output_charset	Name of the charset to output (system specific) (RW)
+ *
+ * @details The fields marked as RO should not be changed by the client, as otherwise
+ * undesired effects may happen. The ones marked as RW are ok to either read
+ * or write by the client.
+ */
+struct dvb_v5_fe_parms {
+	/* Information visible to the client - don't override those values */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct dvb_frontend_info	info;
 	uint32_t			version;
 	int				has_v5_stats;
@@ -192,6 +280,32 @@ struct dvb_v5_fe_parms {
 	int				num_systems;
 	fe_delivery_system_t		systems[MAX_DELIVERY_SYSTEMS];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	int				n_props;
+	struct dtv_property		dvb_prop[DTV_MAX_COMMAND];
+	int				legacy_fe;
+	struct dvb_v5_stats		stats;
+	int				lna;
+
+	/* Satellite specific stuff, specified by the library client */
+	const struct dvb_sat_lnb       	*lnb;
+	int				sat_number;
+	unsigned			freq_bpf;
+
+	/* Satellite specific stuff, used internally */
+	int				high_band;
+	unsigned			diseqc_wait;
+	unsigned			freq_offset;
+
+	int				abort;
+	dvb_logfunc                     logfunc;
+};
+
+
+/* Open/close methods */
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int				legacy_fe;
 
 	/* The values below are specified by the library client */
@@ -216,37 +330,80 @@ struct dvb_v5_fe_parms {
 	char				*default_charset;
 	char				*output_charset;
 };
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 
-=======
-	int				n_props;
-	struct dtv_property		dvb_prop[DTV_MAX_COMMAND];
-	int				legacy_fe;
-	struct dvb_v5_stats		stats;
-	int				lna;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-	/* Satellite specific stuff, specified by the library client */
-	const struct dvb_sat_lnb       	*lnb;
-	int				sat_number;
-	unsigned			freq_bpf;
+<<<<<<< HEAD
+struct dvb_v5_fe_parms *dvb_fe_dummy();
 
-	/* Satellite specific stuff, used internally */
-	int				high_band;
-	unsigned			diseqc_wait;
-	unsigned			freq_offset;
+struct dvb_v5_fe_parms *dvb_fe_open(int adapter, int frontend,
+				    unsigned verbose, unsigned use_legacy_call);
+struct dvb_v5_fe_parms *dvb_fe_open2(int adapter, int frontend,
+				    unsigned verbose, unsigned use_legacy_call,
+				    dvb_logfunc logfunc);
+void dvb_fe_close(struct dvb_v5_fe_parms *parms);
 
-	int				abort;
-	dvb_logfunc                     logfunc;
-};
+/* Get/set delivery system parameters */
 
+const char *dvb_cmd_name(int cmd);
+const char *const *dvb_attr_names(int cmd);
 
-/* Open/close methods */
+int dvb_fe_retrieve_parm(const struct dvb_v5_fe_parms *parms,
+			unsigned cmd, uint32_t *value);
+int dvb_fe_store_parm(struct dvb_v5_fe_parms *parms,
+		      unsigned cmd, uint32_t value);
+int dvb_set_sys(struct dvb_v5_fe_parms *parms,
+		   fe_delivery_system_t sys);
+int dvb_add_parms_for_sys(struct dtv_property *dvb_prop,
+			  unsigned max_size,
+			  fe_delivery_system_t sys);
+int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *parms,
+				   uint32_t desired_system);
 
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 <<<<<<< HEAD
+=======
+void dvb_fe_prt_parms(const struct dvb_v5_fe_parms *parms);
+int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms);
+int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms);
+
+/* Get statistics */
+
+struct dtv_stats *dvb_fe_retrieve_stats_layer(struct dvb_v5_fe_parms *parms,
+                                              unsigned cmd, unsigned layer);
+int dvb_fe_retrieve_stats(struct dvb_v5_fe_parms *parms,
+			  unsigned cmd, uint32_t *value);
+int dvb_fe_get_stats(struct dvb_v5_fe_parms *parms);
+
+float dvb_fe_retrieve_ber(struct dvb_v5_fe_parms *parms, unsigned layer,
+                          enum fecap_scale_params *scale);
+float dvb_fe_retrieve_per(struct dvb_v5_fe_parms *parms, unsigned layer);
+int dvb_fe_snprintf_eng(char *buf, int len, float val);
+int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
+			  char *display_name, int layer,
+		          char **buf, int *len, int *show_layer_name);
+
+/* Get both status statistics and dvb parameters */
+
+int dvb_fe_get_event(struct dvb_v5_fe_parms *parms);
+
+/* Ancillary functions */
+
+const char * const *dvb_attr_names(int cmd);
+
+/* Other functions, associated to SEC/LNB/DISEqC */
+
+/*
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief Allocates a dummy frontend structure
  * @ingroup frontend
@@ -707,6 +864,7 @@ int dvb_fe_get_event(struct dvb_v5_fe_parms *parms);
  * Instead of using most them, the best is to set the LNBf parameters, and let
  * the libdvbv5 to automatically handle the calls.
  *
+<<<<<<< HEAD
 =======
 struct dvb_v5_fe_parms *dvb_fe_dummy();
 
@@ -766,6 +924,9 @@ const char * const *dvb_attr_names(int cmd);
 
 /*
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * NOTE: It currently lacks support for two ioctl's:
  * FE_DISEQC_RESET_OVERLOAD	used only on av7110.
  * Spec says:
@@ -787,6 +948,20 @@ const char * const *dvb_attr_names(int cmd);
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+int dvb_fe_sec_voltage(struct dvb_v5_fe_parms *parms, int on, int v18);
+int dvb_fe_sec_tone(struct dvb_v5_fe_parms *parms, fe_sec_tone_mode_t tone);
+int dvb_fe_lnb_high_voltage(struct dvb_v5_fe_parms *parms, int on);
+int dvb_fe_diseqc_burst(struct dvb_v5_fe_parms *parms, int mini_b);
+int dvb_fe_diseqc_cmd(struct dvb_v5_fe_parms *parms, const unsigned len,
+		      const unsigned char *buf);
+int dvb_fe_diseqc_reply(struct dvb_v5_fe_parms *parms, unsigned *len, char *buf,
+		       int timeout);
+int dvb_fe_is_satellite(uint32_t delivery_system);
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief DVB ioctl wrapper for setting SEC voltage
  * @ingroup frontend
@@ -890,6 +1065,7 @@ int dvb_fe_is_satellite(uint32_t delivery_system);
 int dvb_fe_set_default_country(struct dvb_v5_fe_parms *parms,
 			       const char *country);
 
+<<<<<<< HEAD
 =======
 int dvb_fe_sec_voltage(struct dvb_v5_fe_parms *parms, int on, int v18);
 int dvb_fe_sec_tone(struct dvb_v5_fe_parms *parms, fe_sec_tone_mode_t tone);
@@ -902,11 +1078,19 @@ int dvb_fe_diseqc_reply(struct dvb_v5_fe_parms *parms, unsigned *len, char *buf,
 int dvb_fe_is_satellite(uint32_t delivery_system);
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifdef __cplusplus
 }
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+/* Arrays from dvb-v5.h */
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /*
  * Arrays from dvb-v5.h
  *
@@ -917,9 +1101,13 @@ int dvb_fe_is_satellite(uint32_t delivery_system);
  */
 
 #ifndef _DOXYGEN
+<<<<<<< HEAD
 =======
 /* Arrays from dvb-v5.h */
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 extern const unsigned fe_bandwidth_name[8];
 extern const char *dvb_v5_name[71];
@@ -939,7 +1127,14 @@ extern const char *fe_rolloff_name[5];
 
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #endif
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

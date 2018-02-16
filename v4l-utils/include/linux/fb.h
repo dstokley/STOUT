@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 #ifndef _LINUX_FB_H
 #define _LINUX_FB_H
@@ -6,6 +7,15 @@
 #ifndef _UAPI_LINUX_FB_H
 #define _UAPI_LINUX_FB_H
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#ifndef _UAPI_LINUX_FB_H
+#define _UAPI_LINUX_FB_H
+=======
+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+#ifndef _LINUX_FB_H
+#define _LINUX_FB_H
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #include <linux/types.h>
 #include <linux/i2c.h>
@@ -23,12 +33,21 @@
 #define FBIOPUTCMAP		0x4605
 #define FBIOPAN_DISPLAY		0x4606
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define FBIO_CURSOR            _IOWR('F', 0x08, struct fb_cursor)
 =======
 #ifndef __KERNEL__
 #define FBIO_CURSOR            _IOWR('F', 0x08, struct fb_cursor)
 #endif
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#ifndef __KERNEL__
+#define FBIO_CURSOR            _IOWR('F', 0x08, struct fb_cursor)
+#endif
+=======
+#define FBIO_CURSOR            _IOWR('F', 0x08, struct fb_cursor)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /* 0x4607-0x460B are defined below */
 /* #define FBIOGET_MONITORSPEC	0x460C */
 /* #define FBIOPUT_MONITORSPEC	0x460D */
@@ -410,7 +429,14 @@ struct fb_cursor {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* _LINUX_FB_H */
 =======
 #endif /* _UAPI_LINUX_FB_H */
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#endif /* _UAPI_LINUX_FB_H */
+=======
+#endif /* _LINUX_FB_H */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

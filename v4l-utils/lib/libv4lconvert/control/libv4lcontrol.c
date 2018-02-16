@@ -21,11 +21,19 @@
 
 #include <sys/types.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(MAJOR_IN_SYSMACROS)
 #include <sys/sysmacros.h>
 #endif
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#if defined(MAJOR_IN_SYSMACROS)
+#include <sys/sysmacros.h>
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -42,14 +50,23 @@
 #include "libv4lcontrol-priv.h"
 #include "../libv4lsyscall-priv.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <linux/videodev2.h>
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #if defined(__OpenBSD__)
 #include <sys/videoio.h>
 #else
 #include <linux/videodev2.h>
 #endif
+<<<<<<< HEAD
 =======
 #include <linux/videodev2.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #define ARRAY_SIZE(x) ((int)sizeof(x) / (int)sizeof((x)[0]))
 
@@ -90,11 +107,19 @@ static const struct v4lcontrol_flags_info v4lcontrol_flags[] = {
 	{ 0x04f2, 0xb012, 0, "Founder PC", "T14MF",
 		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Note no whitespace padding for board vendor, this is not a typo */
 	{ 0x04f2, 0xb012, 0, "PEGATRON CORPORATION", "X71TL     ",
 		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED },
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	/* Note no whitespace padding for board vendor, this is not a typo */
+	{ 0x04f2, 0xb012, 0, "PEGATRON CORPORATION", "X71TL     ",
+		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED },
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* These 3 PACKARD BELL's seem to be Asus notebook in disguise */
 	{ 0x04f2, 0xb012, 0, "Packard Bell BV", "T32A      ",
 		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED },
@@ -170,12 +195,20 @@ static const struct v4lcontrol_flags_info v4lcontrol_flags[] = {
 		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED, 0,
 		"Acer, inc.", "Aspire 5570     " },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{ 0x064e, 0xa111, 0, "PEGATRON CORPORATION         ", "F5C     ",
 		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED },
 	{ 0x064e, 0xa111, 0, "PEGATRON CORPORATION         ", "F5SR    ",
 		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED },
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* 2 reports:
 	   Unknown laptop model -> System Vendor: "  IDEALMAX"
 	   Síragon SL-6120      -> System Vendor: "PEGA PC"
@@ -186,10 +219,17 @@ static const struct v4lcontrol_flags_info v4lcontrol_flags[] = {
 	{ 0x064e, 0xa212, 0, "MEDIONAG", "WeTab ",
 		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	{ 0x174f, 0x5a35, 0, "PEGATRON CORPORATION         ", "F5SL    ",
 		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED },
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	{ 0x174f, 0x5a35, 0, "PEGATRON CORPORATION         ", "F5SL    ",
+		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED },
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{ 0x174f, 0x6a51, 0, NULL, "S96S",
 		V4LCONTROL_HFLIPPED | V4LCONTROL_VFLIPPED, 0,
 		"MicroLink", "S96S" },
@@ -294,17 +334,26 @@ static const char *asus_board_vendor[] = {
 	"ASUSTeK Computer INC.",
 	"ASUS CORPORATION",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"PEGATRON CORPORATION",
-	NULL };
-
-static const char *asus_board_name[] = {
-	"A3[A-Z]*", "A6R*", "A7J", "A7M", "A7Sn",
 =======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	NULL };
 
 static const char *asus_board_name[] = {
 	"A3[A-Z]*", "A7M",
+=======
+	"PEGATRON CORPORATION",
+	NULL };
+
+static const char *asus_board_name[] = {
+<<<<<<< HEAD
+	"A3[A-Z]*", "A7M",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	"A3[A-Z]*", "A6R*", "A7J", "A7M", "A7Sn",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	"B50[A-Z]*",
 	"F[23579][A-Z]*", "F70[A-Z]*", "F[58]2[A-Z]*",
 	"G[12][A-Z]*", "G[57]0[A-Z]*",
@@ -394,10 +443,17 @@ static int v4lcontrol_get_usb_info(struct v4lcontrol_data *data,
 {
 	FILE *f;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, minor_dev;
 =======
 	int i, minor;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	int i, minor;
+=======
+	int i, minor_dev;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct stat st;
 	char sysfs_name[512];
 	char c, *s, buf[32];
@@ -424,12 +480,21 @@ static int v4lcontrol_get_usb_info(struct v4lcontrol_data *data,
 		fclose(f);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (s && sscanf(buf, "%*d:%d%c", &minor_dev, &c) == 2 &&
 		    c == '\n' && minor_dev == minor(st.st_rdev))
 =======
 		if (s && sscanf(buf, "%*d:%d%c", &minor, &c) == 2 &&
 		    c == '\n' && minor == minor(st.st_rdev))
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		if (s && sscanf(buf, "%*d:%d%c", &minor, &c) == 2 &&
+		    c == '\n' && minor == minor(st.st_rdev))
+=======
+		if (s && sscanf(buf, "%*d:%d%c", &minor_dev, &c) == 2 &&
+		    c == '\n' && minor_dev == minor(st.st_rdev))
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			break;
 	}
 	if (i == 256)
@@ -757,9 +822,15 @@ struct v4lcontrol_data *v4lcontrol_create(int fd, void *dev_ops_priv,
 			shm_name[i] = '-';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef ANDROID
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#ifndef ANDROID
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* Open the shared memory object identified by shm_name */
 	shm_fd = shm_open(shm_name, (O_CREAT | O_EXCL | O_RDWR), (S_IREAD | S_IWRITE));
 	if (shm_fd >= 0)
@@ -783,9 +854,15 @@ struct v4lcontrol_data *v4lcontrol_create(int fd, void *dev_ops_priv,
 	} else
 		perror("libv4lcontrol: error creating shm segment failed");
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#endif
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	/* Fall back to malloc */
 	if (data->shm_values == NULL) {
@@ -837,10 +914,17 @@ static const struct v4l2_queryctrl fake_controls[V4LCONTROL_COUNT] = {
 		.id = V4L2_CID_AUTO_WHITE_BALANCE,
 		.type = V4L2_CTRL_TYPE_BOOLEAN,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.name =  "White Balance, Automatic",
 =======
 		.name =  "Whitebalance (software)",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		.name =  "Whitebalance (software)",
+=======
+		.name =  "White Balance, Automatic",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		.minimum = 0,
 		.maximum = 1,
 		.step = 1,
@@ -850,10 +934,17 @@ static const struct v4l2_queryctrl fake_controls[V4LCONTROL_COUNT] = {
 		.id = V4L2_CID_HFLIP,
 		.type = V4L2_CTRL_TYPE_BOOLEAN,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.name =  "Horizontal Flip",
 =======
 		.name =  "Horizontal flip (sw)",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		.name =  "Horizontal flip (sw)",
+=======
+		.name =  "Horizontal Flip",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		.minimum = 0,
 		.maximum = 1,
 		.step = 1,
@@ -863,10 +954,17 @@ static const struct v4l2_queryctrl fake_controls[V4LCONTROL_COUNT] = {
 		.id = V4L2_CID_VFLIP,
 		.type = V4L2_CTRL_TYPE_BOOLEAN,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.name =  "Vertical Flip",
 =======
 		.name =  "Vertical flip (sw)",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		.name =  "Vertical flip (sw)",
+=======
+		.name =  "Vertical Flip",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		.minimum = 0,
 		.maximum = 1,
 		.step = 1,
@@ -876,28 +974,49 @@ static const struct v4l2_queryctrl fake_controls[V4LCONTROL_COUNT] = {
 		.id = V4L2_CID_GAMMA,
 		.type = V4L2_CTRL_TYPE_INTEGER,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.name =  "Gamma",
 =======
 		.name =  "Gamma (software)",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		.name =  "Gamma (software)",
+=======
+		.name =  "Gamma",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		.minimum = 500,  /* == 0.5 */
 		.maximum = 3000, /* == 3.0 */
 		.step = 1,
 		.default_value = 1000, /* == 1.0 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.flags = V4L2_CTRL_FLAG_SLIDER
 =======
 		.flags = 0
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		.flags = 0
+=======
+		.flags = V4L2_CTRL_FLAG_SLIDER
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}, { /* Dummy place holder for V4LCONTROL_AUTO_ENABLE_COUNT */
 	}, {
 		.id = V4L2_CID_AUTOGAIN,
 		.type = V4L2_CTRL_TYPE_BOOLEAN,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.name =  "Gain, Automatic",
 =======
 		.name =  "Auto Gain (software)",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		.name =  "Auto Gain (software)",
+=======
+		.name =  "Gain, Automatic",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		.minimum = 0,
 		.maximum = 1,
 		.step = 1,
@@ -907,19 +1026,33 @@ static const struct v4l2_queryctrl fake_controls[V4LCONTROL_COUNT] = {
 		.id = V4L2_CTRL_CLASS_USER + 0x2000, /* FIXME */
 		.type = V4L2_CTRL_TYPE_INTEGER,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.name =  "Auto Gain Target",
 =======
 		.name =  "Auto Gain target",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		.name =  "Auto Gain target",
+=======
+		.name =  "Auto Gain Target",
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		.minimum = 0,
 		.maximum = 255,
 		.step = 1,
 		.default_value = 100,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.flags = V4L2_CTRL_FLAG_SLIDER
 =======
 		.flags = 0
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		.flags = 0
+=======
+		.flags = V4L2_CTRL_FLAG_SLIDER
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	},
 };
 
@@ -997,6 +1130,10 @@ int v4lcontrol_vidioc_g_ctrl(struct v4lcontrol_data *data, void *arg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static void v4lcontrol_alloc_valid_controls(struct v4lcontrol_data *data,
 			const struct v4l2_ext_controls *src,
 			struct v4l2_ext_controls *dst)
@@ -1072,8 +1209,12 @@ int v4lcontrol_vidioc_g_ext_ctrls(struct v4lcontrol_data *data, void *arg)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int v4lcontrol_vidioc_s_ctrl(struct v4lcontrol_data *data, void *arg)
 {
 	int i;
@@ -1097,6 +1238,10 @@ int v4lcontrol_vidioc_s_ctrl(struct v4lcontrol_data *data, void *arg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static int v4lcontrol_validate_ext_ctrls(struct v4lcontrol_data *data,
 		struct v4l2_ext_controls *ctrls)
 {
@@ -1163,8 +1308,12 @@ int v4lcontrol_vidioc_s_ext_ctrls(struct v4lcontrol_data *data, void *arg)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int v4lcontrol_get_bandwidth(struct v4lcontrol_data *data)
 {
 	return data->bandwidth;

@@ -2,19 +2,31 @@
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -24,6 +36,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -38,9 +60,15 @@
 #include <libdvbv5/dvb-fe.h>
 #include <libdvbv5/dvb-scan.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include "parse_string.h"
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#include "parse_string.h"
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <libdvbv5/dvb-frontend.h>
 #include <libdvbv5/dvb-v5-std.h>
 #include <libdvbv5/dvb-log.h>
@@ -62,9 +90,15 @@
 #include <libdvbv5/desc_isdbt_delivery.h>
 #include <libdvbv5/desc_service.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <libdvbv5/desc_service_list.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#include <libdvbv5/desc_service_list.h>
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <libdvbv5/desc_frequency_list.h>
 #include <libdvbv5/desc_event_short.h>
 #include <libdvbv5/desc_event_extended.h>
@@ -93,6 +127,13 @@ static int dvb_desc_default_init(struct dvb_v5_fe_parms *parms, const uint8_t *b
 static void dvb_desc_default_print(struct dvb_v5_fe_parms *parms, const struct dvb_desc *desc)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (!parms)
+		parms = dvb_fe_dummy();
+	hexdump(parms, "|           ", desc->data, desc->length);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (!parms) {
 		parms = dvb_fe_dummy();
 		dvb_hexdump(parms, "|           ", desc->data, desc->length);
@@ -100,11 +141,15 @@ static void dvb_desc_default_print(struct dvb_v5_fe_parms *parms, const struct d
 		return;
 	}
 	dvb_hexdump(parms, "|           ", desc->data, desc->length);
+<<<<<<< HEAD
 =======
 	if (!parms)
 		parms = dvb_fe_dummy();
 	hexdump(parms, "|           ", desc->data, desc->length);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 #define TABLE_INIT(_x) (dvb_table_init_func) _x##_init
@@ -116,21 +161,39 @@ const dvb_table_init_func dvb_table_initializers[256] = {
 	[DVB_TABLE_PMT]          = TABLE_INIT(dvb_table_pmt),
 	[DVB_TABLE_NIT]          = TABLE_INIT(dvb_table_nit),
 <<<<<<< HEAD
+<<<<<<< HEAD
+	[DVB_TABLE_NIT2]         = TABLE_INIT(dvb_table_nit),
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+	[DVB_TABLE_SDT]          = TABLE_INIT(dvb_table_sdt),
+	[DVB_TABLE_EIT]          = TABLE_INIT(dvb_table_eit),
+	[DVB_TABLE_EIT_SCHEDULE] = TABLE_INIT(dvb_table_eit),
+=======
 	[DVB_TABLE_NIT2]         = TABLE_INIT(dvb_table_nit),
 	[DVB_TABLE_SDT]          = TABLE_INIT(dvb_table_sdt),
 	[DVB_TABLE_SDT2]         = TABLE_INIT(dvb_table_sdt),
 	[DVB_TABLE_EIT]          = TABLE_INIT(dvb_table_eit),
-	[DVB_TABLE_EIT_OTHER]	 = TABLE_INIT(dvb_table_eit),
-=======
-	[DVB_TABLE_SDT]          = TABLE_INIT(dvb_table_sdt),
-	[DVB_TABLE_EIT]          = TABLE_INIT(dvb_table_eit),
+<<<<<<< HEAD
 	[DVB_TABLE_EIT_SCHEDULE] = TABLE_INIT(dvb_table_eit),
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	[DVB_TABLE_EIT_OTHER]	 = TABLE_INIT(dvb_table_eit),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	[ATSC_TABLE_MGT]         = TABLE_INIT(atsc_table_mgt),
 	[ATSC_TABLE_EIT]         = TABLE_INIT(atsc_table_eit),
 	[ATSC_TABLE_TVCT]        = TABLE_INIT(atsc_table_vct),
 	[ATSC_TABLE_CVCT]        = TABLE_INIT(atsc_table_vct),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+};
+
+char *default_charset = "iso-8859-1";
+char *output_charset = "utf-8";
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	[DVB_TABLE_EIT_SCHEDULE]		= TABLE_INIT(dvb_table_eit),
 	[DVB_TABLE_EIT_SCHEDULE + 0x01]		= TABLE_INIT(dvb_table_eit),
 	[DVB_TABLE_EIT_SCHEDULE + 0x02]		= TABLE_INIT(dvb_table_eit),
@@ -165,6 +228,7 @@ const dvb_table_init_func dvb_table_initializers[256] = {
 	[DVB_TABLE_EIT_SCHEDULE_OTHER + 0x0f]	= TABLE_INIT(dvb_table_eit),
 };
 
+<<<<<<< HEAD
 =======
 };
 
@@ -172,6 +236,9 @@ char *default_charset = "iso-8859-1";
 char *output_charset = "utf-8";
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int dvb_desc_parse(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 			   uint16_t buflen, struct dvb_desc **head_desc)
 {
@@ -212,10 +279,17 @@ int dvb_desc_parse(struct dvb_v5_fe_parms *parms, const uint8_t *buf,
 				dvb_descriptors[desc_type].init ? "" : "Not handled ",
 				dvb_descriptors[desc_type].name, desc_type, desc_len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dvb_hexdump(parms, "content: ", ptr, desc_len);
 =======
 			hexdump(parms, "content: ", ptr + 2, desc_len);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			hexdump(parms, "content: ", ptr + 2, desc_len);
+=======
+			dvb_hexdump(parms, "content: ", ptr, desc_len);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		}
 
 		dvb_desc_init_func init = dvb_descriptors[desc_type].init;
@@ -538,16 +612,28 @@ const struct dvb_descriptor dvb_descriptors[] = {
 	[service_list_descriptor] = {
 		.name  = "service_list_descriptor",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.init  = NULL,
 		.print = NULL,
 		.free  = NULL,
 		.size  = 0,
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		.init  = dvb_desc_service_list_init,
 		.print = dvb_desc_service_list_print,
 		.free  = NULL,
 		.size  = sizeof(struct dvb_desc_service_list),
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		.init  = NULL,
+		.print = NULL,
+		.free  = NULL,
+		.size  = 0,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	},
 	[stuffing_descriptor] = {
 		.name  = "stuffing_descriptor",
@@ -979,6 +1065,7 @@ const struct dvb_descriptor dvb_descriptors[] = {
 	[extension_descriptor] = {
 		.name  = "extension_descriptor",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.init  = dvb_extension_descriptor_init,
 		.print = dvb_extension_descriptor_print,
 		.free  = dvb_extension_descriptor_free,
@@ -987,6 +1074,16 @@ const struct dvb_descriptor dvb_descriptors[] = {
 		.print = extension_descriptor_print,
 		.free  = extension_descriptor_free,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		.init  = extension_descriptor_init,
+		.print = extension_descriptor_print,
+		.free  = extension_descriptor_free,
+=======
+		.init  = dvb_extension_descriptor_init,
+		.print = dvb_extension_descriptor_print,
+		.free  = dvb_extension_descriptor_free,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		.size  = sizeof(struct dvb_extension_descriptor),
 	},
 
@@ -1402,10 +1499,17 @@ const struct dvb_descriptor dvb_descriptors[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 uint32_t dvb_bcd(uint32_t bcd)
 =======
 uint32_t bcd(uint32_t bcd)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+uint32_t bcd(uint32_t bcd)
+=======
+uint32_t dvb_bcd(uint32_t bcd)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	uint32_t ret = 0, mult = 1;
 	while (bcd) {
@@ -1417,8 +1521,11 @@ uint32_t bcd(uint32_t bcd)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void dvb_hexdump(struct dvb_v5_fe_parms *parms, const char *prefix, const unsigned char *data, int length)
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int bcd_to_int(const unsigned char *bcd, int bits)
 {
 	int nibble = 0;
@@ -1439,7 +1546,13 @@ int bcd_to_int(const unsigned char *bcd, int bits)
 }
 
 void hexdump(struct dvb_v5_fe_parms *parms, const char *prefix, const unsigned char *data, int length)
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+void dvb_hexdump(struct dvb_v5_fe_parms *parms, const char *prefix, const unsigned char *data, int length)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	char ascii[17];
 	char hex[50];
@@ -1463,16 +1576,24 @@ void hexdump(struct dvb_v5_fe_parms *parms, const char *prefix, const unsigned c
 		if (j == 16) {
 			ascii[j] = '\0';
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dvb_loginfo("%s%s  %s", prefix, hex, ascii);
 =======
 			dvb_log("%s%s  %s", prefix, hex, ascii);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+			dvb_log("%s%s  %s", prefix, hex, ascii);
+=======
+			dvb_loginfo("%s%s  %s", prefix, hex, ascii);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			j = 0;
 			hex[0] = '\0';
 		}
 	}
 	if (j > 0 && j < 16) {
 		char spaces[50];
+<<<<<<< HEAD
 <<<<<<< HEAD
 		for (i = 0; i < sizeof(spaces) - 1 - strlen(hex); i++)
 			spaces[i] = ' ';
@@ -1482,6 +1603,16 @@ void hexdump(struct dvb_v5_fe_parms *parms, const char *prefix, const unsigned c
 		for (i = strlen(hex); i < 49; i++)
 			strncat(spaces, " ", sizeof(spaces));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		spaces[0] = '\0';
+		for (i = strlen(hex); i < 49; i++)
+			strncat(spaces, " ", sizeof(spaces));
+=======
+		for (i = 0; i < sizeof(spaces) - 1 - strlen(hex); i++)
+			spaces[i] = ' ';
+		spaces[i] = '\0';
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		ascii[j] = '\0';
 		dvb_loginfo("%s%s %s %s", prefix, hex, spaces, ascii);
 	}

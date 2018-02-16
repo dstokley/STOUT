@@ -1,22 +1,36 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (c) 2011-2016 - Mauro Carvalho Chehab
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * Copyright (c) 2011-2016 - Mauro Carvalho Chehab
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -26,6 +40,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -38,6 +62,68 @@
 #include <strings.h> /* strcasecmp */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <libdvbv5/dvb-fe.h>
+#include <libdvbv5/dvb-v5-std.h>
+
+static const struct dvb_sat_lnb lnb[] = {
+	{
+		.name = "Europe",
+		.alias = "UNIVERSAL",
+		.lowfreq = 9750,
+		.highfreq = 10600,
+		.rangeswitch = 11700,
+		.freqrange = {
+			{ 10800, 11800 },
+			{ 11600, 12700 },
+		}
+	}, {
+		.name = "Expressvu, North America",
+		.alias = "DBS",
+		.lowfreq = 11250,
+		.freqrange = {
+			{ 12200, 12700 }
+		}
+	}, {
+		.name = "Standard",
+		.alias = "STANDARD",
+		.lowfreq = 10000,
+		.freqrange = {
+			{ 10945, 11450 }
+		},
+	}, {
+		.name = "Astra",
+		.alias = "ENHANCED",
+		.lowfreq = 9750,
+		.freqrange = {
+			{ 10700, 11700 }
+		},
+	}, {
+		.name = "Big Dish - Monopoint LNBf",
+		.alias = "C-BAND",
+		.lowfreq = 5150,
+		.freqrange = {
+			{ 3700, 4200 }
+		},
+	}, {
+		.name = "Big Dish - Multipoint LNBf",
+		.alias = "C-MULT",
+		.lowfreq = 5150,
+		.highfreq = 5750,
+		.freqrange = {
+			{ 3700, 4200 }
+		},
+	}, {
+		.name = "DishPro LNBf",
+		.alias = "DISHPRO",
+		.lowfreq = 11250,
+		.highfreq = 14350,
+		.freqrange = {
+			{ 12200, 12700 }
+		}
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include "dvb-fe-priv.h"
 #include <libdvbv5/dvb-v5-std.h>
 
@@ -324,6 +410,7 @@ static const struct dvb_sat_lnb_priv lnb_array[] = {
 			{ 10962.5, 11199.5, 13112, 0, POLARIZATION_H },
 			{ 11704.0, 12188.0, 13138, 0, POLARIZATION_H },
 		},
+<<<<<<< HEAD
 =======
 #include <libdvbv5/dvb-fe.h>
 #include <libdvbv5/dvb-v5-std.h>
@@ -384,6 +471,9 @@ static const struct dvb_sat_lnb lnb[] = {
 			{ 12200, 12700 }
 		}
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	},
 };
 
@@ -392,18 +482,54 @@ int dvb_sat_search_lnb(const char *name)
 	int i = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < ARRAY_SIZE(lnb_array); i++) {
 		if (!strcasecmp(name, lnb_array[i].desc.alias))
 =======
 	for (i = 0; i < ARRAY_SIZE(lnb); i++) {
 		if (!strcasecmp(name, lnb[i].alias))
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	for (i = 0; i < ARRAY_SIZE(lnb); i++) {
+		if (!strcasecmp(name, lnb[i].alias))
+=======
+	for (i = 0; i < ARRAY_SIZE(lnb_array); i++) {
+		if (!strcasecmp(name, lnb_array[i].desc.alias))
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			return i;
 	}
 	return -1;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+int print_lnb(int i)
+{
+	if (i < 0 || i >= ARRAY_SIZE(lnb))
+		return -1;
+
+	printf("%s\n\t%s\n", lnb[i].alias, lnb[i].name);
+	printf("\t%d to %d MHz",
+	       lnb[i].freqrange[0].low, lnb[i].freqrange[0].high);
+	if (lnb[i].freqrange[1].low)
+		printf(" and %d to %d MHz",
+		       lnb[i].freqrange[1].low, lnb[i].freqrange[1].high);
+	printf("\n\t%s LO, ", lnb[i].highfreq ? "Dual" : "Single");
+	if (!lnb[i].highfreq) {
+		printf("IF = %d MHz\n", lnb[i].lowfreq);
+		return 0;
+	}
+	if (!lnb[i].rangeswitch) {
+		printf("Bandstacking, LO POL_R %d MHZ, LO POL_L %d MHz\n",
+		       lnb[i].lowfreq, lnb[i].highfreq);
+		return 0;
+	}
+	printf("IF = lowband %d MHz, highband %d MHz\n",
+	       lnb[i].lowfreq, lnb[i].highfreq);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static char *pol_name[] = {
 	[POLARIZATION_OFF] = N_("Freqs     : "),
 	[POLARIZATION_H]   = N_("Horizontal: "),
@@ -429,6 +555,7 @@ int dvb_print_lnb(int i)
 			lnb_array[i].freqrange[j].high,
 			lnb_array[i].freqrange[j].int_freq);
 	}
+<<<<<<< HEAD
 =======
 int print_lnb(int i)
 {
@@ -454,25 +581,38 @@ int print_lnb(int i)
 	printf("IF = lowband %d MHz, highband %d MHz\n",
 	       lnb[i].lowfreq, lnb[i].highfreq);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void dvb_print_all_lnb(void)
-{
-	int i;
-
-	for (i = 0; i < ARRAY_SIZE(lnb_array); i++) {
-		dvb_print_lnb(i);
 =======
 void print_all_lnb(void)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	int i;
 
 	for (i = 0; i < ARRAY_SIZE(lnb); i++) {
 		print_lnb(i);
+=======
+void dvb_print_all_lnb(void)
+{
+	int i;
+
+<<<<<<< HEAD
+	for (i = 0; i < ARRAY_SIZE(lnb); i++) {
+		print_lnb(i);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	for (i = 0; i < ARRAY_SIZE(lnb_array); i++) {
+		dvb_print_lnb(i);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		printf("\n");
 	}
 }
@@ -480,6 +620,16 @@ void print_all_lnb(void)
 const struct dvb_sat_lnb *dvb_sat_get_lnb(int i)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (i < 0 || i >= ARRAY_SIZE(lnb))
+		return NULL;
+
+	return &lnb[i];
+}
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (i < 0 || i >= ARRAY_SIZE(lnb_array))
 		return NULL;
 
@@ -495,6 +645,7 @@ const char *dvb_sat_get_lnb_name(int i)
 }
 
 
+<<<<<<< HEAD
 =======
 	if (i < 0 || i >= ARRAY_SIZE(lnb))
 		return NULL;
@@ -503,6 +654,9 @@ const char *dvb_sat_get_lnb_name(int i)
 }
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /*
  * DVB satellite Diseqc specifics
  * According with:
@@ -581,11 +735,19 @@ static void dvbsat_diseqc_prep_frame_addr(struct diseqc_cmd *cmd,
 
 /* Inputs are numbered from 1 to 16, according with the spec */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dvbsat_diseqc_write_to_port_group(struct dvb_v5_fe_parms_priv *parms,
 					     struct diseqc_cmd *cmd,
 =======
 static int dvbsat_diseqc_write_to_port_group(struct dvb_v5_fe_parms *parms, struct diseqc_cmd *cmd,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+static int dvbsat_diseqc_write_to_port_group(struct dvb_v5_fe_parms *parms, struct diseqc_cmd *cmd,
+=======
+static int dvbsat_diseqc_write_to_port_group(struct dvb_v5_fe_parms_priv *parms,
+					     struct diseqc_cmd *cmd,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 					     int high_band,
 					     int pol_v,
 					     int sat_number)
@@ -603,21 +765,30 @@ static int dvbsat_diseqc_write_to_port_group(struct dvb_v5_fe_parms *parms, stru
 	cmd->data0 |= pol_v ? 0 : 2;
 	/* Instead of using position/option, use a number from 0 to 3 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cmd->data0 |= (sat_number & 0x3) << 2;
-
-	return dvb_fe_diseqc_cmd(&parms->p, cmd->len, cmd->msg);
-}
-
-static int dvbsat_scr_odu_channel_change(struct dvb_v5_fe_parms_priv *parms,
-					 struct diseqc_cmd *cmd,
 =======
 	cmd->data0 |= (sat_number % 0x3) << 2;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return dvb_fe_diseqc_cmd(parms, cmd->len, cmd->msg);
 }
 
 static int dvbsat_scr_odu_channel_change(struct dvb_v5_fe_parms *parms, struct diseqc_cmd *cmd,
+=======
+	cmd->data0 |= (sat_number & 0x3) << 2;
+
+	return dvb_fe_diseqc_cmd(&parms->p, cmd->len, cmd->msg);
+}
+
+<<<<<<< HEAD
+static int dvbsat_scr_odu_channel_change(struct dvb_v5_fe_parms *parms, struct diseqc_cmd *cmd,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+static int dvbsat_scr_odu_channel_change(struct dvb_v5_fe_parms_priv *parms,
+					 struct diseqc_cmd *cmd,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 					 int high_band,
 					 int pol_v,
 					 int sat_number,
@@ -638,10 +809,17 @@ static int dvbsat_scr_odu_channel_change(struct dvb_v5_fe_parms *parms, struct d
 
 	/* Fill the satelite number - highest bit is for pos A/pos B */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cmd->data0 |= (sat_number & 0x7) << 5;
 =======
 	cmd->data0 |= (sat_number % 0x7) << 5;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	cmd->data0 |= (sat_number % 0x7) << 5;
+=======
+	cmd->data0 |= (sat_number & 0x7) << 5;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	pos_b =  (sat_number & 0x8) ? 1 : 0;
 
 	/* Fill the LNB number */
@@ -650,6 +828,27 @@ static int dvbsat_scr_odu_channel_change(struct dvb_v5_fe_parms *parms, struct d
 	cmd->data0 |= pos_b ? 16 : 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	return dvb_fe_diseqc_cmd(parms, cmd->len, cmd->msg);
+}
+
+static int dvbsat_diseqc_set_input(struct dvb_v5_fe_parms *parms, uint16_t t)
+{
+	int rc;
+	enum dvb_sat_polarization pol;
+	dvb_fe_retrieve_parm(parms, DTV_POLARIZATION, &pol);
+	int pol_v = (pol == POLARIZATION_V) || (pol == POLARIZATION_R);
+	int high_band = parms->high_band;
+	int sat_number = parms->sat_number;
+	int vol_high = 0;
+	int tone_on = 0;
+	int mini_b = 0;
+	struct diseqc_cmd cmd;
+
+	if (!lnb->rangeswitch) {
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	return dvb_fe_diseqc_cmd(&parms->p, cmd->len, cmd->msg);
 }
 
@@ -675,6 +874,7 @@ static int dvbsat_diseqc_set_input(struct dvb_v5_fe_parms_priv *parms,
 	pol_v = (pol == POLARIZATION_V) || (pol == POLARIZATION_R);
 
 	if (!lnb->freqrange[0].rangeswitch) {
+<<<<<<< HEAD
 =======
 	return dvb_fe_diseqc_cmd(parms, cmd->len, cmd->msg);
 }
@@ -694,6 +894,9 @@ static int dvbsat_diseqc_set_input(struct dvb_v5_fe_parms *parms, uint16_t t)
 
 	if (!lnb->rangeswitch) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		/*
 		 * Bandstacking switches don't use 2 bands nor use
 		 * DISEqC for setting the polarization. It also doesn't
@@ -702,27 +905,11 @@ static int dvbsat_diseqc_set_input(struct dvb_v5_fe_parms *parms, uint16_t t)
 		pol_v = 0;
 		high_band = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (parms->p.current_sys == SYS_ISDBS)
 			vol_high = 1;
-	} else {
-		/* Adjust voltage/tone accordingly */
-		if (sat_number < 2) {
-			vol_high = pol_v ? 0 : 1;
-			tone_on = high_band;
-		}
-	}
-
-	rc = dvb_fe_sec_voltage(&parms->p, 1, vol_high);
-	if (rc)
-		return rc;
-
-	rc = dvb_fe_sec_tone(&parms->p, SEC_TONE_OFF);
-	if (rc)
-		return rc;
-
-	if (sat_number >= 0) {
-		/* DiSEqC is enabled. Send DiSEqC commands */
 =======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	} else {
 		/* Adjust voltage/tone accordingly */
 		if (parms->sat_number < 2) {
@@ -741,12 +928,60 @@ static int dvbsat_diseqc_set_input(struct dvb_v5_fe_parms *parms, uint16_t t)
 		if (rc)
 			return rc;
 
+=======
+		if (parms->p.current_sys == SYS_ISDBS)
+			vol_high = 1;
+	} else {
+		/* Adjust voltage/tone accordingly */
+		if (sat_number < 2) {
+			vol_high = pol_v ? 0 : 1;
+			tone_on = high_band;
+		}
+	}
+
+	rc = dvb_fe_sec_voltage(&parms->p, 1, vol_high);
+	if (rc)
+		return rc;
+
+	rc = dvb_fe_sec_tone(&parms->p, SEC_TONE_OFF);
+	if (rc)
+		return rc;
+
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (sat_number >= 0) {
+		/* DiSEqC is enabled. Send DiSEqC commands */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		usleep(15 * 1000);
 
 		if (!t)
 			rc = dvbsat_diseqc_write_to_port_group(parms, &cmd, high_band,
 <<<<<<< HEAD
+<<<<<<< HEAD
+								pol_v, sat_number);
+=======
+							       pol_v, sat_number);
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+		else
+			rc = dvbsat_scr_odu_channel_change(parms, &cmd, high_band,
+							   pol_v, sat_number, t);
+
+		if (rc) {
+			dvb_logerr("sending diseq failed");
+			return rc;
+		}
+		usleep((15 + parms->diseqc_wait) * 1000);
+
+		rc = dvb_fe_diseqc_burst(parms, mini_b);
+		if (rc)
+			return rc;
+		usleep(15 * 1000);
+	}
+
+	rc = dvb_fe_sec_tone(parms, tone_on ? SEC_TONE_ON : SEC_TONE_OFF);
+=======
 								pol_v, sat_number);
 		else
 			rc = dvbsat_scr_odu_channel_change(parms, &cmd, high_band,
@@ -767,32 +1002,22 @@ static int dvbsat_diseqc_set_input(struct dvb_v5_fe_parms *parms, uint16_t t)
 		usleep(15 * 1000);
 	}
 
-	rc = dvb_fe_sec_tone(&parms->p, tone_on ? SEC_TONE_ON : SEC_TONE_OFF);
-=======
-							       pol_v, sat_number);
-		else
-			rc = dvbsat_scr_odu_channel_change(parms, &cmd, high_band,
-							   pol_v, sat_number, t);
-
-		if (rc) {
-			dvb_logerr("sending diseq failed");
-			return rc;
-		}
-		usleep((15 + parms->diseqc_wait) * 1000);
-
-		rc = dvb_fe_diseqc_burst(parms, mini_b);
-		if (rc)
-			return rc;
-		usleep(15 * 1000);
-	}
-
+<<<<<<< HEAD
 	rc = dvb_fe_sec_tone(parms, tone_on ? SEC_TONE_ON : SEC_TONE_OFF);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	rc = dvb_fe_sec_tone(&parms->p, tone_on ? SEC_TONE_ON : SEC_TONE_OFF);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return rc;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int dvb_sat_real_freq(struct dvb_v5_fe_parms *p, int freq)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
@@ -817,14 +1042,73 @@ int dvb_sat_real_freq(struct dvb_v5_fe_parms *p, int freq)
 }
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /*
  * DVB satellite get/set params hooks
  */
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+int dvb_sat_set_parms(struct dvb_v5_fe_parms *parms)
+{
+	const struct dvb_sat_lnb *lnb = parms->lnb;
+	enum dvb_sat_polarization pol;
+	dvb_fe_retrieve_parm(parms, DTV_POLARIZATION, &pol);
+	uint32_t freq;
+	uint16_t t = 0;
+	int rc;
+
+	dvb_fe_retrieve_parm(parms, DTV_FREQUENCY, &freq);
+
+	if (!lnb) {
+		dvb_logerr("Need a LNBf to work");
+		return -EINVAL;
+	}
+
+	/* Simple case: LNBf with just Single LO */
+	if (!lnb->highfreq) {
+		parms->freq_offset = lnb->lowfreq * 1000;
+		goto ret;
+	}
+
+	/* polarization-controlled multi LNBf */
+	if (!lnb->rangeswitch) {
+		if ((pol == POLARIZATION_V) || (pol == POLARIZATION_R))
+			parms->freq_offset = lnb->lowfreq * 1000;
+		else
+			parms->freq_offset = lnb->highfreq * 1000;
+		goto ret;
+	}
+
+	/* Voltage-controlled multiband switch */
+	parms->high_band = (freq > lnb->rangeswitch * 1000) ? 1 : 0;
+
+	/* Adjust frequency */
+	if (parms->high_band)
+		parms->freq_offset = lnb->highfreq * 1000;
+	else
+		parms->freq_offset = lnb->lowfreq * 1000;
+
+	/* For SCR/Unicable setups */
+	if (parms->freq_bpf) {
+		t = (((freq / 1000) + parms->freq_bpf + 2) / 4) - 350;
+		parms->freq_offset += ((t + 350) * 4) * 1000;
+	}
+
+ret:
+	rc = dvbsat_diseqc_set_input(parms, t);
+
+	freq = abs(freq - parms->freq_offset);
+	dvb_fe_store_parm(parms, DTV_FREQUENCY, freq);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static int dvb_sat_get_freq(struct dvb_v5_fe_parms *p, uint16_t *t)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
@@ -929,6 +1213,7 @@ int dvb_sat_set_parms(struct dvb_v5_fe_parms *p)
 		dvb_log("L-Band frequency: %.2f MHz (offset = %.2f MHz)", freq / 1000., parms->freq_offset/1000.);
 
 	dvb_fe_store_parm(&parms->p, DTV_FREQUENCY, freq);
+<<<<<<< HEAD
 =======
 int dvb_sat_set_parms(struct dvb_v5_fe_parms *parms)
 {
@@ -982,12 +1267,18 @@ ret:
 	freq = abs(freq - parms->freq_offset);
 	dvb_fe_store_parm(parms, DTV_FREQUENCY, freq);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return rc;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 const char *dvbsat_polarization_name[5] = {
 	"OFF",
 	"H",
@@ -995,4 +1286,9 @@ const char *dvbsat_polarization_name[5] = {
 	"L",
 	"R",
 };
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

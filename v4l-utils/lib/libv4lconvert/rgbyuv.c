@@ -296,6 +296,10 @@ void v4lconvert_yuyv_to_yuv420(const unsigned char *src, unsigned char *dest,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void v4lconvert_nv16_to_yuyv(const unsigned char *src, unsigned char *dest,
 		int width, int height)
 {
@@ -311,8 +315,12 @@ void v4lconvert_nv16_to_yuyv(const unsigned char *src, unsigned char *dest,
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void v4lconvert_yvyu_to_bgr24(const unsigned char *src, unsigned char *dest,
 		int width, int height, int stride)
 {
@@ -607,6 +615,13 @@ void v4lconvert_rgb565_to_yuv420(const unsigned char *src, unsigned char *dest,
 
 void v4lconvert_y16_to_rgb24(const unsigned char *src, unsigned char *dest,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		int width, int height)
+{
+	int j;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		int width, int height, int little_endian)
 {
 	int j;
@@ -614,11 +629,15 @@ void v4lconvert_y16_to_rgb24(const unsigned char *src, unsigned char *dest,
 	if (little_endian)
 		src++;
 
+<<<<<<< HEAD
 =======
 		int width, int height)
 {
 	int j;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	while (--height >= 0) {
 		for (j = 0; j < width; j++) {
 			*dest++ = *src;
@@ -631,19 +650,27 @@ void v4lconvert_y16_to_rgb24(const unsigned char *src, unsigned char *dest,
 
 void v4lconvert_y16_to_yuv420(const unsigned char *src, unsigned char *dest,
 <<<<<<< HEAD
+<<<<<<< HEAD
+		const struct v4l2_format *src_fmt, int little_endian)
+=======
+		const struct v4l2_format *src_fmt)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+{
+	int x, y;
+
+=======
 		const struct v4l2_format *src_fmt, int little_endian)
 {
 	int x, y;
 
+<<<<<<< HEAD
+>>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
 	if (little_endian)
 		src++;
 
-=======
-		const struct v4l2_format *src_fmt)
-{
-	int x, y;
-
->>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	/* Y */
 	for (y = 0; y < src_fmt->fmt.pix.height; y++)
 		for (x = 0; x < src_fmt->fmt.pix.width; x++){
@@ -787,6 +814,10 @@ void v4lconvert_rgb32_to_rgb24(const unsigned char *src, unsigned char *dest,
 	}
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 static void hsvtorgb(const unsigned char *hsv, unsigned char *rgb,
 		     unsigned char hsv_enc)
@@ -862,5 +893,9 @@ void v4lconvert_hsv_to_rgb24(const unsigned char *src, unsigned char *dest,
 			src += bppIN;
 		}
 }
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

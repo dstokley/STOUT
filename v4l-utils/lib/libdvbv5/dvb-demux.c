@@ -1,18 +1,30 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -22,6 +34,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -43,9 +65,15 @@
 #include <unistd.h>
 #include <stdio.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <time.h>
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#include <time.h>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <errno.h>
 
 #include <sys/ioctl.h>
@@ -56,6 +84,22 @@
 
 #include <libdvbv5/dvb-demux.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+int dvb_dmx_open(int adapter, int demux)
+{
+	char* demux_name = NULL;
+	int fd_demux;
+	int r;
+
+	r = asprintf(&demux_name, "/dev/dvb/adapter%i/demux%i", adapter, demux );
+	if (r < 0)
+		return -1;
+	fd_demux = open( demux_name, O_RDWR | O_NONBLOCK );
+	free(demux_name);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <libdvbv5/dvb-dev.h>
 
 #define MAX_TIME		10	/* 1.0 seconds */
@@ -97,6 +141,7 @@ int dvb_dmx_open(int adapter, int demux)
 
 	fd_demux = open(dvb_dev->path, O_RDWR | O_NONBLOCK);
 	dvb_dev_free(dvb);
+<<<<<<< HEAD
 =======
 
 int dvb_dmx_open(int adapter, int demux)
@@ -111,11 +156,15 @@ int dvb_dmx_open(int adapter, int demux)
 	fd_demux = open( demux_name, O_RDWR | O_NONBLOCK );
 	free(demux_name);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	return fd_demux;
 }
 
 void dvb_dmx_close(int dmx_fd)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	(void)xioctl(dmx_fd, DMX_STOP);
 	close(dmx_fd);
@@ -123,15 +172,30 @@ void dvb_dmx_close(int dmx_fd)
 	(void) ioctl(dmx_fd, DMX_STOP);
 	close( dmx_fd);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	(void) ioctl(dmx_fd, DMX_STOP);
+	close( dmx_fd);
+=======
+	(void)xioctl(dmx_fd, DMX_STOP);
+	close(dmx_fd);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 void dvb_dmx_stop(int dmx_fd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	(void)xioctl(dmx_fd, DMX_STOP);
 =======
 	(void) ioctl(dmx_fd, DMX_STOP);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	(void) ioctl(dmx_fd, DMX_STOP);
+=======
+	(void)xioctl(dmx_fd, DMX_STOP);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
@@ -141,10 +205,17 @@ int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
 
 	if (buffersize) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xioctl(dmxfd, DMX_SET_BUFFER_SIZE, buffersize) == -1)
 =======
 		if (ioctl(dmxfd, DMX_SET_BUFFER_SIZE, buffersize) == -1)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		if (ioctl(dmxfd, DMX_SET_BUFFER_SIZE, buffersize) == -1)
+=======
+		if (xioctl(dmxfd, DMX_SET_BUFFER_SIZE, buffersize) == -1)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			perror("DMX_SET_BUFFER_SIZE failed");
 	}
 
@@ -157,10 +228,17 @@ int dvb_set_pesfilter(int dmxfd, int pid, dmx_pes_type_t type,
 	pesfilter.flags = DMX_IMMEDIATE_START;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xioctl(dmxfd, DMX_SET_PES_FILTER, &pesfilter) == -1) {
 =======
 	if (ioctl(dmxfd, DMX_SET_PES_FILTER, &pesfilter) == -1) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (ioctl(dmxfd, DMX_SET_PES_FILTER, &pesfilter) == -1) {
+=======
+	if (xioctl(dmxfd, DMX_SET_PES_FILTER, &pesfilter) == -1) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		fprintf(stderr, "DMX_SET_PES_FILTER failed "
 		"(PID = 0x%04x): %d %m\n", pid, errno);
 		return -1;
@@ -194,10 +272,17 @@ int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
 	sctfilter.flags = flags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xioctl(dmxfd, DMX_SET_FILTER, &sctfilter) == -1) {
 =======
 	if (ioctl(dmxfd, DMX_SET_FILTER, &sctfilter) == -1) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (ioctl(dmxfd, DMX_SET_FILTER, &sctfilter) == -1) {
+=======
+	if (xioctl(dmxfd, DMX_SET_FILTER, &sctfilter) == -1) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		fprintf(stderr, "DMX_SET_FILTER failed (PID = 0x%04x): %d %m\n",
 			pid, errno);
 		return -1;
@@ -207,6 +292,7 @@ int dvb_set_section_filter(int dmxfd, int pid, unsigned filtsize,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int dvb_get_pmt_pid(int patfd, int sid)
 {
 	int count;
@@ -215,6 +301,16 @@ int get_pmt_pid(const char *dmxdev, int sid)
 {
 	int patfd, count;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+int get_pmt_pid(const char *dmxdev, int sid)
+{
+	int patfd, count;
+=======
+int dvb_get_pmt_pid(int patfd, int sid)
+{
+	int count;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int pmt_pid = 0;
 	int patread = 0;
 	int section_length;
@@ -230,9 +326,12 @@ int get_pmt_pid(const char *dmxdev, int sid)
 	f.flags = DMX_IMMEDIATE_START | DMX_CHECK_CRC;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xioctl(patfd, DMX_SET_FILTER, &f) == -1) {
 		perror("ioctl DMX_SET_FILTER failed");
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if ((patfd = open(dmxdev, O_RDWR)) < 0) {
 		perror("openening pat demux failed");
 		return -1;
@@ -241,7 +340,14 @@ int get_pmt_pid(const char *dmxdev, int sid)
 	if (ioctl(patfd, DMX_SET_FILTER, &f) == -1) {
 		perror("ioctl DMX_SET_FILTER failed");
 		close(patfd);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (xioctl(patfd, DMX_SET_FILTER, &f) == -1) {
+		perror("ioctl DMX_SET_FILTER failed");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return -1;
 	}
 
@@ -251,9 +357,15 @@ int get_pmt_pid(const char *dmxdev, int sid)
 		if (count < 0) {
 		perror("read_sections: read error");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		close(patfd);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		close(patfd);
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return -1;
 		}
 
@@ -277,8 +389,14 @@ int get_pmt_pid(const char *dmxdev, int sid)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	close(patfd);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	close(patfd);
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	return pmt_pid;
 }

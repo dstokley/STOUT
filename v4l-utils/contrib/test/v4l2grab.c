@@ -25,14 +25,24 @@
 #include "../../lib/include/libv4l2.h"
 #include <argp.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+#define CLEAR(x) memset(&(x), 0, sizeof(x))
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <pthread.h>
 
 #define CLEAR_P(x,s) memset((x), 0, s)
 #define CLEAR(x) CLEAR_P(&(x), sizeof(x))
+<<<<<<< HEAD
 =======
 
 #define CLEAR(x) memset(&(x), 0, sizeof(x))
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 struct buffer {
 	void   *start;
@@ -49,16 +59,30 @@ static void xioctl(int fh, unsigned long int request, void *arg)
 
 	if (r == -1) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fprintf(stderr, "%s(%lu): error %d, %s\n", __func__,
 			_IOC_NR(request), errno, strerror(errno));
 =======
 		fprintf(stderr, "error %d, %s\n", errno, strerror(errno));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		fprintf(stderr, "error %d, %s\n", errno, strerror(errno));
+=======
+		fprintf(stderr, "%s(%lu): error %d, %s\n", __func__,
+			_IOC_NR(request), errno, strerror(errno));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		exit(EXIT_FAILURE);
 	}
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+static int capture(char *dev_name, int x_res, int y_res, int n_frames,
+		   char *out_dir)
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /* Used by the multi thread capture version */
 struct buffer_queue {
 	struct v4l2_buffer *buffers;
@@ -246,15 +270,20 @@ static int capture_loop (int fd, struct buffer *buffers, struct v4l2_format fmt,
 
 static int capture(char *dev_name, int x_res, int y_res, int n_frames,
 		   char *out_dir, int block, int threads, int sleep_ms)
+<<<<<<< HEAD
 =======
 static int capture(char *dev_name, int x_res, int y_res, int n_frames,
 		   char *out_dir)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	struct v4l2_format		fmt;
 	struct v4l2_buffer		buf;
 	struct v4l2_requestbuffers	req;
 	enum v4l2_buf_type		type;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int				fd = -1;
 	unsigned int			i, n_buffers;
@@ -265,6 +294,8 @@ static int capture(char *dev_name, int x_res, int y_res, int n_frames,
 	else
 		fd = v4l2_open(dev_name, O_RDWR | O_NONBLOCK, 0);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	fd_set				fds;
 	struct timeval			tv;
 	int				r, fd = -1;
@@ -274,7 +305,20 @@ static int capture(char *dev_name, int x_res, int y_res, int n_frames,
 	struct buffer			*buffers;
 
 	fd = v4l2_open(dev_name, O_RDWR | O_NONBLOCK, 0);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	int				fd = -1;
+	unsigned int			i, n_buffers;
+	struct buffer			*buffers;
+
+	if (block)
+		fd = v4l2_open(dev_name, O_RDWR, 0);
+	else
+		fd = v4l2_open(dev_name, O_RDWR | O_NONBLOCK, 0);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (fd < 0) {
 		perror("Cannot open device");
 		exit(EXIT_FAILURE);
@@ -333,12 +377,15 @@ static int capture(char *dev_name, int x_res, int y_res, int n_frames,
 
 	xioctl(fd, VIDIOC_STREAMON, &type);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (threads)
 		capture_threads(fd, buffers, 2, fmt, n_frames, out_dir,
 				sleep_ms);
 	else
 		capture_loop(fd, buffers, fmt, n_frames, out_dir);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	for (i = 0; i < n_frames; i++) {
 		do {
 			FD_ZERO(&fds);
@@ -373,7 +420,17 @@ static int capture(char *dev_name, int x_res, int y_res, int n_frames,
 
 		xioctl(fd, VIDIOC_QBUF, &buf);
 	}
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (threads)
+		capture_threads(fd, buffers, 2, fmt, n_frames, out_dir,
+				sleep_ms);
+	else
+		capture_loop(fd, buffers, fmt, n_frames, out_dir);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	xioctl(fd, VIDIOC_STREAMOFF, &type);
@@ -401,11 +458,19 @@ static const struct argp_option options[] = {
 	{"yres",	'y',	"YRES",		0,	"vertical resolution", 0},
 	{"n-frames",	'n',	"NFRAMES",	0,	"number of frames to capture", 0},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{"thread-enable", 't',	"THREADS",	0,	"if different threads should capture and save", 0},
 	{"blockmode-enable", 'b', "BLOCKMODE",	0,	"if blocking mode should be used", 0},
 	{"sleep-time",	's',	"SLEEP",	0,	"how long should the consumer thread sleep to simulate the processing of a buffer (in ms)"},
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	{"thread-enable", 't',	"THREADS",	0,	"if different threads should capture and save", 0},
+	{"blockmode-enable", 'b', "BLOCKMODE",	0,	"if blocking mode should be used", 0},
+	{"sleep-time",	's',	"SLEEP",	0,	"how long should the consumer thread sleep to simulate the processing of a buffer (in ms)"},
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{ 0, 0, 0, 0, 0, 0 }
 };
 
@@ -416,11 +481,19 @@ static int	x_res = 640;
 static int	y_res = 480;
 static int	n_frames = 20;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int	threads = 0;
 static int	block = 0;
 static int	sleep_ms = 0;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+static int	threads = 0;
+static int	block = 0;
+static int	sleep_ms = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 static error_t parse_opt(int k, char *arg, struct argp_state *state)
 {
@@ -449,6 +522,10 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 			n_frames = val;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case 't':
 		threads = 1;
 		break;
@@ -460,8 +537,12 @@ static error_t parse_opt(int k, char *arg, struct argp_state *state)
 		if (val)
 			sleep_ms = val;
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	default:
 		return ARGP_ERR_UNKNOWN;
 	}
@@ -480,9 +561,17 @@ int main(int argc, char **argv)
 	argp_parse(&argp, argc, argv, 0, 0, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return capture(dev_name, x_res, y_res, n_frames, out_dir, block,
 		       threads, sleep_ms);
 =======
 	return capture(dev_name, x_res, y_res, n_frames, out_dir);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	return capture(dev_name, x_res, y_res, n_frames, out_dir);
+=======
+	return capture(dev_name, x_res, y_res, n_frames, out_dir, block,
+		       threads, sleep_ms);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }

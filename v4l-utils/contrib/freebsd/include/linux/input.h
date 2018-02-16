@@ -1,7 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /*
  * Copyright (c) 1999-2002 Vojtech Pavlik
  *
@@ -10,15 +16,26 @@
  * the Free Software Foundation.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef _INPUT_H
 #define _INPUT_H
 
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifndef _UAPI_INPUT_H
 #define _UAPI_INPUT_H
 
 #ifndef __KERNEL__
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#ifndef _INPUT_H
+#define _INPUT_H
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <stdint.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
@@ -61,12 +78,19 @@ typedef int8_t __s8;
 #include <linux/types.h>
 #endif
 <<<<<<< HEAD
-
-#include "input-event-codes.h"
+<<<<<<< HEAD
 =======
 #endif
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
+=======
+
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#include "input-event-codes.h"
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 /*
  * The event structure itself
@@ -112,6 +136,13 @@ struct input_id {
  * [minimum, maximum] limits, such task is left to userspace.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+ * Resolution for main axes (ABS_X, ABS_Y, ABS_Z) is reported in
+ * units per millimeter (units/mm), resolution for rotational axes
+ * (ABS_RX, ABS_RY, ABS_RZ) is reported in units per radian.
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * The default resolution for main axes (ABS_X, ABS_Y, ABS_Z)
  * is reported in units per millimeter (units/mm), resolution
  * for rotational axes (ABS_RX, ABS_RY, ABS_RZ) is reported
@@ -120,11 +151,15 @@ struct input_id {
  * The main axes (ABS_X, ABS_Y, ABS_Z) are then reported in
  * in units per g (units/g) and in units per degree per second
  * (units/deg/s) for rotational axes (ABS_RX, ABS_RY, ABS_RZ).
+<<<<<<< HEAD
 =======
  * Resolution for main axes (ABS_X, ABS_Y, ABS_Z) is reported in
  * units per millimeter (units/mm), resolution for rotational axes
  * (ABS_RX, ABS_RY, ABS_RZ) is reported in units per radian.
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  */
 struct input_absinfo {
 	__s32 value;
@@ -160,14 +195,22 @@ struct input_keymap_entry {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct input_mask {
 	__u32 type;
 	__u32 codes_size;
 	__u64 codes_ptr;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define EVIOCGVERSION		_IOR('E', 0x01, int)			/* get driver version */
 #define EVIOCGID		_IOR('E', 0x02, struct input_id)	/* get device ID */
 #define EVIOCGREP		_IOR('E', 0x03, unsigned int[2])	/* get repeat settings */
@@ -219,16 +262,24 @@ struct input_mask {
 #define EVIOCSABS(abs)		_IOW('E', 0xc0 + (abs), struct input_absinfo)	/* set abs value/limits */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define EVIOCSFF		_IOW('E', 0x80, struct ff_effect)	/* send a force effect to a force feedback device */
 =======
 #define EVIOCSFF		_IOC(_IOC_WRITE, 'E', 0x80, sizeof(struct ff_effect))	/* send a force effect to a force feedback device */
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#define EVIOCSFF		_IOC(_IOC_WRITE, 'E', 0x80, sizeof(struct ff_effect))	/* send a force effect to a force feedback device */
+=======
+#define EVIOCSFF		_IOW('E', 0x80, struct ff_effect)	/* send a force effect to a force feedback device */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define EVIOCRMFF		_IOW('E', 0x81, int)			/* Erase a force effect */
 #define EVIOCGEFFECTS		_IOR('E', 0x84, int)			/* Report number of effects playable at the same time */
 
 #define EVIOCGRAB		_IOW('E', 0x90, int)			/* Grab/Release device */
 #define EVIOCREVOKE		_IOW('E', 0x91, int)			/* Revoke device access */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /**
  * EVIOCGMASK - Retrieve current event mask
@@ -286,6 +337,8 @@ struct input_mask {
 
 #define EVIOCSCLOCKID		_IOW('E', 0xa0, int)			/* Set clockid to be used for timestamps */
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define EVIOCSCLOCKID		_IOW('E', 0xa0, int)			/* Set clockid to be used for timestamps */
 
 /*
@@ -1044,7 +1097,67 @@ struct input_mask {
 #define SND_TONE		0x02
 #define SND_MAX			0x07
 #define SND_CNT			(SND_MAX+1)
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+/**
+ * EVIOCGMASK - Retrieve current event mask
+ *
+ * This ioctl allows user to retrieve the current event mask for specific
+ * event type. The argument must be of type "struct input_mask" and
+ * specifies the event type to query, the address of the receive buffer and
+ * the size of the receive buffer.
+ *
+ * The event mask is a per-client mask that specifies which events are
+ * forwarded to the client. Each event code is represented by a single bit
+ * in the event mask. If the bit is set, the event is passed to the client
+ * normally. Otherwise, the event is filtered and will never be queued on
+ * the client's receive buffer.
+ *
+ * Event masks do not affect global state of the input device. They only
+ * affect the file descriptor they are applied to.
+ *
+ * The default event mask for a client has all bits set, i.e. all events
+ * are forwarded to the client. If the kernel is queried for an unknown
+ * event type or if the receive buffer is larger than the number of
+ * event codes known to the kernel, the kernel returns all zeroes for those
+ * codes.
+ *
+ * At maximum, codes_size bytes are copied.
+ *
+ * This ioctl may fail with ENODEV in case the file is revoked, EFAULT
+ * if the receive-buffer points to invalid memory, or EINVAL if the kernel
+ * does not implement the ioctl.
+ */
+#define EVIOCGMASK		_IOR('E', 0x92, struct input_mask)	/* Get event-masks */
+
+/**
+ * EVIOCSMASK - Set event mask
+ *
+ * This ioctl is the counterpart to EVIOCGMASK. Instead of receiving the
+ * current event mask, this changes the client's event mask for a specific
+ * type.  See EVIOCGMASK for a description of event-masks and the
+ * argument-type.
+ *
+ * This ioctl provides full forward compatibility. If the passed event type
+ * is unknown to the kernel, or if the number of event codes specified in
+ * the mask is bigger than what is known to the kernel, the ioctl is still
+ * accepted and applied. However, any unknown codes are left untouched and
+ * stay cleared. That means, the kernel always filters unknown codes
+ * regardless of what the client requests.  If the new mask doesn't cover
+ * all known event-codes, all remaining codes are automatically cleared and
+ * thus filtered.
+ *
+ * This ioctl may fail with ENODEV in case the file is revoked. EFAULT is
+ * returned if the receive-buffer points to invalid memory. EINVAL is returned
+ * if the kernel does not implement the ioctl.
+ */
+#define EVIOCSMASK		_IOW('E', 0x93, struct input_mask)	/* Set event-masks */
+
+#define EVIOCSCLOCKID		_IOW('E', 0xa0, int)			/* Set clockid to be used for timestamps */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 /*
  * IDs.
@@ -1076,11 +1189,19 @@ struct input_mask {
 #define BUS_ATARI		0x1B
 #define BUS_SPI			0x1C
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define BUS_RMI			0x1D
 #define BUS_CEC			0x1E
 #define BUS_INTEL_ISHTP		0x1F
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#define BUS_RMI			0x1D
+#define BUS_CEC			0x1E
+#define BUS_INTEL_ISHTP		0x1F
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 /*
  * MT_TOOL types
@@ -1088,11 +1209,19 @@ struct input_mask {
 #define MT_TOOL_FINGER		0
 #define MT_TOOL_PEN		1
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MT_TOOL_PALM		2
 #define MT_TOOL_MAX		2
 =======
 #define MT_TOOL_MAX		1
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#define MT_TOOL_MAX		1
+=======
+#define MT_TOOL_PALM		2
+#define MT_TOOL_MAX		2
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 /*
  * Values describing the status of a force-feedback effect
@@ -1222,10 +1351,17 @@ struct ff_periodic_effect {
 
 	__u32 custom_len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__s16 *custom_data;
 =======
 	__s16 __user *custom_data;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	__s16 __user *custom_data;
+=======
+	__s16 *custom_data;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 };
 
 /**
@@ -1318,6 +1454,14 @@ struct ff_effect {
 #define FF_AUTOCENTER	0x61
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#define FF_MAX		0x7f
+#define FF_CNT		(FF_MAX+1)
+
+#endif /* _UAPI_INPUT_H */
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /*
  * ff->playback(effect_id = FF_GAIN) is the first effect_id to
  * cause a collision with another ff method, in this case ff->set_gain().
@@ -1330,9 +1474,13 @@ struct ff_effect {
 #define FF_CNT		(FF_MAX+1)
 
 #endif /* _INPUT_H */
+<<<<<<< HEAD
 =======
 #define FF_MAX		0x7f
 #define FF_CNT		(FF_MAX+1)
 
 #endif /* _UAPI_INPUT_H */
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

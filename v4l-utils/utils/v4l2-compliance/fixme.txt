@@ -5,6 +5,16 @@ At some point in time these issues should be resolved, but by placing them
 here they won't be forgotten.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+- Control documentation is out of date regarding how
+  error_idx should be set for G/S_EXT_CTRLS and for TRY_EXT_CTRLS (which does
+  this slightly differently).
+
+- Duplicate controls: V4L2_CID_EXPOSURE (user class) and V4L2_CID_EXPOSURE_ABSOLUTE
+  (camera class).
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 - Duplicate controls: V4L2_CID_EXPOSURE (user class) and V4L2_CID_EXPOSURE_ABSOLUTE
   (camera class).
 
@@ -18,6 +28,7 @@ here they won't be forgotten.
 - Should calling s_std(g_std()) reset the format?
 
 - Latency checks: warn when ioctls take a very long time.
+<<<<<<< HEAD
 =======
 - Control documentation is out of date regarding how
   error_idx should be set for G/S_EXT_CTRLS and for TRY_EXT_CTRLS (which does
@@ -26,3 +37,6 @@ here they won't be forgotten.
 - Duplicate controls: V4L2_CID_EXPOSURE (user class) and V4L2_CID_EXPOSURE_ABSOLUTE
   (camera class).
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

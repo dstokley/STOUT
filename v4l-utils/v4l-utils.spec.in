@@ -18,12 +18,21 @@ Requires:       libv4l = %{version}-%{release}
 %description
 v4l-utils is a collection of various video4linux (V4L) and DVB utilities. The
 <<<<<<< HEAD
+<<<<<<< HEAD
 main v4l-utils package contains cx18-ctl, ir-keytable, ir-ctl, ivtv-ctl,
 v4l2-ctl and v4l2-sysfs-path.
 =======
 main v4l-utils package contains cx18-ctl, ir-keytable, ivtv-ctl, v4l2-ctl and
 v4l2-sysfs-path.
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+main v4l-utils package contains cx18-ctl, ir-keytable, ivtv-ctl, v4l2-ctl and
+v4l2-sysfs-path.
+=======
+main v4l-utils package contains cx18-ctl, ir-keytable, ir-ctl, ivtv-ctl,
+v4l2-ctl and v4l2-sysfs-path.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 
 %package        devel-tools
@@ -135,17 +144,29 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_bindir}/cx18-ctl
 %{_bindir}/ir-keytable
 <<<<<<< HEAD
+<<<<<<< HEAD
 %{_bindir}/ir-ctl
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+%{_bindir}/ir-ctl
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 %{_bindir}/ivtv-ctl
 %{_bindir}/v4l2-ctl
 %{_bindir}/v4l2-sysfs-path
 %{_mandir}/man1/ir-keytable.1*
 <<<<<<< HEAD
+<<<<<<< HEAD
 %{_mandir}/man1/ir-ctl.1*
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+%{_mandir}/man1/ir-ctl.1*
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 %files devel-tools
 %defattr(-,root,root,-)

@@ -1,6 +1,28 @@
 bin_PROGRAMS = dvb-fe-tool dvbv5-zap dvbv5-scan dvb-format-convert
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+dvb_fe_tool_SOURCES = dvb-fe-tool.c
+dvb_fe_tool_LDADD = ../../lib/libdvbv5/libdvbv5.la
+dvb_fe_tool_LDFLAGS = $(ARGP_LIBS) -lm
+
+dvbv5_zap_SOURCES = dvbv5-zap.c
+dvbv5_zap_LDADD = ../../lib/libdvbv5/libdvbv5.la
+dvbv5_zap_LDFLAGS = $(ARGP_LIBS) -lm
+
+dvbv5_scan_SOURCES = dvbv5-scan.c
+dvbv5_scan_LDADD = ../../lib/libdvbv5/libdvbv5.la
+dvbv5_scan_LDFLAGS = $(ARGP_LIBS) -lm
+
+dvb_format_convert_SOURCES = dvb-format-convert.c
+dvb_format_convert_LDADD = ../../lib/libdvbv5/libdvbv5.la
+dvb_format_convert_LDFLAGS = $(ARGP_LIBS) -lm
+
+EXTRA_DIST = README
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 if WITH_DVBV5_REMOTE
 bin_PROGRAMS += \
 	dvbv5-daemon
@@ -34,6 +56,7 @@ dvbv5_daemon_LDFLAGS = $(ARGP_LIBS) -lm $(XMLRPC_LDFLAGS) $(PTHREAD_LDFLAGS)
 dvbv5_daemon_CFLAGS =  $(XMLRPC_CFLAGS) $(LIBUDEV_CFLAGS) $(PTHREAD_CFLAGS)
 
 EXTRA_DIST = README
+<<<<<<< HEAD
 =======
 dvb_fe_tool_SOURCES = dvb-fe-tool.c
 dvb_fe_tool_LDADD = ../../lib/libdvbv5/libdvbv5.la
@@ -54,3 +77,6 @@ dvb_format_convert_LDFLAGS = $(ARGP_LIBS) -lm
 EXTRA_DIST = README
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

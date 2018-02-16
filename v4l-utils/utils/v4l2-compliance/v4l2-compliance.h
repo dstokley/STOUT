@@ -25,6 +25,7 @@
 #include <cerrno>
 #include <string>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <map>
 #include <set>
 #include <map>
@@ -39,6 +40,8 @@
 #ifndef NO_LIBV4L2
 #include <libv4l2.h>
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <list>
 #include <set>
 #include <linux/videodev2.h>
@@ -53,7 +56,25 @@
 #define v4l2_ioctl(fd, request, ...) (-1)
 #define v4l2_mmap(start, length, prot, flags, fd, offset) (MAP_FAILED)
 #define v4l2_munmap(_start, length) (-1)
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#include <map>
+#include <set>
+#include <map>
+#include <linux/videodev2.h>
+
+#ifdef ANDROID
+#include <android-config.h>
+#else
+#include <config.h>
+#endif
+
+#ifndef NO_LIBV4L2
+#include <libv4l2.h>
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #endif
 
 #include <cv4l-helpers.h>
@@ -65,25 +86,10 @@
 extern bool show_info;
 extern bool show_warnings;
 <<<<<<< HEAD
-extern int kernel_version;
-extern unsigned warnings;
-
-struct test_query_ext_ctrl: v4l2_query_ext_ctrl {
-	__u64 menu_mask;
-};
-
-typedef std::map<__u32, struct test_query_ext_ctrl> qctrl_map;
-typedef std::map<__u32, __u32> pixfmt_map;
-typedef std::set<__u64> frmsizes_set;
-typedef std::map<__u32, unsigned> frmsizes_count_map;
-
-struct base_node;
-
-#define V4L2_BUF_TYPE_LAST V4L2_BUF_TYPE_META_CAPTURE
-
-struct base_node {
+<<<<<<< HEAD
 =======
 extern bool wrapper;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 extern int kernel_version;
 extern unsigned warnings;
 
@@ -98,27 +104,67 @@ struct node;
 
 struct node {
 	struct v4l_fd vfd;
+=======
+extern int kernel_version;
+extern unsigned warnings;
+
+struct test_query_ext_ctrl: v4l2_query_ext_ctrl {
+	__u64 menu_mask;
+};
+
+typedef std::map<__u32, struct test_query_ext_ctrl> qctrl_map;
+typedef std::map<__u32, __u32> pixfmt_map;
+typedef std::set<__u64> frmsizes_set;
+typedef std::map<__u32, unsigned> frmsizes_count_map;
+
+struct base_node;
+
+<<<<<<< HEAD
+struct node {
+	struct v4l_fd vfd;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+#define V4L2_BUF_TYPE_LAST V4L2_BUF_TYPE_META_CAPTURE
+
+struct base_node {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	bool is_video;
 	bool is_radio;
 	bool is_vbi;
 	bool is_sdr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool is_meta;
 	bool is_touch;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	bool is_meta;
+	bool is_touch;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	bool is_m2m;
 	bool is_planar;
 	bool can_capture;
 	bool can_output;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool can_scale;
-	const char *device;
 =======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	const char *device;
 	unsigned caps;
+=======
+	bool can_scale;
+	const char *device;
+<<<<<<< HEAD
+	unsigned caps;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct node *node2;	/* second open filehandle */
 	bool has_outputs;
 	bool has_inputs;
@@ -129,6 +175,15 @@ struct node {
 	unsigned outputs;
 	unsigned audio_outputs;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	unsigned std_controls;
+	unsigned priv_controls;
+	qctrl_list controls;
+	__u32 fbuf_caps;
+	pixfmt_set buftype_pixfmts[V4L2_BUF_TYPE_SDR_CAPTURE + 1];
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	unsigned cur_io_caps;
 	unsigned std_controls;
 	unsigned std_compound_controls;
@@ -139,6 +194,7 @@ struct node {
 	frmsizes_set frmsizes;
 	frmsizes_count_map frmsizes_count;
 	bool has_frmintervals;
+<<<<<<< HEAD
 =======
 	unsigned std_controls;
 	unsigned priv_controls;
@@ -146,12 +202,19 @@ struct node {
 	__u32 fbuf_caps;
 	pixfmt_set buftype_pixfmts[V4L2_BUF_TYPE_SDR_CAPTURE + 1];
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	__u32 valid_buftypes;
 	__u32 valid_buftype;
 	__u32 valid_memorytype;
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct node : public base_node, public cv4l_fd {
 	node() : base_node() {}
 
@@ -159,8 +222,12 @@ struct node : public base_node, public cv4l_fd {
 	pixfmt_map buftype_pixfmts[V4L2_BUF_TYPE_LAST + 1];
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define info(fmt, args...) 					\
 	do {							\
 		if (show_info)					\
@@ -175,6 +242,10 @@ struct node : public base_node, public cv4l_fd {
 	} while (0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define warn_once(fmt, args...)						\
 	do {								\
 		static bool show;					\
@@ -188,8 +259,12 @@ struct node : public base_node, public cv4l_fd {
 		}							\
 	} while (0)
 
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define fail(fmt, args...) 						\
 ({ 									\
  	printf("\t\tfail: %s(%d): " fmt, __FILE__, __LINE__, ##args);	\
@@ -203,7 +278,10 @@ struct node : public base_node, public cv4l_fd {
 	} while (0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static inline int test_open(const char *file, int oflag)
 {
  	return wrapper ? v4l2_open(file, oflag) : open(file, oflag);
@@ -257,7 +335,12 @@ static inline int test_munmap(void *start, size_t length)
  	return wrapper ? v4l2_munmap(start, length) : munmap(start, length);
 }
 
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static inline int check_fract(const struct v4l2_fract *f)
 {
 	if (f->numerator && f->denominator)
@@ -271,6 +354,7 @@ static inline double fract2f(const struct v4l2_fract *f)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define doioctl(n, r, p) v4l_named_ioctl((n)->g_v4l_fd(), #r, r, p)
 
 std::string cap2s(unsigned cap);
@@ -278,6 +362,8 @@ std::string buftype2s(int type);
 std::string fcc2s(unsigned int val);
 
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int doioctl_name(struct node *node, unsigned long int request, void *parm,
 		 const char *name, bool no_wrapper = false);
 #define doioctl(n, r, p) doioctl_name(n, r, p, #r)
@@ -285,7 +371,18 @@ int doioctl_name(struct node *node, unsigned long int request, void *parm,
 
 std::string cap2s(unsigned cap);
 std::string buftype2s(int type);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+#define doioctl(n, r, p) v4l_named_ioctl((n)->g_v4l_fd(), #r, r, p)
+
+std::string cap2s(unsigned cap);
+std::string buftype2s(int type);
+std::string fcc2s(unsigned int val);
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 static inline std::string buftype2s(enum v4l2_buf_type type)
 {
        return buftype2s((int)type);
@@ -296,10 +393,17 @@ int check_string(const char *s, size_t len);
 int check_ustring(const __u8 *s, int len);
 int check_0(const void *p, int len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int restoreFormat(struct node *node);
 std::string pixfmt2s(unsigned id);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+int restoreFormat(struct node *node);
+std::string pixfmt2s(unsigned id);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 // Debug ioctl tests
 int testRegister(struct node *node);
@@ -322,17 +426,26 @@ int testOutputAudio(struct node *node);
 
 // Control ioctl tests
 <<<<<<< HEAD
+<<<<<<< HEAD
 int testQueryExtControls(struct node *node);
-int testQueryControls(struct node *node);
-int testSimpleControls(struct node *node);
-int testExtendedControls(struct node *node);
-int testEvents(struct node *node);
 =======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int testQueryControls(struct node *node);
 int testSimpleControls(struct node *node);
 int testExtendedControls(struct node *node);
 int testControlEvents(struct node *node);
+=======
+int testQueryExtControls(struct node *node);
+int testQueryControls(struct node *node);
+int testSimpleControls(struct node *node);
+int testExtendedControls(struct node *node);
+<<<<<<< HEAD
+int testControlEvents(struct node *node);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+int testEvents(struct node *node);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int testJpegComp(struct node *node);
 
 // I/O configuration ioctl tests
@@ -350,11 +463,19 @@ int testTryFormats(struct node *node);
 int testSetFormats(struct node *node);
 int testSlicedVBICap(struct node *node);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int testCropping(struct node *node);
 int testComposing(struct node *node);
 int testScaling(struct node *node);
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+int testCropping(struct node *node);
+int testComposing(struct node *node);
+int testScaling(struct node *node);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 // Codec ioctl tests
 int testEncoder(struct node *node);
@@ -369,12 +490,20 @@ int testMmap(struct node *node, unsigned frame_count);
 int testUserPtr(struct node *node, unsigned frame_count);
 int testDmaBuf(struct node *expbuf_node, struct node *node, unsigned frame_count);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void streamAllFormats(struct node *node);
 
 // Color tests
 int testColorsAllFormats(struct node *node, unsigned component,
 			 unsigned skip, unsigned perc);
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #endif

@@ -2,19 +2,31 @@
  * Copyright (c) 2011-2012 - Mauro Carvalho Chehab
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -24,6 +36,16 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -31,21 +53,37 @@
 #include <sys/types.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+#include "dvb-fe-priv.h"
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+#include "dvb-v5.h"
+#include <libdvbv5/dvb-v5-std.h>
+#include <libdvbv5/dvb-fe.h>
+=======
 #include "dvb-fe-priv.h"
 #include "dvb-v5.h"
 #include <libdvbv5/dvb-dev.h>
 #include <libdvbv5/countries.h>
 #include <libdvbv5/dvb-v5-std.h>
-=======
-#include "dvb-v5.h"
-#include <libdvbv5/dvb-v5-std.h>
+<<<<<<< HEAD
 #include <libdvbv5/dvb-fe.h>
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #include <inttypes.h>
 #include <math.h>
 #include <stddef.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <unistd.h>
+
+static void dvb_v5_free(struct dvb_v5_fe_parms *parms)
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <time.h>
 #include <unistd.h>
 #include <stdarg.h>
@@ -101,11 +139,15 @@ static void libdvbv5_initialize(void)
 }
 
 void dvb_v5_free(struct dvb_v5_fe_parms_priv *parms)
+<<<<<<< HEAD
 =======
 #include <unistd.h>
 
 static void dvb_v5_free(struct dvb_v5_fe_parms *parms)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	if (parms->fname)
 		free(parms->fname);
@@ -114,6 +156,46 @@ static void dvb_v5_free(struct dvb_v5_fe_parms *parms)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+struct dvb_v5_fe_parms dummy_fe;
+struct dvb_v5_fe_parms *dvb_fe_dummy()
+{
+	dummy_fe.logfunc = dvb_default_log;
+	return &dummy_fe;
+}
+
+struct dvb_v5_fe_parms *dvb_fe_open(int adapter, int frontend, unsigned verbose,
+				    unsigned use_legacy_call)
+{
+  return dvb_fe_open2(adapter, frontend, verbose, use_legacy_call,
+		      dvb_default_log);
+}
+
+struct dvb_v5_fe_parms *dvb_fe_open2(int adapter, int frontend, unsigned verbose,
+				    unsigned use_legacy_call, dvb_logfunc logfunc)
+{
+	int fd, i, r;
+	char *fname;
+	struct dtv_properties dtv_prop;
+	struct dvb_v5_fe_parms *parms = NULL;
+
+	r = asprintf(&fname, "/dev/dvb/adapter%i/frontend%i", adapter, frontend);
+	if (r < 0) {
+		logfunc(LOG_ERR, "asprintf error");
+		return NULL;
+	}
+	if (!fname) {
+		logfunc(LOG_ERR, "fname calloc: %s", strerror(errno));
+		return NULL;
+	}
+
+	fd = open(fname, O_RDWR, 0);
+	if (fd == -1) {
+		logfunc(LOG_ERR, "%s while opening %s", strerror(errno), fname);
+		free(fname);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct dvb_v5_fe_parms *dvb_fe_dummy(void)
 {
 	struct dvb_v5_fe_parms_priv *parms = NULL;
@@ -189,49 +271,36 @@ struct dvb_v5_fe_parms *dvb_fe_open_flags(int adapter, int frontend,
 	dvb_dev_free(dvb);
 	if (!fname) {
 		logfunc(LOG_ERR, _("fname calloc: %s"), strerror(errno));
-=======
-struct dvb_v5_fe_parms dummy_fe;
-struct dvb_v5_fe_parms *dvb_fe_dummy()
-{
-	dummy_fe.logfunc = dvb_default_log;
-	return &dummy_fe;
-}
-
-struct dvb_v5_fe_parms *dvb_fe_open(int adapter, int frontend, unsigned verbose,
-				    unsigned use_legacy_call)
-{
-  return dvb_fe_open2(adapter, frontend, verbose, use_legacy_call,
-		      dvb_default_log);
-}
-
-struct dvb_v5_fe_parms *dvb_fe_open2(int adapter, int frontend, unsigned verbose,
-				    unsigned use_legacy_call, dvb_logfunc logfunc)
-{
-	int fd, i, r;
-	char *fname;
-	struct dtv_properties dtv_prop;
-	struct dvb_v5_fe_parms *parms = NULL;
-
-	r = asprintf(&fname, "/dev/dvb/adapter%i/frontend%i", adapter, frontend);
-	if (r < 0) {
-		logfunc(LOG_ERR, "asprintf error");
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
 		return NULL;
 	}
-	if (!fname) {
-		logfunc(LOG_ERR, "fname calloc: %s", strerror(errno));
-		return NULL;
-	}
-
-	fd = open(fname, O_RDWR, 0);
-	if (fd == -1) {
-		logfunc(LOG_ERR, "%s while opening %s", strerror(errno), fname);
+	parms = calloc(sizeof(*parms), 1);
+	if (!parms) {
+<<<<<<< HEAD
+		logfunc(LOG_ERR, "parms calloc: %s", strerror(errno));
+		close(fd);
 		free(fname);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		return NULL;
 	}
 	parms = calloc(sizeof(*parms), 1);
 	if (!parms) {
 <<<<<<< HEAD
+=======
+		return NULL;
+	}
+	parms->fname = fname;
+	parms->verbose = verbose;
+	parms->fd = fd;
+	parms->sat_number = -1;
+	parms->abort = 0;
+	parms->logfunc = logfunc;
+	parms->lna = LNA_AUTO;
+
+	if (ioctl(fd, FE_GET_INFO, &parms->info) == -1) {
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		logfunc(LOG_ERR, _("parms calloc: %s"), strerror(errno));
 		free(fname);
 		return NULL;
@@ -271,20 +340,16 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 	}
 
 	if (xioctl(fd, FE_GET_INFO, &parms->p.info) == -1) {
-=======
-		logfunc(LOG_ERR, "parms calloc: %s", strerror(errno));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+		dvb_perror("FE_GET_INFO");
+		dvb_v5_free(parms);
 		close(fd);
 		free(fname);
+<<<<<<< HEAD
 		return NULL;
 	}
-	parms->fname = fname;
-	parms->verbose = verbose;
-	parms->fd = fd;
-	parms->sat_number = -1;
-	parms->abort = 0;
-	parms->logfunc = logfunc;
-	parms->lna = LNA_AUTO;
 
+<<<<<<< HEAD
 	if (ioctl(fd, FE_GET_INFO, &parms->info) == -1) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		dvb_perror("FE_GET_INFO");
@@ -292,6 +357,14 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 		close(fd);
 		free(fname);
 <<<<<<< HEAD
+=======
+	if (verbose) {
+		fe_caps_t caps = parms->info.caps;
+
+		dvb_log("Device %s (%s) capabilities:",
+			parms->info.name, fname);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return -errno;
 	}
 
@@ -300,6 +373,7 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 
 		dvb_log(_("Device %s (%s) capabilities:"),
 			parms->p.info.name, fname);
+<<<<<<< HEAD
 =======
 		return NULL;
 	}
@@ -310,6 +384,9 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 		dvb_log("Device %s (%s) capabilities:",
 			parms->info.name, fname);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		for (i = 0; i < ARRAY_SIZE(fe_caps_name); i++) {
 			if (caps & fe_caps_name[i].idx)
 				dvb_log ("     %s", fe_caps_name[i].name);
@@ -317,11 +394,19 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	parms->fname = fname;
 	parms->fd = fd;
 	parms->fe_flags = flags;
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	parms->fname = fname;
+	parms->fd = fd;
+	parms->fe_flags = flags;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	parms->dvb_prop[0].cmd = DTV_API_VERSION;
 	parms->dvb_prop[1].cmd = DTV_DELIVERY_SYSTEM;
 
@@ -329,6 +414,7 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 	dtv_prop.props = parms->dvb_prop;
 
 	/* Detect a DVBv3 device */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (parms->p.legacy_fe || xioctl(fd, FE_GET_PROPERTY, &dtv_prop) == -1) {
 		parms->dvb_prop[0].u.data = 0x300;
@@ -391,6 +477,8 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 			close(fd);
 			return -EINVAL;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (ioctl(fd, FE_GET_PROPERTY, &dtv_prop) == -1) {
 		parms->dvb_prop[0].u.data = 0x300;
 		parms->dvb_prop[1].u.data = SYS_UNDEFINED;
@@ -451,13 +539,79 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 			close(fd);
 			free(fname);
 			return NULL;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (parms->p.legacy_fe || xioctl(fd, FE_GET_PROPERTY, &dtv_prop) == -1) {
+		parms->dvb_prop[0].u.data = 0x300;
+		parms->dvb_prop[1].u.data = SYS_UNDEFINED;
+	}
+
+	parms->p.version = parms->dvb_prop[0].u.data;
+	parms->p.current_sys = parms->dvb_prop[1].u.data;
+	if (parms->p.verbose)
+		dvb_log (_("DVB API Version %d.%d%s, Current v5 delivery system: %s"),
+			parms->p.version / 256,
+			parms->p.version % 256,
+			parms->p.legacy_fe ? _(" (forcing DVBv3 calls)") : "",
+			delivery_system_name[parms->p.current_sys]);
+
+	if (parms->p.version < 0x500)
+		parms->p.legacy_fe = 1;
+
+	if (parms->p.version >= 0x50a)
+		parms->p.has_v5_stats = 1;
+	else
+		parms->p.has_v5_stats = 0;
+
+	if (parms->p.legacy_fe || parms->p.version < 0x505) {
+		parms->p.legacy_fe = 1;
+		switch(parms->p.info.type) {
+		case FE_QPSK:
+			parms->p.current_sys = SYS_DVBS;
+			parms->p.systems[parms->p.num_systems++] = parms->p.current_sys;
+			if (parms->p.version < 0x0500)
+				break;
+			if (parms->p.info.caps & FE_CAN_2G_MODULATION)
+				parms->p.systems[parms->p.num_systems++] = SYS_DVBS2;
+			if (parms->p.info.caps & FE_CAN_TURBO_FEC)
+				parms->p.systems[parms->p.num_systems++] = SYS_TURBO;
+			break;
+		case FE_QAM:
+			parms->p.current_sys = SYS_DVBC_ANNEX_A;
+			parms->p.systems[parms->p.num_systems++] = parms->p.current_sys;
+			break;
+		case FE_OFDM:
+			parms->p.current_sys = SYS_DVBT;
+			parms->p.systems[parms->p.num_systems++] = parms->p.current_sys;
+			if (parms->p.version < 0x0500)
+				break;
+			if (parms->p.info.caps & FE_CAN_2G_MODULATION)
+				parms->p.systems[parms->p.num_systems++] = SYS_DVBT2;
+			break;
+		case FE_ATSC:
+			if (parms->p.info.caps & (FE_CAN_8VSB | FE_CAN_16VSB))
+				parms->p.systems[parms->p.num_systems++] = SYS_ATSC;
+			if (parms->p.info.caps & (FE_CAN_QAM_64 | FE_CAN_QAM_256 | FE_CAN_QAM_AUTO))
+				parms->p.systems[parms->p.num_systems++] = SYS_DVBC_ANNEX_B;
+			parms->p.current_sys = parms->p.systems[0];
+			break;
+		}
+		if (!parms->p.num_systems) {
+			dvb_logerr(_("delivery system not detected"));
+			dvb_v5_free(parms);
+			close(fd);
+			return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		}
 	} else {
 		parms->dvb_prop[0].cmd = DTV_ENUM_DELSYS;
 		parms->n_props = 1;
 		dtv_prop.num = 1;
 		dtv_prop.props = parms->dvb_prop;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (xioctl(fd, FE_GET_PROPERTY, &dtv_prop) == -1) {
 			dvb_perror("FE_GET_PROPERTY");
@@ -490,6 +644,8 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 		if (parms->p.legacy_fe || parms->p.version < 0x505)
 			dvb_log(_("Warning: new delivery systems like ISDB-T, ISDB-S, DMB-TH, DSS, ATSC-MH will be miss-detected by a DVBv5.4 or earlier API call"));
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (ioctl(fd, FE_GET_PROPERTY, &dtv_prop) == -1) {
 			dvb_perror("FE_GET_PROPERTY");
 			dvb_v5_free(parms);
@@ -523,13 +679,57 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 		}
 		if (use_legacy_call || parms->version < 0x505)
 			dvb_log("Warning: new delivery systems like ISDB-T, ISDB-S, DMB-TH, DSS, ATSC-MH will be miss-detected by a DVBv5.4 or earlier API call");
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		if (xioctl(fd, FE_GET_PROPERTY, &dtv_prop) == -1) {
+			dvb_perror("FE_GET_PROPERTY");
+			dvb_v5_free(parms);
+			close(fd);
+			return -errno;
+		}
+		parms->p.num_systems = parms->dvb_prop[0].u.buffer.len;
+		for (i = 0; i < parms->p.num_systems; i++)
+			parms->p.systems[i] = parms->dvb_prop[0].u.buffer.data[i];
+
+		if (parms->p.num_systems == 0) {
+			dvb_logerr(_("driver returned 0 supported delivery systems!"));
+			dvb_v5_free(parms);
+			close(fd);
+			return -EINVAL;
+		}
+	}
+
+	if (parms->p.verbose) {
+		dvb_log(P_("Supported delivery system: ", "Supported delivery systems: ", parms->p.num_systems));
+		for (i = 0; i < parms->p.num_systems; i++) {
+			if (parms->p.systems[i] == parms->p.current_sys)
+				dvb_log ("    [%s]",
+					delivery_system_name[parms->p.systems[i]]);
+			else
+				dvb_log ("     %s",
+					delivery_system_name[parms->p.systems[i]]);
+		}
+		if (parms->p.legacy_fe || parms->p.version < 0x505)
+			dvb_log(_("Warning: new delivery systems like ISDB-T, ISDB-S, DMB-TH, DSS, ATSC-MH will be miss-detected by a DVBv5.4 or earlier API call"));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	/*
 	 * Fix a bug at some DVB drivers
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (parms->current_sys == SYS_UNDEFINED)
+		parms->current_sys = parms->systems[0];
+
+	/* Prepare to use the delivery system */
+	dvb_set_sys(parms, parms->current_sys);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (parms->p.current_sys == SYS_UNDEFINED)
 		parms->p.current_sys = parms->p.systems[0];
 
@@ -538,6 +738,7 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 
 	if ((flags & O_ACCMODE) == O_RDWR)
 		dvb_set_sys(&parms->p, parms->p.current_sys);
+<<<<<<< HEAD
 =======
 	if (parms->current_sys == SYS_UNDEFINED)
 		parms->current_sys = parms->systems[0];
@@ -545,6 +746,9 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 	/* Prepare to use the delivery system */
 	dvb_set_sys(parms, parms->current_sys);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	/*
 	 * Prepare the status struct - DVBv5.10 parameters should
@@ -567,10 +771,17 @@ int dvb_fe_open_fname(struct dvb_v5_fe_parms_priv *parms, char *fname,
 	parms->stats.prop[12].cmd = DTV_PRE_BER;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return parms;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	return parms;
+=======
+	return 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 
@@ -589,6 +800,22 @@ int dvb_fe_is_satellite(uint32_t delivery_system)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+void dvb_fe_close(struct dvb_v5_fe_parms *parms)
+{
+	if (!parms)
+		return;
+
+	if (parms->fd < 0)
+		return;
+
+	/* Disable LNBf power */
+	if (dvb_fe_is_satellite(parms->current_sys))
+		dvb_fe_sec_voltage(parms, 0, 0);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void __dvb_fe_close(struct dvb_v5_fe_parms_priv *parms)
 {
 	if (!parms || parms->fd < 0)
@@ -617,6 +844,7 @@ void dvb_fe_close(struct dvb_v5_fe_parms *p)
 	/* Disable LNBf power */
 	if (dvb_fe_is_satellite(parms->p.current_sys))
 		dvb_fe_sec_voltage(&parms->p, 0, 0);
+<<<<<<< HEAD
 =======
 
 void dvb_fe_close(struct dvb_v5_fe_parms *parms)
@@ -631,6 +859,9 @@ void dvb_fe_close(struct dvb_v5_fe_parms *parms)
 	if (dvb_fe_is_satellite(parms->current_sys))
 		dvb_fe_sec_voltage(parms, 0, 0);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	close(parms->fd);
 
@@ -639,18 +870,30 @@ void dvb_fe_close(struct dvb_v5_fe_parms *parms)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+int dvb_add_parms_for_sys(struct dtv_property *dvb_prop,
+			  unsigned max_size,
+			  fe_delivery_system_t sys)
+{
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 int dvb_add_parms_for_sys(struct dvb_v5_fe_parms *p,
 			  fe_delivery_system_t sys)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
 	struct dtv_property *dvb_prop = parms->dvb_prop;
 	unsigned max_size = ARRAY_SIZE(parms->dvb_prop);
+<<<<<<< HEAD
 =======
 int dvb_add_parms_for_sys(struct dtv_property *dvb_prop,
 			  unsigned max_size,
 			  fe_delivery_system_t sys)
 {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	const unsigned int *sys_props;
 	int n;
 
@@ -659,16 +902,25 @@ int dvb_add_parms_for_sys(struct dtv_property *dvb_prop,
 	sys_props = dvb_v5_delivery_system[sys];
 	if (!sys_props)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EINVAL;
-
-	n = 0;
-	while (sys_props[n] && n < max_size - 1) {
 =======
 		return EINVAL;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	n = 0;
 	while (sys_props[n]) {
+=======
+		return -EINVAL;
+
+	n = 0;
+<<<<<<< HEAD
+	while (sys_props[n]) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	while (sys_props[n] && n < max_size - 1) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		dvb_prop[n].cmd = sys_props[n];
 		dvb_prop[n].u.data = 0;
 		n++;
@@ -681,6 +933,7 @@ int dvb_add_parms_for_sys(struct dtv_property *dvb_prop,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int __dvb_set_sys(struct dvb_v5_fe_parms *p, fe_delivery_system_t sys)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
@@ -689,10 +942,21 @@ int dvb_set_sys(struct dvb_v5_fe_parms *parms,
 			  fe_delivery_system_t sys)
 {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+int dvb_set_sys(struct dvb_v5_fe_parms *parms,
+			  fe_delivery_system_t sys)
+{
+=======
+int __dvb_set_sys(struct dvb_v5_fe_parms *p, fe_delivery_system_t sys)
+{
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct dtv_property dvb_prop[1];
 	struct dtv_properties prop;
 	int rc;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (sys != parms->p.current_sys) {
 		/* Disable LNBf power */
@@ -704,6 +968,8 @@ int dvb_set_sys(struct dvb_v5_fe_parms *parms,
 		if (parms->p.legacy_fe)
 			return -EINVAL;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (sys != parms->current_sys) {
 		/* Disable LNBf power */
 		if (dvb_fe_is_satellite(parms->current_sys) &&
@@ -713,13 +979,28 @@ int dvb_set_sys(struct dvb_v5_fe_parms *parms,
 		/* Can't change standard with the legacy FE support */
 		if (parms->legacy_fe)
 			return EINVAL;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (sys != parms->p.current_sys) {
+		/* Disable LNBf power */
+		if (dvb_fe_is_satellite(parms->p.current_sys) &&
+		    !dvb_fe_is_satellite(sys))
+			dvb_fe_sec_voltage(&parms->p, 0, 0);
+
+		/* Can't change standard with the legacy FE support */
+		if (parms->p.legacy_fe)
+			return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		dvb_prop[0].cmd = DTV_DELIVERY_SYSTEM;
 		dvb_prop[0].u.data = sys;
 		prop.num = 1;
 		prop.props = dvb_prop;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (xioctl(parms->fd, FE_SET_PROPERTY, &prop) == -1) {
 			dvb_perror(_("Set delivery system"));
@@ -733,6 +1014,8 @@ int dvb_set_sys(struct dvb_v5_fe_parms *parms,
 
 	parms->p.current_sys = sys;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (ioctl(parms->fd, FE_SET_PROPERTY, &prop) == -1) {
 			dvb_perror("Set delivery system");
 			return errno;
@@ -745,7 +1028,23 @@ int dvb_set_sys(struct dvb_v5_fe_parms *parms,
 		return EINVAL;
 
 	parms->current_sys = sys;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		if (xioctl(parms->fd, FE_SET_PROPERTY, &prop) == -1) {
+			dvb_perror(_("Set delivery system"));
+			return -errno;
+		}
+	}
+
+	rc = dvb_add_parms_for_sys(&parms->p, sys);
+	if (rc < 0)
+		return -EINVAL;
+
+	parms->p.current_sys = sys;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	parms->n_props = rc;
 
 	return 0;
@@ -767,10 +1066,17 @@ static enum dvbv3_emulation_type dvbv3_type(uint32_t delivery_system)
 	case SYS_DVBT2:
 	case SYS_ISDBT:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case SYS_DTMB:
 =======
 	case SYS_DMBTH:
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	case SYS_DMBTH:
+=======
+	case SYS_DTMB:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return DVBV3_OFDM;
 	case SYS_ATSC:
 	case SYS_ATSCMH:
@@ -792,20 +1098,29 @@ static int is_dvbv3_delsys(uint32_t delsys)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *p,
+=======
+int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *parms,
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+				   uint32_t desired_system)
+{
+=======
 int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *p,
 				   uint32_t desired_system)
 {
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
-=======
-int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *parms,
-				   uint32_t desired_system)
-{
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int i;
 	uint32_t delsys = SYS_UNDEFINED;
 	enum dvbv3_emulation_type type;
 
 	/* Check if the desired delivery system is supported */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	for (i = 0; i < parms->p.num_systems; i++) {
 		if (parms->p.systems[i] == desired_system) {
@@ -815,6 +1130,16 @@ int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *parms,
 		if (parms->systems[i] == desired_system) {
 			dvb_set_sys(parms, desired_system);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	for (i = 0; i < parms->num_systems; i++) {
+		if (parms->systems[i] == desired_system) {
+			dvb_set_sys(parms, desired_system);
+=======
+	for (i = 0; i < parms->p.num_systems; i++) {
+		if (parms->p.systems[i] == desired_system) {
+			dvb_set_sys(&parms->p, desired_system);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			return 0;
 		}
 	}
@@ -829,6 +1154,7 @@ int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *parms,
 	 * Get the last non-DVBv3 delivery system that has the same type
 	 * of the desired system
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	for (i = 0; i < parms->p.num_systems; i++) {
 		if ((dvbv3_type(parms->p.systems[i]) == type) &&
@@ -865,6 +1191,8 @@ int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *parms,
 		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERC_SEGMENT_COUNT, 0);
 		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERC_TIME_INTERLEAVING, 0);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	for (i = 0; i < parms->num_systems; i++) {
 		if ((dvbv3_type(parms->systems[i]) == type) &&
 		    !is_dvbv3_delsys(parms->systems[i]))
@@ -899,7 +1227,46 @@ int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *parms,
 		dvb_fe_store_parm(parms, DTV_ISDBT_LAYERB_TIME_INTERLEAVING, 0);
 		dvb_fe_store_parm(parms, DTV_ISDBT_LAYERC_SEGMENT_COUNT, 0);
 		dvb_fe_store_parm(parms, DTV_ISDBT_LAYERC_TIME_INTERLEAVING, 0);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	for (i = 0; i < parms->p.num_systems; i++) {
+		if ((dvbv3_type(parms->p.systems[i]) == type) &&
+		    !is_dvbv3_delsys(parms->p.systems[i]))
+			delsys = parms->p.systems[i];
+	}
+
+	if (delsys == SYS_UNDEFINED)
+		return -EINVAL;
+
+	dvb_log(_("Using a DVBv3 compat file for %s"), delivery_system_name[delsys]);
+
+	dvb_set_sys(&parms->p, delsys);
+
+	/* Put ISDB-T into auto mode */
+	if (delsys == SYS_ISDBT) {
+		dvb_fe_store_parm(&parms->p, DTV_BANDWIDTH_HZ, 6000000);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_PARTIAL_RECEPTION, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_SOUND_BROADCASTING, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_SB_SUBCHANNEL_ID, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_SB_SEGMENT_IDX, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_SB_SEGMENT_COUNT, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYER_ENABLED, 7);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERA_FEC, FEC_AUTO);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERB_FEC, FEC_AUTO);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERC_FEC, FEC_AUTO);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERA_MODULATION, QAM_AUTO);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERB_MODULATION, QAM_AUTO);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERC_MODULATION, QAM_AUTO);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERA_SEGMENT_COUNT, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERA_TIME_INTERLEAVING, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERB_SEGMENT_COUNT, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERB_TIME_INTERLEAVING, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERC_SEGMENT_COUNT, 0);
+		dvb_fe_store_parm(&parms->p, DTV_ISDBT_LAYERC_TIME_INTERLEAVING, 0);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 	return 0;
 }
@@ -907,45 +1274,76 @@ int dvb_set_compat_delivery_system(struct dvb_v5_fe_parms *parms,
 const char *dvb_cmd_name(int cmd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (cmd >= 0 && cmd < DTV_USER_COMMAND_START)
+		return dvb_v5_name[cmd];
+	else if (cmd >= 0 && cmd <= DTV_MAX_STAT_COMMAND)
+		return dvb_user_name[cmd - DTV_USER_COMMAND_START];
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cmd >= 0 && cmd < ARRAY_SIZE(dvb_v5_name))
 		return dvb_v5_name[cmd];
 	else if (cmd >= DTV_USER_COMMAND_START && cmd <= DTV_MAX_USER_COMMAND)
 		return dvb_user_name[cmd - DTV_USER_COMMAND_START];
 	else if (cmd >= DTV_STAT_COMMAND_START && cmd <= DTV_MAX_STAT_COMMAND)
 		return dvb_stat_name[cmd - DTV_STAT_COMMAND_START];
+<<<<<<< HEAD
 =======
 	if (cmd >= 0 && cmd < DTV_USER_COMMAND_START)
 		return dvb_v5_name[cmd];
 	else if (cmd >= 0 && cmd <= DTV_MAX_STAT_COMMAND)
 		return dvb_user_name[cmd - DTV_USER_COMMAND_START];
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	return NULL;
 }
 
 const char *const *dvb_attr_names(int cmd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (cmd >= 0 && cmd < DTV_USER_COMMAND_START)
+		return dvb_v5_attr_names[cmd];
+	else if (cmd >= 0 && cmd <= DTV_MAX_STAT_COMMAND)
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cmd >= 0 && cmd < DTV_MAX_COMMAND)
 		return dvb_v5_attr_names[cmd];
 
 	if (cmd >= DTV_USER_COMMAND_START && cmd <= DTV_MAX_USER_COMMAND)
+<<<<<<< HEAD
 =======
 	if (cmd >= 0 && cmd < DTV_USER_COMMAND_START)
 		return dvb_v5_attr_names[cmd];
 	else if (cmd >= 0 && cmd <= DTV_MAX_STAT_COMMAND)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return dvb_user_attr_names[cmd - DTV_USER_COMMAND_START];
 	return NULL;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void dvb_fe_prt_parms(const struct dvb_v5_fe_parms *p)
-{
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
 =======
 void dvb_fe_prt_parms(const struct dvb_v5_fe_parms *parms)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
+=======
+void dvb_fe_prt_parms(const struct dvb_v5_fe_parms *p)
+{
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int i;
 
 	for (i = 0; i < parms->n_props; i++) {
@@ -972,15 +1370,23 @@ void dvb_fe_prt_parms(const struct dvb_v5_fe_parms *parms)
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+int dvb_fe_retrieve_parm(const struct dvb_v5_fe_parms *p,
+=======
+int dvb_fe_retrieve_parm(const struct dvb_v5_fe_parms *parms,
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+				unsigned cmd, uint32_t *value)
+{
+=======
 int dvb_fe_retrieve_parm(const struct dvb_v5_fe_parms *p,
 				unsigned cmd, uint32_t *value)
 {
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
-=======
-int dvb_fe_retrieve_parm(const struct dvb_v5_fe_parms *parms,
-				unsigned cmd, uint32_t *value)
-{
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int i;
 	for (i = 0; i < parms->n_props; i++) {
 		if (parms->dvb_prop[i].cmd != cmd)
@@ -989,6 +1395,20 @@ int dvb_fe_retrieve_parm(const struct dvb_v5_fe_parms *parms,
 		return 0;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+	dvb_logerr(_("command %s (%d) not found during retrieve"),
+=======
+	dvb_logerr("command %s (%d) not found during retrieve",
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+		dvb_cmd_name(cmd), cmd);
+
+	return EINVAL;
+}
+
+int dvb_fe_store_parm(struct dvb_v5_fe_parms *parms,
+			     unsigned cmd, uint32_t value)
+{
+=======
 	dvb_logerr(_("command %s (%d) not found during retrieve"),
 		dvb_cmd_name(cmd), cmd);
 
@@ -998,18 +1418,12 @@ int dvb_fe_retrieve_parm(const struct dvb_v5_fe_parms *parms,
 int dvb_fe_store_parm(struct dvb_v5_fe_parms *p,
 			     unsigned cmd, uint32_t value)
 {
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
-=======
-	dvb_logerr("command %s (%d) not found during retrieve",
-		dvb_cmd_name(cmd), cmd);
-
-	return EINVAL;
-}
-
-int dvb_fe_store_parm(struct dvb_v5_fe_parms *parms,
-			     unsigned cmd, uint32_t value)
-{
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int i;
 	for (i = 0; i < parms->n_props; i++) {
 		if (parms->dvb_prop[i].cmd != cmd)
@@ -1018,16 +1432,25 @@ int dvb_fe_store_parm(struct dvb_v5_fe_parms *parms,
 		return 0;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dvb_logerr(_("command %s (%d) not found during store"),
-		dvb_cmd_name(cmd), cmd);
-
-	return -EINVAL;
 =======
 	dvb_logerr("command %s (%d) not found during store",
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		dvb_cmd_name(cmd), cmd);
 
 	return EINVAL;
+=======
+	dvb_logerr(_("command %s (%d) not found during store"),
+		dvb_cmd_name(cmd), cmd);
+
+<<<<<<< HEAD
+	return EINVAL;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 static int dvb_copy_fe_props(const struct dtv_property *from, int n, struct dtv_property *to)
@@ -1040,19 +1463,28 @@ static int dvb_copy_fe_props(const struct dtv_property *from, int n, struct dtv_
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int __dvb_fe_get_parms(struct dvb_v5_fe_parms *p)
-{
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
 =======
 int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
+=======
+int __dvb_fe_get_parms(struct dvb_v5_fe_parms *p)
+{
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	int i, n = 0;
 	const unsigned int *sys_props;
 	struct dtv_properties prop;
 	struct dvb_frontend_parameters v3_parms;
 	uint32_t bw;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	sys_props = dvb_v5_delivery_system[parms->p.current_sys];
 	if (!sys_props)
@@ -1062,6 +1494,16 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 	if (!sys_props)
 		return EINVAL;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	sys_props = dvb_v5_delivery_system[parms->current_sys];
+	if (!sys_props)
+		return EINVAL;
+=======
+	sys_props = dvb_v5_delivery_system[parms->p.current_sys];
+	if (!sys_props)
+		return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	while (sys_props[n]) {
 		parms->dvb_prop[n].cmd = sys_props[n];
@@ -1069,10 +1511,17 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 	}
 	parms->dvb_prop[n].cmd = DTV_DELIVERY_SYSTEM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	parms->dvb_prop[n].u.data = parms->p.current_sys;
 =======
 	parms->dvb_prop[n].u.data = parms->current_sys;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	parms->dvb_prop[n].u.data = parms->current_sys;
+=======
+	parms->dvb_prop[n].u.data = parms->p.current_sys;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	n++;
 
 	/* Keep it ready for set */
@@ -1085,6 +1534,24 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 	prop.props = fe_prop;
 	prop.num = n;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	if (!parms->legacy_fe) {
+		if (ioctl(parms->fd, FE_GET_PROPERTY, &prop) == -1) {
+			dvb_perror("FE_GET_PROPERTY");
+			return errno;
+		}
+
+		/* copy back params from temporary fe_prop */
+		for (i = 0; i < n; i++)
+			dvb_fe_store_parm(parms, fe_prop[i].cmd, fe_prop[i].u.data);
+
+		if (parms->verbose) {
+			dvb_log("Got parameters for %s:",
+			       delivery_system_name[parms->current_sys]);
+			dvb_fe_prt_parms(parms);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (!parms->p.legacy_fe) {
 		if (xioctl(parms->fd, FE_GET_PROPERTY, &prop) == -1) {
 			dvb_perror("FE_GET_PROPERTY");
@@ -1105,6 +1572,7 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 			dvb_log(_("Got parameters for %s:"),
 			       delivery_system_name[parms->p.current_sys]);
 			dvb_fe_prt_parms(&parms->p);
+<<<<<<< HEAD
 =======
 	if (!parms->legacy_fe) {
 		if (ioctl(parms->fd, FE_GET_PROPERTY, &prop) == -1) {
@@ -1121,10 +1589,14 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 			       delivery_system_name[parms->current_sys]);
 			dvb_fe_prt_parms(parms);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		}
 		return 0;
 	}
 	/* DVBv3 call */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (xioctl(parms->fd, FE_GET_FRONTEND, &v3_parms) == -1) {
 		dvb_perror("FE_GET_FRONTEND");
@@ -1143,6 +1615,8 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 		dvb_fe_store_parm(&parms->p, DTV_INNER_FEC, v3_parms.u.qam.fec_inner);
 		dvb_fe_store_parm(&parms->p, DTV_MODULATION, v3_parms.u.qam.modulation);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (ioctl(parms->fd, FE_GET_FRONTEND, &v3_parms) == -1) {
 		dvb_perror("FE_GET_FRONTEND");
 		return -1;
@@ -1159,21 +1633,50 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 		dvb_fe_store_parm(parms, DTV_SYMBOL_RATE, v3_parms.u.qam.symbol_rate);
 		dvb_fe_store_parm(parms, DTV_INNER_FEC, v3_parms.u.qam.fec_inner);
 		dvb_fe_store_parm(parms, DTV_MODULATION, v3_parms.u.qam.modulation);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (xioctl(parms->fd, FE_GET_FRONTEND, &v3_parms) == -1) {
+		dvb_perror("FE_GET_FRONTEND");
+		return -EINVAL;
+	}
+
+	dvb_fe_store_parm(&parms->p, DTV_FREQUENCY, v3_parms.frequency);
+	dvb_fe_store_parm(&parms->p, DTV_INVERSION, v3_parms.inversion);
+	switch (parms->p.current_sys) {
+	case SYS_DVBS:
+		dvb_fe_store_parm(&parms->p, DTV_SYMBOL_RATE, v3_parms.u.qpsk.symbol_rate);
+		dvb_fe_store_parm(&parms->p, DTV_INNER_FEC, v3_parms.u.qpsk.fec_inner);
+		break;
+	case SYS_DVBC_ANNEX_A:
+		dvb_fe_store_parm(&parms->p, DTV_SYMBOL_RATE, v3_parms.u.qam.symbol_rate);
+		dvb_fe_store_parm(&parms->p, DTV_INNER_FEC, v3_parms.u.qam.fec_inner);
+		dvb_fe_store_parm(&parms->p, DTV_MODULATION, v3_parms.u.qam.modulation);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	case SYS_ATSC:
 	case SYS_ATSCMH:
 	case SYS_DVBC_ANNEX_B:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dvb_fe_store_parm(&parms->p, DTV_MODULATION, v3_parms.u.vsb.modulation);
 =======
 		dvb_fe_store_parm(parms, DTV_MODULATION, v3_parms.u.vsb.modulation);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		dvb_fe_store_parm(parms, DTV_MODULATION, v3_parms.u.vsb.modulation);
+=======
+		dvb_fe_store_parm(&parms->p, DTV_MODULATION, v3_parms.u.vsb.modulation);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	case SYS_DVBT:
 		if (v3_parms.u.ofdm.bandwidth < ARRAY_SIZE(fe_bandwidth_name) -1)
 			bw = fe_bandwidth_name[v3_parms.u.ofdm.bandwidth];
 		else bw = 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dvb_fe_store_parm(&parms->p, DTV_BANDWIDTH_HZ, bw);
 		dvb_fe_store_parm(&parms->p, DTV_CODE_RATE_HP, v3_parms.u.ofdm.code_rate_HP);
@@ -1183,6 +1686,8 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 		dvb_fe_store_parm(&parms->p, DTV_GUARD_INTERVAL, v3_parms.u.ofdm.guard_interval);
 		dvb_fe_store_parm(&parms->p, DTV_HIERARCHY, v3_parms.u.ofdm.hierarchy_information);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		dvb_fe_store_parm(parms, DTV_BANDWIDTH_HZ, bw);
 		dvb_fe_store_parm(parms, DTV_CODE_RATE_HP, v3_parms.u.ofdm.code_rate_HP);
 		dvb_fe_store_parm(parms, DTV_CODE_RATE_LP, v3_parms.u.ofdm.code_rate_LP);
@@ -1190,7 +1695,19 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 		dvb_fe_store_parm(parms, DTV_TRANSMISSION_MODE, v3_parms.u.ofdm.transmission_mode);
 		dvb_fe_store_parm(parms, DTV_GUARD_INTERVAL, v3_parms.u.ofdm.guard_interval);
 		dvb_fe_store_parm(parms, DTV_HIERARCHY, v3_parms.u.ofdm.hierarchy_information);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		dvb_fe_store_parm(&parms->p, DTV_BANDWIDTH_HZ, bw);
+		dvb_fe_store_parm(&parms->p, DTV_CODE_RATE_HP, v3_parms.u.ofdm.code_rate_HP);
+		dvb_fe_store_parm(&parms->p, DTV_CODE_RATE_LP, v3_parms.u.ofdm.code_rate_LP);
+		dvb_fe_store_parm(&parms->p, DTV_MODULATION, v3_parms.u.ofdm.constellation);
+		dvb_fe_store_parm(&parms->p, DTV_TRANSMISSION_MODE, v3_parms.u.ofdm.transmission_mode);
+		dvb_fe_store_parm(&parms->p, DTV_GUARD_INTERVAL, v3_parms.u.ofdm.guard_interval);
+		dvb_fe_store_parm(&parms->p, DTV_HIERARCHY, v3_parms.u.ofdm.hierarchy_information);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	default:
 		return -EINVAL;
@@ -1200,6 +1717,15 @@ int dvb_fe_get_parms(struct dvb_v5_fe_parms *parms)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
+{
+	/* Use a temporary copy of the parameters so we can safely perform
+	 * adjustments for satellite */
+	struct dvb_v5_fe_parms tmp_parms = *parms;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /* set the delsys default/fixed parameters and replace DVBv5 default values */
 static void dvb_setup_delsys_default(struct dvb_v5_fe_parms *p)
 {
@@ -1256,6 +1782,7 @@ int __dvb_fe_set_parms(struct dvb_v5_fe_parms *p)
 	/* Use a temporary copy of the parameters so we can safely perform
 	 * adjustments for satellite */
 	struct dvb_v5_fe_parms_priv tmp_parms = *parms;
+<<<<<<< HEAD
 =======
 int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 {
@@ -1263,11 +1790,15 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 	 * adjustments for satellite */
 	struct dvb_v5_fe_parms tmp_parms = *parms;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	struct dtv_properties prop;
 	struct dvb_frontend_parameters v3_parms;
 	uint32_t bw;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (parms->p.lna != LNA_AUTO && !parms->p.legacy_fe) {
 		struct dvb_v5_fe_parms_priv tmp_lna_parms;
@@ -1275,12 +1806,38 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 	if (parms->lna != LNA_AUTO && !parms->legacy_fe) {
 		struct dvb_v5_fe_parms tmp_lna_parms;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (parms->lna != LNA_AUTO && !parms->legacy_fe) {
+		struct dvb_v5_fe_parms tmp_lna_parms;
+=======
+	if (parms->p.lna != LNA_AUTO && !parms->p.legacy_fe) {
+		struct dvb_v5_fe_parms_priv tmp_lna_parms;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		memset(&prop, 0, sizeof(prop));
 		prop.props = tmp_lna_parms.dvb_prop;
 
 		prop.props[0].cmd = DTV_LNA;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		prop.props[0].u.data = parms->lna;
+		prop.num = 1;
+		if (ioctl(parms->fd, FE_SET_PROPERTY, &prop) == -1) {
+			dvb_perror("Setting LNA");
+			parms->lna = LNA_AUTO;
+		} else if (parms->lna != LNA_AUTO && parms->verbose)
+			dvb_logdbg("LNA is %s", parms->lna ? "ON" : "OFF");
+	}
+
+	if (dvb_fe_is_satellite(tmp_parms.current_sys))
+		dvb_sat_set_parms(&tmp_parms);
+
+	/* Filter out any user DTV_foo property such as DTV_POLARIZATION */
+	tmp_parms.n_props = dvb_copy_fe_props(tmp_parms.dvb_prop, tmp_parms.n_props, tmp_parms.dvb_prop);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		prop.props[0].u.data = parms->p.lna;
 		prop.num = 1;
 		if (xioctl(parms->fd, FE_SET_PROPERTY, &prop) == -1) {
@@ -1310,6 +1867,7 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 	tmp_parms.n_props = dvb_copy_fe_props(tmp_parms.dvb_prop,
 					      tmp_parms.n_props,
 					      tmp_parms.dvb_prop);
+<<<<<<< HEAD
 =======
 		prop.props[0].u.data = parms->lna;
 		prop.num = 1;
@@ -1326,6 +1884,9 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 	/* Filter out any user DTV_foo property such as DTV_POLARIZATION */
 	tmp_parms.n_props = dvb_copy_fe_props(tmp_parms.dvb_prop, tmp_parms.n_props, tmp_parms.dvb_prop);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	memset(&prop, 0, sizeof(prop));
 	prop.props = tmp_parms.dvb_prop;
@@ -1334,6 +1895,7 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 	prop.num++;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!parms->p.legacy_fe) {
 		if (xioctl(parms->fd, FE_SET_PROPERTY, &prop) == -1) {
 			dvb_perror("FE_SET_PROPERTY");
@@ -1341,17 +1903,31 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 				dvb_fe_prt_parms(&parms->p);
 			return -errno;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (!parms->legacy_fe) {
 		if (ioctl(parms->fd, FE_SET_PROPERTY, &prop) == -1) {
 			dvb_perror("FE_SET_PROPERTY");
 			if (parms->verbose)
 				dvb_fe_prt_parms(parms);
 			return -1;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (!parms->p.legacy_fe) {
+		if (xioctl(parms->fd, FE_SET_PROPERTY, &prop) == -1) {
+			dvb_perror("FE_SET_PROPERTY");
+			if (parms->p.verbose)
+				dvb_fe_prt_parms(&parms->p);
+			return -errno;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		}
 		return 0;
 	}
 	/* DVBv3 call */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	dvb_fe_retrieve_parm(&tmp_parms.p, DTV_FREQUENCY, &v3_parms.frequency);
 	dvb_fe_retrieve_parm(&tmp_parms.p, DTV_INVERSION, &v3_parms.inversion);
@@ -1365,6 +1941,8 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_INNER_FEC, &v3_parms.u.qam.fec_inner);
 		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_MODULATION, &v3_parms.u.qam.modulation);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	dvb_fe_retrieve_parm(&tmp_parms, DTV_FREQUENCY, &v3_parms.frequency);
 	dvb_fe_retrieve_parm(&tmp_parms, DTV_INVERSION, &v3_parms.inversion);
@@ -1377,22 +1955,46 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_SYMBOL_RATE, &v3_parms.u.qam.symbol_rate);
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_INNER_FEC, &v3_parms.u.qam.fec_inner);
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_MODULATION, &v3_parms.u.qam.modulation);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	dvb_fe_retrieve_parm(&tmp_parms.p, DTV_FREQUENCY, &v3_parms.frequency);
+	dvb_fe_retrieve_parm(&tmp_parms.p, DTV_INVERSION, &v3_parms.inversion);
+	switch (tmp_parms.p.current_sys) {
+	case SYS_DVBS:
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_SYMBOL_RATE, &v3_parms.u.qpsk.symbol_rate);
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_INNER_FEC, &v3_parms.u.qpsk.fec_inner);
+		break;
+	case SYS_DVBC_ANNEX_AC:
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_SYMBOL_RATE, &v3_parms.u.qam.symbol_rate);
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_INNER_FEC, &v3_parms.u.qam.fec_inner);
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_MODULATION, &v3_parms.u.qam.modulation);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	case SYS_ATSC:
 	case SYS_ATSCMH:
 	case SYS_DVBC_ANNEX_B:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_MODULATION, &v3_parms.u.vsb.modulation);
 =======
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_MODULATION, &v3_parms.u.vsb.modulation);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		dvb_fe_retrieve_parm(&tmp_parms, DTV_MODULATION, &v3_parms.u.vsb.modulation);
+=======
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_MODULATION, &v3_parms.u.vsb.modulation);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	case SYS_DVBT:
 		for (bw = 0; fe_bandwidth_name[bw] != 0; bw++) {
 			if (fe_bandwidth_name[bw] == v3_parms.u.ofdm.bandwidth)
 				break;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_BANDWIDTH_HZ, &bw);
 		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_CODE_RATE_HP, &v3_parms.u.ofdm.code_rate_HP);
@@ -1402,6 +2004,8 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_GUARD_INTERVAL, &v3_parms.u.ofdm.guard_interval);
 		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_HIERARCHY, &v3_parms.u.ofdm.hierarchy_information);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_BANDWIDTH_HZ, &bw);
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_CODE_RATE_HP, &v3_parms.u.ofdm.code_rate_HP);
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_CODE_RATE_LP, &v3_parms.u.ofdm.code_rate_LP);
@@ -1409,11 +2013,24 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_TRANSMISSION_MODE, &v3_parms.u.ofdm.transmission_mode);
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_GUARD_INTERVAL, &v3_parms.u.ofdm.guard_interval);
 		dvb_fe_retrieve_parm(&tmp_parms, DTV_HIERARCHY, &v3_parms.u.ofdm.hierarchy_information);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_BANDWIDTH_HZ, &bw);
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_CODE_RATE_HP, &v3_parms.u.ofdm.code_rate_HP);
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_CODE_RATE_LP, &v3_parms.u.ofdm.code_rate_LP);
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_MODULATION, &v3_parms.u.ofdm.constellation);
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_TRANSMISSION_MODE, &v3_parms.u.ofdm.transmission_mode);
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_GUARD_INTERVAL, &v3_parms.u.ofdm.guard_interval);
+		dvb_fe_retrieve_parm(&tmp_parms.p, DTV_HIERARCHY, &v3_parms.u.ofdm.hierarchy_information);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	default:
 		return -EINVAL;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (xioctl(tmp_parms.fd, FE_SET_FRONTEND, &v3_parms) == -1) {
 		dvb_perror("FE_SET_FRONTEND");
@@ -1421,22 +2038,41 @@ int dvb_fe_set_parms(struct dvb_v5_fe_parms *parms)
 			dvb_fe_prt_parms(&tmp_parms.p);
 		return -errno;
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (ioctl(tmp_parms.fd, FE_SET_FRONTEND, &v3_parms) == -1) {
 		dvb_perror("FE_SET_FRONTEND");
 		if (tmp_parms.verbose)
 			dvb_fe_prt_parms(&tmp_parms);
 		return -1;
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (xioctl(tmp_parms.fd, FE_SET_FRONTEND, &v3_parms) == -1) {
+		dvb_perror("FE_SET_FRONTEND");
+		if (tmp_parms.p.verbose)
+			dvb_fe_prt_parms(&tmp_parms.p);
+		return -errno;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct dtv_stats *dvb_fe_store_stats(struct dvb_v5_fe_parms_priv *parms,
 =======
 static struct dtv_stats *dvb_fe_store_stats(struct dvb_v5_fe_parms *parms,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+static struct dtv_stats *dvb_fe_store_stats(struct dvb_v5_fe_parms *parms,
+=======
+static struct dtv_stats *dvb_fe_store_stats(struct dvb_v5_fe_parms_priv *parms,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			      unsigned cmd,
 			      enum fecap_scale_params scale,
 			      unsigned layer,
@@ -1444,9 +2080,15 @@ static struct dtv_stats *dvb_fe_store_stats(struct dvb_v5_fe_parms *parms,
 {
 	int i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	for (i = 0; i < DTV_NUM_STATS_PROPS; i++) {
 		if (parms->stats.prop[i].cmd != cmd)
 			continue;
@@ -1457,36 +2099,59 @@ static struct dtv_stats *dvb_fe_store_stats(struct dvb_v5_fe_parms *parms,
 		return &parms->stats.prop[i].u.st.stat[layer];
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dvb_logerr(_("%s not found on store"), dvb_cmd_name(cmd));
 =======
 	dvb_logerr("%s not found on store", dvb_cmd_name(cmd));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	dvb_logerr("%s not found on store", dvb_cmd_name(cmd));
+=======
+	dvb_logerr(_("%s not found on store"), dvb_cmd_name(cmd));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return NULL;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static float calculate_postBER(struct dvb_v5_fe_parms_priv *parms, unsigned layer)
 =======
 static float calculate_postBER(struct dvb_v5_fe_parms *parms, unsigned layer)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+static float calculate_postBER(struct dvb_v5_fe_parms *parms, unsigned layer)
+=======
+static float calculate_postBER(struct dvb_v5_fe_parms_priv *parms, unsigned layer)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	uint64_t n, d;
 
 	if (!parms->stats.has_post_ber[layer])
 <<<<<<< HEAD
-		return -EINVAL;
-
-	d = parms->stats.cur[layer].post_bit_count - parms->stats.prev[layer].post_bit_count;
-	if (!d)
+<<<<<<< HEAD
 		return -EINVAL;
 =======
 		return -1;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	d = parms->stats.cur[layer].post_bit_count - parms->stats.prev[layer].post_bit_count;
 	if (!d)
 		return -1;
+=======
+		return -EINVAL;
+
+	d = parms->stats.cur[layer].post_bit_count - parms->stats.prev[layer].post_bit_count;
+	if (!d)
+<<<<<<< HEAD
+		return -1;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	n = parms->stats.cur[layer].post_bit_error - parms->stats.prev[layer].post_bit_error;
 
@@ -1494,27 +2159,43 @@ static float calculate_postBER(struct dvb_v5_fe_parms *parms, unsigned layer)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static float calculate_preBER(struct dvb_v5_fe_parms_priv *parms, unsigned layer)
 =======
 static float calculate_preBER(struct dvb_v5_fe_parms *parms, unsigned layer)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+static float calculate_preBER(struct dvb_v5_fe_parms *parms, unsigned layer)
+=======
+static float calculate_preBER(struct dvb_v5_fe_parms_priv *parms, unsigned layer)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	uint64_t n, d;
 
 	if (!parms->stats.has_pre_ber[layer])
 <<<<<<< HEAD
-		return -EINVAL;
-
-	d = parms->stats.cur[layer].pre_bit_count - parms->stats.prev[layer].pre_bit_count;
-	if (!d)
+<<<<<<< HEAD
 		return -EINVAL;
 =======
 		return -1;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	d = parms->stats.cur[layer].pre_bit_count - parms->stats.prev[layer].pre_bit_count;
 	if (!d)
 		return -1;
+=======
+		return -EINVAL;
+
+	d = parms->stats.cur[layer].pre_bit_count - parms->stats.prev[layer].pre_bit_count;
+	if (!d)
+<<<<<<< HEAD
+		return -1;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	n = parms->stats.cur[layer].pre_bit_error - parms->stats.prev[layer].pre_bit_error;
 
@@ -1522,10 +2203,17 @@ static float calculate_preBER(struct dvb_v5_fe_parms *parms, unsigned layer)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct dtv_stats *dvb_fe_retrieve_v5_BER(struct dvb_v5_fe_parms_priv *parms,
 =======
 static struct dtv_stats *dvb_fe_retrieve_v5_BER(struct dvb_v5_fe_parms *parms,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+static struct dtv_stats *dvb_fe_retrieve_v5_BER(struct dvb_v5_fe_parms *parms,
+=======
+static struct dtv_stats *dvb_fe_retrieve_v5_BER(struct dvb_v5_fe_parms_priv *parms,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 					        unsigned layer)
 {
 	float ber;
@@ -1545,21 +2233,30 @@ static struct dtv_stats *dvb_fe_retrieve_v5_BER(struct dvb_v5_fe_parms *parms,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+struct dtv_stats *dvb_fe_retrieve_stats_layer(struct dvb_v5_fe_parms *p,
+=======
+struct dtv_stats *dvb_fe_retrieve_stats_layer(struct dvb_v5_fe_parms *parms,
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+					      unsigned cmd, unsigned layer)
+{
+	int i;
+
+	if (cmd == DTV_BER && parms->has_v5_stats)
+=======
 struct dtv_stats *dvb_fe_retrieve_stats_layer(struct dvb_v5_fe_parms *p,
 					      unsigned cmd, unsigned layer)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
 	int i;
 
-	if (cmd == DTV_BER && parms->p.has_v5_stats)
-=======
-struct dtv_stats *dvb_fe_retrieve_stats_layer(struct dvb_v5_fe_parms *parms,
-					      unsigned cmd, unsigned layer)
-{
-	int i;
-
+<<<<<<< HEAD
 	if (cmd == DTV_BER && parms->has_v5_stats)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (cmd == DTV_BER && parms->p.has_v5_stats)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		return dvb_fe_retrieve_v5_BER(parms, layer);
 
 	for (i = 0; i < DTV_NUM_STATS_PROPS; i++) {
@@ -1570,29 +2267,27 @@ struct dtv_stats *dvb_fe_retrieve_stats_layer(struct dvb_v5_fe_parms *parms,
 		return &parms->stats.prop[i].u.st.stat[layer];
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dvb_logerr(_("%s not found on retrieve"), dvb_cmd_name(cmd));
 =======
 	dvb_logerr("%s not found on retrieve", dvb_cmd_name(cmd));
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	dvb_logerr("%s not found on retrieve", dvb_cmd_name(cmd));
+=======
+	dvb_logerr(_("%s not found on retrieve"), dvb_cmd_name(cmd));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return NULL;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int dvb_fe_retrieve_stats(struct dvb_v5_fe_parms *p,
-			  unsigned cmd, uint32_t *value)
-{
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
-	struct dtv_stats *stat;
-	enum fecap_scale_params scale;
-
-	stat = dvb_fe_retrieve_stats_layer(&parms->p, cmd, 0);
-	if (!stat) {
-		if (parms->p.verbose)
-			dvb_logdbg(_("%s not found on retrieve"), dvb_cmd_name(cmd));
-		return -EINVAL;
 =======
 int dvb_fe_retrieve_stats(struct dvb_v5_fe_parms *parms,
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			  unsigned cmd, uint32_t *value)
 {
 	struct dtv_stats *stat;
@@ -1603,11 +2298,32 @@ int dvb_fe_retrieve_stats(struct dvb_v5_fe_parms *parms,
 		if (parms->verbose)
 			dvb_logdbg("%s not found on retrieve", dvb_cmd_name(cmd));
 		return EINVAL;
+=======
+int dvb_fe_retrieve_stats(struct dvb_v5_fe_parms *p,
+			  unsigned cmd, uint32_t *value)
+{
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+	struct dtv_stats *stat;
+	enum fecap_scale_params scale;
+
+	stat = dvb_fe_retrieve_stats_layer(&parms->p, cmd, 0);
+	if (!stat) {
+<<<<<<< HEAD
+		if (parms->verbose)
+			dvb_logdbg("%s not found on retrieve", dvb_cmd_name(cmd));
+		return EINVAL;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		if (parms->p.verbose)
+			dvb_logdbg(_("%s not found on retrieve"), dvb_cmd_name(cmd));
+		return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	scale = stat->scale;
 	if (scale == FE_SCALE_NOT_AVAILABLE) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (parms->p.verbose)
 			dvb_logdbg(_("%s not available"), dvb_cmd_name(cmd));
@@ -1617,10 +2333,21 @@ int dvb_fe_retrieve_stats(struct dvb_v5_fe_parms *parms,
 			dvb_logdbg("%s not available", dvb_cmd_name(cmd));
 		return EINVAL;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		if (parms->verbose)
+			dvb_logdbg("%s not available", dvb_cmd_name(cmd));
+		return EINVAL;
+=======
+		if (parms->p.verbose)
+			dvb_logdbg(_("%s not available"), dvb_cmd_name(cmd));
+		return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	*value = stat->uvalue;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (parms->p.verbose > 1)
 		dvb_logdbg(_("Stats for %s = %d"), dvb_cmd_name(cmd), *value);
@@ -1628,11 +2355,31 @@ int dvb_fe_retrieve_stats(struct dvb_v5_fe_parms *parms,
 	if (parms->verbose > 1)
 		dvb_logdbg("Stats for %s = %d", dvb_cmd_name(cmd), *value);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (parms->verbose > 1)
+		dvb_logdbg("Stats for %s = %d", dvb_cmd_name(cmd), *value);
+=======
+	if (parms->p.verbose > 1)
+		dvb_logdbg(_("Stats for %s = %d"), dvb_cmd_name(cmd), *value);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+float dvb_fe_retrieve_ber(struct dvb_v5_fe_parms *p, unsigned layer,
+=======
+float dvb_fe_retrieve_ber(struct dvb_v5_fe_parms *parms, unsigned layer,
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+			  enum fecap_scale_params *scale)
+{
+	float ber;
+	uint32_t ber32;
+
+	if (parms->has_v5_stats) {
+=======
 float dvb_fe_retrieve_ber(struct dvb_v5_fe_parms *p, unsigned layer,
 			  enum fecap_scale_params *scale)
 {
@@ -1640,16 +2387,13 @@ float dvb_fe_retrieve_ber(struct dvb_v5_fe_parms *p, unsigned layer,
 	float ber;
 	uint32_t ber32;
 
-	if (parms->p.has_v5_stats) {
-=======
-float dvb_fe_retrieve_ber(struct dvb_v5_fe_parms *parms, unsigned layer,
-			  enum fecap_scale_params *scale)
-{
-	float ber;
-	uint32_t ber32;
-
+<<<<<<< HEAD
 	if (parms->has_v5_stats) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (parms->p.has_v5_stats) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		ber = calculate_postBER(parms, layer);
 		if (ber >= 0)
 			*scale = FE_SCALE_COUNTER;
@@ -1661,16 +2405,25 @@ float dvb_fe_retrieve_ber(struct dvb_v5_fe_parms *parms, unsigned layer,
 	if (layer) {
 		*scale = FE_SCALE_NOT_AVAILABLE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EINVAL;
-	}
-
-	if (dvb_fe_retrieve_stats(&parms->p, DTV_BER, &ber32))
 =======
 		return -1;
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	if (dvb_fe_retrieve_stats(parms, DTV_BER, &ber32))
+=======
+		return -EINVAL;
+	}
+
+<<<<<<< HEAD
+	if (dvb_fe_retrieve_stats(parms, DTV_BER, &ber32))
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (dvb_fe_retrieve_stats(&parms->p, DTV_BER, &ber32))
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		*scale = FE_SCALE_NOT_AVAILABLE;
 	else
 		*scale = FE_SCALE_RELATIVE;
@@ -1679,30 +2432,46 @@ float dvb_fe_retrieve_ber(struct dvb_v5_fe_parms *parms, unsigned layer,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+float dvb_fe_retrieve_per(struct dvb_v5_fe_parms *p, unsigned layer)
+=======
+float dvb_fe_retrieve_per(struct dvb_v5_fe_parms *parms, unsigned layer)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+{
+	uint64_t n, d;
+
+	if (!parms->stats.has_per[layer]) {
+		return -1;
+=======
 float dvb_fe_retrieve_per(struct dvb_v5_fe_parms *p, unsigned layer)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
 	uint64_t n, d;
 
 	if (!parms->stats.has_per[layer]) {
-		return -EINVAL;
-=======
-float dvb_fe_retrieve_per(struct dvb_v5_fe_parms *parms, unsigned layer)
-{
-	uint64_t n, d;
-
-	if (!parms->stats.has_per[layer]) {
+<<<<<<< HEAD
 		return -1;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	d = parms->stats.cur[layer].block_count - parms->stats.prev[layer].block_count;
 	if (!d) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EINVAL;
 =======
 		return -1;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		return -1;
+=======
+		return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	n = parms->stats.cur[layer].block_error - parms->stats.prev[layer].block_error;
@@ -1778,10 +2547,17 @@ struct cnr_to_qual_s dvb_s2_cnr_2_qual[] = {
  * As ARIB doesn't define a max value, assume +2dB for DVB_QUAL_GOOD
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct cnr_to_qual_s isdb_t_cnr_2_qual[] = {
 =======
 struct cnr_to_qual_s isdb_t_cnr_2_qual[] = {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+struct cnr_to_qual_s isdb_t_cnr_2_qual[] = {
+=======
+static struct cnr_to_qual_s isdb_t_cnr_2_qual[] = {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{  DQPSK, FEC_1_2,  6.2,  8.2},
 	{  DQPSK, FEC_2_3,  7.7,  9.7},
 	{  DQPSK, FEC_3_4,  8.7, 10.7},
@@ -1812,10 +2588,17 @@ struct cnr_to_qual_s isdb_t_cnr_2_qual[] = {
  * OK corresponds to Ricean fading; Good to Rayleigh fading
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct cnr_to_qual_s dvb_t_cnr_2_qual[] = {
 =======
 struct cnr_to_qual_s dvb_t_cnr_2_qual[] = {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+struct cnr_to_qual_s dvb_t_cnr_2_qual[] = {
+=======
+static struct cnr_to_qual_s dvb_t_cnr_2_qual[] = {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	{   QPSK, FEC_1_2,  4.1,  5.9},
 	{   QPSK, FEC_2_3,  6.1,  9.6},
 	{   QPSK, FEC_3_4,  7.2, 12.4},
@@ -1836,10 +2619,17 @@ struct cnr_to_qual_s dvb_t_cnr_2_qual[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms_priv *parms,
 =======
 static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms *parms,
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms *parms,
+=======
+static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms_priv *parms,
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 					       struct dtv_stats *cnr)
 {
 	uint32_t modulation, fec;
@@ -1861,16 +2651,25 @@ static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms *parms,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (parms->p.current_sys) {
-	case SYS_DVBC_ANNEX_A:
-	case SYS_DVBC_ANNEX_C:
-		dvb_fe_retrieve_parm(&parms->p, DTV_MODULATION, &modulation);
 =======
 	switch (parms->current_sys) {
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case SYS_DVBC_ANNEX_A:
 	case SYS_DVBC_ANNEX_C:
 		dvb_fe_retrieve_parm(parms, DTV_MODULATION, &modulation);
+=======
+	switch (parms->p.current_sys) {
+	case SYS_DVBC_ANNEX_A:
+	case SYS_DVBC_ANNEX_C:
+<<<<<<< HEAD
+		dvb_fe_retrieve_parm(parms, DTV_MODULATION, &modulation);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		dvb_fe_retrieve_parm(&parms->p, DTV_MODULATION, &modulation);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (modulation == QAM_AUTO)
 			modulation = QAM_64;	/* Assume worse case */
 		qual = cnr_arr_to_qual(modulation, FEC_NONE, cnr->svalue,
@@ -1879,15 +2678,23 @@ static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms *parms,
 		break;
 	case SYS_DVBS:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dvb_fe_retrieve_parm(&parms->p, DTV_INNER_FEC, &fec);
 =======
 		dvb_fe_retrieve_parm(parms, DTV_INNER_FEC, &fec);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		dvb_fe_retrieve_parm(parms, DTV_INNER_FEC, &fec);
+=======
+		dvb_fe_retrieve_parm(&parms->p, DTV_INNER_FEC, &fec);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		qual = cnr_arr_to_qual(QPSK, fec, cnr->svalue,
 				       dvb_s_cnr_2_qual,
 				       ARRAY_SIZE(dvb_s_cnr_2_qual));
 		break;
 	case SYS_DVBS2:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dvb_fe_retrieve_parm(&parms->p, DTV_MODULATION, &modulation);
 		dvb_fe_retrieve_parm(&parms->p, DTV_INNER_FEC, &fec);
@@ -1895,11 +2702,20 @@ static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms *parms,
 		dvb_fe_retrieve_parm(parms, DTV_MODULATION, &modulation);
 		dvb_fe_retrieve_parm(parms, DTV_INNER_FEC, &fec);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		dvb_fe_retrieve_parm(parms, DTV_MODULATION, &modulation);
+		dvb_fe_retrieve_parm(parms, DTV_INNER_FEC, &fec);
+=======
+		dvb_fe_retrieve_parm(&parms->p, DTV_MODULATION, &modulation);
+		dvb_fe_retrieve_parm(&parms->p, DTV_INNER_FEC, &fec);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		qual = cnr_arr_to_qual(modulation, fec, cnr->svalue,
 			               dvb_s2_cnr_2_qual,
 				       ARRAY_SIZE(dvb_s_cnr_2_qual));
 		break;
 	case SYS_ISDBT:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dvb_fe_retrieve_parm(&parms->p, DTV_ISDBT_LAYERA_MODULATION, &modulation);
 		dvb_fe_retrieve_parm(&parms->p, DTV_ISDBT_LAYERA_FEC, &fec);
@@ -1907,6 +2723,14 @@ static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms *parms,
 		dvb_fe_retrieve_parm(parms, DTV_ISDBT_LAYERA_MODULATION, &modulation);
 		dvb_fe_retrieve_parm(parms, DTV_ISDBT_LAYERA_FEC, &fec);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		dvb_fe_retrieve_parm(parms, DTV_ISDBT_LAYERA_MODULATION, &modulation);
+		dvb_fe_retrieve_parm(parms, DTV_ISDBT_LAYERA_FEC, &fec);
+=======
+		dvb_fe_retrieve_parm(&parms->p, DTV_ISDBT_LAYERA_MODULATION, &modulation);
+		dvb_fe_retrieve_parm(&parms->p, DTV_ISDBT_LAYERA_FEC, &fec);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (modulation == QAM_AUTO)
 			modulation = QAM_64;	/* Assume worse case */
 		qual = cnr_arr_to_qual(modulation, fec, cnr->svalue,
@@ -1915,23 +2739,38 @@ static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms *parms,
 		break;
 	case SYS_DVBT:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		dvb_fe_retrieve_parm(&parms->p, DTV_MODULATION, &modulation);
 		dvb_fe_retrieve_parm(&parms->p, DTV_CODE_RATE_LP, &fec);
 		qual = cnr_arr_to_qual(modulation, fec, cnr->svalue,
 			               dvb_t_cnr_2_qual,
 				       ARRAY_SIZE(isdb_t_cnr_2_qual));
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case SYS_DVBT2:
 	case SYS_TURBO:
 	case SYS_ISDBS:
 	case SYS_DSS:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case SYS_DTMB:
 =======
 	case SYS_DMBTH:
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	case SYS_DMBTH:
+=======
+	case SYS_DTMB:
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	case SYS_ATSC:
 	case SYS_ATSCMH:
 	case SYS_DVBC_ANNEX_B:
@@ -1944,24 +2783,42 @@ static enum dvb_quality dvbv_fe_cnr_to_quality(struct dvb_v5_fe_parms *parms,
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+static enum dvb_quality dvb_fe_retrieve_quality(struct dvb_v5_fe_parms *parms,
+						unsigned layer)
+{
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 enum dvb_quality dvb_fe_retrieve_quality(struct dvb_v5_fe_parms *p,
 					 unsigned layer)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+<<<<<<< HEAD
 =======
 static enum dvb_quality dvb_fe_retrieve_quality(struct dvb_v5_fe_parms *parms,
 						unsigned layer)
 {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	float ber, per;
 	struct dtv_stats *cnr;
 	enum dvb_quality qual = DVB_QUAL_UNKNOWN;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	per = dvb_fe_retrieve_per(&parms->p, layer);
 =======
 	per = dvb_fe_retrieve_per(parms, layer);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	per = dvb_fe_retrieve_per(parms, layer);
+=======
+	per = dvb_fe_retrieve_per(&parms->p, layer);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (per >= 0) {
 		if (per > 1e-6)
 			qual = DVB_QUAL_POOR;
@@ -1972,10 +2829,17 @@ static enum dvb_quality dvb_fe_retrieve_quality(struct dvb_v5_fe_parms *parms,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ber = dvb_fe_retrieve_per(&parms->p, layer);
 =======
 	ber = dvb_fe_retrieve_per(parms, layer);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	ber = dvb_fe_retrieve_per(parms, layer);
+=======
+	ber = dvb_fe_retrieve_per(&parms->p, layer);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (ber >= 0) {
 
 		if (ber > 1e-3)	/* FIXME: good enough???? */
@@ -1987,10 +2851,17 @@ static enum dvb_quality dvb_fe_retrieve_quality(struct dvb_v5_fe_parms *parms,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cnr = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_CNR, layer);
 =======
 	cnr = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_CNR, layer);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	cnr = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_CNR, layer);
+=======
+	cnr = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_CNR, layer);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (cnr)
 		dvbv_fe_cnr_to_quality(parms, cnr);
 
@@ -1998,15 +2869,23 @@ static enum dvb_quality dvb_fe_retrieve_quality(struct dvb_v5_fe_parms *parms,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void dvb_fe_update_counters(struct dvb_v5_fe_parms_priv *parms)
 =======
 static void dvb_fe_update_counters(struct dvb_v5_fe_parms *parms)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+static void dvb_fe_update_counters(struct dvb_v5_fe_parms *parms)
+=======
+static void dvb_fe_update_counters(struct dvb_v5_fe_parms_priv *parms)
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
 	struct dtv_stats *error, *count;
 	int i;
 
 	for (i = 0; i < MAX_DTV_STATS; i++) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		count = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_POST_TOTAL_BIT_COUNT, i);
 		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
@@ -2016,6 +2895,16 @@ static void dvb_fe_update_counters(struct dvb_v5_fe_parms *parms)
 		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
 			error = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_POST_ERROR_BIT_COUNT, i);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		count = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_POST_TOTAL_BIT_COUNT, i);
+		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
+			error = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_POST_ERROR_BIT_COUNT, i);
+=======
+		count = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_POST_TOTAL_BIT_COUNT, i);
+		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
+			error = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_POST_ERROR_BIT_COUNT, i);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			if (!error || error->scale == FE_SCALE_NOT_AVAILABLE) {
 				parms->stats.has_post_ber[i] = 0;
 			} else if(count->uvalue != parms->stats.cur[i].post_bit_count) {
@@ -2030,6 +2919,7 @@ static void dvb_fe_update_counters(struct dvb_v5_fe_parms *parms)
 		} else
 			parms->stats.has_post_ber[i] = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		count = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_PRE_TOTAL_BIT_COUNT, i);
 		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
 			error = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_PRE_ERROR_BIT_COUNT, i);
@@ -2038,6 +2928,16 @@ static void dvb_fe_update_counters(struct dvb_v5_fe_parms *parms)
 		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
 			error = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_PRE_ERROR_BIT_COUNT, i);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		count = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_PRE_TOTAL_BIT_COUNT, i);
+		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
+			error = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_PRE_ERROR_BIT_COUNT, i);
+=======
+		count = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_PRE_TOTAL_BIT_COUNT, i);
+		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
+			error = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_PRE_ERROR_BIT_COUNT, i);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			if (!error || error->scale == FE_SCALE_NOT_AVAILABLE) {
 				parms->stats.has_pre_ber[i] = 0;
 			} else if(count->uvalue != parms->stats.cur[i].pre_bit_count) {
@@ -2052,6 +2952,7 @@ static void dvb_fe_update_counters(struct dvb_v5_fe_parms *parms)
 		} else
 			parms->stats.has_pre_ber[i] = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		count = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_TOTAL_BLOCK_COUNT, i);
 		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
 			error = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_ERROR_BLOCK_COUNT, i);
@@ -2060,6 +2961,16 @@ static void dvb_fe_update_counters(struct dvb_v5_fe_parms *parms)
 		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
 			error = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_ERROR_BLOCK_COUNT, i);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		count = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_TOTAL_BLOCK_COUNT, i);
+		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
+			error = dvb_fe_retrieve_stats_layer(parms, DTV_STAT_ERROR_BLOCK_COUNT, i);
+=======
+		count = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_TOTAL_BLOCK_COUNT, i);
+		if (count && count->scale != FE_SCALE_NOT_AVAILABLE) {
+			error = dvb_fe_retrieve_stats_layer(&parms->p, DTV_STAT_ERROR_BLOCK_COUNT, i);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 			if (!error || error->scale == FE_SCALE_NOT_AVAILABLE) {
 				parms->stats.has_per[i] = 0;
 			} else if (count->uvalue != parms->stats.cur[i].block_count) {
@@ -2077,19 +2988,28 @@ static void dvb_fe_update_counters(struct dvb_v5_fe_parms *parms)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int __dvb_fe_get_stats(struct dvb_v5_fe_parms *p)
-{
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
 =======
 int dvb_fe_get_stats(struct dvb_v5_fe_parms *parms)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
+=======
+int __dvb_fe_get_stats(struct dvb_v5_fe_parms *p)
+{
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	fe_status_t status = 0;
 	uint32_t ber= 0, ucb = 0;
 	uint16_t strength = 0, snr = 0;
 	int i;
 	enum fecap_scale_params scale;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (xioctl(parms->fd, FE_READ_STATUS, &status) == -1) {
 		dvb_perror("FE_READ_STATUS");
@@ -2099,6 +3019,16 @@ int dvb_fe_get_stats(struct dvb_v5_fe_parms *parms)
 		dvb_perror("FE_READ_STATUS");
 		return EINVAL;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (ioctl(parms->fd, FE_READ_STATUS, &status) == -1) {
+		dvb_perror("FE_READ_STATUS");
+		return EINVAL;
+=======
+	if (xioctl(parms->fd, FE_READ_STATUS, &status) == -1) {
+		dvb_perror("FE_READ_STATUS");
+		return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 	dvb_fe_store_stats(parms, DTV_STATUS, FE_SCALE_RELATIVE, 0, status);
 
@@ -2107,18 +3037,27 @@ int dvb_fe_get_stats(struct dvb_v5_fe_parms *parms)
 		if ((status & FE_HAS_LOCK) &&
 		    parms->stats.prev_status != status)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dvb_fe_get_parms(&parms->p);
-		parms->stats.prev_status = status;
-	}
-
-	if (parms->p.has_v5_stats) {
 =======
 			dvb_fe_get_parms(parms);
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		parms->stats.prev_status = status;
 	}
 
 	if (parms->has_v5_stats) {
+=======
+			dvb_fe_get_parms(&parms->p);
+		parms->stats.prev_status = status;
+	}
+
+<<<<<<< HEAD
+	if (parms->has_v5_stats) {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (parms->p.has_v5_stats) {
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		struct dtv_properties props;
 
 		props.num = DTV_NUM_KERNEL_STATS;
@@ -2126,15 +3065,25 @@ int dvb_fe_get_stats(struct dvb_v5_fe_parms *parms)
 
 		/* Do a DVBv5.10 stats call */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		if (ioctl(parms->fd, FE_GET_PROPERTY, &props) == -1)
+			goto dvbv3_fallback;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (ioctl(parms->fd, FE_GET_PROPERTY, &props) == -1) {
 			if (errno == EAGAIN)
 				return 0;
 			goto dvbv3_fallback;
 		}
+<<<<<<< HEAD
 =======
 		if (ioctl(parms->fd, FE_GET_PROPERTY, &props) == -1)
 			goto dvbv3_fallback;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		/*
 		 * All props with len=0 mean that this device doesn't have any
@@ -2154,10 +3103,17 @@ int dvb_fe_get_stats(struct dvb_v5_fe_parms *parms)
 dvbv3_fallback:
 	/* DVB v3 stats */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	parms->p.has_v5_stats = 0;
 =======
 	parms->has_v5_stats = 0;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	parms->has_v5_stats = 0;
+=======
+	parms->p.has_v5_stats = 0;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	if (ioctl(parms->fd, FE_READ_BER, &ber) == -1)
 		scale = FE_SCALE_NOT_AVAILABLE;
@@ -2190,21 +3146,37 @@ dvbv3_fallback:
 	dvb_fe_store_stats(parms, DTV_STAT_ERROR_BLOCK_COUNT, scale, 0, snr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (parms->p.verbose > 1) {
 		dvb_log(_("Status: "));
 =======
 	if (parms->verbose > 1) {
 		dvb_log("Status: ");
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	if (parms->verbose > 1) {
+		dvb_log("Status: ");
+=======
+	if (parms->p.verbose > 1) {
+		dvb_log(_("Status: "));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		for (i = 0; i < ARRAY_SIZE(fe_status_name); i++) {
 			if (status & fe_status_name[i].idx)
 				dvb_log ("    %s", fe_status_name[i].name);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dvb_log(_("BER: %d, Strength: %d, SNR: %d, UCB: %d"),
 =======
 		dvb_log("BER: %d, Strength: %d, SNR: %d, UCB: %d",
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		dvb_log("BER: %d, Strength: %d, SNR: %d, UCB: %d",
+=======
+		dvb_log(_("BER: %d, Strength: %d, SNR: %d, UCB: %d"),
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		       ber, strength, snr, ucb);
 	}
 	return 0;
@@ -2212,17 +3184,26 @@ dvbv3_fallback:
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int dvb_fe_get_event(struct dvb_v5_fe_parms *p)
-{
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
 =======
 int dvb_fe_get_event(struct dvb_v5_fe_parms *parms)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
+=======
+int dvb_fe_get_event(struct dvb_v5_fe_parms *p)
+{
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct dvb_frontend_event event;
 	fe_status_t status;
 	int i;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!parms->p.legacy_fe) {
 		dvb_fe_get_parms(&parms->p);
@@ -2237,6 +3218,8 @@ int dvb_fe_get_event(struct dvb_v5_fe_parms *parms)
 	if (parms->p.verbose > 1) {
 		dvb_log(_("Status: "));
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (!parms->legacy_fe) {
 		dvb_fe_get_parms(parms);
 		return dvb_fe_get_stats(parms);
@@ -2249,7 +3232,24 @@ int dvb_fe_get_event(struct dvb_v5_fe_parms *parms)
 	status = event.status;
 	if (parms->verbose > 1) {
 		dvb_log("Status: ");
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+	if (!parms->p.legacy_fe) {
+		dvb_fe_get_parms(&parms->p);
+		return dvb_fe_get_stats(&parms->p);
+	}
+
+	if (xioctl(parms->fd, FE_GET_EVENT, &event) == -1) {
+		dvb_perror("FE_GET_EVENT");
+		return -errno;
+	}
+	status = event.status;
+	if (parms->p.verbose > 1) {
+		dvb_log(_("Status: "));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		for (i = 0; i < ARRAY_SIZE(fe_status_name); i++) {
 			if (status & fe_status_name[i].idx)
 				dvb_log ("    %s", fe_status_name[i].name);
@@ -2257,6 +3257,7 @@ int dvb_fe_get_event(struct dvb_v5_fe_parms *parms)
 	}
 	dvb_fe_store_stats(parms, DTV_STATUS, FE_SCALE_RELATIVE, 0, status);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	dvb_fe_retrieve_parm(&parms->p, DTV_FREQUENCY, &event.parameters.frequency);
 	dvb_fe_retrieve_parm(&parms->p, DTV_INVERSION, &event.parameters.inversion);
@@ -2270,6 +3271,8 @@ int dvb_fe_get_event(struct dvb_v5_fe_parms *parms)
 		dvb_fe_retrieve_parm(&parms->p, DTV_INNER_FEC, &event.parameters.u.qam.fec_inner);
 		dvb_fe_retrieve_parm(&parms->p, DTV_MODULATION, &event.parameters.u.qam.modulation);
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	dvb_fe_retrieve_parm(parms, DTV_FREQUENCY, &event.parameters.frequency);
 	dvb_fe_retrieve_parm(parms, DTV_INVERSION, &event.parameters.inversion);
 	switch (parms->current_sys) {
@@ -2281,6 +3284,7 @@ int dvb_fe_get_event(struct dvb_v5_fe_parms *parms)
 		dvb_fe_retrieve_parm(parms, DTV_SYMBOL_RATE, &event.parameters.u.qam.symbol_rate);
 		dvb_fe_retrieve_parm(parms, DTV_INNER_FEC, &event.parameters.u.qam.fec_inner);
 		dvb_fe_retrieve_parm(parms, DTV_MODULATION, &event.parameters.u.qam.modulation);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 		break;
 	case SYS_ATSC:
@@ -2298,6 +3302,25 @@ int dvb_fe_get_event(struct dvb_v5_fe_parms *parms)
 		dvb_fe_retrieve_parm(&parms->p, DTV_GUARD_INTERVAL, &event.parameters.u.ofdm.guard_interval);
 		dvb_fe_retrieve_parm(&parms->p, DTV_HIERARCHY, &event.parameters.u.ofdm.hierarchy_information);
 =======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+=======
+	dvb_fe_retrieve_parm(&parms->p, DTV_FREQUENCY, &event.parameters.frequency);
+	dvb_fe_retrieve_parm(&parms->p, DTV_INVERSION, &event.parameters.inversion);
+	switch (parms->p.current_sys) {
+	case SYS_DVBS:
+		dvb_fe_retrieve_parm(&parms->p, DTV_SYMBOL_RATE, &event.parameters.u.qpsk.symbol_rate);
+		dvb_fe_retrieve_parm(&parms->p, DTV_INNER_FEC, &event.parameters.u.qpsk.fec_inner);
+		break;
+	case SYS_DVBC_ANNEX_AC:
+		dvb_fe_retrieve_parm(&parms->p, DTV_SYMBOL_RATE, &event.parameters.u.qam.symbol_rate);
+		dvb_fe_retrieve_parm(&parms->p, DTV_INNER_FEC, &event.parameters.u.qam.fec_inner);
+		dvb_fe_retrieve_parm(&parms->p, DTV_MODULATION, &event.parameters.u.qam.modulation);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+		break;
+	case SYS_ATSC:
+	case SYS_ATSCMH:
+	case SYS_DVBC_ANNEX_B:
+<<<<<<< HEAD
 		dvb_fe_retrieve_parm(parms, DTV_MODULATION, &event.parameters.u.vsb.modulation);
 		break;
 	case SYS_DVBT:
@@ -2308,17 +3331,39 @@ int dvb_fe_get_event(struct dvb_v5_fe_parms *parms)
 		dvb_fe_retrieve_parm(parms, DTV_TRANSMISSION_MODE, &event.parameters.u.ofdm.transmission_mode);
 		dvb_fe_retrieve_parm(parms, DTV_GUARD_INTERVAL, &event.parameters.u.ofdm.guard_interval);
 		dvb_fe_retrieve_parm(parms, DTV_HIERARCHY, &event.parameters.u.ofdm.hierarchy_information);
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+		dvb_fe_retrieve_parm(&parms->p, DTV_MODULATION, &event.parameters.u.vsb.modulation);
+		break;
+	case SYS_DVBT:
+		dvb_fe_retrieve_parm(&parms->p, DTV_BANDWIDTH_HZ, &event.parameters.u.ofdm.bandwidth);
+		dvb_fe_retrieve_parm(&parms->p, DTV_CODE_RATE_HP, &event.parameters.u.ofdm.code_rate_HP);
+		dvb_fe_retrieve_parm(&parms->p, DTV_CODE_RATE_LP, &event.parameters.u.ofdm.code_rate_LP);
+		dvb_fe_retrieve_parm(&parms->p, DTV_MODULATION, &event.parameters.u.ofdm.constellation);
+		dvb_fe_retrieve_parm(&parms->p, DTV_TRANSMISSION_MODE, &event.parameters.u.ofdm.transmission_mode);
+		dvb_fe_retrieve_parm(&parms->p, DTV_GUARD_INTERVAL, &event.parameters.u.ofdm.guard_interval);
+		dvb_fe_retrieve_parm(&parms->p, DTV_HIERARCHY, &event.parameters.u.ofdm.hierarchy_information);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		break;
 	default:
 		return -EINVAL;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return dvb_fe_get_stats(&parms->p);
 =======
 	return dvb_fe_get_stats(parms);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	return dvb_fe_get_stats(parms);
+=======
+	return dvb_fe_get_stats(&parms->p);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 }
 
 int dvb_fe_snprintf_eng(char *buf, int len, float val)
@@ -2373,6 +3418,29 @@ int dvb_fe_snprintf_eng(char *buf, int len, float val)
 
 static char *sig_bits[7] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	[0] = "RF",
+	[1] = "Carrier",
+	[2] = "Viterbi",
+	[3] = "Sync",
+	[4] = "Lock",
+	[5] = "Timeout",
+	[6] = "Reinit",
+};
+
+static char *qual_name[] = {
+	[DVB_QUAL_POOR] = "Poor",
+	[DVB_QUAL_OK]   = "Ok",
+	[DVB_QUAL_GOOD] = "Good",
+};
+
+int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
+			  char *display_name, int layer,
+		          char **buf, int *len, int *show_layer_name)
+{
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	[0] = N_("RF"),
 	[1] = N_("Carrier"),
 	[2] = N_("Viterbi"),
@@ -2393,6 +3461,7 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *p, uint32_t cmd,
 		          char **buf, int *len, int *show_layer_name)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+<<<<<<< HEAD
 =======
 	[0] = "RF",
 	[1] = "Carrier",
@@ -2414,6 +3483,9 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
 		          char **buf, int *len, int *show_layer_name)
 {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct dtv_stats *stat = NULL;
 	enum dvb_quality qual = DVB_QUAL_UNKNOWN;
 	enum fecap_scale_params scale;
@@ -2429,6 +3501,7 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
 			return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (dvb_fe_retrieve_stats(&parms->p, DTV_STATUS, &status)) {
 			dvb_logerr (_("Error: no adapter status"));
 			return -EINVAL;
@@ -2437,6 +3510,16 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
 			dvb_logerr ("Error: no adapter status");
 			return -1;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		if (dvb_fe_retrieve_stats(parms, DTV_STATUS, &status)) {
+			dvb_logerr ("Error: no adapter status");
+			return -1;
+=======
+		if (dvb_fe_retrieve_stats(&parms->p, DTV_STATUS, &status)) {
+			dvb_logerr (_("Error: no adapter status"));
+			return -EINVAL;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		}
 		if (display_name) {
 			size = snprintf(*buf, *len, " %s=", display_name);
@@ -2448,6 +3531,18 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
 		for (i = ARRAY_SIZE(sig_bits) - 1; i >= 0 ; i--) {
 			if ((1 << i) & status) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+				size = snprintf(*buf, *len, "%-7s", sig_bits[i]);
+				break;
+			}
+		}
+		if (i < 0)
+			size = snprintf(*buf, *len, "%7s", "");
+		*buf += size;
+		len -= size;
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 				size = snprintf(*buf, *len, _("%-7s"), _(sig_bits[i]));
 				*buf += size;
 				*len -= size;
@@ -2459,6 +3554,7 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
 			*buf += size;
 			*len -= size;
 		}
+<<<<<<< HEAD
 =======
 				size = snprintf(*buf, *len, "%-7s", sig_bits[i]);
 				break;
@@ -2469,15 +3565,25 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
 		*buf += size;
 		len -= size;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		/* Add the status bits */
 		size = snprintf(*buf, *len, "(0x%02x)", status);
 		*buf += size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		*len -= size;
 =======
 		len -= size;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		len -= size;
+=======
+		*len -= size;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 		return initial_len - *len;
 	}
@@ -2492,38 +3598,66 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
 		break;
 	case DTV_BER:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		val = dvb_fe_retrieve_ber(&parms->p, layer, &scale);
 =======
 		val = dvb_fe_retrieve_ber(parms, layer, &scale);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		val = dvb_fe_retrieve_ber(parms, layer, &scale);
+=======
+		val = dvb_fe_retrieve_ber(&parms->p, layer, &scale);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (scale == FE_SCALE_NOT_AVAILABLE)
 			return 0;
 		break;
 	case DTV_PER:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		val = dvb_fe_retrieve_per(&parms->p, layer);
 =======
 		val = dvb_fe_retrieve_per(parms, layer);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		val = dvb_fe_retrieve_per(parms, layer);
+=======
+		val = dvb_fe_retrieve_per(&parms->p, layer);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (val < 0)
 			return 0;
 		scale = FE_SCALE_COUNTER;
 		break;
 	case DTV_QUALITY:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		qual = dvb_fe_retrieve_quality(&parms->p, layer);
 =======
 		qual = dvb_fe_retrieve_quality(parms, layer);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		qual = dvb_fe_retrieve_quality(parms, layer);
+=======
+		qual = dvb_fe_retrieve_quality(&parms->p, layer);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (qual == DVB_QUAL_UNKNOWN)
 			return 0;
 		break;
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		stat = dvb_fe_retrieve_stats_layer(&parms->p, cmd, layer);
 =======
 		stat = dvb_fe_retrieve_stats_layer(parms, cmd, layer);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		stat = dvb_fe_retrieve_stats_layer(parms, cmd, layer);
+=======
+		stat = dvb_fe_retrieve_stats_layer(&parms->p, cmd, layer);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (!stat || stat->scale == FE_SCALE_NOT_AVAILABLE)
 			return 0;
 	}
@@ -2531,10 +3665,17 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
 	/* If requested, prints the layer name */
 	if (*show_layer_name && layer) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		size = snprintf(*buf, *len, _("  Layer %c:"), 'A' + layer - 1);
 =======
 		size = snprintf(*buf, *len, "  Layer %c:", 'A' + layer - 1);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		size = snprintf(*buf, *len, "  Layer %c:", 'A' + layer - 1);
+=======
+		size = snprintf(*buf, *len, _("  Layer %c:"), 'A' + layer - 1);
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		*buf += size;
 		*len -= size;
 		*show_layer_name = 0;
@@ -2548,10 +3689,17 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
 	/* Quality measure */
 	if (qual != DVB_QUAL_UNKNOWN) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		size = snprintf(*buf, *len, " %-4s", _(qual_name[qual]));
 =======
 		size = snprintf(*buf, *len, " %-4s", qual_name[qual]);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		size = snprintf(*buf, *len, " %-4s", qual_name[qual]);
+=======
+		size = snprintf(*buf, *len, " %-4s", _(qual_name[qual]));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		*buf += size;
 		*len -= size;
 		return initial_len - *len;
@@ -2605,19 +3753,70 @@ int dvb_fe_snprintf_stat(struct dvb_v5_fe_parms *parms, uint32_t cmd,
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int dvb_fe_sec_voltage(struct dvb_v5_fe_parms *p, int on, int v18)
-{
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
 =======
 int dvb_fe_sec_voltage(struct dvb_v5_fe_parms *parms, int on, int v18)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 {
+=======
+int dvb_fe_sec_voltage(struct dvb_v5_fe_parms *p, int on, int v18)
+{
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	fe_sec_voltage_t v;
 	int rc;
 
 	if (!on) {
 		v = SEC_VOLTAGE_OFF;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		if (parms->verbose)
+			dvb_log("DiSEqC VOLTAGE: OFF");
+	} else {
+		v = v18 ? SEC_VOLTAGE_18 : SEC_VOLTAGE_13;
+		if (parms->verbose)
+			dvb_log("DiSEqC VOLTAGE: %s", v18 ? "18" : "13");
+	}
+	rc = ioctl(parms->fd, FE_SET_VOLTAGE, v);
+	if (rc == -1)
+		dvb_perror("FE_SET_VOLTAGE");
+	return rc;
+}
+
+int dvb_fe_sec_tone(struct dvb_v5_fe_parms *parms, fe_sec_tone_mode_t tone)
+{
+	int rc;
+	if (parms->verbose)
+		dvb_log( "DiSEqC TONE: %s", fe_tone_name[tone] );
+	rc = ioctl(parms->fd, FE_SET_TONE, tone);
+	if (rc == -1)
+		dvb_perror("FE_SET_TONE");
+	return rc;
+}
+
+int dvb_fe_lnb_high_voltage(struct dvb_v5_fe_parms *parms, int on)
+{
+	int rc;
+
+	if (on) on = 1;
+	if (parms->verbose)
+		dvb_log( "DiSEqC HIGH LNB VOLTAGE: %s", on ? "ON" : "OFF" );
+	rc = ioctl(parms->fd, FE_ENABLE_HIGH_LNB_VOLTAGE, on);
+	if (rc == -1)
+		dvb_perror("FE_ENABLE_HIGH_LNB_VOLTAGE");
+	return rc;
+}
+
+int dvb_fe_diseqc_burst(struct dvb_v5_fe_parms *parms, int mini_b)
+{
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		if (parms->p.verbose)
 			dvb_log(_("SEC: set voltage to OFF"));
 	} else {
@@ -2666,46 +3865,25 @@ int dvb_fe_lnb_high_voltage(struct dvb_v5_fe_parms *p, int on)
 int dvb_fe_diseqc_burst(struct dvb_v5_fe_parms *p, int mini_b)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
-=======
-		if (parms->verbose)
-			dvb_log("DiSEqC VOLTAGE: OFF");
-	} else {
-		v = v18 ? SEC_VOLTAGE_18 : SEC_VOLTAGE_13;
-		if (parms->verbose)
-			dvb_log("DiSEqC VOLTAGE: %s", v18 ? "18" : "13");
-	}
-	rc = ioctl(parms->fd, FE_SET_VOLTAGE, v);
-	if (rc == -1)
-		dvb_perror("FE_SET_VOLTAGE");
-	return rc;
-}
-
-int dvb_fe_sec_tone(struct dvb_v5_fe_parms *parms, fe_sec_tone_mode_t tone)
-{
-	int rc;
-	if (parms->verbose)
-		dvb_log( "DiSEqC TONE: %s", fe_tone_name[tone] );
-	rc = ioctl(parms->fd, FE_SET_TONE, tone);
-	if (rc == -1)
-		dvb_perror("FE_SET_TONE");
-	return rc;
-}
-
-int dvb_fe_lnb_high_voltage(struct dvb_v5_fe_parms *parms, int on)
-{
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+	fe_sec_mini_cmd_t mini;
 	int rc;
 
-	if (on) on = 1;
+	mini = mini_b ? SEC_MINI_B : SEC_MINI_A;
+
+<<<<<<< HEAD
 	if (parms->verbose)
-		dvb_log( "DiSEqC HIGH LNB VOLTAGE: %s", on ? "ON" : "OFF" );
-	rc = ioctl(parms->fd, FE_ENABLE_HIGH_LNB_VOLTAGE, on);
+		dvb_log( "DiSEqC BURST: %s", mini_b ? "SEC_MINI_B" : "SEC_MINI_A" );
+	rc = ioctl(parms->fd, FE_DISEQC_SEND_BURST, mini);
 	if (rc == -1)
-		dvb_perror("FE_ENABLE_HIGH_LNB_VOLTAGE");
+		dvb_perror("FE_DISEQC_SEND_BURST");
 	return rc;
 }
 
-int dvb_fe_diseqc_burst(struct dvb_v5_fe_parms *parms, int mini_b)
+int dvb_fe_diseqc_cmd(struct dvb_v5_fe_parms *parms, const unsigned len,
+		      const unsigned char *buf)
 {
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
 	fe_sec_mini_cmd_t mini;
 	int rc;
@@ -2713,6 +3891,9 @@ int dvb_fe_diseqc_burst(struct dvb_v5_fe_parms *parms, int mini_b)
 	mini = mini_b ? SEC_MINI_B : SEC_MINI_A;
 
 <<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	if (parms->p.verbose)
 		dvb_log( _("DiSEqC BURST: %s"), mini_b ? "SEC_MINI_B" : "SEC_MINI_A" );
 	rc = xioctl(parms->fd, FE_DISEQC_SEND_BURST, mini);
@@ -2727,6 +3908,7 @@ int dvb_fe_diseqc_cmd(struct dvb_v5_fe_parms *p, const unsigned len,
 		      const unsigned char *buf)
 {
 	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+<<<<<<< HEAD
 =======
 	if (parms->verbose)
 		dvb_log( "DiSEqC BURST: %s", mini_b ? "SEC_MINI_B" : "SEC_MINI_A" );
@@ -2740,6 +3922,9 @@ int dvb_fe_diseqc_cmd(struct dvb_v5_fe_parms *parms, const unsigned len,
 		      const unsigned char *buf)
 {
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct dvb_diseqc_master_cmd msg;
 	int rc;
 
@@ -2750,24 +3935,48 @@ int dvb_fe_diseqc_cmd(struct dvb_v5_fe_parms *parms, const unsigned len,
 	memcpy(msg.msg, buf, len);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (parms->p.verbose) {
-		int i;
-		char log[len * 3 + 20], *p = log;
-
-		p += sprintf(p, _("DiSEqC command: "));
 =======
 	if (parms->verbose) {
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		int i;
 		char log[len * 3 + 20], *p = log;
 
 		p += sprintf(p, "DiSEqC command: ");
+=======
+	if (parms->p.verbose) {
+		int i;
+		char log[len * 3 + 20], *p = log;
+
+<<<<<<< HEAD
+		p += sprintf(p, "DiSEqC command: ");
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		p += sprintf(p, _("DiSEqC command: "));
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		for (i = 0; i < len; i++)
 			p += sprintf (p, "%02x ", buf[i]);
 		dvb_log("%s", log);
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+	rc = xioctl(parms->fd, FE_DISEQC_SEND_MASTER_CMD, &msg);
+	if (rc == -1) {
+=======
+	rc = ioctl(parms->fd, FE_DISEQC_SEND_MASTER_CMD, &msg);
+	if (rc == -1)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
+		dvb_perror("FE_DISEQC_SEND_MASTER_CMD");
+	return rc;
+}
+
+int dvb_fe_diseqc_reply(struct dvb_v5_fe_parms *parms, unsigned *len, char *buf,
+		       int timeout)
+{
+=======
 	rc = xioctl(parms->fd, FE_DISEQC_SEND_MASTER_CMD, &msg);
 	if (rc == -1) {
 		dvb_perror("FE_DISEQC_SEND_MASTER_CMD");
@@ -2779,18 +3988,12 @@ int dvb_fe_diseqc_cmd(struct dvb_v5_fe_parms *parms, const unsigned len,
 int dvb_fe_diseqc_reply(struct dvb_v5_fe_parms *p, unsigned *len, char *buf,
 		       int timeout)
 {
-	struct dvb_v5_fe_parms_priv *parms = (void *)p;
-=======
-	rc = ioctl(parms->fd, FE_DISEQC_SEND_MASTER_CMD, &msg);
-	if (rc == -1)
-		dvb_perror("FE_DISEQC_SEND_MASTER_CMD");
-	return rc;
-}
-
-int dvb_fe_diseqc_reply(struct dvb_v5_fe_parms *parms, unsigned *len, char *buf,
-		       int timeout)
-{
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+	struct dvb_v5_fe_parms_priv *parms = (void *)p;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	struct dvb_diseqc_slave_reply reply;
 	int rc;
 
@@ -2801,22 +4004,31 @@ int dvb_fe_diseqc_reply(struct dvb_v5_fe_parms *parms, unsigned *len, char *buf,
 	reply.msg_len = *len;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (parms->p.verbose)
-		dvb_log("DiSEqC FE_DISEQC_RECV_SLAVE_REPLY");
-
-	rc = xioctl(parms->fd, FE_DISEQC_RECV_SLAVE_REPLY, reply);
-	if (rc == -1) {
-		dvb_perror("FE_DISEQC_RECV_SLAVE_REPLY");
-		return -errno;
 =======
 	if (parms->verbose)
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 		dvb_log("DiSEqC FE_DISEQC_RECV_SLAVE_REPLY");
 
 	rc = ioctl(parms->fd, FE_DISEQC_RECV_SLAVE_REPLY, reply);
 	if (rc == -1) {
 		dvb_perror("FE_DISEQC_RECV_SLAVE_REPLY");
 		return rc;
+=======
+	if (parms->p.verbose)
+		dvb_log("DiSEqC FE_DISEQC_RECV_SLAVE_REPLY");
+
+	rc = xioctl(parms->fd, FE_DISEQC_RECV_SLAVE_REPLY, reply);
+	if (rc == -1) {
+		dvb_perror("FE_DISEQC_RECV_SLAVE_REPLY");
+<<<<<<< HEAD
+		return rc;
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+		return -errno;
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 	}
 
 	*len = reply.msg_len;
@@ -2825,6 +4037,10 @@ int dvb_fe_diseqc_reply(struct dvb_v5_fe_parms *parms, unsigned *len, char *buf,
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 int dvb_fe_set_default_country(struct dvb_v5_fe_parms *p, const char *cc)
 {
@@ -2852,5 +4068,9 @@ dvb_logfunc_priv dvb_get_log_priv(struct dvb_v5_fe_parms *p, void **priv)
 	*priv = parms->logpriv;
 	return parms->logfunc_priv;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0

@@ -3,19 +3,31 @@
  * Copyright (c) 2012-2014 - Andre Roth <neolynx@gmail.com>
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation version 2.1 of the License.
 =======
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation version 2
  * of the License.
+<<<<<<< HEAD
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation version 2.1 of the License.
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<<<<<<< HEAD
 <<<<<<< HEAD
  * GNU Lesser General Public License for more details.
  *
@@ -25,12 +37,28 @@
  *
  * You should have received a copy of the GNU General Public License
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+=======
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  * Or, point your browser to http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+/*
+ * Descriptors, as defined on ETSI EN 300 468 V1.11.1 (2010-04)
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @file descriptors.h
  * @ingroup dvb_table
@@ -52,10 +80,14 @@
  *
  * @par Bug Report
  * Please submit bug reports and patches to linux-media@vger.kernel.org
+<<<<<<< HEAD
 =======
 /*
  * Descriptors, as defined on ETSI EN 300 468 V1.11.1 (2010-04)
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
  */
 
 
@@ -63,6 +95,25 @@
 #define _DESCRIPTORS_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <stdint.h>
+
+#define DVB_MAX_PAYLOAD_PACKET_SIZE 4096
+#define DVB_CRC_SIZE 4
+
+struct dvb_v5_fe_parms;
+
+typedef void (*dvb_table_init_func)(struct dvb_v5_fe_parms *parms, const uint8_t *buf, ssize_t buflen, void **table);
+
+extern const dvb_table_init_func dvb_table_initializers[256];
+extern char *default_charset;
+extern char *output_charset;
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #include <unistd.h>
 #include <stdint.h>
 #include <arpa/inet.h>
@@ -106,6 +157,7 @@ typedef void (*dvb_table_init_func)(struct dvb_v5_fe_parms *parms,
 extern const dvb_table_init_func dvb_table_initializers[256];
 
 #ifndef _DOXYGEN
+<<<<<<< HEAD
 =======
 #include <arpa/inet.h>
 #include <unistd.h>
@@ -123,6 +175,9 @@ extern char *default_charset;
 extern char *output_charset;
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define bswap16(b) do {\
 	b = ntohs(b); \
 } while (0)
@@ -132,15 +187,27 @@ extern char *output_charset;
 } while (0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Deprecated */
 =======
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+=======
+/* Deprecated */
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #define DVB_DESC_HEADER() \
 	uint8_t type; \
 	uint8_t length; \
 	struct dvb_desc *next
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+struct dvb_desc {
+	DVB_DESC_HEADER();
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #endif /* _DOXYGEN */
 
 /**
@@ -158,15 +225,30 @@ struct dvb_desc {
 	uint8_t type;
 	uint8_t length;
 	struct dvb_desc *next;
+<<<<<<< HEAD
 =======
 struct dvb_desc {
 	DVB_DESC_HEADER();
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 	uint8_t data[];
 } __attribute__((packed));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+#define dvb_desc_foreach( _desc, _tbl ) \
+	for( struct dvb_desc *_desc = _tbl->descriptor; _desc; _desc = _desc->next ) \
+
+#define dvb_desc_find(_struct, _desc, _tbl, _type) \
+	for( _struct *_desc = (_struct *) _tbl->descriptor; _desc; _desc = (_struct *) _desc->next ) \
+		if(_desc->type == _type) \
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 #ifndef _DOXYGEN
 
 #define dvb_desc_foreach( _desc, _tbl ) \
@@ -179,6 +261,7 @@ struct dvb_desc {
 			if(_desc->type == _type) \
 
 #endif /* _DOXYGEN */
+<<<<<<< HEAD
 =======
 
 #define dvb_desc_foreach( _desc, _tbl ) \
@@ -188,12 +271,25 @@ struct dvb_desc {
 	for( _struct *_desc = (_struct *) _tbl->descriptor; _desc; _desc = (_struct *) _desc->next ) \
 		if(_desc->type == _type) \
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+uint32_t bcd(uint32_t bcd);
+
+void hexdump(struct dvb_v5_fe_parms *parms, const char *prefix, const unsigned char *buf, int len);
+
+int  dvb_desc_parse(struct dvb_v5_fe_parms *parms, const uint8_t *buf, uint16_t section_length, struct dvb_desc **head_desc);
+void dvb_desc_free (struct dvb_desc **list);
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief Converts from BCD to CPU integer internal representation
  * @ingroup dvb_table
@@ -253,6 +349,7 @@ void dvb_desc_free (struct dvb_desc **list);
  * @param parms		Struct dvb_v5_fe_parms pointer
  * @param desc		struct dvb_desc pointer.
  */
+<<<<<<< HEAD
 =======
 uint32_t bcd(uint32_t bcd);
 
@@ -261,6 +358,9 @@ void hexdump(struct dvb_v5_fe_parms *parms, const char *prefix, const unsigned c
 int  dvb_desc_parse(struct dvb_v5_fe_parms *parms, const uint8_t *buf, uint16_t section_length, struct dvb_desc **head_desc);
 void dvb_desc_free (struct dvb_desc **list);
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 void dvb_desc_print(struct dvb_v5_fe_parms *parms, struct dvb_desc *desc);
 
 #ifdef __cplusplus
@@ -268,6 +368,16 @@ void dvb_desc_print(struct dvb_v5_fe_parms *parms, struct dvb_desc *desc);
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+struct dvb_v5_fe_parms;
+
+typedef int (*dvb_desc_init_func) (struct dvb_v5_fe_parms *parms, const uint8_t *buf, struct dvb_desc *desc);
+typedef void (*dvb_desc_print_func)(struct dvb_v5_fe_parms *parms, const struct dvb_desc *desc);
+typedef void (*dvb_desc_free_func) (struct dvb_desc *desc);
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief Function prototype for the descriptors parsing init code
  * @ingroup dvb_table
@@ -310,6 +420,7 @@ typedef void (*dvb_desc_free_func) (struct dvb_desc *desc);
  * @param free		Frees all memory blocks allocated by the init function
  * @param size		Descriptor's size, in bytes.
  */
+<<<<<<< HEAD
 =======
 struct dvb_v5_fe_parms;
 
@@ -318,6 +429,9 @@ typedef void (*dvb_desc_print_func)(struct dvb_v5_fe_parms *parms, const struct 
 typedef void (*dvb_desc_free_func) (struct dvb_desc *desc);
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 struct dvb_descriptor {
 	const char *name;
 	dvb_desc_init_func init;
@@ -327,6 +441,12 @@ struct dvb_descriptor {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+extern const struct dvb_descriptor dvb_descriptors[];
+
+=======
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 /**
  * @brief Contains the parsers for the several descriptors
  * @ingroup dvb_table
@@ -662,10 +782,14 @@ extern const struct dvb_descriptor dvb_descriptors[];
  * @var atsc_genre_descriptor
  *	@brief	atsc_genre descriptor - ATSC A/65:2009
  */
+<<<<<<< HEAD
 =======
 extern const struct dvb_descriptor dvb_descriptors[];
 
 >>>>>>> b1f14ac63b12fb60bbbe4b94bce6651a12e5d2f2
+=======
+>>>>>>> e31bcf40f130f2350c9b88436caf5a7d1c1dfc5d
+>>>>>>> 77342727cd17097e98fd40bc9ff338753144b1e0
 enum descriptors {
 	/* ISO/IEC 13818-1 */
 	video_stream_descriptor				= 0x02,
