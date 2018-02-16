@@ -1,4 +1,0 @@
-To link an compile optics_control.cc:
-
-g++ -Wall --std=c++0x -I/usr/local/include -c optics_control.cc
-g++ -I/usr/local/include/ -L/usr/local/lib/ optics_control.o -lblas -lm
