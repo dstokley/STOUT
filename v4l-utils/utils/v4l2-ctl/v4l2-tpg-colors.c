@@ -1,1 +1,0 @@
-../common/v4l2-tpg-colors.c
