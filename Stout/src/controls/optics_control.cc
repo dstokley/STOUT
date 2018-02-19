@@ -61,16 +61,6 @@ double* optics_control::optics_compute(double x,double y)
   // std::cout << rot_mat[0][2] << std::endl;
   //
   // std::cout << " " << std::endl;
-  //
-  // std::cout << rot_mat[1][0] << std::endl;
-  // std::cout << rot_mat[1][1] << std::endl;
-  // std::cout << rot_mat[1][2] << std::endl;
-  //
-  // std::cout << " " << std::endl;
-  //
-  // std::cout << rot_mat[2][0] << std::endl;
-  // std::cout << rot_mat[2][1] << std::endl;
-  // std::cout << rot_mat[2][2] << std::endl;S
 
   // Find ball joint locations
   double r_cg_vb[3];

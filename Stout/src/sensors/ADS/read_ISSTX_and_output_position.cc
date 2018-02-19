@@ -23,8 +23,13 @@ int main(int argc, char** argv)
 //	O_RDWR - Open for reading and writing
 //	O_WRONLY - Open for writing only
 //	O_NDELAY - returns failure status of reading (look into)
+<<<<<<< HEAD
 //printf("HELP ME IM LOST");
 int uart1_filestream = open("/dev/ttyS4", O_RDONLY | O_NOCTTY | O_NDELAY);
+=======
+
+uart1_filestream = open("/dev/ttys4"| O_RDONLY | O_NOCTTY | O_NDELAY);
+>>>>>>> funk
 //int uart1_filestream = 1;
 if (uart1_filestream == -1)
 {
@@ -57,9 +62,13 @@ if (uart1_filestream != -1)
 //Read up to 255 characters
 	unsigned char rx_buffer[256];
 	int rx_length = read(uart1_filestream, (void*)rx_buffer, 255);
+<<<<<<< HEAD
 	printf("RX_Length: %i", rx_length);
 	std::cout << "HELP ME IM LOST" << std::endl;
 	usleep(1000000);
+=======
+
+>>>>>>> funk
 	while(rx_length < 255)
 	{
 		if (rx_length < 0)

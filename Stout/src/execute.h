@@ -1,4 +1,5 @@
 #include "controls/optics_control.h"
+#include "sensors/ADS/ADS_read.h"
 
 namespace STOUT
 {
@@ -11,9 +12,11 @@ namespace STOUT
     void start_loop();
     // Assign an object to the optics_control class
     optics_control optics;
+    ADS ADS_obj;
 
+  private:
     // Communication configuration with Arduino
-    char const *portname = "/dev/ttyS0";
+    char const *portname = "/dev/ttyACM0";
     int baud = 115200;
 
   };
