@@ -14,10 +14,13 @@ namespace STOUT
     while(true)
     {
       // THESE WILL NEED TO BE HANDLED VIA INTERRUPTS
-      // Read the ADS data (azimuth and elevation angles)
-      //[x,y] = handler.read_ads();
+
       double x=0, y=0;
       double* Lengths;
+      char* Angles;
+
+      // Read the ADS data (azimuth and elevation angles)
+      Angles = ADS_obj.ADS_read();
 
       // Compute required actuation distances
       Lengths = optics.optics_compute(x,y);
