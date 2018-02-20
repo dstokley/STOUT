@@ -1,8 +1,0 @@
-<map id="src/sensors/spectrometer.h" name="src/sensors/spectrometer.h">
-<area shape="rect" id="node2" href="$datahandler_8h.html" title="src/datahandler.h" alt="" coords="143,80,266,107"/>
-<area shape="rect" id="node7" href="$spectrometer_8cc.html" title="src/sensors/spectrometer.cc" alt="" coords="291,80,479,107"/>
-<area shape="rect" id="node3" href="$datahandler_8cc.html" title="src/datahandler.cc" alt="" coords="5,229,135,256"/>
-<area shape="rect" id="node4" href="$microcontroller_8h.html" title="src/microcontroller.h" alt="" coords="135,155,275,181"/>
-<area shape="rect" id="node6" href="$microcontroller_8cc.html" title="src/microcontroller.cc" alt="" coords="274,229,421,256"/>
-<area shape="rect" id="node5" href="$main_8cc.html" title="src/main.cc" alt="" coords="159,229,250,256"/>
-</map>

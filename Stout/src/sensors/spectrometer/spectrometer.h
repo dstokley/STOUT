@@ -1,8 +1,6 @@
-#ifndef RADIANCE_SRC_SENSORS_SPECTROMETER_H_
-#define RADIANCE_SRC_SENSORS_SPECTROMETER_H_
 #include "../../include/avaspec/avaspec.h"
 
-namespace RADIANCE {
+namespace STOUT{
   // Encapsulates the spectrometer configuration and reading
   class Spectrometer {
 
@@ -32,5 +30,4 @@ namespace RADIANCE {
 
   };
 
-} // namespace RADIANCE
-#endif //RADIANCE_SRC_SENSORS_SPECTROMETER_H_
+}
