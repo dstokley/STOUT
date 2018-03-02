@@ -10,11 +10,16 @@
 #include <WinTypes.h>
 #include <ftd2xx.h>
 #include <sys/time.h>
+#include <string.h>
 
 int main(int argv, char* argc[])
 {
+  //system("sudo rmmod ftdi_sio usbserial");
+
   FT_STATUS ftStatus;
   FT_HANDLE ftHandle;
+
+  char home = 1;
 
   FT_SetVIDPID(0x0403, 0xFAF0);
   //the following is per the user manual for thor device.
@@ -37,26 +42,45 @@ int main(int argv, char* argc[])
   // Set RTS.
   ftStatus = FT_SetRts(ftHandle);
 
-  //lets flash the led, MGMSG_MOD_IDENTIFY
-  BYTE buf[6] ={0x23,0x2,0,0,0x21,0x1};
-  // d = 0x21, s = 0x01
+  // //lets flash the led, MGMSG_MOD_IDENTIFY
+  // BYTE buf[6] ={0x23,0x2,0,0,0x21,0x1};
+  // // d = 0x21, s = 0x01
+  // /*******************/
+  // ftStatus = FT_Write(ftHandle, buf, (DWORD)6, &written);//4= FT_IO_ERROR
+  // /*******************/
+  //
+  // usleep(5000);
+
+  // Read location from the encoder
+
   DWORD written = 0;
-  /*******************/
-  ftStatus = FT_Write(ftHandle, buf, (DWORD)6, &written);//4= FT_IO_ERROR
-  /*******************/
 
-  usleep(5000);
-
-  BYTE buf_reldist[12] = {0x45,0x04,0x06,0x00,0xA1,0x01,0x01,0x00,0x40,0x0D,0x33,0x00};
+  if (home == 0)
+  {
+  // Set desired relative rotation amount in degrees (22.5)
+  BYTE buf_reldist[12] = {0x45,0x04,0x06,0x00,0xA1,0x01,0x01,0x00,0x00,0xE0,0x2E,0x00};
   written = 0;
   ftStatus = FT_Write(ftHandle, buf_reldist, (DWORD)12, &written);
 
   usleep(5000);
 
+  // Move the desired relative rotation amount (22.5 degrees)
   BYTE buf_relmove[6] = {0x48,0x04,0x01,0x00,0x21,0x01};
   written = 0;
   ftStatus = FT_Write(ftHandle, buf_relmove, (DWORD)6, &written);
+  }
+  else if (home == 1)
+  {
+  // // Set home parameters
+  BYTE buf_homeparam[12] = {0x50,0x04,0x06,0x00,0xA1,0x01,0x01,0x00,0x00,0x00,0x00,0x00};
+  written = 0;
+  ftStatus = FT_Write(ftHandle, buf_homeparam, (DWORD)12, &written);
 
+  usleep(5000);
 
-
+  // Rotate back to home
+  BYTE buf_home[6] = {0x53,0x04,0x01,0x00,0x21,0x01};
+  written = 0;
+  ftStatus = FT_Write(ftHandle, buf_home, (DWORD)6, &written);
+  }
 }
