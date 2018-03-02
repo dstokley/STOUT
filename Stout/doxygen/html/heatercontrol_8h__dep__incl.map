@@ -1,7 +1,0 @@
-<map id="src/controls/heatercontrol.h" name="src/controls/heatercontrol.h">
-<area shape="rect" id="node2" href="$heatercontrol_8cc.html" title="src/controls/heatercontrol.cc" alt="" coords="5,80,192,107"/>
-<area shape="rect" id="node3" href="$microcontroller_8h.html" title="src/microcontroller.h" alt="" coords="267,80,407,107"/>
-<area shape="rect" id="node4" href="$datahandler_8cc.html" title="src/datahandler.cc" alt="" coords="138,155,267,181"/>
-<area shape="rect" id="node6" href="$microcontroller_8cc.html" title="src/microcontroller.cc" alt="" coords="407,155,553,181"/>
-<area shape="rect" id="node5" href="$main_8cc.html" title="src/main.cc" alt="" coords="292,155,383,181"/>
-</map>
