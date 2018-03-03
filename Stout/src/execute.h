@@ -19,6 +19,7 @@ namespace STOUT
     char const *portname = "/dev/ttyACM0";
     int baud = 115200;
 
+
   };
 
 

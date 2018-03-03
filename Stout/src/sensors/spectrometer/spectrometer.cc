@@ -5,8 +5,9 @@
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+
 //#include "../systemhaltexception.h"
-namespace STOUT{
+namespace STOUT {
 
   // Setup and configure the spectrometer
   // The spectrometer is the only mission-critical item. This means that

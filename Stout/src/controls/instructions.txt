@@ -1,3 +1,7 @@
 To link an compile and link optics_control.cc with main.cc and execute.cc:
 
+Only controls:
 g++ -std=c++11 -I/usr/local/include/ -L/usr/local/lib/ controls/optics_control.cc main.cc execute.cc -lblas -lm -o test
+
+Controls and ADS:
+g++ -std=c++11 -I/usr/local/include/ -L/usr/local/lib/ controls/optics_control.cc sensors/ADS/ADS_read.cc main.cc execute.cc -lblas -lm -o test

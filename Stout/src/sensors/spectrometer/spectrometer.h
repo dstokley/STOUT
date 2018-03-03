@@ -1,10 +1,16 @@
-#include "../../include/avaspec/avaspec.h"
+#include "../../../include/avaspec/avaspec.h"
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <array>
 
 namespace STOUT{
   // Encapsulates the spectrometer configuration and reading
   class Spectrometer {
 
   public:
+
+    int main();
     // Setup and configure the spectrometer
     Spectrometer();
 

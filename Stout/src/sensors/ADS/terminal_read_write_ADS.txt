@@ -1,0 +1,2 @@
+echo -e "\x01\x03\x00\x08\x00\x07\x85\xCA und normaler Text" > /dev/ttyS4
+cat -v /dev/ttyS4

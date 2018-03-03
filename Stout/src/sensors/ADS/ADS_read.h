@@ -8,7 +8,7 @@ class ADS
 
 public:
   // Function for reading data (azimuth and elevation angles) from ADS sensor
-  char* ADS_read();
+  void ADS_read();
 
 private:
   // Communication parameters (UART)

@@ -16,13 +16,13 @@ namespace RADIANCE {
   // DataHandler encapsulates the data transfer process
   // The read functions set the data in the science data struct
   class DataHandler{
-    
+
   private:
   // Takes a value and writes the binary information to given stream
   template <class T> std::ostream& BinaryWrite(std::ostream& stream, const T& value);
 
   public:
-    
+
     // Reads a measurement from each sensor and places it into the
     // science data struct.
     void ReadSensorData();
