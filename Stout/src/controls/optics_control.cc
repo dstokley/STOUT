@@ -15,6 +15,15 @@ double* optics_control::optics_compute(double x,double y)
   double r_ap[3];
   int i;
 
+  for (i=0; i<2; i++)
+  {
+    r_cg[i] = r_cg[i] - O1_offset[i];
+    r_vg[i] = r_vg[i] - O1_offset[i];
+    r_hg[i] = r_hg[i] - O1_offset[i];
+    r_vg[i] = r_vb[i] - O1_offset[i];
+    r_hb[i] = r_hb[i] - O1_offset[i];
+  }
+
   // Calculate vectors from apex of ball joint centers at 0 deg pointing deflection
   for (i=0; i<2; i++)
   {
@@ -210,7 +219,7 @@ void optics_control::polarizer_rotate(char location)
     ftStatus = FT_Write(ftHandle, buf_relmove, (DWORD)6, &written);
 
   }
-  else if (home == 1)
+  else if (location == 1)
   {
     // Set home parameters
     BYTE buf_homeparam[12] = {0x50,0x04,0x06,0x00,0xA1,0x01,0x01,0x00,0x00,0x00,0x00,0x00};

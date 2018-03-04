@@ -10,6 +10,7 @@ namespace STOUT
   class handler
   {
   public:
+    void receive_arduino_data();
     void read_sensor_data();
     void call_to_write();
 

@@ -12,6 +12,9 @@
 
 namespace STOUT
 {
+  void handler::receive_arduino_data() {
+    
+  }
 
   void handler::read_sensor_data() {
 
