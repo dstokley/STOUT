@@ -1,5 +1,9 @@
+#ifndef EXECUTE_H
+#define EXECUTE_H
+
 #include "controls/optics_control.h"
-#include "sensors/ADS/ADS_read.h"
+//#include "sensors/ADS/ADS_read.h"
+#include "handler.h"
 
 namespace STOUT
 {
@@ -9,18 +13,15 @@ namespace STOUT
   public:
 
     // Loop for all STOUT actions
-    void start_loop();
-    // Assign an object to the optics_control class
-    optics_control optics;
-    ADS ADS_obj;
+    int start_loop();
 
   private:
-    // Communication configuration with Arduino
-    char const *portname = "/dev/ttyACM0";
-    int baud = 115200;
-
+    // Assign objects to classes
+    optics_control optics_obj;
+    handler handler_obj;
+    serial_comm comm_obj;
 
   };
-
-
 }
+
+#endif

@@ -1,23 +1,28 @@
-#include <stdio.h>
-#include <sys/types.h>
-#include <chrono>
-#include <limits>
-#include <iostream>
-#include <thread>
-#include <stdexcept>
 #include "../include/avaspec/avaspec.h"
 #include "handler.h"
 #include "execute.h"
 #include "systemhaltexception.h"
 
+
 namespace STOUT
 {
-  void handler::receive_arduino_data() {
-    
+  char* handler::receive_arduino_data(int fd)
+  {
+    char* buffer;
+    int n;
+
+    n = read (fd, buffer, sizeof buffer*23); 	// Read all 23 characters
+  	if (n > 0) {
+  		int i;
+  		for (i = 0; i < n; i++) {
+  			printf("%c",buffer[i]);
+  		}
+  	}
+    return buffer;
   }
 
-  void handler::read_sensor_data() {
-
+  void handler::read_sensor_data()
+  {
     // Read timestamp measurement
     // This timestamp represents seconds since Unix epoch
     std::chrono::seconds ms = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
@@ -90,8 +95,8 @@ namespace STOUT
   }
 
   // Writes the frame data to a csv file
-  void handler::call_to_write() {
-
+  void handler::call_to_write()
+  {
     // Make sure at least one data file can be written to
     // If not, restart the system
     if (!slc_data_file.good() && !mlc1_data_file.good()) {
@@ -103,8 +108,8 @@ namespace STOUT
     write_to_flash(mlc1_data_file);
   }
 
-  void handler::write_to_flash(std::ofstream& file) {
-
+  void handler::write_to_flash(std::ofstream& file)
+  {
     // Check that the data file is OK
     // If not OK, do nothing
     if (file.good()) {

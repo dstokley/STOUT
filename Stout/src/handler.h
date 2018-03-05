@@ -1,16 +1,27 @@
+#ifndef HANDLER_H
+#define HANDLER_H
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <chrono>
+#include <limits>
+#include <thread>
+#include <stdexcept>
 #include <iostream>
 #include <fstream>
 #include <array>
 #include "sensors/spectrometer/spectrometer.h"
-#include "sensors/ADS/ADS_read.h"
 #include "sensors/camera/camera.h"
+#include "controls/optics_control.h"
+#include "serial_comm.h"
 
 namespace STOUT
 {
   class handler
   {
   public:
-    void receive_arduino_data();
+    char* receive_arduino_data(int fd);
+
     void read_sensor_data();
     void call_to_write();
 
@@ -60,3 +71,5 @@ namespace STOUT
     };
 
 }
+
+#endif

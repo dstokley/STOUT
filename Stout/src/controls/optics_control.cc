@@ -1,11 +1,20 @@
 #include "optics_control.h"
-#include <iostream>
 
 #define PI 3.141592653
 
+namespace STOUT
+{
 // Calculate required actuations from x and y angles
 double* optics_control::optics_compute(double x,double y)
 {
+  // Optical dimensions
+  const double O1_offset[3] = {16.15,-9.28,45.78};
+  double r_cg[3] = {0.0,0.0,0.0};
+  double r_vg[3] = {41.45,-107.68,-45.09};
+  double r_hg[3] = {-2.14,-52.68,-46.16};
+  double r_vb[3] = {49.3,-65.72,-45.09};
+  double r_hb[3] = {36.79,-53.21,-45.09};
+  double d_ap = 90.865;
 
   // Variable declarations
   double r_ap0[3];
@@ -110,72 +119,16 @@ void optics_control::optics_transmit(double* Lengths, int fd)
   L2 = (float)*(Lengths + 1);
 
   // Send actuation data to Arduino via serial
-  write(fd,&L1,4);
-  write(fd,&L2,4);
+  write(fd, &L1, 4);
+  write(fd, &L2, 4);
 
 }
 
-int optics_control::set_interface_attribs(int fd, int speed, int parity)
-{
-        struct termios tty;
-        memset (&tty, 0, sizeof tty);
-        if (tcgetattr (fd, &tty) != 0)
-        {
-                printf ("error %d from tcgetattr", errno);
-                return -1;
-        }
-
-        cfsetospeed (&tty, speed);
-        cfsetispeed (&tty, speed);
-
-        tty.c_cflag = (tty.c_cflag & ~CSIZE) | CS8;     // 8-bit chars
-        // disable IGNBRK for mismatched speed tests; otherwise receive break
-        // as \000 chars
-        tty.c_iflag &= ~IGNBRK;         // ignore break signal
-        tty.c_lflag = 0;                // no signaling chars, no echo,
-                                        // no canonical processing
-        tty.c_oflag = 0;                // no remapping, no delays
-        tty.c_cc[VMIN]  = 0;            // read doesn't block
-        tty.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
-
-        tty.c_iflag &= ~(IXON | IXOFF | IXANY); // shut off xon/xoff ctrl
-
-        tty.c_cflag |= (CLOCAL | CREAD);// ignore modem controls,
-                                        // enable reading
-        tty.c_cflag &= ~(PARENB | PARODD);      // shut off parity
-        tty.c_cflag |= parity;
-        tty.c_cflag &= ~CSTOPB;
-        tty.c_cflag &= ~CRTSCTS;
-
-        if (tcsetattr (fd, TCSANOW, &tty) != 0)
-        {
-                printf ("error %d from tcsetattr", errno);
-                return -1;
-        }
-        return 0;
-}
-
-void optics_control::set_blocking (int fd, int should_block)
-{
-        struct termios tty;
-        memset (&tty, 0, sizeof tty);
-        if (tcgetattr (fd, &tty) != 0)
-        {
-                printf ("error %d from tggetattr", errno);
-                return;
-        }
-
-        tty.c_cc[VMIN]  = should_block ? 1 : 0;
-        tty.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
-
-        if (tcsetattr (fd, TCSANOW, &tty) != 0)
-                printf ("error %d setting term attributes", errno);
-}
 
 void optics_control::polarizer_rotate(char location)
 {
   // Handle, status, and writing variables
-  FT_STATUS ftStatus;
+  FT_STATUS ftStatus;   // May want to check this value for error handling
   FT_HANDLE ftHandle;
   DWORD written = 0;
 
@@ -233,4 +186,5 @@ void optics_control::polarizer_rotate(char location)
     written = 0;
     ftStatus = FT_Write(ftHandle, buf_home, (DWORD)6, &written);
   }
+}
 }

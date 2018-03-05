@@ -1,3 +1,6 @@
+#ifndef ADS_H
+#define ADS_H
+
 #include <iostream>
 #include <unistd.h>
 #include <fcntl.h>
@@ -12,8 +15,8 @@ namespace STOUT {
     void ADS_read();
 
   private:
-    // Communication parameters (UART)
-    int baud = 19200;   // Default sensor baud rate
-    const char* portname = "/dev/ttyS4";  // UART1 location
+
   };
 }
+
+#endif
