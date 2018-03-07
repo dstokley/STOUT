@@ -210,7 +210,7 @@ void optics_control::polarizer_rotate(char location)
     ftStatus = FT_Write(ftHandle, buf_relmove, (DWORD)6, &written);
 
   }
-  else if (home == 1)
+  else if (home == 1) // Want to try to change this to the actual home function
   {
     // Set home parameters
     BYTE buf_homeparam[12] = {0x50,0x04,0x06,0x00,0xA1,0x01,0x01,0x00,0x00,0x00,0x00,0x00};
