@@ -104,7 +104,7 @@ double* optics_control::optics_compute(double x,double y)
   L2 = Lv + 0;
 
   // Place actuation distances in output array
-  double *Lengths =(double *) malloc(sizeof(double)*2);
+  double* Lengths =(double *) malloc(sizeof(double)*2);
   Lengths[0] = L1;
   Lengths[1] = L2;
 

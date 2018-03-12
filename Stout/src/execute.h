@@ -2,7 +2,7 @@
 #define EXECUTE_H
 
 #include "controls/optics_control.h"
-//#include "sensors/ADS/ADS_read.h"
+#include "sensors/ADS/ADS_read.h"
 #include "handler.h"
 
 namespace STOUT
@@ -20,6 +20,7 @@ namespace STOUT
     optics_control optics_obj;
     handler handler_obj;
     serial_comm comm_obj;
+    ADS ADS_obj;
 
   };
 }

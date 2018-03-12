@@ -11,6 +11,7 @@ namespace STOUT
   {
     double x=0, y=0;
     double* Lengths;
+    float* ADS_data;
     char* sensor_data;
     const char* portname = "/dev/ttyACM0";  // Arduino location
 
@@ -30,7 +31,7 @@ namespace STOUT
       // THESE WILL NEED TO BE HANDLED VIA INTERRUPTS
 
       // Read the ADS data (azimuth and elevation angles)
-      //Angles = ADS_obj.ADS_read();
+      ADS_data = ADS_obj.ADS_read();
 
       // Compute required actuation distances
       Lengths = optics_obj.optics_compute(x,y);

@@ -155,28 +155,9 @@ void loop()
   // Check if it has been 1 second since last measurement
   if (currentMillis - previousMillis >= interval)
   {
-    // These functions will transmit over serial in the final implementation
-    printPress();                           // Print temp, press, alt, and humidity from BME280
-    printTemp();                            // Print internal and external temp values
-
-    // Read new GPS data
-    GPS.read();
-    if (GPS.newNMEAreceived()) {
-      if (!GPS.parse(GPS.lastNMEA()))   
-           return;
-     }
-    // If a GPS fix is obtained, print data via serial
-    if (GPS.fix) {
-      Serial.print("\nTime: ");
-      Serial.print(GPS.hour, DEC); Serial.print(':');
-      Serial.print(GPS.minute, DEC); Serial.print(':');
-      Serial.print(GPS.seconds, DEC); Serial.print('.');
-      Serial.println(GPS.milliseconds);
-     }
-     // Otherwise indicate that there is no GPS fix
-     else {
-      Serial.println("\nNo GPS Fix");
-     }
+    byte data_array[24];
+    // Tranmist all collected data to UDOO
+    msg_transmit(data_array);
      
     previousMillis = currentMillis;         // Reset time stamp
   }
@@ -415,54 +396,52 @@ int16_t dallas(int x,byte start)
 }
 
 
-// Print pressure/humidity/temperature values from BME280: will need to change to write these values to the UDOO
-void printPress() {
-    Serial.print("Temperature = ");
-    Serial.print(bme.readTemperature());
-    Serial.println(" *C");
+// Send all environmental sensor data to the main UDOO processor via the serial connection
+void msg_transmit(byte data_array[]){
+  
+  bool GPS_data;
+  
+  // Add internal temperature values to the data array
+  data_array[0] = (byte)((int)dallas(2,0) & 0xF0);  // Four 1-wire internal temperature sensors
+  data_array[1] = (int)dallas(3,0);
+  data_array[2] = (int)dallas(4,0);
+  data_array[3] = (int)dallas(5,0);
+  data_array[4] = (int)(round(bme.readTemperature()));  // BME280 temperature reading
 
-    Serial.print("Pressure = ");
-    Serial.print(bme.readPressure() / 100.0F);
-    Serial.println(" hPa");
+  // Add external temperature values to the data array
+  data_array[5] = (int)dallas(6,0);  // Two 1-wire external temperature sensors
+  data_array[6] = (int)dallas(7,0);
 
-    Serial.print("Approx. Altitude = ");
-    Serial.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
-    Serial.println(" m");
+  // Add pressure and humidity values to data array
+  data_array[7] = (int)(round(bme.readPressure()));     // BME280 pressure reading
+  data_array[8] = (int)(round(bme.readHumidity()));     // BME280 humidity reading
 
-    Serial.print("Humidity = ");
-    Serial.print(bme.readHumidity());
-    Serial.println(" %");
+  // Check if a GPS lock has been acheived, add data to data array if it has
+  GPS.read();
+  if (GPS.newNMEAreceived()) {
+    GPS.parse(GPS.lastNMEA());  
+   }
+  // If a GPS fix is obtained, add data to array
+  if (GPS.fix) {
+    data_array[9] = (int)(GPS.hour);
+    data_array[10] = (int)(GPS.minute);
+    data_array[11] = (int)(GPS.seconds);
+    data_array[12] = (int)(GPS.milliseconds);
+    GPS_data = true;
+       }
+   // Otherwise don't add data to array
+   else {
+    GPS_data = false;
+   }
 
-    Serial.println();
+   // Send correct number of bytes to UDOO
+   if (GPS_data) {
+    Serial.write(data_array, 24);
+   }
+   else {
+    Serial.write(data_array, 16);
+   }
+  
+  
 }
 
-
-// Print internal and external temperature values for OneWire sensors: will need to change to write these values to the UDOO
-void printTemp() {
-    Serial.print("Int Temperature 1 = ");
-    Serial.print(dallas(2,0));
-    Serial.println(" *C");
-
-    Serial.print("Int Temperature 2 = ");
-    Serial.print(dallas(3,0));
-    Serial.println(" *C");
-
-    Serial.print("Int Temperature 3 = ");
-    Serial.print(dallas(4,0));
-    Serial.println(" *C");
-
-    Serial.print("Int Temperature 4 = ");
-    Serial.print(dallas(5,0));
-    Serial.println(" *C");
-
-    Serial.print("Ext Temperature 1 = ");
-    Serial.print(dallas(6,0));
-    Serial.println(" *C");
-
-    Serial.print("Ext Temperature 2 = ");
-    Serial.print(dallas(7,0));
-    Serial.println(" *C");
-
-    Serial.println();
-
-}
