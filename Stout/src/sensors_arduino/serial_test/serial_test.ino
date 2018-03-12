@@ -24,7 +24,7 @@ void loop() {
     Serial.println(inByte);
     msg[count] = inByte;
     count++;
-    delay(1);
+    //delay(1);
     received = true;
    
   }
@@ -33,9 +33,8 @@ void loop() {
     Serial.println();
     byte send_msg[] = {1,2,3,4,5,6,7,8};
     Serial.write(send_msg, 8);
-    delay(100);
     received = false;
-    
+
   }
   
 }
