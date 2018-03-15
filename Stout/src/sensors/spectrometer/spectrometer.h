@@ -1,16 +1,18 @@
+#ifndef SPEC_H
+#define SPEC_H
+
+
 #include "../../../include/avaspec/avaspec.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
 #include <array>
 
-namespace STOUT{
+namespace STOUT {
   // Encapsulates the spectrometer configuration and reading
   class Spectrometer {
 
   public:
-
-    int main();
     // Setup and configure the spectrometer
     Spectrometer();
 
@@ -23,6 +25,7 @@ namespace STOUT{
     // Return spectrometer temperature
     // Returns false if read failed
     bool ReadSpectrometerTemperature(float& temp);
+
   private:
 
     // Spectrometer reference handle
@@ -36,4 +39,7 @@ namespace STOUT{
 
   };
 
-}
+} // namespace RADIANCE
+
+
+#endif

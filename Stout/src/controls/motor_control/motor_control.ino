@@ -41,16 +41,16 @@
 // Interrupts
 #define INTRPT1 14            // Interrupt for receiving actuation values from UDOO GPIO 347
 #define INTRPT2 15            // Interrupt for sending actuation complete to UDOO GPIO 349
-// I2C (Pressure/Humidity/Temp Sensor)
-#define BME_MISO A0
-#define BME_SCK A1
 #define SEALEVELPRESSURE_HPA (1013.25)
 // Horizontal encoder
-#define CH1_x A2              // Horizontal encoder channel 1
-#define CH2_x A3              // Horizontal encoder channel 2
+#define CH1_x A0              // Horizontal encoder channel 1
+#define CH2_x A1              // Horizontal encoder channel 2
 // Vertical encoder
-#define CH1_y A4              // Vertical encoder channel 1
-#define CH2_y A5              // Vertical encoder channel 2
+#define CH1_y A2              // Vertical encoder channel 1
+#define CH2_y A3              // Vertical encoder channel 2
+// I2C (Pressure/Humidity/Temp Sensor)
+#define BME_MISO A4
+#define BME_SCK A5
 
 // Declare variables for actuation use
 float step_x = 0;            // Required horizontal actuation distance [mm]
@@ -73,7 +73,7 @@ int counter_y = 0;
 
 // Sensor reading variables
 unsigned long previousMillis = 0; // Time of last update
-const long interval = 1000; // Measurement interval [ms]
+const long interval = 100; // Measurement interval [ms]
 
 // Communication protocol for BME280 sensor
 Adafruit_BME280 bme; // I2C
@@ -402,19 +402,33 @@ void msg_transmit(byte data_array[]){
   bool GPS_data;
   
   // Add internal temperature values to the data array
-  data_array[0] = (byte)((int)dallas(2,0) & 0xF0);  // Four 1-wire internal temperature sensors
-  data_array[1] = (int)dallas(3,0);
-  data_array[2] = (int)dallas(4,0);
-  data_array[3] = (int)dallas(5,0);
-  data_array[4] = (int)(round(bme.readTemperature()));  // BME280 temperature reading
+  data_array[0] = (byte)((dallas(2,0))&0xFF);             // Four 1-wire internal temperature sensors
+  data_array[1] = (byte)(((dallas(2,0))>>8)&0xFF);
+  data_array[2] = (byte)((dallas(3,0))&0xFF);
+  data_array[3] = (byte)(((dallas(3,0))>>8)&0xFF);
+  data_array[4] = (byte)((dallas(4,0))&0xFF);
+  data_array[5] = (byte)(((dallas(4,0))>>8)&0xFF);
+  data_array[6] = (byte)((dallas(5,0))&0xFF);
+  data_array[7] = (byte)(((dallas(5,0))>>8)&0xFF);
+
+  int bme_temp = (int)(round(bme.readTemperature()));     // BME280 temperature reading
+  data_array[8] = (byte)(bme_temp&0xFF);
+  data_array[9] = (byte)((bme_temp>>8)&0xFF);
 
   // Add external temperature values to the data array
-  data_array[5] = (int)dallas(6,0);  // Two 1-wire external temperature sensors
-  data_array[6] = (int)dallas(7,0);
+  data_array[10] = (byte)((dallas(6,0))&0xFF);  // Two 1-wire external temperature sensors
+  data_array[11] = (byte)(((dallas(6,0))>>8)&0xFF);
+  data_array[12] = (byte)((dallas(7,0))&0xFF);
+  data_array[13] = (byte)(((dallas(7,0))>>8)&0xFF);
 
   // Add pressure and humidity values to data array
-  data_array[7] = (int)(round(bme.readPressure()));     // BME280 pressure reading
-  data_array[8] = (int)(round(bme.readHumidity()));     // BME280 humidity reading
+  int bme_press = (int)(round(bme.readPressure()));     // BME280 pressure reading
+  data_array[14] = (byte)(bme_press&0xFF);
+  data_array[15] = (byte)((bme_press>>8)&0xFF);
+  
+  int bme_humid = (int)(round(bme.readHumidity()));     // BME280 humidity reading
+  data_array[16] = (byte)(bme_humid&0xFF);
+  data_array[17] = (byte)((bme_humid>>8)&0xFF);
 
   // Check if a GPS lock has been acheived, add data to data array if it has
   GPS.read();
@@ -423,10 +437,13 @@ void msg_transmit(byte data_array[]){
    }
   // If a GPS fix is obtained, add data to array
   if (GPS.fix) {
-    data_array[9] = (int)(GPS.hour);
-    data_array[10] = (int)(GPS.minute);
-    data_array[11] = (int)(GPS.seconds);
-    data_array[12] = (int)(GPS.milliseconds);
+    data_array[18] = (byte)(GPS.hour);
+    data_array[19] = (byte)(GPS.minute);
+    data_array[20] = (byte)(GPS.seconds);
+    int GPS_ms = (int)(GPS.milliseconds);
+    data_array[21] = (byte)(GPS_ms&0xFF);
+    data_array[22] = (byte)((GPS_ms>>8)&0xFF);
+    
     GPS_data = true;
        }
    // Otherwise don't add data to array
@@ -436,12 +453,9 @@ void msg_transmit(byte data_array[]){
 
    // Send correct number of bytes to UDOO
    if (GPS_data) {
-    Serial.write(data_array, 24);
+    Serial.write(data_array, 23);
    }
    else {
-    Serial.write(data_array, 16);
+    Serial.write(data_array, 18);
    }
-  
-  
 }
-

@@ -1,10 +1,8 @@
 #ifndef EXECUTE_H
 #define EXECUTE_H
 
-#include "controls/optics_control.h"
-#include "sensors/ADS/ADS_read.h"
-#include "handler.h"
-
+//#include "handler.h"
+# include "sensors/spectrometer/spectrometer.h"
 namespace STOUT
 {
   class execute
@@ -17,10 +15,11 @@ namespace STOUT
 
   private:
     // Assign objects to classes
-    optics_control optics_obj;
-    handler handler_obj;
-    serial_comm comm_obj;
-    ADS ADS_obj;
+    // optics_control optics_obj;
+    // handler handler_obj;
+    // serial_comm comm_obj;
+    // ADS ADS_obj;
+    Spectrometer Spec_obj;
 
   };
 }

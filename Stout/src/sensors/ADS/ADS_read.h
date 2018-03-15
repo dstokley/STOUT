@@ -15,15 +15,6 @@ namespace STOUT {
   public:
     // Function for reading data (azimuth and elevation angles) from ADS sensor
     float* ADS_read();
-    // class ADS_data
-    // {
-    //   float ADS_rad;
-    //   float ADS_temp;
-    //   float x_filter;
-    //   float y_filter;
-    //   float x_nofilter;
-    //   float y_nofilter;
-    // };
 
   private:
 

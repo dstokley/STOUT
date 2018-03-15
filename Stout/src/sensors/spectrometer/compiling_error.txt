@@ -1,0 +1,25 @@
+In file included from /usr/include/c++/5/array:35:0,
+                 from /home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spectrometer.h:5,
+                 from /home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spec_test.cc:1:
+/usr/include/c++/5/bits/c++0x_warning.h:32:2: error: #error This file requires compiler and library support for the ISO C++ 2011 standard. This support must be enabled with the -std=c++11 or -std=gnu++11 compiler options.
+ #error This file requires compiler and library support \
+  ^
+In file included from /home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spec_test.cc:1:0:
+/home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spectrometer.h:22:28: error: ‘std::array’ has not been declared
+     bool ReadSpectrum(std::array<float,kNumPixels>& spectrum);
+                            ^
+/home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spectrometer.h:22:33: error: expected ‘,’ or ‘...’ before ‘<’ token
+     bool ReadSpectrum(std::array<float,kNumPixels>& spectrum);
+                                 ^
+/home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spec_test.cc: In function ‘int main()’:
+/home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spec_test.cc:10:5: error: ‘Spectrometer’ was not declared in this scope
+     Spectrometer spec;
+     ^
+/home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spec_test.cc:10:5: note: suggested alternative:
+In file included from /home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spec_test.cc:1:0:
+/home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spectrometer.h:9:9: note:   ‘STOUT::Spectrometer’
+   class Spectrometer
+         ^
+/home/stout/Documents/STOUT/Stout/src/sensors/spectrometer/spec_test.cc:13:5: error: ‘spec’ was not declared in this scope
+     spec.ReadSpectrometerTemperature(temp);
+     ^

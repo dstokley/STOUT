@@ -4,14 +4,17 @@
 #include <stdlib.h>
 #include <array>
 
-  int main(void)
-  {
+namespace STOUT {
+int main(void)
+{
 
-    Spectrometer spec;
-    float temp;
+  Spectrometer spec;
+  float temp;
 
-    spec.ReadSpectrometerTemperature(temp);
-    printf("Spectrometer Temp = %f \n", temp);
+  spec.ReadSpectrometerTemperature(temp);
+  printf("Spectrometer Temp = %f \n", temp);
 
-    return 1;
+  return 1;
+}
+
 }

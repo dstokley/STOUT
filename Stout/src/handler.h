@@ -1,6 +1,7 @@
 #ifndef HANDLER_H
 #define HANDLER_H
 
+#include "serial_comm.h"
 #include <stdio.h>
 #include <sys/types.h>
 #include <chrono>
@@ -13,7 +14,7 @@
 #include "sensors/spectrometer/spectrometer.h"
 #include "sensors/camera/camera.h"
 #include "controls/optics_control.h"
-#include "serial_comm.h"
+#include "sensors/ADS/ADS_read.h"
 
 namespace STOUT
 {

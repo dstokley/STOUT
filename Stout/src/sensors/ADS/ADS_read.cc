@@ -56,8 +56,8 @@ namespace STOUT
      float ADS_rad, ADS_temp, x_filter, y_filter, x_nofilter, y_nofilter;
      //ADS_rad = (float)(ADS_rad_int);
      ADS_temp = (float)(ADS_temp_int)*0.1;
-     x_filter = (float)(x_filter_int)*0.001;
-     y_filter = (float)(y_filter_int)*0.001;
+     x_filter = (float)(x_filter_int)*0.0001;
+     y_filter = (float)(y_filter_int)*0.0001;
      //x_nofilter = (float)(x_nofilter_int)*0.001;
      //y_nofilter = (float)(y_nofilter_int)*0.001;
 
