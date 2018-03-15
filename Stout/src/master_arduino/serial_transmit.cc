@@ -29,7 +29,7 @@ int main()
    printf("%i Bytes Transmitted \n", bytes_written);
 
    // Delay for appropriate amount of time
-   usleep(5000);
+   usleep(1000);
 
   //  // Receive data over USB
   //  unsigned char read_buffer[4];
