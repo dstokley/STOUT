@@ -30,26 +30,33 @@ namespace STOUT
     // System loop
     while(true)
     {
-      status = Spec_obj.ReadSpectrometerTemperature(temp);
-      printf("Spectrometer Temp = %f \n", temp);
-      sleep(10);
-      // // THESE WILL NEED TO BE HANDLED VIA INTERRUPTS
-      //
-      // // Read the ADS data (azimuth and elevation angles)
-      // ADS_data = ADS_obj.ADS_read();
-      //
-      // // Compute required actuation distances
-      // Lengths = optics_obj.optics_compute(x,y);
-      //
-      // // Trasmit required actuation distances to the Arduino via Serial
-      // optics_obj.optics_transmit(Lengths, fd);
-      //
-      // // Receive data from the Arduino via serial
-      // sensor_data = handler_obj.receive_arduino_data(fd);
-      //
-      // // Sensors reads and writes, heater control
-      // free(Lengths);    // Free dynamically allocated variable memory
-      return status;
+      // status = Spec_obj.ReadSpectrometerTemperature(temp);
+      // printf("Spectrometer Temp = %f \n", temp);
+      // sleep(10);
+      // THESE WILL NEED TO BE HANDLED VIA INTERRUPTS
+
+      // Read the ADS data (azimuth and elevation angles)
+      ADS_data = ADS_obj.ADS_read();
+
+      // Compute required actuation distances
+      Lengths = Optics_obj.optics_compute(x,y);
+
+      // Trasmit required actuation distances to the Arduino via Serial
+      Optics_obj.optics_transmit(Lengths, fd);
+
+      // Receive data from the Arduino via serial
+      Sensor_data = Handler_obj.receive_arduino_data(fd);
+
+      // Call Handler_obj function to collect control temperatures(T1, T2)
+
+      // Turn heaters on/off based on temperatures
+      //Heater_obj.heater_eval(T1, T2);
+
+      // Free dynamically allocated variable memory
+      free(ADS_data);
+      free(Lengths);
+      free(Sensor_data);
+      // return status;
     }
   }
 }
