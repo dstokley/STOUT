@@ -57,23 +57,23 @@ void loop() {
 }
 
 void printPress() {
-    Serial.print("Temperature = ");
-    Serial.print(bme.readTemperature());
-    Serial.println(" *C");
-
-    Serial.print("Pressure = ");
-    Serial.print(bme.readPressure() / 100.0F);
-    Serial.println(" hPa");
-
-    Serial.print("Approx. Altitude = ");
-    Serial.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
-    Serial.println(" m");
-
-    Serial.print("Humidity = ");
-    Serial.print(bme.readHumidity());
-    Serial.println(" %");
-
-    Serial.println();
+//    Serial.print("Temperature = ");
+//    Serial.print(bme.readTemperature());
+//    Serial.println(" *C");
+//
+//    Serial.print("Pressure = ");
+//    Serial.print(bme.readPressure() / 100.0F);
+//    Serial.println(" hPa");
+//
+//    Serial.print("Approx. Altitude = ");
+//    Serial.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
+//    Serial.println(" m");
+//
+//    Serial.print("Humidity = ");
+//    Serial.print(bme.readHumidity());
+//    Serial.println(" %");
+//
+//    Serial.println();
 }
 
 int16_t dallas(int x,byte start)
@@ -100,30 +100,54 @@ int16_t dallas(int x,byte start)
 }
 
 void printIntTemp() {
-    Serial.print("Int Temperature 1 = ");
-    Serial.print(dallas(2,0));
-    Serial.println(" *C");
+//    Serial.print("Int Temperature 1 = ");
+//    Serial.print(dallas(2,0),HEX);
+//    Serial.println(" *C");
+//
+//    Serial.print("Int Temperature 2 = ");
+//    Serial.print(dallas(3,0),HEX);
+//    Serial.println(" *C");
+//
+//    Serial.print("Int Temperature 3 = ");
+//    Serial.print(dallas(4,0),HEX);
+//    Serial.println(" *C");
+//
+//    Serial.print("Int Temperature 4 = ");
+//    Serial.print(dallas(5,0),HEX);
+//    Serial.println(" *C");
+//
+//    Serial.print("Ext Temperature 1 = ");
+//    Serial.print(dallas(6,0));
+//    Serial.println(" *C");
+//
+//    Serial.print("Ext Temperature 2 = ");
+//    Serial.print(dallas(7,0));
+//    Serial.println(" *C");
+//
+//    Serial.println();
 
-    Serial.print("Int Temperature 2 = ");
-    Serial.print(dallas(3,0));
-    Serial.println(" *C");
+    char data_array[8];
+    // Add internal temperature values to the data array
+    data_array[0] = (byte)((dallas(2,0))&0xFF);             // Four 1-wire internal temperature sensors
+    data_array[1] = (byte)(((dallas(2,0))>>8)&0xFF);
+    data_array[2] = (byte)((dallas(3,0))&0xFF);
+    data_array[3] = (byte)(((dallas(3,0))>>8)&0xFF);
+    data_array[4] = (byte)((dallas(4,0))&0xFF);
+    data_array[5] = (byte)(((dallas(4,0))>>8)&0xFF);
+    data_array[6] = (byte)((dallas(5,0))&0xFF);
+    data_array[7] = (byte)(((dallas(5,0))>>8)&0xFF);
 
-    Serial.print("Int Temperature 3 = ");
-    Serial.print(dallas(4,0));
-    Serial.println(" *C");
+    delay(10);
+//    data_array[0] = 0;
+//    data_array[1] = 1;
+//     data_array[2] = 0;
+//    data_array[3] = 1;
+//     data_array[4] = 0;
+//    data_array[5] = 1;
+//     data_array[6] = 0;
+//    data_array[7] = 1;
 
-    Serial.print("Int Temperature 4 = ");
-    Serial.print(dallas(5,0));
-    Serial.println(" *C");
-
-    Serial.print("Ext Temperature 1 = ");
-    Serial.print(dallas(6,0));
-    Serial.println(" *C");
-
-    Serial.print("Ext Temperature 2 = ");
-    Serial.print(dallas(7,0));
-    Serial.println(" *C");
-
-    Serial.println();
+    int bytes_written = Serial.write(data_array, 8);
+    Serial.println(bytes_written);
 
 }

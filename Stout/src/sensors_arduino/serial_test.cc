@@ -31,18 +31,18 @@ int main()
   tcsetattr(uart1_filestream, TCSANOW, &options);
   usleep(5000);
   //Message to trasmit to ADS sensor to ask for data
-  unsigned char tx_buffer[8] = {19,96,21,12,1,4,65,34};
-  // Write to UART1
-
-  char tx_len = write(uart1_filestream,tx_buffer,8);
-  usleep(2000);
-  //tcflush(uart1_filestream, TCIOFLUSH);
-  printf("%i bytes trasmitted \n",tx_len);
+  // unsigned char tx_buffer[8] = {19,96,21,12,1,4,65,34};
+  // // Write to UART1
+  //
+  // char tx_len = write(uart1_filestream,tx_buffer,8);
+  // usleep(2000);
+  // //tcflush(uart1_filestream, TCIOFLUSH);
+  // printf("%i bytes trasmitted \n",tx_len);
   //char rx_buffer[256];
-  unsigned char rx_buffer[8];
+  unsigned char rx_buffer[23];
   //Read up to 255 characters
   int rx_length;
-  rx_length = read(uart1_filestream,rx_buffer,8);
+  rx_length = read(uart1_filestream,rx_buffer,23);
   //usleep(5000);
   //tcflush(uart1_filestream, TCIOFLUSH);
   printf("%i bytes received \n",rx_length);
@@ -51,7 +51,7 @@ int main()
   int i;
   for (i=0;i<rx_length;i++)
   {
-    printf("%c \n", rx_buffer[i]);
+    printf("%u \n", rx_buffer[i]);
   }
 
   tcflush(uart1_filestream, TCIOFLUSH);
