@@ -6,7 +6,7 @@
 
 namespace STOUT
 {
-  char* handler::receive_arduino_data(int fd)
+  char* handler::receive_arduino_data()
   {
     int bufsize = 25;
     char* buffer = (char*)malloc(sizeof(char) * bufsize + 1);
@@ -26,13 +26,6 @@ namespace STOUT
 
     buffer[23] = udoo_temp&0xFF;
     buffer[24] = (udoo_temp>>8)&0xFF;
-
-    // printf("%i bytes read\n",n);
-    // int i;
-    // for(i=0;i<24;i++)
-    // {
-    //   printf("Value %i = %c\n",i,buffer[i]);
-    // }
 
     return buffer;
   }

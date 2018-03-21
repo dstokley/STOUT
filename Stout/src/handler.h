@@ -15,18 +15,18 @@
 #include <fcntl.h>
 #include <math.h>
 #include "serial_comm.h"
-// #include "sensors/spectrometer/spectrometer.h"
-// #include "sensors/camera/camera.h"
-// #include "controls/optics_control.h"
+#include "sensors/spectrometer/spectrometer.h"
+#include "sensors/camera/camera.h"
+#include "controls/optics_control.h"
 #include "controls/heater_control.h"
-// #include "sensors/ADS/ADS_read.h"
+#include "sensors/ADS/ADS_read.h"
 
 namespace STOUT
 {
   class handler
   {
   public:
-    char* receive_arduino_data(int fd);
+    char* receive_arduino_data();
     void UART_transmit(char* data);
 
     // void read_sensor_data();
