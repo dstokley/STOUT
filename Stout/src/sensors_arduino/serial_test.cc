@@ -39,10 +39,10 @@ int main()
   // //tcflush(uart1_filestream, TCIOFLUSH);
   // printf("%i bytes trasmitted \n",tx_len);
   //char rx_buffer[256];
-  unsigned char rx_buffer[23];
+  unsigned char rx_buffer[20];
   //Read up to 255 characters
   int rx_length;
-  rx_length = read(uart1_filestream,rx_buffer,23);
+  rx_length = read(uart1_filestream,rx_buffer,20);
   //usleep(5000);
   //tcflush(uart1_filestream, TCIOFLUSH);
   printf("%i bytes received \n",rx_length);
@@ -51,7 +51,7 @@ int main()
   int i;
   for (i=0;i<rx_length;i++)
   {
-    printf("%u \n", rx_buffer[i]);
+    printf("%x \n", rx_buffer[i]);
   }
 
   tcflush(uart1_filestream, TCIOFLUSH);

@@ -11,15 +11,11 @@ namespace STOUT
 
     // Loop for all STOUT actions
     int start_loop();
+    // Assign objects to classes
+    //optics_control Optics_obj;
 
   private:
-    // Assign objects to classes
-    optics_control Optics_obj;
-    handler Handler_obj;
-    serial_comm Comm_obj;
-    ADS ADS_obj;
-    Spectrometer Spec_obj;
-    heater_control Heater_obj;
+    //handler Handler_obj;
 
   };
 }

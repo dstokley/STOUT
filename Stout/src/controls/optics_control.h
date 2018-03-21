@@ -26,10 +26,10 @@ class optics_control
 public:
 
   // Actuation computation function
-  double* optics_compute(double x, double y);
+  float* optics_compute(float x, float y);
 
   // Data transmission functions
-  void optics_transmit(double* Lengths, int fd);
+  void optics_transmit(float* Lengths, int fd);
 
   // Polarizer control function
   void polarizer_rotate(char location);

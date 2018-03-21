@@ -1,0 +1,10 @@
+To compile and link:
+g++ -static -L/usr/lib/avaspec -I/usr/lib/avaspec main.cc -lavaspec -m32
+
+Error received:
+/tmp/cciHXl5j.o: In function `main':
+main.cc:(.text+0x17): undefined reference to `AVS_Init'
+collect2: error: ld returned 1 exit status
+
+This occurs even though it appears that AVS_Init is defined somewhere in libavaspec.a
+at some point

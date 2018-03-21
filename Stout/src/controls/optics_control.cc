@@ -5,23 +5,23 @@
 namespace STOUT
 {
 // Calculate required actuations from x and y angles
-double* optics_control::optics_compute(double x,double y)
+float* optics_control::optics_compute(float x, float y)
 {
   // Optical dimensions
-  const double O1_offset[3] = {16.15,-9.28,45.78};
-  double r_cg[3] = {0.0,0.0,0.0};
-  double r_vg[3] = {41.45,-107.68,-45.09};
-  double r_hg[3] = {-2.14,-52.68,-46.16};
-  double r_vb[3] = {49.3,-65.72,-45.09};
-  double r_hb[3] = {36.79,-53.21,-45.09};
-  double d_ap = 90.865;
+  const float O1_offset[3] = {16.15,-9.28,45.78};
+  float r_cg[3] = {0.0,0.0,0.0};
+  float r_vg[3] = {41.45,-107.68,-45.09};
+  float r_hg[3] = {-2.14,-52.68,-46.16};
+  float r_vb[3] = {49.3,-65.72,-45.09};
+  float r_hb[3] = {36.79,-53.21,-45.09};
+  float d_ap = 90.865;
 
   // Variable declarations
-  double r_ap0[3];
-  double r_ap_vb0[3];
-  double r_ap_hb0[3];
-  double temp_vec[3] = {0,0,d_ap};
-  double r_ap[3];
+  float r_ap0[3];
+  float r_ap_vb0[3];
+  float r_ap_hb0[3];
+  float temp_vec[3] = {0,0,d_ap};
+  float r_ap[3];
   int i;
 
   for (i=0; i<2; i++)
@@ -56,7 +56,7 @@ double* optics_control::optics_compute(double x,double y)
 
   // Convert r_ap_vb and r_ap_hb to cage gimbal frame
   // Rotation matrix
-  double rot_mat[3][3];
+  float rot_mat[3][3];
   rot_mat[0][0] = cos(y);
   rot_mat[0][1] = sin(y)*sin(x);
   rot_mat[0][2] = sin(y)*sin(x);
@@ -68,14 +68,14 @@ double* optics_control::optics_compute(double x,double y)
   rot_mat[2][2] = cos(x)*cos(y);
 
   // Setting up matrix-vector multiplications
-  double r_ap_vb[3];
-  double r_ap_hb[3];
+  float r_ap_vb[3];
+  float r_ap_hb[3];
   cblas_dgemm(CblasColMajor,CblasNoTrans,CblasNoTrans,3,1,3,1.0,*rot_mat,3,r_ap_vb0,3,0.0,r_ap_vb,3);
   cblas_dgemm(CblasColMajor,CblasNoTrans,CblasNoTrans,3,1,3,1.0,*rot_mat,3,r_ap_hb0,3,0.0,r_ap_hb,3);
 
   // Find ball joint locations
-  double r_cg_vb[3];
-  double r_cg_hb[3];
+  float r_cg_vb[3];
+  float r_cg_hb[3];
 
   for (i=0; i<2; i++)
   {
@@ -84,8 +84,8 @@ double* optics_control::optics_compute(double x,double y)
   }
 
   // Calculate actuation lengths
-  double Lh, Lv, L1, L2;
-  double temp_vec1[3], temp_vec2[3];
+  float Lh, Lv, L1, L2;
+  float temp_vec1[3], temp_vec2[3];
 
   for (i=0; i<2; i++)
   {
@@ -104,14 +104,14 @@ double* optics_control::optics_compute(double x,double y)
   L2 = Lv + 0;
 
   // Place actuation distances in output array
-  double* Lengths =(double *) malloc(sizeof(double)*2);
+  float* Lengths =(float *) malloc(sizeof(float)*2);
   Lengths[0] = L1;
   Lengths[1] = L2;
 
   return Lengths;
 }
 
-void optics_control::optics_transmit(double* Lengths, int fd)
+void optics_control::optics_transmit(float* Lengths, int fd)
 {
   // Placing actuations into variables
   float L1, L2;

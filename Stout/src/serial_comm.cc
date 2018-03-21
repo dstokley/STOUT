@@ -3,7 +3,7 @@
 namespace STOUT
 {
 
-int set_interface_attribs (int fd, int speed, int parity)
+int serial_comm::set_interface_attribs (int fd, int speed, int parity)
 {
         struct termios tty;
         memset (&tty, 0, sizeof tty);
@@ -43,7 +43,7 @@ int set_interface_attribs (int fd, int speed, int parity)
         return 0;
 }
 
-void set_blocking (int fd, int should_block)
+void serial_comm::set_blocking (int fd, int should_block)
 {
         struct termios tty;
         memset (&tty, 0, sizeof tty);

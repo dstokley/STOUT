@@ -1,3 +1,4 @@
+#include <libusb-1.0/libusb.h>
 #include "avaspec/avaspec.h"
 #include <stdio.h>
 #include <stdlib.h>

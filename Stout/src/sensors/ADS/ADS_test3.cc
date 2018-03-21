@@ -3,6 +3,41 @@
 #include <termios.h>/* POSIX Terminal Control Definitions*/
 #include <unistd.h> /* UNIX Standard Definitions         */
 #include <errno.h>  /* ERROR Number Definitions          */
+
+
+int transmit_data(char* data)
+{
+  // Communication parameters (UART)
+  const char* portname = "/dev/ttyACM0";  // UART1 location
+
+  int uart1_filestream = open(portname,O_RDWR,O_NOCTTY,O_NDELAY);
+
+  if (uart1_filestream == -1)
+  {
+    //ERROR cannot open serial port
+    printf("Error - Unable to open UART. Ensure it is not in use by another application\n");
+    return -1;
+  }
+  //Configure the UART
+  // The flags are defined in /usr/include/termios.h
+  struct termios options;
+  tcgetattr(uart1_filestream, &options);
+  // options.c_cflag = B115200 | CS8 | PARENB | CLOCAL | CREAD;
+  // options.c_iflag = 0;
+  // options.c_oflag = 0;
+  // options.c_lflag = 0;
+  // tcflush(uart1_filestream, TCIOFLUSH);
+  tcsetattr(uart1_filestream, TCSANOW, &options);
+  usleep(5000);
+
+  int bw = 0;
+  bw = write(uart1_filestream,data,sizeof(data));
+  printf("%i Bytes Transmitted \n", bw);
+
+  close(uart1_filestream);
+  return 0;
+}
+
 int main()
 {
   // Open USB line
@@ -25,7 +60,7 @@ int main()
 while(1)
 {
    // Trasmit data over USB
-   signed char write_buffer[] = {0x01,0x03,0x00,0x08,0x00,0x07,0x85,0xCA};
+   unsigned char write_buffer[] = {0x01,0x03,0x00,0x08,0x00,0x07,0x85,0xCA};
    int bytes_written = 0;
    bytes_written = write(fd,write_buffer,sizeof(write_buffer));
    printf("%i Bytes Transmitted \n", bytes_written);
@@ -123,7 +158,7 @@ if (add_info == 255 ) {
   printf("Sun out of FOV, Sun is to X Positive reference\n");
   x_filter = 5.0; x_nofilter = 5.0;
 }
-  else if (add_info == 2) {
+  else if (add_info == 2 || x_filter < -5.0 || x_nofilter < -5.0) {
   printf("Sun out of FOV, Sun is to X Negative reference\n");
   x_filter = -5.0; x_nofilter = -5.0;
   }
@@ -131,7 +166,7 @@ if (add_info == 255 ) {
   printf("Sun out of FOV, Sun is to Y Positive reference\n");
   y_filter = 5.0; y_nofilter = 5.0;
 }
-  else if (add_info == 32) {
+  else if (add_info == 32 || y_filter < -5.0 || y_nofilter < -5.0) {
   printf("Sun out of FOV, Sun is to Y Negative reference\n");
   y_filter = -5.0; y_nofilter = -5.0;
   }
@@ -155,6 +190,7 @@ if (add_info == 255 ) {
 
 
 
+
 printf("With filter\n");
 printf("Angle X is %f\n",x_filter);
 printf("Angle Y is %f\n",y_filter);
@@ -162,6 +198,14 @@ printf("Angle Y is %f\n",y_filter);
 printf("No filter\n");
 printf("Angle X is %f\n",x_nofilter);
 printf("Angle Y is %f\n",y_nofilter);
+
+if (x_filter > 5.0 || y_filter > 5.0 || x_nofilter > 5.0 || y_nofilter > 5.0 || x_filter < -5.0 || y_filter < -5.0 || x_nofilter < -5.0 || y_nofilter < -5.0) {
+  printf("~~~~~~~~~~~~~~~~~~~Angle outputted magnitude  is larger than 5 degrees ~~~~~~~~~~~~~~~~~~~~");
+}
+
+
 }
   close(fd);
+  char angles[8];
+  int sent = transmit_data(angles);
 }

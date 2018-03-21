@@ -150,6 +150,7 @@ void setup()
 // Loop function which takes and transmits EMCS data at 1 Hz
 void loop()
 {
+  Serial.print("Here");
   unsigned long currentMillis = millis(); // Read current time
   
   // Check if it has been 1 second since last measurement
@@ -158,6 +159,7 @@ void loop()
     byte data_array[24];
     // Tranmist all collected data to UDOO
     msg_transmit(data_array);
+    
      
     previousMillis = currentMillis;         // Reset time stamp
   }

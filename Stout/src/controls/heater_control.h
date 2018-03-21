@@ -9,8 +9,7 @@ namespace STOUT{
     public:
       void heater_eval(int T1, int T2);
     private:
-      // Max temp for heater to be turned on
-      int heater_Tmax = 5;  // deg C
+
     };
 }
 #endif

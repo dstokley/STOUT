@@ -1,4 +1,4 @@
-// Script for carrying out all required Arduino functionality. The tasks which occur include:
+A// Script for carrying out all required Arduino functionality. The tasks which occur include:
 // measuring pressure, humidity, and internal/external temperature at a rate of 1 Hz throughout
 // the whole mission, reading GPS time when possible, and sending this data to the UDOO to update
 // its clock every minute, performing required actuations for the horizontal and vertical linear
@@ -73,7 +73,7 @@ int counter_y = 0;
 
 // Sensor reading variables
 unsigned long previousMillis = 0; // Time of last update
-const long interval = 100; // Measurement interval [ms]
+const long interval = 1000; // Measurement interval [ms]
 
 // Communication protocol for BME280 sensor
 Adafruit_BME280 bme; // I2C
@@ -125,9 +125,8 @@ void setup()
   if (!status) {
       // Check for wiring error
       Serial.println("Could not find a valid BME280 sensor, check wiring!");
-      //while (1); // Infinite loop if sensor is not found
   }
-
+  
   // Setup internal/external temperature sensors
   dallas(2,1);
   dallas(3,1);
@@ -151,14 +150,12 @@ void setup()
 void loop()
 {
   unsigned long currentMillis = millis(); // Read current time
-  
   // Check if it has been 1 second since last measurement
   if (currentMillis - previousMillis >= interval)
   {
     byte data_array[24];
     // Tranmist all collected data to UDOO
     msg_transmit(data_array);
-     
     previousMillis = currentMillis;         // Reset time stamp
   }
   
@@ -448,6 +445,11 @@ void msg_transmit(byte data_array[]){
        }
    // Otherwise don't add data to array
    else {
+    data_array[18] = 0;
+    data_array[19] = 0;
+    data_array[20] = 0;
+    data_array[21] = 0;
+    data_array[22] = 0;
     GPS_data = false;
    }
 
@@ -456,6 +458,7 @@ void msg_transmit(byte data_array[]){
     Serial.write(data_array, 23);
    }
    else {
-    Serial.write(data_array, 18);
+    //Serial.write(data_array, 18);
+    Serial.write(data_array, 23);
    }
 }

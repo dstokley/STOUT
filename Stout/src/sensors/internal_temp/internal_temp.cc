@@ -5,7 +5,7 @@
 
 
 
-void Read_Temperature(void)
+char Read_Temperature(void)
 {
 char get[10];
 char temp_lsb,temp_msb;
@@ -31,4 +31,5 @@ printf( "\nTempC= %d degrees C\n", (int)temp_lsb ); // print temp. C
 temp_c = temp_lsb; // ready for conversion to Fahrenheit
 temp_f = (((int)temp_c)* 9)/5 + 32;
 printf( "\nTempF= %d degrees F\n", (int)temp_f ); // print temp. F
+return temp_c;
 }

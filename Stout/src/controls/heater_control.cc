@@ -2,8 +2,10 @@
 
 namespace STOUT {
   // GPIO 346 and 351 are used for heater control
-  void heater_eval(int T1, int T2)
+  void heater_control::heater_eval(int T1, int T2)
   {
+    // Max temp for heater to be turned on
+    int heater_Tmax = 5;  // deg C
     if (T1 > heater_Tmax)
     {
       system("echo 0 > /sys/class/gpio/gpio344/value");
