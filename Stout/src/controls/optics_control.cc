@@ -8,20 +8,20 @@ namespace STOUT
 float* optics_control::optics_compute(float x, float y)
 {
   // Optical dimensions
-  const float O1_offset[3] = {16.15,-9.28,45.78};
-  float r_cg[3] = {0.0,0.0,0.0};
-  float r_vg[3] = {41.45,-107.68,-45.09};
-  float r_hg[3] = {-2.14,-52.68,-46.16};
-  float r_vb[3] = {49.3,-65.72,-45.09};
-  float r_hb[3] = {36.79,-53.21,-45.09};
-  float d_ap = 90.865;
+  const double O1_offset[3] = {16.15,-9.28,45.78};
+  double r_cg[3] = {0.0,0.0,0.0};
+  double r_vg[3] = {41.45,-107.68,-45.09};
+  double r_hg[3] = {-2.14,-52.68,-46.16};
+  double r_vb[3] = {49.3,-65.72,-45.09};
+  double r_hb[3] = {36.79,-53.21,-45.09};
+  double d_ap = 90.865;
 
   // Variable declarations
-  float r_ap0[3];
-  float r_ap_vb0[3];
-  float r_ap_hb0[3];
-  float temp_vec[3] = {0,0,d_ap};
-  float r_ap[3];
+  double r_ap0[3];
+  double r_ap_vb0[3];
+  double r_ap_hb0[3];
+  double temp_vec[3] = {0,0,d_ap};
+  double r_ap[3];
   int i;
 
   for (i=0; i<2; i++)
@@ -56,7 +56,7 @@ float* optics_control::optics_compute(float x, float y)
 
   // Convert r_ap_vb and r_ap_hb to cage gimbal frame
   // Rotation matrix
-  float rot_mat[3][3];
+  double rot_mat[3][3];
   rot_mat[0][0] = cos(y);
   rot_mat[0][1] = sin(y)*sin(x);
   rot_mat[0][2] = sin(y)*sin(x);
@@ -68,14 +68,14 @@ float* optics_control::optics_compute(float x, float y)
   rot_mat[2][2] = cos(x)*cos(y);
 
   // Setting up matrix-vector multiplications
-  float r_ap_vb[3];
-  float r_ap_hb[3];
+  double r_ap_vb[3];
+  double r_ap_hb[3];
   cblas_dgemm(CblasColMajor,CblasNoTrans,CblasNoTrans,3,1,3,1.0,*rot_mat,3,r_ap_vb0,3,0.0,r_ap_vb,3);
   cblas_dgemm(CblasColMajor,CblasNoTrans,CblasNoTrans,3,1,3,1.0,*rot_mat,3,r_ap_hb0,3,0.0,r_ap_hb,3);
 
   // Find ball joint locations
-  float r_cg_vb[3];
-  float r_cg_hb[3];
+  double r_cg_vb[3];
+  double r_cg_hb[3];
 
   for (i=0; i<2; i++)
   {
@@ -84,8 +84,9 @@ float* optics_control::optics_compute(float x, float y)
   }
 
   // Calculate actuation lengths
-  float Lh, Lv, L1, L2;
-  float temp_vec1[3], temp_vec2[3];
+  double Lh, Lv;
+  float L1, L2;
+  double temp_vec1[3], temp_vec2[3];
 
   for (i=0; i<2; i++)
   {
@@ -100,27 +101,35 @@ float* optics_control::optics_compute(float x, float y)
   Lv = sqrt(pow(temp_vec2[0],2) + pow(temp_vec2[1],2) + pow(temp_vec2[3],2));
 
   // Calculate actual actuations based on dimensions
-  L1 = Lh + 0;        // Need to add necessary additions/subtractions
-  L2 = Lv + 0;
+  L1 = (float)Lh + 0;        // Need to add necessary additions/subtractions
+  L2 = (float)Lv + 0;
 
   // Place actuation distances in output array
-  float* Lengths =(float *) malloc(sizeof(float)*2);
-  Lengths[0] = L1;
-  Lengths[1] = L2;
+  float* lengths =(float*) malloc(sizeof(float)*2);
+  lengths[0] = L1;
+  lengths[1] = L2;
 
-  return Lengths;
+  return lengths;
 }
 
-void optics_control::optics_transmit(float* Lengths, int fd)
+void optics_control::optics_transmit(double* lengths)
 {
+  // Communication object creation, opening arduino port
+  serial_comm optics_comm;
+  int fd = optics_comm.set_arduino_comm();
+
   // Placing actuations into variables
-  float L1, L2;
-  L1 = (float)*(Lengths + 0);
-  L2 = (float)*(Lengths + 1);
+  double L1, L2;
+  L1 = (double)*(lengths + 0);
+  L2 = (double)*(lengths + 1);
 
   // Send actuation data to Arduino via serial
   write(fd, &L1, 4);
   write(fd, &L2, 4);
+
+  // Wait appropriate time and close port
+  usleep(100);
+  close(fd);
 
 }
 
@@ -137,24 +146,37 @@ void optics_control::polarizer_rotate(char location)
 
   // Open device and set baud/message size
   ftStatus = FT_Open(0, &ftHandle);
+  assert(ftStatus == FT_OK);
+
   // Set baud rate to 115200.
-  const int uBaudRate=115200;
+  const long uBaudRate = 115200;
   ftStatus =  FT_SetBaudRate(ftHandle, (ULONG)uBaudRate);
+  assert(ftStatus == FT_OK);
+
   // 8 data bits, 1 stop bit, no parity
   ftStatus = FT_SetDataCharacteristics(ftHandle, FT_BITS_8, FT_STOP_BITS_1, FT_PARITY_NONE);
+  assert(ftStatus == FT_OK);
 
-  // Pre purge dwell 5ms.
+  // Pre purge dwell 0.5 ms.
   usleep(500);
+
   // Purge the device.
   ftStatus = FT_Purge(ftHandle, FT_PURGE_RX | FT_PURGE_TX);
-  // Post purge dwell 5ms.
+  assert(ftStatus == FT_OK);
+
+  // Post purge dwell 0.5 ms.
   usleep(500);
+
   ftStatus = FT_ResetDevice(ftHandle);
+  assert(ftStatus == FT_OK);
 
   // Set flow control to RTS/CTS.
   ftStatus = FT_SetFlowControl(ftHandle, FT_FLOW_RTS_CTS, 0, 0);
+  assert(ftStatus == FT_OK);
+
   // Set RTS.
   ftStatus = FT_SetRts(ftHandle);
+  assert(ftStatus == FT_OK);
 
   // Check if we need to rotate polarizer back to 0 degrees or forward 22.5 deg
   if (location != 0)
@@ -163,6 +185,7 @@ void optics_control::polarizer_rotate(char location)
     BYTE buf_reldist[12] = {0x45,0x04,0x06,0x00,0xA1,0x01,0x01,0x00,0x00,0xE0,0x2E,0x00};
     written = 0;
     ftStatus = FT_Write(ftHandle, buf_reldist, (DWORD)12, &written);
+    assert(ftStatus == FT_OK);
 
     usleep(500);
 
@@ -170,6 +193,7 @@ void optics_control::polarizer_rotate(char location)
     BYTE buf_relmove[6] = {0x48,0x04,0x01,0x00,0x21,0x01};
     written = 0;
     ftStatus = FT_Write(ftHandle, buf_relmove, (DWORD)6, &written);
+    assert(ftStatus == FT_OK);
 
   }
   else if (location == 1)
@@ -178,6 +202,7 @@ void optics_control::polarizer_rotate(char location)
     BYTE buf_homeparam[12] = {0x50,0x04,0x06,0x00,0xA1,0x01,0x01,0x00,0x00,0x00,0x00,0x00};
     written = 0;
     ftStatus = FT_Write(ftHandle, buf_homeparam, (DWORD)12, &written);
+    assert(ftStatus == FT_OK);
 
     usleep(500);
 
@@ -185,6 +210,12 @@ void optics_control::polarizer_rotate(char location)
     BYTE buf_home[6] = {0x53,0x04,0x01,0x00,0x21,0x01};
     written = 0;
     ftStatus = FT_Write(ftHandle, buf_home, (DWORD)6, &written);
+    assert(ftStatus == FT_OK);
   }
+
+  // Close the port
+  ftStatus = FT_Close(ftHandle);
+  assert(ftStatus == FT_OK);
+
 }
 }

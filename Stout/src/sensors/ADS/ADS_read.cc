@@ -4,45 +4,29 @@ namespace STOUT
 {
   float* ADS::ADS_read()
   {
-
-    // Open USB line
-    int fd;
-    fd = open("/dev/ttyUSB0",O_RDWR | O_NOCTTY);
-    if (fd==1)
-    {
-       printf("Error! in Opening ttyUSB0\n");
-     }
-    else
-    {
-       printf("ttyUSB0 Opened Successfully\n");
-     }
-
-     // Setup port settings
-     struct termios options;
-     tcgetattr(fd, &options);
-     tcsetattr(fd,TCSANOW,&options);
+    // Create comm object, open comm line
+    serial_comm ADS_comm;
+    int fd = ADS_comm.set_ADS_comm();
 
      // Trasmit data over USB
      unsigned char write_buffer[] = {0x01,0x03,0x00,0x08,0x00,0x07,0x85,0xCA};
-     int bytes_written = 0;
-     bytes_written = write(fd,write_buffer,sizeof(write_buffer));
-     printf("%i Bytes Transmitted \n", bytes_written);
+     write(fd,write_buffer,sizeof(write_buffer));
+     //printf("%i Bytes Transmitted \n", bytes_written);
 
-     // Delay for appropriate amount of time
+     // Delay for appropriate amount of time (5 ms)
      usleep(5000);
 
      // Receive data over USB
-     unsigned char read_buffer[19];
-     int bytes_read = 0;
-     bytes_read = read(fd,&read_buffer,19);
-     printf("%i Bytes Received \n",bytes_read);
+     char read_buffer[19];
+     read(fd,&read_buffer,19);
+     //printf("%i Bytes Received \n",bytes_read);
 
      // Printing received values
-     int i;
-     for (i=0;i<19;i++)
-     {
-       printf("Byte %i = %0x\n",i,read_buffer[i]);
-     }
+     // int i;
+     // for (i=0;i<19;i++)
+     // {
+     //   printf("Byte %i = %0x\n",i,read_buffer[i]);
+     // }
 
      // Convert received bytes to desired data values
      int ADS_rad_int, ADS_temp_int, x_filter_int, y_filter_int, x_nofilter_int, y_nofilter_int;

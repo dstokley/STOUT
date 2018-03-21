@@ -16,6 +16,7 @@
 #include <assert.h>
 #include <WinTypes.h>
 #include <ftd2xx.h>
+#include "../serial_comm.h"
 
 namespace STOUT
 {
@@ -28,8 +29,8 @@ public:
   // Actuation computation function
   float* optics_compute(float x, float y);
 
-  // Data transmission functions
-  void optics_transmit(float* Lengths, int fd);
+  // Data transmission function
+  void optics_transmit(double* lengths);
 
   // Polarizer control function
   void polarizer_rotate(char location);
