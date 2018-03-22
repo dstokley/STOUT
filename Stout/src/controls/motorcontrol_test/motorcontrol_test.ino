@@ -37,10 +37,14 @@ void setup() {
   pinMode(EN_x, OUTPUT);
   pinMode(STP_x, OUTPUT);
   pinMode(DIR_x, OUTPUT);
+  pinMode(CH1_x, INPUT);
+  pinMode(CH2_x, INPUT);
   // Vertical actuator motor driver
 //  pinMode(EN_y, OUTPUT);
 //  pinMode(STP_y, OUTPUT);
 //  pinMode(DIR_y, OUTPUT);
+
+ch1laststate_x = digitalRead(CH1_x);
   
 }
 
@@ -65,6 +69,8 @@ void loop() {
 
   step_x = 30e-3;
 //  step_y = -75e-2;
+
+
   
   if (step_x > 0.0)
   {
@@ -111,23 +117,27 @@ void loop() {
       // Trigger one step foward for each actuator
       digitalWrite(STP_x, HIGH);
       //digitalWrite(STP_y, HIGH);
-      delay(100);
+      //delay(1);
 
       // Checking encoders
       ch1state_x = digitalRead(CH1_x);    // Current value on ch1 of horizontal encoder
       if(ch1state_x != ch1laststate_x)
       {
+          //counter_x++;
+          Serial.println("Change in channel A");
         if (digitalRead(CH2_x) != ch1state_x)
         {
           counter_x++;                    // Increment x encoder counter
+          Serial.println(" ++ Counter");
         }
         else
         {
           counter_x--;                    // Decrement x encoder counter
+          Serial.println(" -- Counter");
         }
       }
       ch1laststate_x = ch1state_x;        // Save current value of encoder
-//
+
 //      ch1state_y = digitalRead(CH1_y);    // Current value on ch1 of vertical encoder
 //      if(ch1state_y != ch1laststate_y)
 //      {
@@ -146,7 +156,7 @@ void loop() {
       // Reset to allow for more actuations
       digitalWrite(STP_x, LOW);
 //      digitalWrite(STP_y, LOW);
-      delay(100);
+      //delay(1);
 
       // Subtract from number of steps
       remsteps_x--;
