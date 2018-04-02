@@ -13,12 +13,12 @@ namespace STOUT
     int n;
 
     n = read (fd, buffer, sizeof(char)*23); 	// Read all 23 characters
-  	if (n > 0) {
-  		int i;
-  		for (i = 0; i < n; i++) {
-  			printf("%c",buffer[i]);
-  		}
-  	}
+  	// if (n > 0) {
+  	// 	int i;
+  	// 	for (i = 0; i < n; i++) {
+  	// 		printf("%c",buffer[i]);
+  	// 	}
+  	// }
     long raw_temp;
     int udoo_temp;
     raw_temp = system("cat /sys/devices/virtual/thermal/thermal_zone0/temp");

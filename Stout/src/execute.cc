@@ -56,8 +56,8 @@ namespace STOUT
 
       // Isolate heater control temperatures
       int T1, T2;
-      T1 = sensor_obj[0] | sensor_obj[1] << 8;
-      T2 = sensor_obj[2] | sensor_obj[3] << 8;
+      T1 = sensor_data[0] | sensor_data[1] << 8;
+      T2 = sensor_data[2] | sensor_data[3] << 8;
 
       // Turn heaters on/off based on temperatures
       heater_obj.heater_eval(T1, T2);
@@ -72,7 +72,7 @@ namespace STOUT
         int UART_status = comm_obj.set_UART_comm();
         if (UART_status == 0)
         {
-          handler_obj.UART_transmit(sensor_obj);
+          handler_obj.UART_transmit(sensor_data);
           count = 0;
         }
       }
