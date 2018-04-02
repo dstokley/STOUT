@@ -26,7 +26,7 @@ void StepForwardDefault()
 {
   Serial.println("Moving forward at default step mode.");
   digitalWrite(dir, LOW); //Pull direction pin low to move "forward"
-  for(x= 1; x<40; x++)  //Loop the forward stepping enough times for motion to be visible
+  for(x= 1; x<10000; x++)  //Loop the forward stepping enough times for motion to be visible
   {
     digitalWrite(stp,HIGH); //Trigger one step forward
     delay(1);
