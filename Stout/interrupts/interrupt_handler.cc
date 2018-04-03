@@ -19,25 +19,25 @@ volatile sig_atomic_t signal_flag = 0;
 
 int main()
 {
+  // Need to figure out how to run external main loop from g_main_loop_run
   GMainLoop* loop = g_main_loop_new(0, 0);
   int fd = open("/sys/class/gpio/gpio349/value", O_RDONLY | O_NONBLOCK);
   GIOChannel* channel = g_io_channel_unix_new(fd);
   GIOCondition cond = GIOCondition(G_IO_PRI);
   guint id = g_io_add_watch(channel, cond, GPIO_event, 0);
-  //g_source_connect();
   g_main_loop_run(loop);
 
   // signal(SIGALRM, &sigalrm_handler);
   // ualarm(100000,0);
 
-  // while(1)
-  // {
+  //while(1)
+  //{
   //   if(signal_flag == 1)
   //   {
   //     printf("It has been 100 milliseconds \n");
   //     signal_flag = 0;
   //   }
-  // }
+  //}
 }
 
 
@@ -52,13 +52,12 @@ static gboolean GPIO_event(GIOChannel *channel, GIOCondition condition, gpointer
   std::cerr << "GPIO_event" << std::endl;
   GError *error = 0;
   gsize bytes_read = 0;
-  gchar *buf;
-  gsize buf_sz;
+  gchar buf[1];
 
   g_io_channel_seek_position(channel, 0, G_SEEK_SET, 0);
-  GIOStatus rc = g_io_channel_read_chars(channel, buf, buf_sz-1, &bytes_read, &error);
+  GIOStatus rc = g_io_channel_read_chars(channel, buf, 1, &bytes_read, &error);
   std::cerr << "rc:" << rc << "  data:" << buf << std::endl;
-  free(buf);
+//g_io_channel_flush(channel, &error);
 
   return 1;
 }
