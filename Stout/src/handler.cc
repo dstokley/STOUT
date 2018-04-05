@@ -1,18 +1,17 @@
-#include "../include/avaspec/avaspec.h"
 #include "handler.h"
-#include "execute.h"
-#include "systemhaltexception.h"
-
 
 namespace STOUT
 {
   char* handler::receive_arduino_data()
   {
-    int bufsize = 25;
-    char* buffer = (char*)malloc(sizeof(char) * bufsize + 1);
+    serial_comm arduino_comm;
+    int fd = arduino_comm.set_arduino_comm();
+
+    int bufsize = 26;
+    char* buffer = (char*)malloc(sizeof(char) * bufsize); //+1 ???
     int n;
 
-    n = read (fd, buffer, sizeof(char)*23); 	// Read all 23 characters
+    n = read (fd, buffer, sizeof(char)*20); 	// Read all 20 characters
   	// if (n > 0) {
   	// 	int i;
   	// 	for (i = 0; i < n; i++) {
@@ -24,8 +23,10 @@ namespace STOUT
     raw_temp = system("cat /sys/devices/virtual/thermal/thermal_zone0/temp");
     udoo_temp = (int)(raw_temp/1000);
 
-    buffer[23] = udoo_temp&0xFF;
-    buffer[24] = (udoo_temp>>8)&0xFF;
+    buffer[20] = udoo_temp&0xFF;
+    buffer[21] = (udoo_temp>>8)&0xFF;
+
+    close(fd);
 
     return buffer;
   }
@@ -33,21 +34,8 @@ namespace STOUT
   void handler::UART_transmit(char* data)
   {
     // Open USB line
-    int fd;
-    fd = open("/dev/ttyS4",O_RDWR | O_NOCTTY);
-    if (fd==1)
-    {
-       printf("Error! in Opening ttyS4\n");
-     }
-    else
-    {
-       printf("ttyS4 Opened Successfully\n");
-     }
-
-     // Setup port settings
-     struct termios options;
-     tcgetattr(fd, &options);
-     tcsetattr(fd,TCSANOW,&options);
+    serial_comm UART_comm;
+    int fd = UART_comm.set_UART_comm();
 
      // Trasmit data over UART
      int bytes_written = 0;

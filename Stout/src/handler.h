@@ -14,12 +14,17 @@
 #include <iostream>
 #include <fcntl.h>
 #include <math.h>
+#include <signal.h>
+//#include <glib.h>
+#include <stdlib.h>
+#include <fcntl.h>
 #include "serial_comm.h"
 #include "sensors/spectrometer/spectrometer.h"
 #include "sensors/camera/camera.h"
 #include "controls/optics_control.h"
 #include "controls/heater_control.h"
 #include "sensors/ADS/ADS_read.h"
+#include "systemhaltexception.h"
 
 namespace STOUT
 {

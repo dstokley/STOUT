@@ -14,8 +14,8 @@
 #include <stdint.h>
 #include <sys/time.h>
 #include <assert.h>
-#include <WinTypes.h>
-#include <ftd2xx.h>
+//#include <WinTypes.h>
+//#include <ftd2xx.h>
 #include "../serial_comm.h"
 
 namespace STOUT

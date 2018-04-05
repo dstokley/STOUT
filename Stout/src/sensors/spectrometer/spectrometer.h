@@ -1,12 +1,15 @@
 #ifndef SPEC_H
 #define SPEC_H
 
-
-#include "../../../include/avaspec/avaspec.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
 #include <array>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include "../../systemhaltexception.h"
+#include "../../../include/avaspec/avaspec.h"
 
 namespace STOUT {
   // Encapsulates the spectrometer configuration and reading
@@ -26,6 +29,9 @@ namespace STOUT {
     // Returns false if read failed
     bool ReadSpectrometerTemperature(float& temp);
 
+    // Converts the voltage into a temperature
+    float ConvertVoltageToTemperature(float voltage);
+
   private:
 
     // Spectrometer reference handle
@@ -33,9 +39,6 @@ namespace STOUT {
 
     // Spectrometer measurement config
     MeasConfigType meas_config_;
-
-    // Converts the voltage into a temperature
-    float ConvertVoltageToTemperature(float voltage);
 
   };
 

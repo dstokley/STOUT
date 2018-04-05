@@ -1,2 +1,2 @@
 To link/compile with gdb support (debugging) for EMCS only:
-g++ serial_comm.cc controls/heater_control.cc systemhaltexception.cc handler.cc execute.cc main.cc -o EMCS_test -std=c++11 -g
+g++ serial_comm.cc controls/heater_control.cc systemhaltexception.cc handler.cc execute.cc sensors/spectrometer/spectrometer.cc sensors/ADS/ADS_read.cc main.cc -o TVAC_test -std=c++11 -L~/Documents/STOUT/Stout/include/avaspec -lavs

@@ -20,6 +20,7 @@ void setup() {
     while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
     }
+    Serial1.begin(115200);
 
     // Setup pressure/humidity sensor
     bool status;
@@ -41,42 +42,10 @@ void setup() {
 }
 
 void loop() {
-//      t1 = millis();
-      
-      //printPress();     // Print temp, press, alt, and humidity from BME280
-
-      //printIntTemp();   // Print internal temp values
-
-      sendData();
-
-//      t2 = millis();
-
-//      Serial.println();
-//      Serial.println(t2-t1);
-
-      delay(1000);
+    sendData();
+    //delay(1000);
      
 }
-//
-//void printPress() {
-//    Serial.print("Temperature = ");
-//    Serial.print(bme.readTemperature());
-//    Serial.println(" *C");
-//
-//    Serial.print("Pressure = ");
-//    Serial.print(bme.readPressure() / 100.0F);
-//    Serial.println(" hPa");
-//
-//    Serial.print("Approx. Altitude = ");
-//    Serial.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
-//    Serial.println(" m");
-//
-//    Serial.print("Humidity = ");
-//    Serial.print(bme.readHumidity());
-//    Serial.println(" %");
-//
-//    Serial.println();
-//}
 
 int16_t dallas(int x,byte start)
 {
@@ -102,56 +71,30 @@ int16_t dallas(int x,byte start)
 }
 
 void sendData() {
-//    Serial.print("Int Temperature 1 = ");
-//    Serial.print(dallas(2,0),HEX);
-//    Serial.println(" *C");
-//
-//    Serial.print("Int Temperature 2 = ");
-//    Serial.print(dallas(3,0),HEX);
-//    Serial.println(" *C");
-//
-//    Serial.print("Int Temperature 3 = ");
-//    Serial.print(dallas(4,0),HEX);
-//    Serial.println(" *C");
-//
-//    Serial.print("Int Temperature 4 = ");
-//    Serial.print(dallas(5,0),HEX);
-//    Serial.println(" *C");
-//
-//    Serial.print("Ext Temperature 1 = ");
-//    Serial.print(dallas(6,0));
-//    Serial.println(" *C");
-//
-//    Serial.print("Ext Temperature 2 = ");
-//    Serial.print(dallas(7,0));
-//    Serial.println(" *C");
-//
-//    Serial.println();
 
-    char data_array[20];
-    // Add internal temperature values to the data array
-    data_array[0] = (byte)((dallas(2,0))&0xFF);             // Four 1-wire internal temperature sensors
-    data_array[1] = (byte)(((dallas(2,0))>>8)&0xFF);
-    data_array[2] = (byte)((dallas(3,0))&0xFF);
-    data_array[3] = (byte)(((dallas(3,0))>>8)&0xFF);
-    data_array[4] = (byte)((dallas(4,0))&0xFF);
-    data_array[5] = (byte)(((dallas(4,0))>>8)&0xFF);
-    data_array[6] = (byte)((dallas(5,0))&0xFF);
-    data_array[7] = (byte)(((dallas(5,0))>>8)&0xFF);
+  char data_array[20];
+  // Add internal temperature values to the data array
+  data_array[0] = (byte)((dallas(2,0))&0xFF);             // Four 1-wire internal temperature sensors
+  data_array[1] = (byte)(((dallas(2,0))>>8)&0xFF);
+  data_array[2] = (byte)((dallas(3,0))&0xFF);
+  data_array[3] = (byte)(((dallas(3,0))>>8)&0xFF);
+  data_array[4] = (byte)((dallas(4,0))&0xFF);
+  data_array[5] = (byte)(((dallas(4,0))>>8)&0xFF);
+  data_array[6] = (byte)((dallas(5,0))&0xFF);
+  data_array[7] = (byte)(((dallas(5,0))>>8)&0xFF);
 
-    int bme_temp = (int)(round(bme.readTemperature()));     // BME280 temperature reading
-    data_array[8] = (byte)(bme_temp&0xFF);
-    data_array[9] = (byte)((bme_temp>>8)&0xFF);
+  int bme_temp = (int)(round(bme.readTemperature()));     // BME280 temperature reading
+  data_array[8] = (byte)(bme_temp&0xFF);
+  data_array[9] = (byte)((bme_temp>>8)&0xFF);
 
-    // Add external temperature values to the data array
-    data_array[10] = (byte)((dallas(6,0))&0xFF);  // Two 1-wire external temperature sensors
-    data_array[11] = (byte)(((dallas(6,0))>>8)&0xFF);
-    data_array[12] = (byte)((dallas(7,0))&0xFF);
-    data_array[13] = (byte)(((dallas(7,0))>>8)&0xFF);
+  // Add external temperature values to the data array
+  data_array[10] = (byte)((dallas(6,0))&0xFF);  // Two 1-wire external temperature sensors
+  data_array[11] = (byte)(((dallas(6,0))>>8)&0xFF);
+  data_array[12] = (byte)((dallas(7,0))&0xFF);
+  data_array[13] = (byte)(((dallas(7,0))>>8)&0xFF);
 
-     // Add pressure and humidity values to data array
+  // Add pressure and humidity values to data array
   long bme_press = (long)(round(bme.readPressure()));     // BME280 pressure reading
-//  Serial.println(bme_press);
   data_array[14] = (byte)(bme_press&0xFF);
   data_array[15] = (byte)((bme_press>>8)&0xFF);
   data_array[16] = (byte)((bme_press>>16)&0xFF);
@@ -162,8 +105,8 @@ void sendData() {
   data_array[19] = (byte)((bme_humid>>8)&0xFF);
   
 
-    int bytes_written = Serial.write(data_array, 20);
-     delay(1);
-    Serial.println(bytes_written);
+  int bytes_written = Serial1.write(data_array, 20);
+  delay(2);
+  Serial.println(bytes_written);
 
 }
