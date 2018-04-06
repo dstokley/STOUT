@@ -11,7 +11,6 @@ namespace STOUT
     int portname = open (arduino_portname, O_RDWR | O_NOCTTY | O_SYNC);
     if (portname < 0)
     {
-  		//printf("error %d opening %s\n", errno, portname);
   		return -1;
     }
 
@@ -19,7 +18,6 @@ namespace STOUT
     memset (&tty, 0, sizeof tty);
     if (tcgetattr (portname, &tty) != 0)
     {
-      //printf ("error from tcgetattr");
       return -1;
     }
 
@@ -45,14 +43,12 @@ namespace STOUT
 
     if (tcsetattr (portname, TCSANOW, &tty) != 0)
     {
-      //printf ("error %d from tcsetattr", errno);
       return -1;
     }
 
     memset (&tty, 0, sizeof tty);
     if (tcgetattr (portname, &tty) != 0)
     {
-      //printf ("error %d from tggetattr", errno);
       return -1;
     }
 
@@ -61,7 +57,6 @@ namespace STOUT
 
     if (tcsetattr (portname, TCSANOW, &tty) != 0)
     {
-      //printf ("error %d setting term attributes", errno);
       return -1;
     }
 
@@ -75,7 +70,6 @@ namespace STOUT
     fd = open("/dev/ttyUSB0",O_RDWR | O_NOCTTY);
     if (fd==1)
     {
-       //printf("Error! in Opening ttyUSB0\n");
        return -1;
      }
 
@@ -95,7 +89,6 @@ namespace STOUT
     int portname = open (UART_portname, O_RDWR | O_NOCTTY | O_SYNC);
     if (portname < 0)
     {
-      //printf("error %d opening %s\n", errno, portname);
       return -1;
     }
 
@@ -103,7 +96,6 @@ namespace STOUT
     memset (&tty, 0, sizeof tty);
     if (tcgetattr (portname, &tty) != 0)
     {
-      //printf ("error from tcgetattr");
       return -1;
     }
 
@@ -129,14 +121,12 @@ namespace STOUT
 
     if (tcsetattr (portname, TCSANOW, &tty) != 0)
     {
-      //printf ("error %d from tcsetattr", errno);
       return -1;
     }
 
     memset (&tty, 0, sizeof tty);
     if (tcgetattr (portname, &tty) != 0)
     {
-      //printf ("error %d from tggetattr", errno);
       return -1;
     }
 
@@ -145,7 +135,6 @@ namespace STOUT
 
     if (tcsetattr (portname, TCSANOW, &tty) != 0)
     {
-      //printf ("error %d setting term attributes", errno);
       return -1;
     }
 

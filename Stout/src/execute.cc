@@ -26,7 +26,6 @@ namespace STOUT
       // Read the spectrometer themistor voltage
       bool status = spec_obj.ReadSpectrometerTemperature(temp_float);
       int spec_temp = (int)round(temp_float);
-      printf("Spectrometer temperature = %i \n",spec_temp);
 
       // Read the ADS data
       ADS_data = ADS_obj.ADS_read();
