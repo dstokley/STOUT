@@ -40,7 +40,7 @@ namespace STOUT
      // Trasmit data over UART
      int bytes_written = 0;
      bytes_written = write(fd,data,sizeof(data));
-     //printf("%i Bytes Transmitted \n", bytes_written);
+     printf("%i Bytes Transmitted \n", bytes_written);
 
      // Delay for appropriate amount of time
      usleep(5000);

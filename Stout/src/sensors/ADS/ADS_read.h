@@ -7,6 +7,9 @@
 #include <unistd.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <chrono>
+#include <iostream>
+#include <stdlib.h>
 #include "../../serial_comm.h"
 
 namespace STOUT {

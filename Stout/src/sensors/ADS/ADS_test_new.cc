@@ -83,11 +83,11 @@ while(1)
   }
 
 // Re orintation is done here such that is matches the XY for SOUT mounting
-// int x_filter_int, y_filter_int, x_nofilter_int, y_nofilter_int;
-//  x_filter_int = read_buffer[9] | read_buffer[10] << 8;
-//  y_filter_int = read_buffer[11] | read_buffer[12] << 8;
-//  x_nofilter_int = read_buffer[13] | read_buffer[14] << 8;
-//  y_nofilter_int = read_buffer[15] | read_buffer[16] << 8;
+signed int x_filter_int, y_filter_int, x_nofilter_int, y_nofilter_int;
+//x_filter_int = read_buffer[9] | read_buffer[10] << 8;
+//y_filter_int = read_buffer[11] | read_buffer[12] << 8;
+//x_nofilter_int = read_buffer[13] | read_buffer[14] << 8;
+//y_nofilter_int = read_buffer[15] | read_buffer[16] << 8;
 
 //x_filter_int = read_buffer[10] | read_buffer[9] << 8;
 //y_filter_int = read_buffer[12] | read_buffer[11] << 8;
@@ -95,22 +95,26 @@ while(1)
 //y_nofilter_int = read_buffer[16] | read_buffer[15] << 8;
 
 
-int x_filter_int_low, x_filter_int_hi, y_filter_int_low, y_filter_int_hi;
-int x_nofilter_int_low, x_nofilter_int_hi, y_nofilter_int_low, y_nofilter_int_hi;
-x_filter_int_low = read_buffer[10];
-x_filter_int_hi = read_buffer[9];
-y_filter_int_low = read_buffer[12];
-y_filter_int_hi = read_buffer[11];
-x_nofilter_int_low = read_buffer[14];
-x_nofilter_int_hi = read_buffer[13];
-y_nofilter_int_low = read_buffer[16];
-y_nofilter_int_hi = read_buffer[15];
+//int x_filter_int_low, x_filter_int_hi, y_filter_int_low, y_filter_int_hi;
+//int x_nofilter_int_low, x_nofilter_int_hi, y_nofilter_int_low, y_nofilter_int_hi;
+//x_filter_int_low = read_buffer[10];
+//x_filter_int_hi = read_buffer[9];
+//y_filter_int_low = read_buffer[12];
+//y_filter_int_hi = read_buffer[11];
+//x_nofilter_int_low = read_buffer[14];
+//x_nofilter_int_hi = read_buffer[13];
+//y_nofilter_int_low = read_buffer[16];
+//y_nofilter_int_hi = read_buffer[15];
 
 float x_filter, y_filter, x_nofilter, y_nofilter;
-x_filter = (float)(x_filter_int_hi*255+x_filter_int_low)*0.001;
-y_filter = (float)(y_filter_int_hi*255+y_filter_int_low)*0.001;
-x_nofilter = (float)(x_nofilter_int_hi*255+x_nofilter_int_low)*0.001;
-y_nofilter = (float)(y_nofilter_int_hi*255+y_nofilter_int_low)*0.001;
+//x_filter = (float)(x_filter_int_hi*255+x_filter_int_low)*0.001;
+//y_filter = (float)(y_filter_int_hi*255+y_filter_int_low)*0.001;
+//x_nofilter = (float)(x_nofilter_int_hi*255+x_nofilter_int_low)*0.001;
+//y_nofilter = (float)(y_nofilter_int_hi*255+y_nofilter_int_low)*0.001;
+ x_filter = (float)(x_filter_int*0.001);
+ y_filter = (float)(y_filter_int*0.001);
+ x_nofilter = (float)(x_nofilter_int*0.001);
+ y_nofilter = (float)(y_nofilter_int*0.001);
 
 
 //printf("y_filter_int = %i\n",y_filter_int);
