@@ -1,4 +1,4 @@
-A// Script for carrying out all required Arduino functionality. The tasks which occur include:
+// Script for carrying out all required Arduino functionality. The tasks which occur include:
 // measuring pressure, humidity, and internal/external temperature at a rate of 1 Hz throughout
 // the whole mission, reading GPS time when possible, and sending this data to the UDOO to update
 // its clock every minute, performing required actuations for the horizontal and vertical linear

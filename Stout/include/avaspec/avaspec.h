@@ -12,11 +12,8 @@
 #define _CRTDBG_MAP_ALLOC
 
 #pragma once
-//#include <string>
-
+#include <stdbool.h>
 #include "type.h"
-//#include <winuser.h>
-
 
 #if defined(__linux) || defined(__APPLE__)
 	#define WM_APP 0
@@ -58,7 +55,6 @@
 #define AVS_POSTMESSAGE
 #endif
 
-
 #endif
 
 #ifdef __cplusplus
@@ -73,6 +69,10 @@ extern "C" {
 #define     ROOT_NAME_LEN           6
 
 #define     VERSION_LEN             16
+#define     AVASPEC_ERROR_MSG_LEN   8
+#define     AVASPEC_MIN_MSG_LEN     6  // Minimum size of an AvaSpec message
+
+#define     OEM_DATA_LEN            4096 // Reserved for OEM data
 
 #define     NR_WAVELEN_POL_COEF     5
 #define     NR_NONLIN_POL_COEF      8
@@ -115,6 +115,8 @@ extern "C" {
 #define     HAMS7031_USED_DARK_PIXELS       4
 #define     HAMS7031_TOTAL_DARK_PIXELS      4
 
+#define		HAMS11155_TOTAL_DARK_PIXELS		20
+
 #define     MIN_ILX_INTTIME                 1.1   //[ms]
 
 #define     MILLI_TO_MICRO                  1000
@@ -126,7 +128,6 @@ extern "C" {
 #define     TEC_ID                          2
 
 #define     NR_ANALOG_OUTPUTS               2
-
 
 long const INVALID_AVS_HANDLE_VALUE     = 1000L;
 
@@ -266,7 +267,7 @@ typedef struct
 {
 	int32					m_Nmsr;
 	uint8					m_Reserved[8]; // for future use and backwards compatibility
-}DynamicStorageType;
+} DynamicStorageType;
 
 typedef struct
 {
@@ -298,30 +299,35 @@ typedef struct
 	uint8				 m_LinkStatus;
 } EthernetSettingsType;
 
-#define DEVICE_CONFIG_TYPE_SIZE   10 + USER_ID_LEN + sizeof(DetectorType) + sizeof(IrradianceType) + sizeof(SpectrumCalibrationType) + sizeof(SpectrumCorrectionType) + sizeof(StandAloneType) + (sizeof(TempSensorType)*MAX_TEMP_SENSORS) + sizeof(TecControlType) + sizeof(ProcessControlType + sizeof(EthernetSettingsType))
+typedef struct
+{
+    uint8                m_data[OEM_DATA_LEN];
+} OemDataType;
 
+// HEARTBEAT_RESP message data (response to HEARTBEAT message)
+typedef struct
+{
+    unsigned int m_BitMatrix; // Built-In Test matrix
+    unsigned int m_Reserved;
+} HeartbeatRespType;
 
-const uint16    SETTINGS_RESERVED_LEN   = ((62*1024) -  sizeof(uint32) -    // CRC calculated by firmware 
-                                                        (sizeof(uint16) +   // m_Len
-                                                         sizeof(uint16) +  // m_ConfigVersion
-                                                         USER_ID_LEN +
-                                                         sizeof(DetectorType) +
-                                                         sizeof(IrradianceType) +
-                                                         sizeof(SpectrumCalibrationType) +
-                                                         sizeof(SpectrumCorrectionType) +
-                                                         sizeof(StandAloneType) +
-														 sizeof(DynamicStorageType) +
-                                                        (sizeof(TempSensorType)*MAX_TEMP_SENSORS) +
-                                                         sizeof(TecControlType) +
-                                                         sizeof(ProcessControlType) + 
-														 sizeof(EthernetSettingsType)
-                                                        )
+typedef unsigned int HeartbeatReqType;
 
-                                           );
-
-
-
-
+#define     SETTINGS_RESERVED_LEN ((62 * 1024) - sizeof(uint32) -    /* CRC calculated by firmware */ \
+                                   (sizeof(uint16) +   /* m_Len */ \
+                                    sizeof(uint16) +   /* m_ConfigVersion */ \
+                                    USER_ID_LEN + \
+                                    sizeof(DetectorType) + \
+                                    sizeof(IrradianceType) + \
+                                    sizeof(SpectrumCalibrationType) + \
+                                    sizeof(SpectrumCorrectionType) + \
+                                    sizeof(StandAloneType) + \
+                                    sizeof(DynamicStorageType) + \
+                                    (sizeof(TempSensorType) * MAX_TEMP_SENSORS) + \
+                                    sizeof(TecControlType) + \
+                                    sizeof(ProcessControlType) + \
+                                    sizeof(EthernetSettingsType) + \
+                                    sizeof(OemDataType)))
 
 typedef struct
 {
@@ -339,6 +345,7 @@ typedef struct
     ProcessControlType      m_ProcessControl;
 	EthernetSettingsType	m_EthernetSettings;
     uint8                   m_aReserved[SETTINGS_RESERVED_LEN];
+    OemDataType             m_OemData; // OEM part must be at the end of the configuration!
 } DeviceConfigType;
 
 typedef enum
@@ -364,18 +371,10 @@ typedef enum
     SENS_HAMS11638 = 21,
     SENS_HAMS11639,
     SENS_HAMS12443,
-    SENS_HAMG9208_512
+    SENS_HAMG9208_512,
+	SENS_HAMG13913,
+	SENS_HAMS13496
 } SENS_TYPE;
-
-typedef struct
-{
-    uint32           TimeStamp;
-	uint32			 ScanNumber;
-	uint32		     ScanStorageLeft;
-	uint32			 DynamicStgFlags;	
-}DstrStatusType;
-
-
 
 #pragma pack(pop)
 
@@ -385,9 +384,10 @@ typedef struct
 //
 // Description  : Tries to open com-port and ask spectrometer configuration
 //
-// Parameters   : a_COMPort   : -1, search for port to be used
-//                              0, use USB port
-//                              1-4, use COM port
+// Parameters   : a_COMPort   : -1,  use both Ethernet and USB ports
+//                              0,   use USB port
+//                              1-4, use COM port (not supported by the AS7010)
+//                              256, use Ethernet port (only AS7010)
 //
 // Returns      : integer     :  >0, number of attached devices
 //                               <0, error occured
@@ -497,23 +497,58 @@ DLL_INT AVS_GetList
 
 //----------------------------------------------------------------------------
 //
-// Name         : AVS_Activate
+// Name       : AVS_Activate
 //
-// Description  : Activates selected spectrometer for communication
+// Description: Activates selected spectrometer for communication
 //
-// Parameters   : a_pDeviceId   : AvsIdentity of desired spectrometer
+//              Do not call AVS_ActivateConnCb() when AVS_Activate() is called 
+//              before.
 //
-// Returns      : AvsHandle     : handle to be used in subsequent calls
-//                INVALID_HANDLE_VALUE  : in case of error
+// Parameters : a_pDeviceId: AvsIdentity of desired spectrometer
 //
-// Remark(s)    : -
+// Returns    : AvsHandle: handle to be used in subsequent calls
+//              INVALID_HANDLE_VALUE: in case of error
+//
+// Remark(s)  : -
 //
 //----------------------------------------------------------------------------
-DLL_AvsHandle AVS_Activate
-(
-    AvsIdentityType*    a_pDeviceId
-);
+DLL_AvsHandle AVS_Activate( AvsIdentityType* a_pDeviceId );
 
+//----------------------------------------------------------------------------
+//
+// Name       : AVS_ActivateConn / AVS_ActivateConnCb
+//
+// Description: AVS_ActivateConn: depending on the define, either the Windows Message 
+//              version or the callback version is used.
+//              Windows Message version: the WM_CONN_STATUS message is sent to the window 
+//              with the a_hWnd handle.
+//              Callback version: Activates selected spectrometer for communication and 
+//              registers a Connection Status callback routine. This callback routine 
+//              will be called by the DLL when a connection status change has
+//              occured. This callback routine must be used by the application 
+//              layer to ensure connection reliability.
+//
+//              Do not call AVS_Activate() when AVS_ActivateConn() has been called 
+//              before. For now the function works only for Ethernet interface.
+//
+// Parameters : a_pDeviceId: AvsIdentity of desired spectrometer
+//              a_hWnd     : handle of window to which the WM_COMM_STATUS message should
+//                           be sent
+//              __Conn     : function pointer which is called by the AvaSpec library
+//                           on Ethernet connection status change
+//
+// Returns    : AvsHandle: handle to be used in subsequent calls
+//              INVALID_HANDLE_VALUE: in case of error
+//
+// Remark(s)  : -
+//
+//----------------------------------------------------------------------------
+#ifdef AVS_POSTMESSAGE
+DLL_AvsHandle AVS_ActivateConn(AvsIdentityType* a_pDeviceId, void *a_hWnd);
+#else
+DLL_AvsHandle AVS_ActivateConn(AvsIdentityType* a_pDeviceId, void(*__Conn)(AvsHandle*, int));
+#endif
+DLL_AvsHandle AVS_ActivateConnCb(AvsIdentityType* a_pDeviceId, void(*__Conn)(AvsHandle*, int));
 
 //----------------------------------------------------------------------------
 //
@@ -681,7 +716,7 @@ DLL_INT AVS_PollScan( AvsHandle a_hDevice );
 //
 //----------------------------------------------------------------------------
 DLL_INT AVS_GetScopeData( AvsHandle a_hDevice, unsigned int* a_pTimeLabel, double* a_pSpectrum );
-DLL_INT AVS_GetDstrData( AvsHandle a_hDevice, DstrStatusType* a_pDstrStatus, double* a_pSpectrum );
+
 //----------------------------------------------------------------------------
 //
 // Name         : AVS_GetSaturatedPixels
@@ -764,6 +799,7 @@ DLL_INT AVS_GetParameter
     unsigned int*   	a_pRequiredSize,
     DeviceConfigType*   a_pDeviceParm
 );
+
 //----------------------------------------------------------------------------
 //
 // Name         : AVS_SetParameter
@@ -784,6 +820,7 @@ DLL_INT AVS_SetParameter
     AvsHandle           a_hDevice,
     DeviceConfigType*   a_pDeviceParm
 );
+
 //----------------------------------------------------------------------------
 //
 // Name         : AVS_GetVersionInfo
@@ -882,7 +919,6 @@ DLL_INT AVS_UseHighResAdc
     AvsHandle       a_hDevice,
     bool            a_Enable
 );
-
 
 //----------------------------------------------------------------------------
 //
@@ -1025,16 +1061,17 @@ DLL_INT AVS_GetDarkPixelData
     double*         a_pDarkData
 );
 
-
 //----------------------------------------------------------------------------
 //
-// Name       : AVS_GetDeviceIp
+// Name       : AVS_GetComPortName
 //
 // Description: Returns the ip address of the device
 //
-// Parameters : a_pDeviceId   : AvsIdentity of desired spectrometer
-//              a_pIp         : array of char, 	size=16
-//              a_size        : number of allocated char for a_ip;
+// Parameters : a_pDeviceId: AvsIdentity of desired spectrometer
+//              a_pIp      : Output; will be filled with A NULL terminated character string 
+//                           representing a "." (dotted) notation number. Size of this buffer
+//                           must be at least 16 bytes long (including NULL termination).
+//              a_size     : number of allocated char for a_ip;
 //
 // Returns    : integer,  1, on success
 //                        0, error, no data available 
@@ -1050,11 +1087,17 @@ DLL_INT AVS_GetComPortName( AvsIdentityType*  a_pDeviceId, char *a_pIp, int *a_s
 //
 // Description: Returns the communication protocol
 //
-//    RS232 = 0,
-//    USB5216 = 1,
-//    USBMINI = 2,
-//    USB7010 = 3,
-//    ETH7010 = 4
+// Parameters : a_pDeviceId: AvsIdentity of desired spectrometer
+//              a_type     : Communication type as defined below;
+//                             RS232 = 0,
+//                             USB5216 = 1,
+//                             USBMINI = 2,
+//                             USB7010 = 3,
+//                             ETH7010 = 4
+//                             -1 when identity given with a_pDeviceId is unknown
+//
+// Returns    : integer,  0, on success
+//                        Any other AvaSpec return value on error
 //
 //----------------------------------------------------------------------------
 DLL_INT AVS_GetComType( AvsIdentityType*  a_pDeviceId, int *a_type );
@@ -1118,13 +1161,96 @@ DLL_INT AVS_GetIpConfig( AvsHandle a_hDevice, EthernetSettingsType *a_Data );
 // Remark(s)    : array size not checked
 //
 //----------------------------------------------------------------------------
-DLL_INT AVS_SuppressStrayLight( AvsHandle a_hDevice, float a_Multifactor, double* a_pSrcSpectrum, double* a_pDestSpectrum );
+DLL_INT AVS_SuppressStrayLight
+(
+    AvsHandle   a_hDevice, 
+    float       a_Multifactor, 
+    double*     a_pSrcSpectrum, 
+    double*     a_pDestSpectrum 
+);
+
+//----------------------------------------------------------------------------
+//
+// Name       : AVS_Heartbeat
+//
+// Description: Indicates that the device is alive (send from host to its client) where the
+//              response contains additional spectrometer information.
+//
+// Parameters : a_hDevice: device handle
+//              a_pHbReq: bitmapped Heartbeat request values (input), see Interface Requirement  
+//                        Specification (doc ID 020388) for the full description of the Heartbeat request.
+//              a_pHbResp: Heartbeat response structure (output), as received from the spectrometer
+//
+// Returns    : integer: 0, successfully received
+//                          error code on error
+//
+// Remark(s)  : array size not checked
+//
+//----------------------------------------------------------------------------
+DLL_INT AVS_Heartbeat( AvsHandle a_hDevice, HeartbeatReqType *a_pHbReq, HeartbeatRespType *a_pHbResp );
+
+//----------------------------------------------------------------------------
+//
+// Name       : AVS_ResetDevice
+//
+// Description: After this command is replied the device will perform a hard reset.
+//                 
+// Parameters : a_hDevice: device handle
+//
+// Returns    : integer: 0, ok
+//                       <0 on error
+//
+//----------------------------------------------------------------------------
+DLL_INT AVS_ResetDevice( AvsHandle a_hDevice );
+
+
+//----------------------------------------------------------------------------
+//
+// Name         : AVS_GetOemParameter
+//
+// Description  : Returns the OEM part of the device parameter structure
+//
+// Parameters   : a_hDevice   : device handle
+//                a_pOemData  : pointer to allocated buffer in which the 
+//                              OEM data will be copied.
+//
+// Returns      : integer     : 0, info available
+//                              AvaSpec error code on error
+//
+//----------------------------------------------------------------------------
+DLL_INT AVS_GetOemParameter
+(
+    AvsHandle        a_hDevice,
+    OemDataType*     a_pOemData
+);
+
+//----------------------------------------------------------------------------
+//
+// Name         : AVS_SetOemParameter
+//
+// Description  : Sets the OEM part of the device parameter
+//
+// Parameters   : a_hDevice   : Device handle
+//                a_pOemData  : Structure containing OEM data which will be 
+//                              copied in the Device Configuration
+//
+// Returns      : integer     : 0, Data available
+//                              AvaSpec error code on error
+//
+// Remark(s)    : contents of structure not checked
+//
+//----------------------------------------------------------------------------
+DLL_INT AVS_SetOemParameter
+(
+    AvsHandle       a_hDevice,
+    OemDataType*    a_pOemData
+);
 
 //----------------------------------------------------------------------------
 // End of definitions
 //----------------------------------------------------------------------------
 
-// Return error codes
+// AvaSpec return error codes
 #define ERR_SUCCESS                     0
 #define ERR_INVALID_PARAMETER          -1
 #define ERR_OPERATION_NOT_SUPPORTED    -2
@@ -1148,7 +1274,8 @@ DLL_INT AVS_SuppressStrayLight( AvsHandle a_hDevice, float a_Multifactor, double
 #define ERR_DLL_INITIALISATION         -20
 #define ERR_INVALID_STATE              -21
 #define ERR_INVALID_REPLY              -22
-#define ERR_GIGE_MEASUREMENT_SERVER    -23
+#define ERR_CONNECTION_FAILURE         ERR_COMMUNICATION
+#define ERR_ACCESS                     -24
 
 // Return error codes; DeviceData check
 #define ERR_INVALID_PARAMETER_NR_PIXELS    -100
@@ -1176,14 +1303,19 @@ DLL_INT AVS_SuppressStrayLight( AvsHandle a_hDevice, float a_Multifactor, double
 #define ERR_SL_STARTPIX_GT_ENDPIX          -143
 #define ERR_SL_MFACTOR_OUT_OF_RANGE        -144
 
-
-
+// Connection status codes (distributed by the callback handler registered with AVS_ActivateConnCb())
+#define ETH_CONN_STATUS_CONNECTING         0 // Waiting to establish ethernet connection (may be send more than once on regular time base)
+                                             // This state could also be given after ETH_CONN_STATUS_CONNECTED, in case of connection loss.
+#define ETH_CONN_STATUS_CONNECTED          1 // Eth connection established, with connection recovery enabled
+#define ETH_CONN_STATUS_CONNECTED_NOMON    2 // Eth connection ready, without connection recovery 
+#define ETH_CONN_STATUS_NOCONNECTION       3 // Unrecoverable connection failure or disconnect from user, AvaSpec library will stop trying to connect with the spectrometer!
 
 #if defined(_M_X64)
 #define WM_MEAS_READY       (WM_APP + 1)
 #else
 #define WM_MEAS_READY       (WM_USER + 1)
 #endif
+#define WM_CONN_STATUS      (WM_APP + 15)   // please check message numbers already used in AvaSoft 8!!
 
 #define WM_DBG_INFO         (WM_USER + 2)
 #define WM_DEVICE_RESET     (WM_USER + 3)
@@ -1193,4 +1325,3 @@ DLL_INT AVS_SuppressStrayLight( AvsHandle a_hDevice, float a_Multifactor, double
 #endif
 
 #endif
-

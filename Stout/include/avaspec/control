@@ -1,0 +1,8 @@
+Package: libavs
+Version: 2.0.0.0
+Section: libs
+Maintainer: Avantes <info@avantes.com>
+Priority: optional
+Architecture: amd64
+Description: Interface Package to write Linux Applications for Avantes Spectrometers
+

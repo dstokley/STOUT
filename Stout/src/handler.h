@@ -24,7 +24,7 @@
 #include "controls/optics_control.h"
 #include "controls/heater_control.h"
 #include "sensors/ADS/ADS_read.h"
-#include "systemhaltexception.h"
+//#include "systemhaltexception.h"
 
 namespace STOUT
 {

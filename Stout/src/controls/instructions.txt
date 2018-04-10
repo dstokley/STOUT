@@ -5,3 +5,7 @@ g++ -std=c++11 -I/usr/local/include/ -L/usr/local/lib/ controls/optics_control.c
 
 Controls and ADS:
 g++ -std=c++11 -I/usr/local/include/ -L/usr/local/lib/ controls/optics_control.cc sensors/ADS/ADS_read.cc main.cc execute.cc -lblas -lm -o test
+
+g++ -I/usr/local/include -L/usr/local/lib -lftd2xx  polarizer.cc -o polarizer_test
+
+

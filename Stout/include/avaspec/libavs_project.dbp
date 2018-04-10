@@ -1,0 +1,53 @@
+[DEBREATE-0.7.10]
+<<CTRL>>
+Package: libavs
+Version: 2.0.0.0
+Section: libs
+Maintainer: Avantes <info@avantes.com>
+Priority: optional
+Architecture: amd64
+Depends: libusb-1.0-0 (>=1.0.19)
+Description: Interface Package to write Linux Applications for Avantes Spectrometers
+
+<</CTRL>>
+<<FILES>>
+1
+/home/user/deb_package_1604_x86_64/testavs* -> testavs -> /usr/local/bin
+/home/user/deb_package_1604_x86_64/type.h -> type.h -> /usr/local/include/libavs
+/home/user/deb_package_1604_x86_64/avaspec.h -> avaspec.h -> /usr/local/include/libavs
+/home/user/deb_package_1604_x86_64/libavs.so.0.2.0* -> libavs.so.0.2.0 -> /usr/local/lib
+<</FILES>>
+<<SCRIPTS>>
+<<PREINST>>
+0
+<</PREINST>>
+<<POSTINST>>
+1
+ln -s /usr/local/lib/libavs.so.0.2.0 /usr/local/lib/libavs.so.0.2
+ln -s /usr/local/lib/libavs.so.0.2.0 /usr/local/lib/libavs.so.0
+ln -s /usr/local/lib/libavs.so.0.2.0 /usr/local/lib/libavs.so
+/sbin/ldconfig
+
+<</POSTINST>>
+<<PRERM>>
+0
+<</PRERM>>
+<<POSTRM>>
+0
+<</POSTRM>>
+<</SCRIPTS>>
+<<CHANGELOG>>
+<<DEST>>DEFAULT<</DEST>>
+
+<</CHANGELOG>>
+<<COPYRIGHT>>
+Copyright (c) 2018  Avantes bv
+<</COPYRIGHT>>
+<<MENU>>
+0
+<</MENU>>
+<<BUILD>>
+0
+1
+1
+<</BUILD>>

@@ -1,0 +1,22 @@
+warning: the authors of lintian do not recommend running it with root privileges!
+E: libavs: unstripped-binary-or-object usr/local/bin/testavs
+E: libavs: binary-or-shlib-defines-rpath usr/local/bin/testavs /opt/Qt5.8.0/5.8/gcc_64/lib
+E: libavs: unstripped-binary-or-object usr/local/lib/libavs.so.0.2.0
+E: libavs: missing-dependency-on-libc needed by usr/local/bin/testavs and 1 others
+E: libavs: changelog-file-missing-in-native-package
+E: libavs: extended-description-is-empty
+E: libavs: dir-in-usr-local usr/local/bin/
+E: libavs: file-in-usr-local usr/local/bin/testavs
+W: libavs: file-in-unusual-dir usr/local/bin/testavs
+E: libavs: dir-in-usr-local usr/local/include/
+E: libavs: dir-in-usr-local usr/local/include/libavs/
+E: libavs: file-in-usr-local usr/local/include/libavs/avaspec.h
+W: libavs: file-in-unusual-dir usr/local/include/libavs/avaspec.h
+E: libavs: file-in-usr-local usr/local/include/libavs/type.h
+W: libavs: file-in-unusual-dir usr/local/include/libavs/type.h
+E: libavs: dir-in-usr-local usr/local/lib/
+E: libavs: file-in-usr-local usr/local/lib/libavs.so.0.2.0
+W: libavs: file-in-unusual-dir usr/local/lib/libavs.so.0.2.0
+E: libavs: shlib-with-executable-bit usr/local/lib/libavs.so.0.2.0 0755
+E: libavs: ldconfig-symlink-missing-for-shlib usr/local/lib/libavs.so.0 usr/local/lib/libavs.so.0.2.0 libavs.so.0
+E: libavs: no-shlibs-control-file usr/local/lib/libavs.so.0.2.0
