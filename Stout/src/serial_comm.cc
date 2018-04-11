@@ -85,10 +85,10 @@ namespace STOUT
   // This function is only used for transmitting data during testing
   int serial_comm::set_UART_comm()
   {
-    const char* UART_portname = "/dev/ttyAMA0";  // Arduino location
+    const char* UART_portname = "/dev/ttyS0";  // Arduino location
 
     // Setup serial communication with Arduino
-    int portname = open (UART_portname, O_RDWR | O_NOCTTY | O_SYNC);
+    int portname = open (UART_portname, O_WRONLY | O_NOCTTY | O_SYNC);
     if (portname < 0)
     {
       return -1;
@@ -97,7 +97,7 @@ namespace STOUT
      struct termios options;
     tcgetattr(portname, &options);
     tcsetattr(portname,TCSANOW,&options);
-    system("stty -F /dev/ttyAMA0 -hupcl ignbrk ignpar -icrnl -ixon -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke 115200");
+    system("stty -F /dev/ttyS0 -hupcl ignbrk ignpar -icrnl -ixon -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke 115200");
 
     //struct termios tty;
     // memset (&tty, 0, sizeof tty);

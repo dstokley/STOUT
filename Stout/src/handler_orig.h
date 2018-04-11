@@ -32,7 +32,7 @@ namespace STOUT
   {
   public:
     char* receive_arduino_data();
-    void UART_transmit(unsigned char* data);
+    void UART_transmit(char* data);
 
     //void read_sensor_data();
     //void call_to_write();

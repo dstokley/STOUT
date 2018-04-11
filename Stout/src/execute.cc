@@ -62,22 +62,37 @@ namespace STOUT
       // Save data to USB drive
 
       // Convert from float to chars
-      char * angle1 = (char*) &ADS_data[0];
-      char * angle2 = (char*) &ADS_data[1];
-      char * angle3 = (char*) &ADS_data[2];
-      char * angle4 = (char*) &ADS_data[3];
+      unsigned char * angle1 = (unsigned char*) &ADS_data[0];
+      unsigned char * angle2 = (unsigned char*) &ADS_data[1];
+      unsigned char * angle3 = (unsigned char*) &ADS_data[2];
+      unsigned char * angle4 = (unsigned char*) &ADS_data[3];
+
+      //printf("Angle 1 is size: %i \n", strlen(angle1));
+      unsigned char data[16];
+      memcpy(data,angle1,sizeof(angle1));
+      memcpy(data+sizeof(angle1),angle2,sizeof(angle2));
+      memcpy(data+sizeof(angle1)+sizeof(angle2),angle3,sizeof(angle3));
+      
 
       // Send EMCS data to external arduino via UART
       //handler_obj.UART_transmit(sensor_data);
       //handler_obj.UART_transmit(ADS_data);
-      handler_obj.UART_transmit(angle1);
+      //printf("ADS DATA 1 is: %f\n", ADS_data[0]);
+       for (std::size_t i = 0; i != sizeof(data); ++i)
+	{
+	  std::printf("The byte in EXECUTE: #%zu is 0x%02X\n", i, data[i]);
+	}
+       
+       //std::printf("THE DATA STRING IS: 0X");
+       //for (std::size_t i = 0; i != sizeof(data); ++i)
+       //{
+       //  std::printf("%02X", i, angle1[i]);
+       //	}
+       //std::printf("\n");
+     
+      handler_obj.UART_transmit(data);
       usleep(1000);
-      handler_obj.UART_transmit(angle2);
-      usleep(1000);
-      handler_obj.UART_transmit(angle3);
-      usleep(1000);
-      handler_obj.UART_transmit(angle4);
-      usleep(1000);
+      
       
       // Free dynamically allocated variable memory
       //free(ADS_data);

@@ -32,14 +32,14 @@ namespace STOUT
   {
   public:
     char* receive_arduino_data();
-    void UART_transmit(unsigned char* data);
+    void UART_transmit(char* data);
 
-    //void read_sensor_data();
-    //void call_to_write();
+    void read_sensor_data();
+    void call_to_write();
 
-    // struct data_frame
-    // {
-    //   clock_t time_stamp;
+     struct data_frame
+     {
+       clock_t time_stamp;
     //   std::array<float,Spectrometer::kNumPixels> spectrum;
     //   float spectrometer_temp_UV;
     //   float spectrometer_temp_vis;
@@ -55,9 +55,9 @@ namespace STOUT
     //   float GPS;
     //   std::array<float,10> azimuth_angles;
     //   std::array<float,10> elevation_angles;
-    // };
+     };
 
-    //data_frame get_frame_data();
+    data_frame get_frame_data();
   
   private:
     // Sensor objects
@@ -72,15 +72,15 @@ namespace STOUT
     // Storage data objects for regular data
     // These are kept open for performance
     //std::ofstream slc_data_file{"/mnt/slcdrive/datafile",std::ios::binary|std::ios::app};
-    //std::ofstream mlc_data_file{"/mnt/64GB_MLC/datafile",std::ios::binary|std::ios::app};
+    std::ofstream mlc_data_file{"/mnt/64GB_MLC/datafile",std::ios::binary|std::ios::app};
     //
     // // Data storage objects here
     //
-    //void write_to_flash(std::ofstream& file);
+    void write_to_flash(std::ofstream& file);
     //
-    //template <class T> std::ostream& binarywrite(std::ostream& stream, const T& value);
+    template <class T> std::ostream& binarywrite(std::ostream& stream, const T& value);
     //
-    //data_frame frame_data;
+    data_frame frame_data;
     //
     //const float max_heater_temp = 15; // deg C
     // const float min_heater_temp = 5;  // deg C

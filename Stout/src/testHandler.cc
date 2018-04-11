@@ -31,27 +31,16 @@ namespace STOUT
     return buffer;
   }
 
-  void handler::UART_transmit(unsigned char * data)
+  void handler::UART_transmit(char* data)
   {
     // Open USB line
     serial_comm UART_comm;
-
-    for (std::size_t i = 0; i != 4*sizeof(data); ++i)
-	{
-	  std::printf("The byte in UART TRANSMIT: #%zu is 0x%02X\n", i, data[i]);
-	}
-    
     int fd = UART_comm.set_UART_comm();
-    printf("File Identifier = %i \n", fd);
-    
+
      // Trasmit data over UART
      int bytes_written = 0;
-     //printf("Size of Data = %i \n", sizeof(data));
-     //unsigned char a[1] = {2};
-     bytes_written = write(fd,data,4*sizeof(data));
-     //bytes_written = write(fd,a,sizeof(a));
+     bytes_written = write(fd,data,sizeof(data));
      printf("%i Bytes Transmitted \n", bytes_written);
-     
 
      // Delay for appropriate amount of time
      usleep(5000);
@@ -72,13 +61,13 @@ namespace STOUT
     close(fd);
   }
 
-  //  void handler::read_sensor_data()
-  // {
+  void handler::read_sensor_data()
+     {
        // Read timestamp measurement
        // This timestamp represents seconds since Unix epoch
        
-  //   frame_data.time_stamp = clock();
-  //   std::cout << "Timestamp: " << frame_data.time_stamp << std::endl;
+       frame_data.time_stamp = clock();
+       std::cout << "Timestamp: " << frame_data.time_stamp << std::endl;
   //
   //     // Read main instrument(spectrometer)
   //     // If the spectrometer cannot be read from, throw an exception to restart the system
@@ -143,11 +132,11 @@ namespace STOUT
   //     	frame_data.attitude_values[i] = radiance_ads.ads_read(i+1);
   //     }
   //
-  //  }
+    }
 
    // Writes the frame data to a csv file
-   //void handler::call_to_write()
-   //{
+   void handler::call_to_write()
+   {
      // Make sure at least one data file can be written to
      // If not, restart the system
 //     if (!slc_data_file.good() && !mlc1_data_file.good()) {
@@ -156,16 +145,16 @@ namespace STOUT
 
      // Writes the data(measurements) to all three drives every second
      //write_to_flash(slc_data_file);
-     //write_to_flash(mlc_data_file);
-  //}
+     write_to_flash(mlc_data_file);
+   }
 
-  //void handler::write_to_flash(std::ofstream& file)
-  //  {
+  void handler::write_to_flash(std::ofstream& file)
+  {
      // Check that the data file is OK
      // If not OK, do nothing
-  //  if (file.good()) {
+     if (file.good()) {
      // Write timestamp of measurement
-  //   handler::binarywrite(file,frame_data.time_stamp);
+     handler::binarywrite(file,frame_data.time_stamp);
      // Write the spectrometer measurements
      // for (auto& i : frame_data.spectrum) {
      //   handler::binarywrite(file,i);
@@ -193,17 +182,17 @@ namespace STOUT
      // handler::binarywrite(file,i);
      //}
      
-  // file.flush();
-     
-    
+     file.flush();
+     }
+  }  
 
   
    // Gets the frame_data struct for other routines
-   //handler::data_frame handler::get_frame_data() {return frame_data;}
+   handler::data_frame handler::get_frame_data() {return frame_data;}
 
    // Takes a value and writes the binary information to given stream
-   //template <class T> std::ostream& handler::binarywrite(std::ostream& stream, const T& value) {
-//return stream.write(reinterpret_cast<const char*>(&value), sizeof(T));
-   
+   template <class T> std::ostream& handler::binarywrite(std::ostream& stream, const T& value) {
+     return stream.write(reinterpret_cast<const char*>(&value), sizeof(T));
+   }
 
 }
