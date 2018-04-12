@@ -7,6 +7,7 @@ namespace STOUT
     // Create comm object, open comm line
     serial_comm ADS_comm;
     int fd = ADS_comm.set_ADS_comm();
+    handler handler_obj;
 
      // Trasmit data over USB
      unsigned char write_buffer[] = {0x01,0x03,0x00,0x08,0x00,0x07,0x85,0xCA};
@@ -14,7 +15,7 @@ namespace STOUT
      //printf("%i Bytes Transmitted \n", bytes_written);
 
      // Delay for appropriate amount of time (5 ms)
-     sleep(1);
+     usleep(20000);
 
      // Receive data over USB
      signed char read_buffer[19];
@@ -134,6 +135,8 @@ namespace STOUT
      ADS_data[1] = y_filter;
      ADS_data[2] = x_nofilter;
      ADS_data[3] = y_nofilter;
+
+     handler_obj.save_ADS_data(ADS_data, add_info);
 
      close(fd);
 

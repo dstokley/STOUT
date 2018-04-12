@@ -2,6 +2,7 @@
 #include <unistd.h>			//Used for UART
 #include <fcntl.h>			//Used for UART
 #include <termios.h>		//Used for UART	//-------------------------
+#include <stdlib.h>
 
 int main(){
 //----- SETUP USART 0 -----
@@ -21,7 +22,7 @@ int main(){
 	//											immediately with a failure status if the output can't be written immediately.
 	//
 	//	O_NOCTTY - When set and path identifies a terminal device, open() shall not cause the terminal device to become the controlling terminal for the process.
-	uart0_filestream = open("/dev/ttyAMA0", O_RDWR | O_NOCTTY | O_NDELAY);		//Open in non blocking read/write mode
+	uart0_filestream = open("/dev/ttyS0", O_WRONLY | O_NOCTTY | O_NDELAY);		//Open in non blocking read/write mode
 	if (uart0_filestream == -1)
 	{
 		//ERROR - CAN'T OPEN SERIAL PORT
@@ -44,30 +45,39 @@ int main(){
 	options.c_iflag = IGNPAR;
 	options.c_oflag = 0;
 	options.c_lflag = 0;
-	tcflush(uart0_filestream, TCIFLUSH);
+	options.c_lflag &= ~ICANON;
+	tcflush(uart0_filestream, TCIOFLUSH);
 	tcsetattr(uart0_filestream, TCSANOW, &options);
 
 //----- TX BYTES -----
-	unsigned char tx_buffer[20];
+	unsigned char tx_buffer[5];
 	unsigned char *p_tx_buffer;
 	
 	p_tx_buffer = &tx_buffer[0];
-	*p_tx_buffer++ = 'H';
-	*p_tx_buffer++ = 'e';
-	*p_tx_buffer++ = 'l';
-	*p_tx_buffer++ = 'l';
-	*p_tx_buffer++ = 'o';
+	*p_tx_buffer++ = 1;
+	*p_tx_buffer++ = 5;
+	*p_tx_buffer++ = 8;
+	*p_tx_buffer++ = 4;
+	*p_tx_buffer++ = 3;
 	
 	if (uart0_filestream != -1)
 	{
+	  //while(1)
+	  //{
 		int count = write(uart0_filestream, &tx_buffer[0], (p_tx_buffer - &tx_buffer[0]));		//Filestream, bytes to write, number of bytes to write
+		usleep(2000);
 		
 		if (count < 0)
 		{
 			printf("UART TX error\n");
 		}
 		printf("Bytes Written = %i\n", count);
-	}
+		//	sleep(1);
+		   }
+	//}
+	  tcflush(uart0_filestream, TCIOFLUSH);
+	close(uart0_filestream);
+	//system("tput reset > /dev/ttyS0");
 
 	return 0;
 }

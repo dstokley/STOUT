@@ -10,6 +10,7 @@
 #include <chrono>
 #include <iostream>
 #include <stdlib.h>
+#include "../../handler.h"
 #include "../../serial_comm.h"
 
 namespace STOUT {

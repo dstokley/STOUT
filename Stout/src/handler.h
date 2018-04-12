@@ -17,6 +17,7 @@
 #include <signal.h>
 //#include <glib.h>
 #include <stdlib.h>
+#include <time.h>
 #include <fcntl.h>
 #include "serial_comm.h"
 #include "sensors/spectrometer/spectrometer.h"
@@ -33,6 +34,7 @@ namespace STOUT
   public:
     char* receive_arduino_data();
     void UART_transmit(unsigned char* data);
+    void save_ADS_data(float * angles, signed char add_info);
 
     //void read_sensor_data();
     //void call_to_write();

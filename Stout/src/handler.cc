@@ -36,26 +36,27 @@ namespace STOUT
     // Open USB line
     serial_comm UART_comm;
 
-    for (std::size_t i = 0; i != 4*sizeof(data); ++i)
-	{
-	  std::printf("The byte in UART TRANSMIT: #%zu is 0x%02X\n", i, data[i]);
-	}
+    //for (std::size_t i = 0; i != 4*sizeof(data); ++i)
+    //{
+    //std::printf("The byte in UART TRANSMIT: #%zu is 0x%02X\n", i, data[i]);
+    //}
     
     int fd = UART_comm.set_UART_comm();
-    printf("File Identifier = %i \n", fd);
+    //printf("File Identifier = %i \n", fd);
     
      // Trasmit data over UART
      int bytes_written = 0;
      //printf("Size of Data = %i \n", sizeof(data));
-     //unsigned char a[1] = {2};
-     bytes_written = write(fd,data,4*sizeof(data));
-     //bytes_written = write(fd,a,sizeof(a));
+     unsigned char a[1] = {1};
+     //  const char a = 'a';
+     //bytes_written = write(fd,data,sizeof(data));
+     bytes_written = write(fd,a,1);
      printf("%i Bytes Transmitted \n", bytes_written);
      
 
      // Delay for appropriate amount of time
-     usleep(5000);
-
+     usleep(10000);
+     
     //  // Receive data over USB
     //  unsigned char read_buffer[4];
     //  int bytes_read = 0;
@@ -70,6 +71,32 @@ namespace STOUT
     // }
 
     close(fd);
+  }
+
+  void handler::save_ADS_data(float* angles, signed char add_info)
+  {
+    //const char* save_point = "/mnt/64GB_MLC/datafile"; // Save location (USB)
+    FILE *f = fopen("file.txt", "a");
+if (f == NULL)
+{
+    printf("Error opening file!\n");
+    exit(1);
+}
+
+/* print some text */
+//const char *text = "Write this to the file";
+//fprintf(f, "Some text: %s\n", text);
+
+time_t rawtime;
+struct tm * timeinfo;
+time(&rawtime);
+timeinfo = localtime(&rawtime);
+// time_t now = time(0);
+
+ fprintf(f,"%f\t%f\t%f\t%f\t%x\t%s",angles[0],angles[1],angles[2],angles[3],add_info,asctime(timeinfo));
+
+
+fclose(f);
   }
 
   //  void handler::read_sensor_data()

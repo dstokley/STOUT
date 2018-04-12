@@ -14,8 +14,18 @@ namespace STOUT
     // Initialize the spectrometer
     //spec_obj.Spectrometer();
 
+    FILE *f = fopen("file.txt", "a");
+    if (f == NULL)
+      {
+    printf("Error opening file!\n");
+    exit(1);
+      }
+    fprintf(f,"\nFiltered X\tFiltered Y\tUnfiltered X\tUnfiltered Y\tAdditional Info\tTime\n");
+
+    fclose(f);
+
     // System loop
-    while(true)
+     while(true)
     {
       //float x = 0, y = 0;
       //float* Lengths;
@@ -90,8 +100,8 @@ namespace STOUT
        //	}
        //std::printf("\n");
      
-      handler_obj.UART_transmit(data);
-      usleep(1000);
+       //handler_obj.UART_transmit(data);
+       //usleep(1000);
       
       
       // Free dynamically allocated variable memory
@@ -100,7 +110,7 @@ namespace STOUT
       //free(sensor_data);
       free(ADS_data);
 
-      //sleep(1); // Sleep for 1 second (only for TVAC testing)
-    }
+      usleep(80000); // Sleep for 1 second (only for TVAC testing)
+      }
   }
 }
