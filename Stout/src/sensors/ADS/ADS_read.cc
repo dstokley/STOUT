@@ -15,7 +15,7 @@ namespace STOUT
      //printf("%i Bytes Transmitted \n", bytes_written);
 
      // Delay for appropriate amount of time (5 ms)
-     usleep(20000);
+     usleep(25000);
 
      // Receive data over USB
      signed char read_buffer[19];

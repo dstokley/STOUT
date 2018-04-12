@@ -88,10 +88,10 @@ namespace STOUT
       //handler_obj.UART_transmit(sensor_data);
       //handler_obj.UART_transmit(ADS_data);
       //printf("ADS DATA 1 is: %f\n", ADS_data[0]);
-       for (std::size_t i = 0; i != sizeof(data); ++i)
-	{
-	  std::printf("The byte in EXECUTE: #%zu is 0x%02X\n", i, data[i]);
-	}
+      // for (std::size_t i = 0; i != sizeof(data); ++i)
+      //{
+      //std::printf("The byte in EXECUTE: #%zu is 0x%02X\n", i, data[i]);
+      //}
        
        //std::printf("THE DATA STRING IS: 0X");
        //for (std::size_t i = 0; i != sizeof(data); ++i)
@@ -110,7 +110,7 @@ namespace STOUT
       //free(sensor_data);
       free(ADS_data);
 
-      usleep(80000); // Sleep for 1 second (only for TVAC testing)
+      usleep(975000); // Sleep for 1 second (only for TVAC testing)
       }
   }
 }

@@ -92,6 +92,7 @@ struct tm * timeinfo;
 time(&rawtime);
 timeinfo = localtime(&rawtime);
 // time_t now = time(0);
+ printf("%s",asctime(timeinfo));
 
  fprintf(f,"%f\t%f\t%f\t%f\t%x\t%s",angles[0],angles[1],angles[2],angles[3],add_info,asctime(timeinfo));
 
