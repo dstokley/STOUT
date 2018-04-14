@@ -55,11 +55,14 @@ namespace STOUT
      rad_int_hi = read_buffer[5];
      rad = (float)(rad_int_hi*255+rad_int_low);
      // Temperature
-     int temp_int_low, temp_int_hi;
+     unsigned char temp_low, temp_hi;
+     signed int temp_int;
      float temp;
-     temp_int_low = read_buffer[8];
-     temp_int_hi = read_buffer[7];
-     temp = (float)(temp_int_hi*255+temp_int_low)*0.1;
+     temp_low = read_buffer[8];
+     temp_hi = read_buffer[7];
+     temp_int = (temp_hi << 8) + temp_low;
+     temp = (float)temp_int*0.1;
+     //temp = (float)(temp_int_hi*255+temp_int_low)*0.1;
 
      // Put needed values into the output array
      float* ADS_data = (float *) malloc(sizeof(float)*3);

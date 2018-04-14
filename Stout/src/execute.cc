@@ -26,12 +26,14 @@ namespace STOUT
       // Read the spectrometer themistor voltage
       bool status = spec_obj.ReadSpectrometerTemperature(temp_float);
       int spec_temp = (int)round(temp_float);
+      //printf("Temp Spec = %i\n",spec_temp);
 
       // Read the ADS data
       ADS_data = ADS_obj.ADS_read();
       // Grab ADS temperature value from data
       float temp0 = ADS_data[0];
       int ADS_temp = (int)round(temp0);
+      //printf("ADS Temp = %i\n",ADS_temp);
 
       // Compute required actuation distances
       //Lengths = Optics_obj.optics_compute(x,y);
@@ -45,6 +47,8 @@ namespace STOUT
       // Isolate heater control temperature
       int T1;
       T1 = sensor_data[0] | sensor_data[1] << 8;
+      printf("Temp 1 = %i\n",T1);
+      //printf("Byte 0 = %x\n",sensor_data[0]);
 
       // Turn heaters on/off based on temperatures
       heater_obj.heater_eval(spec_temp, T1);
@@ -54,6 +58,7 @@ namespace STOUT
       sensor_data[23] = (char)(((spec_temp>>8)&0xFF));
       sensor_data[24] = (char)(((ADS_temp>>8)&0xFF));
       sensor_data[25] = (char)(((ADS_temp>>8)&0xFF));
+      //printf("Sensor data size: %lu\n",sizeof(sensor_data));
 
       // Save data to USB drive
 

@@ -43,9 +43,9 @@ void setup() {
 void loop() {
       //t1 = millis();
       
-      printPress();     // Print temp, press, alt, and humidity from BME280
+     printPress();     // Print temp, press, alt, and humidity from BME280
 
-      printTemp();   // Print internal temp values
+     printTemp();   // Print internal temp values
 
       //sendData();
 
@@ -169,7 +169,7 @@ void sendData() {
   
 
     int bytes_written = Serial.write(data_array, 20);
-     delay(1);
+     delay(2);
     Serial.println(bytes_written);
 
 }

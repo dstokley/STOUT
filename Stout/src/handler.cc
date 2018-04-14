@@ -12,19 +12,35 @@ namespace STOUT
     int n;
 
     n = read (fd, buffer, sizeof(char)*20); 	// Read all 20 characters
+    //printf("Number of bytes received = %i\n",n);
+    usleep(3000);
   	// if (n > 0) {
   	// 	int i;
   	// 	for (i = 0; i < n; i++) {
-  	// 		printf("%c",buffer[i]);
+  	// 		printf("%x\n",buffer[i]);
   	// 	}
   	// }
-    long raw_temp;
+    long raw_temp = 0;
     int udoo_temp;
-    raw_temp = system("cat /sys/devices/virtual/thermal/thermal_zone0/temp");
+    char tmp[256] = {0x00};
+
+    FILE* fp = popen("cat /sys/devices/virtual/thermal/thermal_zone0/temp", "r");
+
+    while(fgets(tmp,4095,fp)!=NULL)
+    {
+      raw_temp += atol(tmp);
+    }
+
     udoo_temp = (int)(raw_temp/1000);
+    //printf("UDOO temp = %i\n",udoo_temp);
 
     buffer[20] = udoo_temp&0xFF;
     buffer[21] = (udoo_temp>>8)&0xFF;
+
+    // for (int i=0;i<21;i++)
+    // {
+    //   printf("Byte %i = %c\n",i,buffer[i]);
+    // }
 
     close(fd);
 
@@ -39,11 +55,11 @@ namespace STOUT
 
      // Trasmit data over UART
      int bytes_written = 0;
-     bytes_written = write(fd,data,sizeof(data));
-     //printf("%i Bytes Transmitted \n", bytes_written);
+     bytes_written = write(fd,data,26);
 
      // Delay for appropriate amount of time
-     usleep(5000);
+     usleep(3000);
+     printf("%i Bytes Transmitted \n", bytes_written);
 
     //  // Receive data over USB
     //  unsigned char read_buffer[4];

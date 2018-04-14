@@ -17,10 +17,10 @@ unsigned long t1, t2;
 
 void setup() {
     Serial.begin(115200);
-    while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-    }
-    Serial1.begin(115200);
+    //while (!Serial) {
+    //; // wait for serial port to connect. Needed for native USB port only
+    //}
+    //Serial1.begin(115200);
 
     // Setup pressure/humidity sensor
     bool status;
@@ -105,8 +105,8 @@ void sendData() {
   data_array[19] = (byte)((bme_humid>>8)&0xFF);
   
 
-  int bytes_written = Serial1.write(data_array, 20);
-  delay(2);
+  int bytes_written = Serial.write(data_array, 20);
+  delay(3);
   Serial.println(bytes_written);
 
 }

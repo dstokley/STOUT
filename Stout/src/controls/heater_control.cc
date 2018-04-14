@@ -8,11 +8,11 @@ namespace STOUT {
     int heater_Tmax = 5;  // deg C
     if (T1 > heater_Tmax)
     {
-      system("echo 0 > /sys/class/gpio/gpio344/value");
+      system("echo 0 > /sys/class/gpio/gpio346/value");
     }
     else
     {
-      system("echo 1 > /sys/class/gpio/gpio344/value");
+      system("echo 1 > /sys/class/gpio/gpio346/value");
     }
     if (T2 > heater_Tmax)
     {
