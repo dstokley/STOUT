@@ -47,7 +47,7 @@ namespace STOUT
       // Isolate heater control temperature
       int T1;
       T1 = sensor_data[0] | sensor_data[1] << 8;
-      printf("Temp 1 = %i\n",T1);
+      //printf("Temp 1 = %i\n",T1);
       //printf("Byte 0 = %x\n",sensor_data[0]);
 
       // Turn heaters on/off based on temperatures
@@ -56,13 +56,19 @@ namespace STOUT
       // Add spectrometer and ADS temperatures to data array
       sensor_data[22] = (char)((spec_temp)&0xFF);
       sensor_data[23] = (char)(((spec_temp>>8)&0xFF));
-      sensor_data[24] = (char)(((ADS_temp>>8)&0xFF));
+      sensor_data[24] = (char)((ADS_temp)&0xFF);
       sensor_data[25] = (char)(((ADS_temp>>8)&0xFF));
       //printf("Sensor data size: %lu\n",sizeof(sensor_data));
+      // for(int i=0;i<25;i++)
+      // {
+      //   printf("%x\n",sensor_data[i]);
+      // }
+      // printf("\n\n");
 
       // Save data to USB drive
 
-      // Send EMCS data to external arduino via UART
+
+      // Send EMCS data to external arduino via UART (for TVAC testing)
       handler_obj.UART_transmit(sensor_data);
 
       // Free dynamically allocated variable memory

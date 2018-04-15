@@ -106,7 +106,7 @@ void sendData() {
   
 
   int bytes_written = Serial.write(data_array, 20);
-  delay(3);
-  Serial.println(bytes_written);
+  delay(5);
+  //Serial.println(bytes_written);
 
 }

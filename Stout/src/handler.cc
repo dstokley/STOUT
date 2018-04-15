@@ -8,10 +8,9 @@ namespace STOUT
     int fd = arduino_comm.set_arduino_comm();
 
     int bufsize = 26;
-    char* buffer = (char*)malloc(sizeof(char) * bufsize); //+1 ???
-    int n;
+    char* buffer = (char*)malloc(sizeof(char) * bufsize);
 
-    n = read (fd, buffer, sizeof(char)*20); 	// Read all 20 characters
+    read(fd, buffer, sizeof(char)*20); 	// Read all 20 characters
     //printf("Number of bytes received = %i\n",n);
     usleep(3000);
   	// if (n > 0) {
@@ -54,12 +53,12 @@ namespace STOUT
     int fd = UART_comm.set_UART_comm();
 
      // Trasmit data over UART
-     int bytes_written = 0;
-     bytes_written = write(fd,data,26);
+     //int bytes_written = 0;
+     write(fd,data,26);
 
      // Delay for appropriate amount of time
      usleep(3000);
-     printf("%i Bytes Transmitted \n", bytes_written);
+     //printf("%i Bytes Transmitted \n", bytes_written);
 
     //  // Receive data over USB
     //  unsigned char read_buffer[4];
