@@ -198,7 +198,7 @@ namespace STOUT
   }
 
   // Gets the frame_data struct for other routines
-  handler::data_frame handler::get_frame_data() {return frame_data;}
+  // handler::data_frame handler::get_frame_data() {return frame_data;}
 
   // Takes a value and writes the binary information to given stream
   template <class T> std::ostream& handler::binarywrite(std::ostream& stream, const T& value) {
