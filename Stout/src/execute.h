@@ -8,7 +8,11 @@ namespace STOUT
   {
 
   public:
-
+    // Function declarations
+    static gboolean GPIO_event(GIOChannel *channel, GIOCondition condition, gpointer user_data);
+    static gboolean timeout_event(gpointer user_data);
+    static gboolean ext_main(gpointer user_data);
+    
     // Loop for all STOUT actions
     int start_loop();
 

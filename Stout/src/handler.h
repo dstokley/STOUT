@@ -1,6 +1,11 @@
 #ifndef HANDLER_H
 #define HANDLER_H
 
+// Set timer interrupt to high priority
+#define G_PRIORITY_DEFAULT  -10
+
+// Required libraries
+#include <glib.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <chrono>
@@ -15,7 +20,6 @@
 #include <fcntl.h>
 #include <math.h>
 #include <signal.h>
-//#include <glib.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include "serial_comm.h"
@@ -33,31 +37,23 @@ namespace STOUT
   public:
     char* receive_arduino_data();
     void UART_transmit(char* data);
+    Camera camera;
+
+
 
     // void read_sensor_data();
     // void call_to_write();
 
-    // struct data_frame
-    // {
-    //   unsigned int time_stamp;
-    //   std::array<float,Spectrometer::kNumPixels> spectrum;
-    //   float spectrometer_temp_UV;
-    //   float spectrometer_temp_vis;
-    //   float UDOO_temp;
-    //   float storage_temp;
-    //   float motor_hor_temp;
-    //   float motor_vert_temp;
-    //   float power_temp;
-    //   float ext_front_temp;
-    //   float ext_back_temp;
-    //   float humidity;
-    //   float pressure;
-    //   float GPS;
-    //   std::array<float,10> azimuth_angles;
-    //   std::array<float,10> elevation_angles;
-    // };
+    struct data_frame
+    {
+      milliseconds timestamp;
+      std::array<float,Spectrometer::kNumPixels> spectrum;
+      char* sensor_datas;
+      float* ADS_datas;
+    };
 
-    // data_frame get_frame_data();
+    //data_frame get_frame_data();
+    void take_pic();
 
   private:
     // Sensor objects
@@ -68,6 +64,7 @@ namespace STOUT
     //ADS ADS_obj;
     //Spectrometer Spec_obj;
     //heater_control Heater_obj;
+    //void take_pic();
 
     // Storage data objects for regular data
     // These are kept open for performance
