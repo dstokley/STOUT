@@ -59,13 +59,12 @@ void setup() {
   // Read current states of channel 1 on both encoders
   ch1laststate_x = digitalRead(CH1_x);
   ch1laststate_y = digitalRead(CH1_y);
-  step_x = 30e-3;
-  step_y = 30e-3;
-}
+  step_x = 1500e-3;
+  step_y = 0;
 
-void loop() {
-  
-  // put your main code here, to run repeatedly:
+  unsigned long t1, t2;
+
+    // put your main code here, to run repeatedly:
     // Calculate necessary numbers of steps and dirction for hoizontal and vertical actuations
   // Horizontal linear actuator
   if (step_x > 0.0)
@@ -152,9 +151,11 @@ void loop() {
     // Actuations are only required for the horizontal motor
     else if (remsteps_x != 0 && remsteps_y == 0)
     {
+      //Serial.println(remsteps_x);
       // Trigger one step foward for horizontal actuator
+       //t1 = micros();
       digitalWrite(STP_x, HIGH);
-
+      delayMicroseconds(94);
       // Checking horizontal encoder
       ch1state_x = digitalRead(CH1_x);    // Current value on ch1 of horizontal encoder
       if (ch1state_x != ch1laststate_x)
@@ -169,12 +170,15 @@ void loop() {
         }
       }
       ch1laststate_x = ch1state_x;        // Save current value of encoder
-
+      //t2 = micros();
+      //Serial.println(t2-t1);
       // Reset to allow for more actuations
       digitalWrite(STP_x, LOW);
+      delayMicroseconds(100);
 
       // Subtract from number of steps
       remsteps_x--;
+      Serial.println(counter_x);
     }
 
     // Actuations are only required for the vertical motor
@@ -202,12 +206,14 @@ void loop() {
 
       // Subtract from number of steps
       remsteps_y--;
-    }
+          }
 
     // Check if required actuations were carried out by looking at encoder values when
     // remaining steps for horizontal and vertical actuation are both 0
     else if (remsteps_x == 0 && remsteps_y == 0)
     {
+      
+      //Serial.println(stepact_x);
       // Check for correct horizontal actuation
       if (counter_x != stepact_x)
       {
@@ -243,9 +249,14 @@ void loop() {
         }
       }
     }
-    Serial.println(remsteps_x);
-    Serial.println(counter_x);
+    //Serial.println(remsteps_x);
+    //Serial.println(counter_x);
   }
+}
+
+void loop() {
+  
+
 
    // Disable movement for both actuators
   digitalWrite(EN_x, HIGH);

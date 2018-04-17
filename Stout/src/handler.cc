@@ -76,6 +76,33 @@ namespace STOUT
     close(fd);
   }
 
+//   void handler::save_EMCS_data(int* EMCS_data)
+// {
+//   //const char* save_point = "/mnt/64GB_MLC/datafile"; // Save location (USB)
+//   FILE *f = fopen("TVAC_Data.txt", "a");
+//   if (f == NULL)
+//   {
+//     printf("Error opening file!\n");
+//     exit(1);
+//   }
+//
+// /* print some text */
+// //const char *text = "Write this to the file";
+// //fprintf(f, "Some text: %s\n", text);
+//
+// time_t rawtime;
+// struct tm * timeinfo;
+// time(&rawtime);
+// timeinfo = localtime(&rawtime);
+// // time_t now = time(0);
+// printf("%s",asctime(timeinfo));
+//
+// fprintf(f,"%i\t%i\t%i\t%i\t%i\t%s",EMCS_data[0] | EMCS_data[1] << 8,EMCS_data[2] | EMCS_data[3] << 8,EMCS_data[4] | EMCS_data[5] << 8,EMCS_data[6] | EMCS_data[7] << 8,EMCS_data[8] | EMCS_data[9] << 8,EMCS_data[9] | EMCS_data[10] << 8,EMCS_data[11] | EMCS_data[12] << 8,EMCS_data[13] | EMCS_data[9] << 8,EMCS_data[8] | EMCS_data[9] << 8asctime(timeinfo));
+//
+//
+// fclose(f);
+// }
+
 //   void handler::read_sensor_data()
 //   {
 //     // Read timestamp measurement

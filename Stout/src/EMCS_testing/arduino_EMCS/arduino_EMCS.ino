@@ -17,10 +17,6 @@ unsigned long t1, t2;
 
 void setup() {
     Serial.begin(115200);
-    //while (!Serial) {
-    //; // wait for serial port to connect. Needed for native USB port only
-    //}
-    //Serial1.begin(115200);
 
     // Setup pressure/humidity sensor
     bool status;

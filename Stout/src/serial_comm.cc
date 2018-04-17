@@ -30,6 +30,10 @@ namespace STOUT
        return -1;
      }
 
+     // Enable required mods
+     system("modprobe ftdi_sio");
+     system("modprobe usbserial");
+
      // Setup port settings
      system("stty -F /dev/ttyUSB0 -hupcl ignbrk ignpar -icrnl -ixon -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke 19200");
 

@@ -38,7 +38,7 @@ void setup() {
     dallas(5,1);
     dallas(6,1);
     dallas(7,1);
-    
+
 }
 
 void loop() {
@@ -84,9 +84,31 @@ void printTemp(){
     Serial.print(dallas(2,0));
     Serial.println(" *C");
 
+    if(dallas(2,0) < 30)
+    {
+      digitalWrite(A0, HIGH);
+      Serial.println("Heater 1 On");
+    }
+    else
+    {
+      digitalWrite(A0, LOW);
+      Serial.println("Heater 1 Off");
+    }
+
     Serial.print("Int Temperature 2 = ");
     Serial.print(dallas(3,0));
     Serial.println(" *C");
+
+    if(dallas(3,0) < 30)
+    {
+      digitalWrite(A1, HIGH);
+      Serial.println("Heater 2 On");
+    }
+    else
+    {
+      digitalWrite(A1, LOW);
+      Serial.println("Heater 2 Off");
+    }
 
     Serial.print("Int Temperature 3 = ");
     Serial.print(dallas(4,0));

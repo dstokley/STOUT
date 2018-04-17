@@ -14,8 +14,8 @@
 #include <stdint.h>
 #include <sys/time.h>
 #include <assert.h>
-//#include <WinTypes.h>
-//#include <ftd2xx.h>
+#include <WinTypes.h>
+#include <ftd2xx.h>
 #include "../serial_comm.h"
 
 namespace STOUT
@@ -26,14 +26,17 @@ class optics_control
 
 public:
 
+  // Scan location determination Function
+  // float* optics_determine(char location);
+
   // Actuation computation function
   float* optics_compute(float x, float y);
 
   // Data transmission function
-  void optics_transmit(double* lengths);
+  void optics_transmit(float* lengths);
 
   // Polarizer control function
-  void polarizer_rotate(char location);
+  void polarizer_rotate(char home);
 
 
 private:

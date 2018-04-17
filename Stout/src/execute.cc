@@ -2,44 +2,62 @@
 
 namespace STOUT
 {
+
   int execute::start_loop()
   {
-    //serial_comm comm_obj;
+
     handler handler_obj;
     heater_control heater_obj;
     ADS ADS_obj;
     Spectrometer spec_obj;
     //optics_control optics_obj;
 
-    // Initialize the spectrometer
-    //spec_obj.Spectrometer();
+    //char location = 0, home = 0;
 
     // System loop
     while(true)
     {
       //float x = 0, y = 0;
-      //float* Lengths;
       float* ADS_data;
+      //float* lengths;
       char* sensor_data;
       float temp_float;
 
       // Read the spectrometer themistor voltage
       bool status = spec_obj.ReadSpectrometerTemperature(temp_float);
+      if (status != true)
+      {
+        // Restart UDOO
+        continue;
+      }
+
       int spec_temp = (int)round(temp_float);
       //printf("Temp Spec = %i\n",spec_temp);
 
       // Read the ADS data
       ADS_data = ADS_obj.ADS_read();
+
       // Grab ADS temperature value from data
       float temp0 = ADS_data[0];
       int ADS_temp = (int)round(temp0);
       //printf("ADS Temp = %i\n",ADS_temp);
 
-      // Compute required actuation distances
-      //Lengths = Optics_obj.optics_compute(x,y);
+      // Grab filtered angle values from data
+      //x = ADS_data[1];
+      //y = ADS_data[2];
 
-      // Trasmit required actuation distances to the Arduino via Serial
-      //Optics_obj.optics_transmit(Lengths, fd);
+      // Compute required actuation distances
+      //lengths = optics_obj.optics_compute(x,y);
+
+      // Print angles to screen
+      //printf("X Angle = %f deg\nY Angle = %f deg\n",x,y);
+
+      // Trasmit required actuation distances to the Arduino via serial line
+      //optics_obj.optics_transmit(lengths);
+
+      // Print lengths to screen
+      //printf("X Length = %f mm\nY Length = %f mm\n",(float)*(lengths + 0),(float)*(lengths + 1));
+      //printf("\n\n");
 
       // Receive data from the Arduino via serial
       sensor_data = handler_obj.receive_arduino_data();
@@ -48,7 +66,6 @@ namespace STOUT
       int T1;
       T1 = sensor_data[0] | sensor_data[1] << 8;
       //printf("Temp 1 = %i\n",T1);
-      //printf("Byte 0 = %x\n",sensor_data[0]);
 
       // Turn heaters on/off based on temperatures
       heater_obj.heater_eval(spec_temp, T1);
@@ -72,10 +89,9 @@ namespace STOUT
       handler_obj.UART_transmit(sensor_data);
 
       // Free dynamically allocated variable memory
-      //free(ADS_data);
-      //free(Lengths);
-      free(sensor_data);
       free(ADS_data);
+      //free(lengths);
+      free(sensor_data);
 
       sleep(1); // Sleep for 1 second (only for TVAC testing)
     }
