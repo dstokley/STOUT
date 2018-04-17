@@ -76,32 +76,34 @@ namespace STOUT
     close(fd);
   }
 
-//   void handler::save_EMCS_data(int* EMCS_data)
-// {
-//   //const char* save_point = "/mnt/64GB_MLC/datafile"; // Save location (USB)
-//   FILE *f = fopen("TVAC_Data.txt", "a");
-//   if (f == NULL)
-//   {
-//     printf("Error opening file!\n");
-//     exit(1);
-//   }
-//
-// /* print some text */
-// //const char *text = "Write this to the file";
-// //fprintf(f, "Some text: %s\n", text);
-//
-// time_t rawtime;
-// struct tm * timeinfo;
-// time(&rawtime);
-// timeinfo = localtime(&rawtime);
-// // time_t now = time(0);
-// printf("%s",asctime(timeinfo));
-//
-// fprintf(f,"%i\t%i\t%i\t%i\t%i\t%s",EMCS_data[0] | EMCS_data[1] << 8,EMCS_data[2] | EMCS_data[3] << 8,EMCS_data[4] | EMCS_data[5] << 8,EMCS_data[6] | EMCS_data[7] << 8,EMCS_data[8] | EMCS_data[9] << 8,EMCS_data[9] | EMCS_data[10] << 8,EMCS_data[11] | EMCS_data[12] << 8,EMCS_data[13] | EMCS_data[9] << 8,EMCS_data[8] | EMCS_data[9] << 8asctime(timeinfo));
-//
-//
-// fclose(f);
-// }
+    void handler::save_EMCS_data(char* EMCS_data)
+  {
+    //const char* save_point = "/mnt/64GB_MLC/datafile"; // Save location (USB)
+    FILE *f = fopen("TVAC_Data.txt", "a");
+    if (f == NULL)
+    {
+      printf("Error opening file!\n");
+      exit(1);
+    }
+
+  /* print some text */
+  //const char *text = "Write this to the file";
+  //fprintf(f, "Some text: %s\n", text);
+
+  time_t rawtime;
+  struct tm * timeinfo;
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
+  // time_t now = time(0);
+  //printf("%s",asctime(timeinfo));
+
+  fprintf(f,"%i\t%i\t%i\t%i\t%i\t%i\t%i\t%li\t%i\t%i\t%i\t%i\t%s",EMCS_data[0] | EMCS_data[1] << 8,EMCS_data[2] | EMCS_data[3] << 8,EMCS_data[4] | EMCS_data[5] << 8,EMCS_data[6] | EMCS_data[7] << 8,
+  EMCS_data[8] | EMCS_data[9] << 8,EMCS_data[10] | EMCS_data[11] << 8,EMCS_data[12] | EMCS_data[13] << 8,(long)(EMCS_data[14] | EMCS_data[15] << 8 | EMCS_data[16] << 16 | EMCS_data[17] << 24),
+  EMCS_data[18] | EMCS_data[19] << 8,EMCS_data[20] | EMCS_data[21] << 8,EMCS_data[22] | EMCS_data[23] << 8,EMCS_data[24] | EMCS_data[25] << 8,asctime(timeinfo));
+
+
+  fclose(f);
+  }
 
 //   void handler::read_sensor_data()
 //   {

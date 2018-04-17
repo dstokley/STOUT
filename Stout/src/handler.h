@@ -33,6 +33,7 @@ namespace STOUT
   public:
     char* receive_arduino_data();
     void UART_transmit(char* data);
+    void save_EMCS_data(char* EMCS_data);
 
     // void read_sensor_data();
     // void call_to_write();

@@ -14,6 +14,16 @@ namespace STOUT
 
     //char location = 0, home = 0;
 
+    FILE *f = fopen("TVAC_Data.txt", "a");
+    if (f == NULL)
+      {
+    printf("Error opening file!\n");
+    exit(1);
+      }
+    fprintf(f,"\nInt Temp 1\tInt Temp 2\tInt Temp 3\tInt Temp 4\tInt Temp 5\tExt Temp 1\tExt Temp 2\tPressure\tHumidity\tUDOO Temo\tSpec Temp\tADS Temp\tTime\n");
+
+    fclose(f);
+
     // System loop
     while(true)
     {
@@ -83,7 +93,7 @@ namespace STOUT
       // printf("\n\n");
 
       // Save data to USB drive
-
+      handler_obj.save_EMCS_data(sensor_data);
 
       // Send EMCS data to external arduino via UART (for TVAC testing)
       handler_obj.UART_transmit(sensor_data);
