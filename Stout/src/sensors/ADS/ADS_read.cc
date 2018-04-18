@@ -52,7 +52,7 @@ namespace STOUT
      y_nofilter = x_nofilter_temp;
 
      // Print ADS angle values
-     //printf("X filtered = %f\nY filtered = %f\nX unfiltered = %f\nY unfiltered = %f\n\n\n",x_filter,y_filter,x_nofilter,y_nofilter);
+     printf("X filtered = %f\nY filtered = %f\nX unfiltered = %f\nY unfiltered = %f\n\n\n",x_filter,y_filter,x_nofilter,y_nofilter);
 
      // Radiation and temperature
 
