@@ -4,3 +4,5 @@ Int Temp 1	Int Temp 2	Int Temp 3	Int Temp 4	Int Temp 5	Ext Temp 1	Ext Temp 2	Pre
 0	0	0	0	0	0	0	0	0	48	29	22	Tue Apr 17 11:18:52 2018
 0	0	0	0	0	0	0	0	0	48	29	22	Tue Apr 17 11:18:53 2018
 0	0	0	0	0	0	0	0	0	48	29	22	Tue Apr 17 11:18:54 2018
+
+Int Temp 1	Int Temp 2	Int Temp 3	Int Temp 4	Int Temp 5	Ext Temp 1	Ext Temp 2	Pressure	Humidity	UDOO Temo	Spec Temp	ADS Temp	Time
