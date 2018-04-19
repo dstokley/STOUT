@@ -2,12 +2,13 @@
 #define ADS_H
 
 #include <stdio.h>
-#include <fcntl.h>  
+#include <fcntl.h>
 #include <termios.h>
 #include <unistd.h>
 #include <errno.h>
 #include <stdlib.h>
 #include "../../serial_comm.h"
+#include "../../handler.h"
 
 namespace STOUT {
   class ADS

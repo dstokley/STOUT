@@ -1,3 +1,5 @@
+ #include <EEPROM.h>
+ 
  //Declare pin functions on Redboard
 #define stp_h 10
 #define dir_h 9
@@ -10,9 +12,11 @@
 
 //Declare variables for functions
 char user_input;
-int x;
-int y;
+String user_input_steps;
+unsigned int x;
 int state;
+long hor_pos=0, vert_pos=0;
+unsigned int num_steps;
 
 //Reset Easy Driver pins to default states
 void resetEDPins()
@@ -29,15 +33,35 @@ void resetEDPins()
 //Default microstep mode function
 void StepForwardDefault1()
 {
+  Serial.println("Enter desired number of steps:");
+  while(1)
+  {
+    if(Serial.available())
+    {
+     user_input_steps = Serial.readString();
+     delay(1);
+     num_steps = user_input_steps.toInt();
+     Serial.println(num_steps);
+     break;
+    }
+  }
+  
   Serial.println("Moving forward at default step mode.");
   digitalWrite(dir_h, HIGH); //Pull direction pin low to move "forward"
-  for(x= 1; x<=200; x++)  //Loop the forward stepping enough times for motion to be visible
+  for(x= 1; x<=num_steps; x++)  //Loop the forward stepping enough times for motion to be visible
   {
     digitalWrite(stp_h,HIGH); //Trigger one step forward
     delayMicroseconds(250);
     digitalWrite(stp_h,LOW); //Pull step pin low so it can be triggered again
     delayMicroseconds(250);
   }
+  hor_pos = hor_pos + num_steps;
+  Serial.println();
+  Serial.print("Horizontal steps from starting point:");
+  Serial.println(hor_pos);
+  Serial.print("Vertical steps from starting point:");
+  Serial.println(vert_pos);
+  Serial.println();
   Serial.println("Enter new option");
   Serial.println();
 }
@@ -45,15 +69,34 @@ void StepForwardDefault1()
 //Backward microstep mode function
 void StepBackwardDefault1()
 {
+   Serial.println("Enter desired number of steps:");
+  while(1)
+  {
+    if(Serial.available())
+    {
+     user_input_steps = Serial.readString();
+     delay(1);
+     num_steps = user_input_steps.toInt();
+     Serial.println(num_steps);
+     break;
+    }
+  }
   Serial.println("Moving backward at default step mode.");
   digitalWrite(dir_h, LOW); //Pull direction pin low to move "backward"
-  for(x= 1; x<=200; x++)  //Loop the forward stepping enough times for motion to be visible
+  for(x= 1; x<=num_steps; x++)  //Loop the forward stepping enough times for motion to be visible
   {
     digitalWrite(stp_h,HIGH); //Trigger one step forward
     delayMicroseconds(250);
     digitalWrite(stp_h,LOW); //Pull step pin low so it can be triggered again
     delayMicroseconds(250);
   }
+  hor_pos = hor_pos - num_steps;
+  Serial.println();
+  Serial.print("Horizontal steps from starting point:");
+  Serial.println(hor_pos);
+  Serial.print("Vertical steps from starting point:");
+  Serial.println(vert_pos);
+  Serial.println();
   Serial.println("Enter new option");
   Serial.println();
 }
@@ -61,15 +104,34 @@ void StepBackwardDefault1()
 //Default microstep mode function
 void StepForwardDefault2()
 {
+   Serial.println("Enter desired number of steps:");
+  while(1)
+  {
+    if(Serial.available())
+    {
+     user_input_steps = Serial.readString();
+     delay(1);
+     num_steps = user_input_steps.toInt();
+     Serial.println(num_steps);
+     break;
+    }
+  }
   Serial.println("Moving forward at default step mode.");
   digitalWrite(dir_v, HIGH); //Pull direction pin low to move "forward"
-  for(x= 1; x<=200; x++)  //Loop the forward stepping enough times for motion to be visible
+  for(x= 1; x<=num_steps; x++)  //Loop the forward stepping enough times for motion to be visible
   {
     digitalWrite(stp_v,HIGH); //Trigger one step forward
     delayMicroseconds(250);
     digitalWrite(stp_v,LOW); //Pull step pin low so it can be triggered again
     delayMicroseconds(250);
   }
+  vert_pos = vert_pos + num_steps;
+  Serial.println();
+  Serial.print("Horizontal steps from starting point:");
+  Serial.println(hor_pos);
+  Serial.print("Vertical steps from starting point:");
+  Serial.println(vert_pos);
+  Serial.println();
   Serial.println("Enter new option");
   Serial.println();
 }
@@ -77,15 +139,34 @@ void StepForwardDefault2()
 //Backward microstep mode function
 void StepBackwardDefault2()
 {
+   Serial.println("Enter desired number of steps:");
+  while(1)
+  {
+    if(Serial.available())
+    {
+     user_input_steps = Serial.readString();
+     delay(1);
+     num_steps = user_input_steps.toInt();
+     Serial.println(num_steps);
+     break;
+    }
+  }
   Serial.println("Moving backward at default step mode.");
   digitalWrite(dir_v, LOW); //Pull direction pin low to move "backward"
-  for(x= 1; x<=200; x++)  //Loop the forward stepping enough times for motion to be visible
+  for(x= 1; x<=num_steps; x++)  //Loop the forward stepping enough times for motion to be visible
   {
     digitalWrite(stp_v,HIGH); //Trigger one step forward
     delayMicroseconds(250);
     digitalWrite(stp_v,LOW); //Pull step pin low so it can be triggered again
     delayMicroseconds(250);
   }
+  vert_pos = vert_pos - num_steps;
+  Serial.println();
+  Serial.print("Horizontal steps from starting point:");
+  Serial.println(hor_pos);
+  Serial.print("Vertical steps from starting point:");
+  Serial.println(vert_pos);
+  Serial.println();
   Serial.println("Enter new option");
   Serial.println();
 }
@@ -103,10 +184,10 @@ void setup() {
   Serial.println();
   //Print function list for user selection
   Serial.println("Enter number for control option:");
-  Serial.println("1. Turn at default microstep mode, horizontal motor.");
-  Serial.println("2. Reverse direction at default microstep mode, horizontal motor.");
-  Serial.println("3. Turn at default microstep mode, vertical motor.");
-  Serial.println("4. Reverse direction at default microstep mode, vertical motor.");
+  Serial.println("1. Turn at default microstep mode (horizontal motor)");
+  Serial.println("2. Reverse direction at default microstep mode (horizontal motor)");
+  Serial.println("3. Turn at default microstep mode (vertical motor)");
+  Serial.println("4. Reverse direction at default microstep mode (vertical motor)");
   Serial.println();
 
 }
@@ -123,14 +204,14 @@ void loop() {
       else if (user_input =='2')
       {
          StepBackwardDefault1();
-      }
+               }
       else if (user_input == '3')
       {
          StepForwardDefault2();
-      }
+               }
       else if (user_input == '4')
       {
-        StepBackwardDefault2();
+         StepBackwardDefault2();
       }
       else
       {

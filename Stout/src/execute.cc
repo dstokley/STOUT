@@ -46,10 +46,7 @@ namespace STOUT
 
       // Read the ADS data
       ADS_data = ADS_obj.ADS_read();
-
-      // Save ADS data
-      hanlder.save_ADS_data(ADS_data);
-
+      
       // Grab ADS temperature value from data
       float temp0 = ADS_data[0];
       int ADS_temp = (int)round(temp0);

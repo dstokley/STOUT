@@ -109,21 +109,21 @@ namespace STOUT
   {
     //const char* save_point = "/mnt/64GB_MLC/datafile"; // Save location (USB)
     FILE *f = fopen("ADS_data.txt", "a");
-if (f == NULL)
-{
-    printf("Error opening file!\n");
-    exit(1);
-}
+    if (f == NULL)
+    {
+      printf("Error opening file!\n");
+      exit(1);
+    }
 
-/* print some text */
-//const char *text = "Write this to the file";
-//fprintf(f, "Some text: %s\n", text);
+  /* print some text */
+  //const char *text = "Write this to the file";
+  //fprintf(f, "Some text: %s\n", text);
 
-time_t rawtime;
-struct tm * timeinfo;
-time(&rawtime);
-timeinfo = localtime(&rawtime);
-// time_t now = time(0);
+  time_t rawtime;
+  struct tm * timeinfo;
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
+  // time_t now = time(0);
  printf("%s",asctime(timeinfo));
 
  fprintf(f,"%f\t%f\t%f\t%f\t%x\t%s",angles[0],angles[1],angles[2],angles[3],add_info,asctime(timeinfo));

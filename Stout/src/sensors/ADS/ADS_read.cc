@@ -6,6 +6,7 @@ namespace STOUT
   {
     // Create comm object, open comm line
     serial_comm ADS_comm;
+    handler ADS_handler;
     int fd = ADS_comm.set_ADS_comm();
 
      // Trasmit data over USB
@@ -126,6 +127,9 @@ namespace STOUT
      ADS_data[2] = y_filter;
      ADS_data[3] = x_nofilter;
      ADS_data[4] = y_nofilter;
+
+     // Save values
+     ADS_handler.save_ADS_data(ADS_data, add_info);
 
      // Close serial connection
      close(fd);
