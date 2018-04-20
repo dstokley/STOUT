@@ -22,7 +22,7 @@ unsigned int num_steps;
 void resetEDPins()
 {
   digitalWrite(stp_h, LOW);
-  digitalWrite(dir_h, LOW);
+  digitalWrite(dir_h, HIGH);
   digitalWrite(EN_h, HIGH);
 
   digitalWrite(stp_v, LOW);
@@ -46,14 +46,16 @@ void StepForwardDefault1()
     }
   }
   
-  Serial.println("Moving forward at default step mode.");
-  digitalWrite(dir_h, HIGH); //Pull direction pin low to move "forward"
+  Serial.println("Moving forward at default step mode (horizontal motor)");
+//  digitalWrite(dir_h, HIGH); //Pull direction pin low to move "forward"
+//  Serial.println(digitalRead(dir_h));
   for(x= 1; x<=num_steps; x++)  //Loop the forward stepping enough times for motion to be visible
   {
     digitalWrite(stp_h,HIGH); //Trigger one step forward
     delayMicroseconds(250);
     digitalWrite(stp_h,LOW); //Pull step pin low so it can be triggered again
     delayMicroseconds(250);
+    Serial.println(digitalRead(dir_h));
   }
   hor_pos = hor_pos + num_steps;
   Serial.println();
@@ -81,14 +83,16 @@ void StepBackwardDefault1()
      break;
     }
   }
-  Serial.println("Moving backward at default step mode.");
-  digitalWrite(dir_h, LOW); //Pull direction pin low to move "backward"
+  Serial.println("Moving backward at default step mode (horizontal motor)");
+//  digitalWrite(dir_h, LOW); //Pull direction pin low to move "backward"
+//  Serial.println(digitalRead(dir_h));
   for(x= 1; x<=num_steps; x++)  //Loop the forward stepping enough times for motion to be visible
   {
     digitalWrite(stp_h,HIGH); //Trigger one step forward
     delayMicroseconds(250);
     digitalWrite(stp_h,LOW); //Pull step pin low so it can be triggered again
     delayMicroseconds(250);
+    Serial.println(digitalRead(dir_h));
   }
   hor_pos = hor_pos - num_steps;
   Serial.println();
@@ -116,7 +120,7 @@ void StepForwardDefault2()
      break;
     }
   }
-  Serial.println("Moving forward at default step mode.");
+  Serial.println("Moving forward at default step mode (vertical motor)");
   digitalWrite(dir_v, HIGH); //Pull direction pin low to move "forward"
   for(x= 1; x<=num_steps; x++)  //Loop the forward stepping enough times for motion to be visible
   {
@@ -151,7 +155,7 @@ void StepBackwardDefault2()
      break;
     }
   }
-  Serial.println("Moving backward at default step mode.");
+  Serial.println("Moving backward at default step mode (vertical motor)");
   digitalWrite(dir_v, LOW); //Pull direction pin low to move "backward"
   for(x= 1; x<=num_steps; x++)  //Loop the forward stepping enough times for motion to be visible
   {

@@ -53,10 +53,10 @@ namespace STOUT
     int fd = UART_comm.set_UART_comm();
 
      // Trasmit data over UART
-     //int bytes_written = 0;
+     int bytes_written = 0;
      //write(fd,data,26);
-     write(fd,data,22);
-
+     bytes_written = write(fd,data,22);
+     printf("Bytes Written = %i\n",bytes_written);
      // Delay for appropriate amount of time
      usleep(3000);
      //printf("%i Bytes Transmitted \n", bytes_written);
