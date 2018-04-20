@@ -70,12 +70,12 @@ void sendData() {
 
   char data_array[20];
   // Add internal temperature values to the data array
-  data_array[0] = (byte)((dallas(2,0))&0xFF);             // Four 1-wire internal temperature sensors
-  data_array[1] = (byte)(((dallas(2,0))>>8)&0xFF);
-  data_array[2] = (byte)((dallas(3,0))&0xFF);
-  data_array[3] = (byte)(((dallas(3,0))>>8)&0xFF);
-  data_array[4] = (byte)((dallas(4,0))&0xFF);
-  data_array[5] = (byte)(((dallas(4,0))>>8)&0xFF);
+  data_array[0] = (byte)((dallas(4,0))&0xFF);             // Four 1-wire internal temperature sensors
+  data_array[1] = (byte)(((dallas(4,0))>>8)&0xFF);
+  data_array[2] = (byte)((dallas(7,0))&0xFF);
+  data_array[3] = (byte)(((dallas(7,0))>>8)&0xFF);
+  data_array[4] = (byte)((dallas(6,0))&0xFF);
+  data_array[5] = (byte)(((dallas(6,0))>>8)&0xFF);
   data_array[6] = (byte)((dallas(5,0))&0xFF);
   data_array[7] = (byte)(((dallas(5,0))>>8)&0xFF);
 
@@ -84,10 +84,10 @@ void sendData() {
   data_array[9] = (byte)((bme_temp>>8)&0xFF);
 
   // Add external temperature values to the data array
-  data_array[10] = (byte)((dallas(6,0))&0xFF);  // Two 1-wire external temperature sensors
-  data_array[11] = (byte)(((dallas(6,0))>>8)&0xFF);
-  data_array[12] = (byte)((dallas(7,0))&0xFF);
-  data_array[13] = (byte)(((dallas(7,0))>>8)&0xFF);
+  data_array[10] = (byte)((dallas(3,0))&0xFF);  // Two 1-wire external temperature sensors
+  data_array[11] = (byte)(((dallas(3,0))>>8)&0xFF);
+  data_array[12] = (byte)((dallas(2,0))&0xFF);
+  data_array[13] = (byte)(((dallas(2,0))>>8)&0xFF);
 
   // Add pressure and humidity values to data array
   long bme_press = (long)(round(bme.readPressure()));     // BME280 pressure reading

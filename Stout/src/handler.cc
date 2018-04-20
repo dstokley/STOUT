@@ -54,7 +54,8 @@ namespace STOUT
 
      // Trasmit data over UART
      //int bytes_written = 0;
-     write(fd,data,26);
+     //write(fd,data,26);
+     write(fd,data,22);
 
      // Delay for appropriate amount of time
      usleep(3000);
