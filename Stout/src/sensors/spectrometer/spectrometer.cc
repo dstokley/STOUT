@@ -18,8 +18,9 @@ namespace STOUT{
     // 0 is connected via USB
     // If the spec cannot be found, restart the Pi and try again.
     if (AVS_Init(0)==ERR_SUCCESS) {
+      throw SystemHaltException();
       throw std::runtime_error("Could not initialize spectrometer");
-    }
+          }
 
     // Parameters for calling AVS_GetList()
     unsigned int byte_set;

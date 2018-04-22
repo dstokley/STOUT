@@ -6,9 +6,9 @@ namespace STOUT
   int execute::start_loop()
   {
 
-    //handler handler_obj;
+    handler handler_obj;
     //heater_control heater_obj;
-    //ADS ADS_obj;
+    ADS ADS_obj;
     Spectrometer spec_obj;
     optics_control optics_obj;
 
@@ -37,7 +37,6 @@ namespace STOUT
       bool status = spec_obj.ReadSpectrometerTemperature(temp_float);
       if (status != true)
       {
-        // Restart UDOO
         continue;
       }
 

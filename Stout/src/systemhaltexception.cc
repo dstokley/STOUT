@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include <sys/reboot.h>
+#include </usr/include/x86_64-linux-gnu/sys/reboot.h>
 #include "systemhaltexception.h"
 namespace STOUT {
 
@@ -10,7 +10,7 @@ namespace STOUT {
   // Error handler function; first syncs the file system and then restarts the pi
   void SystemHaltException::RestartSystem() {
     sync();
-    reboot(LINUX_REBOOT_CMD_RESTART);
+    reboot(RB_AUTOBOOT);
 
   }
 
