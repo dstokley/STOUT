@@ -10,7 +10,7 @@ namespace STOUT
     //heater_control heater_obj;
     //ADS ADS_obj;
     Spectrometer spec_obj;
-    //optics_control optics_obj;
+    optics_control optics_obj;
 
     //char location = 0, home = 0;
 
@@ -27,9 +27,9 @@ namespace STOUT
     // System loop
     while(true)
     {
-      //float x = 0, y = 0;
+      float x = 0, y = 0;
       //float* ADS_data;
-      //float* lengths;
+      float* lengths;
       //char* sensor_data;
       float temp_float;
 
@@ -42,31 +42,33 @@ namespace STOUT
       }
 
       int spec_temp = (int)round(temp_float);
-      printf("Temp Spec = %f\n",temp_float);
+      printf("Temp Spec = %i\n",spec_temp);
 
       // Read the ADS data
-      //ADS_data = ADS_obj.ADS_read();
+      // ADS_data = ADS_obj.ADS_read();
 
       // Grab ADS temperature value from data
-      //float temp0 = ADS_data[0];
-      //int ADS_temp = (int)round(temp0);
-      //printf("ADS Temp = %i\n",ADS_temp);
+      // float temp0 = ADS_data[0];
+      // int ADS_temp = (int)round(temp0);
+      // printf("ADS Temp = %i\n",ADS_temp);
 
       // Grab filtered angle values from data
-      //x = ADS_data[1];
-      //y = ADS_data[2];
+      // x = ADS_data[1];
+      // y = ADS_data[2];
+      x = 0.00;
+      y = 0.00;
 
       // Compute required actuation distances
-      //lengths = optics_obj.optics_compute(x,y);
+      lengths = optics_obj.optics_compute(x,y);
 
       // Print angles to screen
       //printf("X Angle = %f deg\nY Angle = %f deg\n",x,y);
 
       // Trasmit required actuation distances to the Arduino via serial line
-      //optics_obj.optics_transmit(lengths);
+      optics_obj.optics_transmit(lengths);
 
       // Print lengths to screen
-      //printf("X Length = %f mm\nY Length = %f mm\n",(float)*(lengths + 0),(float)*(lengths + 1));
+      printf("X Length = %f mm\nY Length = %f mm\n",(float)*(lengths + 0),(float)*(lengths + 1));
       //printf("\n\n");
 
       // Receive data from the Arduino via serial
@@ -102,7 +104,7 @@ namespace STOUT
 
       // Free dynamically allocated variable memory
       //free(ADS_data);
-      //free(lengths);
+      free(lengths);
       //free(sensor_data);
 
       sleep(1); // Sleep for 1 second (only for TVAC testing)

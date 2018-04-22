@@ -16,27 +16,28 @@ float* optics_control::optics_compute(float x, float y)
 {
   // Optical dimensions
   const double O1_offset[3] = {16.15,-9.28,45.78};
-  double r_cg[3] = {0.0,0.0,0.0};
+  double r_cg[3] = {0.00,0.00,0.00};
   double r_vg[3] = {41.45,-107.68,-45.09};
   double r_hg[3] = {-2.14,-52.68,-46.16};
-  double r_vb[3] = {49.3,-65.72,-45.09};
+  double r_vb[3] = {49.30,-65.72,-45.09};
   double r_hb[3] = {36.79,-53.21,-45.09};
   double d_ap = 100.6602;
+  //double d_ap = 90.865;
 
   // Variable declarations
   double r_ap0[3];
   double r_ap_vb0[3];
   double r_ap_hb0[3];
-  double temp_vec[3] = {0,0,d_ap};
+  double temp_vec[3] = {0.00,0.00,d_ap};
   double r_ap[3];
   int i;
 
   for (i=0; i<3; i++)
   {
-    r_cg[i] = r_cg[i] - O1_offset[i];
+    //r_cg[i] = r_cg[i] - O1_offset[i];
     r_vg[i] = r_vg[i] - O1_offset[i];
     r_hg[i] = r_hg[i] - O1_offset[i];
-    r_vg[i] = r_vb[i] - O1_offset[i];
+    r_vb[i] = r_vb[i] - O1_offset[i];
     r_hb[i] = r_hb[i] - O1_offset[i];
   }
 
@@ -53,25 +54,26 @@ float* optics_control::optics_compute(float x, float y)
   }
 
   // Convert x and y from degrees to radians
-  x = x*PI/180;
-  y = y*PI/180;
+  // *May want to convert from float to double*
+  x = x*(PI/180.00);
+  y = y*(PI/180.00);
 
   // Find position of actuated apex
-  r_ap[0] = d_ap*(-sin(y)*cos(x));
-  r_ap[1] = d_ap*(sin(x));
-  r_ap[2] = d_ap*(-cos(y)*cos(x));
+  r_ap[0] = d_ap*(-sin(x)*cos(y));
+  r_ap[1] = d_ap*(sin(y));
+  r_ap[2] = d_ap*(-cos(x)*cos(y));
 
   // Convert r_ap_vb and r_ap_hb to cage gimbal frame
   // Rotation matrix
   double rot_mat[3][3];
-  rot_mat[0][0] = cos(y);
-  rot_mat[0][1] = sin(y)*sin(x);
-  rot_mat[0][2] = sin(y)*sin(x);
+  rot_mat[0][0] = cos(x);
+  rot_mat[0][1] = sin(x)*sin(y);
+  rot_mat[0][2] = sin(x)*cos(y);
   rot_mat[1][0] = 0;
-  rot_mat[1][1] = cos(x);
+  rot_mat[1][1] = cos(y);
   rot_mat[1][2] = -sin(y);
-  rot_mat[2][0] = -sin(y);
-  rot_mat[2][1] = cos(y)*sin(x);
+  rot_mat[2][0] = -sin(x);
+  rot_mat[2][1] = cos(x)*sin(y);
   rot_mat[2][2] = cos(x)*cos(y);
 
   // Setting up matrix-vector multiplications
@@ -103,9 +105,9 @@ float* optics_control::optics_compute(float x, float y)
   }
 
   // Horizontal distance from motor gimbal center to ball joint center
-  Lh = sqrt(pow(temp_vec1[0],2) + pow(temp_vec1[1],2) + pow(temp_vec1[2],2));
+  Lv = sqrt(pow(temp_vec1[0],2) + pow(temp_vec1[1],2) + pow(temp_vec1[2],2));
   // Vertical distance from motor gimbal center to ball joint center
-  Lv = sqrt(pow(temp_vec2[0],2) + pow(temp_vec2[1],2) + pow(temp_vec2[2],2));
+  Lh = sqrt(pow(temp_vec2[0],2) + pow(temp_vec2[1],2) + pow(temp_vec2[2],2));
 
   // Calculate actual actuations based on dimensions
   L1 = (float)(Lh + 0);        // Need to add necessary additions/subtractions

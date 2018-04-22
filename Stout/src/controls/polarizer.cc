@@ -19,7 +19,7 @@ int main(int argv, char* argc[])
   FT_STATUS ftStatus;
   FT_HANDLE ftHandle;
 
-  char home = 0;
+  char home = 1;
 
   FT_SetVIDPID(0x0403, 0xFAF0);
   //the following is per the user manual for thor device.
