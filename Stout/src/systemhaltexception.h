@@ -1,3 +1,6 @@
+#ifndef SYSTEMHALTEXCEPTION_H
+#define SYSTEMHALTEXCEPTION_H
+
 #define LINUX_REBOOT_CMD_RESTART 0x4321fedc
 #include <exception>
 
@@ -11,3 +14,5 @@ namespace STOUT {
   };
 
 }
+
+#endif /* SYSTEMHALTEXCEPTION_H */

@@ -80,7 +80,7 @@ namespace STOUT
     void handler::save_EMCS_data(char* EMCS_data)
   {
     //const char* save_point = "/mnt/64GB_MLC/datafile"; // Save location (USB)
-    FILE *f = fopen("TVAC_Data.txt", "a");
+    FILE *f = fopen("/mnt/mlcdrive/EMCS_data/TVAC_Data.txt", "a");
     if (f == NULL)
     {
       printf("Error opening file!\n");
@@ -125,13 +125,18 @@ namespace STOUT
   time(&rawtime);
   timeinfo = localtime(&rawtime);
   // time_t now = time(0);
- printf("%s",asctime(timeinfo));
+  printf("%s",asctime(timeinfo));
 
- fprintf(f,"%f\t%f\t%f\t%f\t%x\t%s",angles[0],angles[1],angles[2],angles[3],add_info,asctime(timeinfo));
+  fprintf(f,"%f\t%f\t%f\t%f\t%x\t%s",angles[0],angles[1],angles[2],angles[3],add_info,asctime(timeinfo));
 
 
-fclose(f);
-  }
+  fclose(f);
+ }
+
+ void handler::take_pic():
+ {
+  camera.take_picture();  
+ }
 
 //   void handler::read_sensor_data()
 //   {

@@ -121,12 +121,13 @@ namespace STOUT
       }
 
      // Put needed values into the output array
-     float* ADS_data = (float *) malloc(sizeof(float)*5);
+     float* ADS_data = (float *) malloc(sizeof(float)*6);
      ADS_data[0] = temp;
      ADS_data[1] = x_filter;
      ADS_data[2] = y_filter;
      ADS_data[3] = x_nofilter;
      ADS_data[4] = y_nofilter;
+     ADS_data[5] = add_info;
 
      // Save values
      ADS_handler.save_ADS_data(ADS_data, add_info);
