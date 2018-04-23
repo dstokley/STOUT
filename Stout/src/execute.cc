@@ -130,6 +130,9 @@ namespace STOUT
       fclose(f);
         // Send EMCS data to external arduino via UART (for TVAC testing)
         //handler_obj.UART_transmit(sensor_data);
+
+      handler_obj.take_pic();
+
       auto t2 = std::chrono::high_resolution_clock::now();
       std::cout << "Read and Write loop took "
               << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count()
