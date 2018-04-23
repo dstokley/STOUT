@@ -29,7 +29,6 @@ namespace STOUT
     {
       raw_temp += atol(tmp);
     }
-
     udoo_temp = (int)(raw_temp/1000);
     //printf("UDOO temp = %i\n",udoo_temp);
 
@@ -76,11 +75,6 @@ namespace STOUT
     close(fd);
   }
 
-  // Takes Picture Saves to Camera Directory as JPEG
-  void handler::take_pic(){
-    camera cam
-    cam.take_picture();
-  }
 
 //   void handler::read_sensor_data()
 //   {
@@ -158,52 +152,52 @@ namespace STOUT
 //   }
 
   // Writes the frame data to a csv file
-  void handler::call_to_write()
-  {
-    // Make sure at least one data file can be written to
-    // If not, restart the system
-    if (/*!slc_data_file.good() && */!mlc_data_file.good()) {
-      throw SystemHaltException();
-    }
+  // void handler::call_to_write()
+  // {
+  //   // Make sure at least one data file can be written to
+  //   // If not, restart the system
+  //   if (/*!slc_data_file.good() && */!mlc_data_file.good()) {
+  //     throw SystemHaltException();
+  //   }
+  //
+  //   // Writes the data(measurements) to all three drives every second
+  //   //write_to_flash(slc_data_file);
+  //   write_to_flash(mlc_data_file);
+  // }
 
-    // Writes the data(measurements) to all three drives every second
-    //write_to_flash(slc_data_file);
-    write_to_flash(mlc_data_file);
-  }
-
-  void handler::write_to_flash(std::ofstream& file)
-  {
-    // Check that the data file is OK
-    // If not OK, do nothing
-    if (file.good()) {
-
-      // Write timestamp of measurement
-      handler::binarywrite(file,frame_data.time_stamp);
-
-      // Write the spectrometer measurements
-      // for (auto& i : frame_data.spectrum) {
-      //   handler::binarywrite(file,i);
-      // }
-      // Write the engineering/housekeeping measurements to the given file
-      // Write the Sensor Data
-      for (auto& i : frame_data.sensor_datas) {
-        handler::binarywrite(file,i);
-      }
-      // Write the attitude measurements
-      //for (auto& i : frame_data.ADS_datas) {
-      //  handler::binarywrite(file,i);
-      //}
-
-      file.flush();
-    }
-  }
-
-  // Gets the frame_data struct for other routines
-  // handler::data_frame handler::get_frame_data() {return frame_data;}
-
-  // Takes a value and writes the binary information to given stream
-  template <class T> std::ostream& handler::binarywrite(std::ostream& stream, const T& value) {
-    return stream.write(reinterpret_cast<const char*>(&value), sizeof(T));
-  }
+  // void handler::write_to_flash(std::ofstream& file)
+  // {
+  //   // Check that the data file is OK
+  //   // If not OK, do nothing
+  //   if (file.good()) {
+  //
+  //     // Write timestamp of measurement
+  //     handler::binarywrite(file,frame_data.time_stamp);
+  //
+  //     // Write the spectrometer measurements
+  //     // for (auto& i : frame_data.spectrum) {
+  //     //   handler::binarywrite(file,i);
+  //     // }
+  //     // Write the engineering/housekeeping measurements to the given file
+  //     // Write the Sensor Data
+  //     for (auto& i : frame_data.sensor_datas) {
+  //       handler::binarywrite(file,i);
+  //     }
+  //     // Write the attitude measurements
+  //     //for (auto& i : frame_data.ADS_datas) {
+  //     //  handler::binarywrite(file,i);
+  //     //}
+  //
+  //     file.flush();
+  //   }
+  // }
+  //
+  // // Gets the frame_data struct for other routines
+  // // handler::data_frame handler::get_frame_data() {return frame_data;}
+  //
+  // // Takes a value and writes the binary information to given stream
+  // template <class T> std::ostream& handler::binarywrite(std::ostream& stream, const T& value) {
+  //   return stream.write(reinterpret_cast<const char*>(&value), sizeof(T));
+  // }
 
 }

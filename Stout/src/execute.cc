@@ -10,6 +10,7 @@ namespace STOUT
     //heater_control heater_obj;
     ADS ADS_obj;
     Spectrometer spec_obj;
+    Camera camera;
     //optics_control optics_obj;
 
     //char location = 0, home = 0;
@@ -56,7 +57,7 @@ namespace STOUT
       //x = ADS_data[1];
       //y = ADS_data[2];
       //x = 0.00;
-      //y = 0.00;
+      //y = 0.00;    Camera camera
 
       // Compute required actuation distances
       //lengths = optics_obj.optics_compute(x,y);
@@ -131,7 +132,7 @@ namespace STOUT
         // Send EMCS data to external arduino via UART (for TVAC testing)
         //handler_obj.UART_transmit(sensor_data);
 
-      handler_obj.take_pic();
+      camera.take_picture();
 
       auto t2 = std::chrono::high_resolution_clock::now();
       std::cout << "Read and Write loop took "
