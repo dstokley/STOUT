@@ -5,7 +5,7 @@
 #define G_PRIORITY_DEFAULT  -10
 
 // Required libraries
-#include <glib.h>
+#include </usr/include/glib-2.0/glib.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <chrono>
@@ -37,6 +37,7 @@ namespace STOUT
   public:
     char* receive_arduino_data();
     void UART_transmit(char* data);
+    void take_pic();
     Camera camera;
 
 
@@ -53,7 +54,7 @@ namespace STOUT
     };
 
     //data_frame get_frame_data();
-    void take_pic();
+
 
   private:
     // Sensor objects

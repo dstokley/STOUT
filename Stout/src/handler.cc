@@ -161,13 +161,13 @@ namespace STOUT
   {
     // Make sure at least one data file can be written to
     // If not, restart the system
-    if (!slc_data_file.good() && !mlc1_data_file.good()) {
+    if (/*!slc_data_file.good() && */!mlc_data_file.good()) {
       //throw SystemHaltException();
     }
 
     // Writes the data(measurements) to all three drives every second
-    write_to_flash(slc_data_file);
-    write_to_flash(mlc1_data_file);
+    //write_to_flash(slc_data_file);
+    write_to_flash(mlc_data_file);
   }
 
   void handler::write_to_flash(std::ofstream& file)
