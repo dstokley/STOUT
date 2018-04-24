@@ -79,23 +79,21 @@ namespace STOUT
     ADS ADS_obj;
     Spectrometer spec_obj;
     //optics_control optics_obj;
+    Camera cam_obj;
 
     // Initialize the spectrometer
-    //spec_obj.Spectrometer();
+    spec_obj.Spectrometer();
 
-    // GPS in range flag
-    // Define by altitude lost at: 10 km
-    GPS_flag = 1
-
-    milliseconds ms_start = duration_cast<milliseconds>(system_clock::now().time_since_epoch()));
-    milliseconds ms_end = duration_cast<milliseconds>(system_clock::now().time_since_epoch()));
-    milliseconds ms_diff = 0;
+    int ms_start = std::chrono::system_clock::now().time_since_epoch().count();
+    int ms_end = std::chrono::system_clock::now().time_since_epoch().count();
+    int ms_diff = 0;
+    int count = 1;
     first_flag = 1;
     while(true)
     {
-      if(first_flag && ms_diff < std::chrono::milliseconds(1000))
+      if(first_flag && ms_diff < 1000)
       {
-        ms_start = system_clock::now().time_since_epoch();
+        ms_start = std::chrono::system_clock::now().time_since_epoch().count();
 
         //float x = 0, y = 0;
         //float* Lengths;
@@ -123,14 +121,8 @@ namespace STOUT
 
         // Receive data from the Arduino via serial
         // IF IN GPS RANGE GRAB IT
-        if(GPS_flag)
-        {
-          sensor_data = handler_obj.receive_arduino_data();
-        }
-        else
-        {
-          sensor_data = handler_obj.receive_arduino_data_no_gps();
-        }
+        sensor_data = handler_obj.receive_arduino_data();
+
 
 
         // Isolate heater control temperature
@@ -155,7 +147,7 @@ namespace STOUT
         // printf("\n\n");
 
         // TAKE CAMERA IMAGE
-        handler_obj.take_pic();
+        cam_obj.take_pic();
 
         // Find time to read all data
 
@@ -169,18 +161,24 @@ namespace STOUT
         // Free dynamically allocated variable memory
         //free(ADS_data);
         //free(Lengths);
-        free(sensor_data);
         first_flag = 0;
       }
       else
       {
-        if(ms_diff < std::chrono::milliseconds(1000))
+        if(ms_diff < 1000)
         {
-          ms_end = system_clock::now().time_since_epoch();
+          ms_end = std::chrono::system_clock::now().time_since_epoch().count();
           ms_diff = ms_end - ms_start;
         }
         else
         {
+          count++;
+
+          if(count == 10){
+            cam_obj.take_pic();
+            camera = 1;
+          }
+
           handler_obj.timestamp = ms_end;
 
           // Build Frame to save for USB
@@ -189,6 +187,7 @@ namespace STOUT
           // Save data to USB drive
           handler_obj.WriteFrameToStorage();
 
+          free(sensor_data);
           free(ADS_data);
         }
       }
@@ -197,134 +196,3 @@ namespace STOUT
 
     return 1;
   }
-
-
-  // auto *execute::readSpect()
-  // {
-  //   std::array<float,kNumPixels>& f_spectrum;
-  //
-  //   if (!spec_obj.ReadSpectrum(data_frame.spectrum)) {
-  //   //       throw SystemHaltException();
-  //       ;
-  //   }
-  //
-  //   pthread_exit(NULL);
-  // }
-
-
-  int execute::start_loop()
-  {
-    //serial_comm comm_obj;
-    handler handler_obj;
-    heater_control heater_obj;
-    ADS ADS_obj;
-    Spectrometer spec_obj;
-    //optics_control optics_obj;
-
-    // Initialize the spectrometer
-    //spec_obj.Spectrometer();
-
-    // GPS in range flag
-    // Define by altitude lost at: 10 km
-    GPS_flag = 1
-
-    milliseconds ms_start = duration_cast<milliseconds>(system_clock::now().time_since_epoch()));
-    milliseconds ms_end = duration_cast<milliseconds>(system_clock::now().time_since_epoch()));
-    milliseconds ms_diff = 0;
-
-
-    // System loop
-    while(true)
-    {
-      ms_start = system_clock::now().time_since_epoch();
-
-      //float x = 0, y = 0;
-      //float* Lengths;
-      float* ADS_data;
-      char* sensor_data;
-      float temp_float;
-
-      // Read the spectrometer themistor voltage
-      bool status = spec_obj.ReadSpectrometerTemperature(temp_float);
-      int spec_temp = (int)round(temp_float);
-      //printf("Temp Spec = %i\n",spec_temp);
-
-      // Read the ADS data
-      ADS_data = ADS_obj.ADS_read();
-      // Grab ADS temperature value from data
-      float temp0 = ADS_data[0];
-      int ADS_temp = (int)round(temp0);
-      //printf("ADS Temp = %i\n",ADS_temp);
-
-      // Compute required actuation distances
-      //Lengths = Optics_obj.optics_compute(x,y);
-
-      // Trasmit required actuation distances to the Arduino via Serial
-      //Optics_obj.optics_transmit(Lengths, fd);
-
-      // Receive data from the Arduino via serial
-      // IF IN GPS RANGE GRAB IT
-      if(GPS_flag)
-      {
-        sensor_data = handler_obj.receive_arduino_data();
-      }
-      else
-      {
-        sensor_data = handler_obj.receive_arduino_data_no_gps();
-      }
-
-
-      // Isolate heater control temperature
-      int T1;
-      T1 = sensor_data[0] | sensor_data[1] << 8;
-      //printf("Temp 1 = %i\n",T1);
-      //printf("Byte 0 = %x\n",sensor_data[0]);
-
-      // Turn heaters on/off based on temperatures
-      heater_obj.heater_eval(spec_temp, T1);
-
-      // Add spectrometer and ADS temperatures to data array
-      sensor_data[22] = (char)((spec_temp)&0xFF);
-      sensor_data[23] = (char)(((spec_temp>>8)&0xFF));
-      sensor_data[24] = (char)((ADS_temp)&0xFF);
-      sensor_data[25] = (char)(((ADS_temp>>8)&0xFF));
-      //printf("Sensor data size: %lu\n",sizeof(sensor_data));
-      // for(int i=0;i<25;i++)
-      // {
-      //   printf("%x\n",sensor_data[i]);
-      // }
-      // printf("\n\n");
-
-      // TAKE CAMERA IMAGE
-      handler_obj.take_pic();
-
-      // Find time to read all data
-      ms_end = system_clock::now().time_since_epoch();
-      ms_diff = ms_end - ms_start;
-
-      // Sleep for remaining 1 second
-      if(ms_diff < std::chrono::milliseconds(1000)){
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000)-ms);
-      }
-
-      // Build Frame to save for USB
-      handler_obj.timestamp = ms_end;
-      handler_obj.sensor_datas = sensor_data;
-      handler_obj.ADS_datas = ADS_data;
-
-      // Save data to USB drive
-      handler_obj.WriteFrameToStorage();
-
-      // Send EMCS data to external arduino via UART (for TVAC testing)
-      // handler_obj.UART_transmit(sensor_data);
-
-      // Free dynamically allocated variable memory
-      //free(ADS_data);
-      //free(Lengths);
-      free(sensor_data);
-      free(ADS_data);
-
-      sleep(1); // Sleep for 1 second (only for TVAC testing)
-    }
-  }
-}
