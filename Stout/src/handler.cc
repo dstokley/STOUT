@@ -76,133 +76,70 @@ namespace STOUT
     close(fd);
   }
 
-  // Takes Picture Saves to Camera Directory as JPEG
-  void handler::take_pic(){
-    camera.take_picture();
-  }
-
-//   void handler::read_sensor_data()
-//   {
-//     // Read timestamp measurement
-//     // This timestamp represents seconds since Unix epoch
-//     std::chrono::seconds ms = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
-//     frame_data.time_stamp = ms.count();
-//     std::cout << "Timestamp: " << frame_data.time_stamp << std::endl;
-//
-//     // Recieve Arduino Communication
-//
-//     // Read main instrument(spectrometer)
-//     // If the spectrometer cannot be read from, throw an exception to restart the system
-//     if (!spectrometer.ReadSpectrum(frame_data.spectrum)) {
-//       throw SystemHaltException();
-//     }
-//
-//     // Take a picture, if necessary
-//     // The time stamp is necessary to know how long ago a picture was taken
-//     camera.take_picture();
-//
-//     // Read temperature sensors
-//     // These sensors are used for heater control. Overheating is a concern, so
-//     // if the sensors are not responding, assume sensor is already at desired temperature
-//
-//
-// // START WORKING HERE!
-//     if (!spectrometer.ReadSpectrometerTemperature(frame_data.spectrometer_temp_UV)) {
-//       frame_data.spectrometer_temp_UV = max_heater_temp;
-//     }
-//
-//     if (!spectrometer.ReadSpectrometerTemperature(frame_data.spectrometer_temp_vis)) {
-//       frame_data.spectrometer_temp_vis = max_heater_temp;
-//     }
-//
-//     if (!spectrometer.ReadSpectrometerTemperature(frame_data.spectrometer_temp_UV)) {
-//       frame_data.spectrometer_temp_UV = max_heater_temp;
-//     }
-//
-//     if (!spectrometer.ReadSpectrometerTemperature(frame_data.motor_vert_temp)) {
-//       frame_data.motor_vert_temp = max_heater_temp;
-//     }
-//
-//
-//     // Read environmental sensors
-//     // These sensors are not used in heating calculations so return 0 if they cannot be read
-//     if (!upper_battery_temperature_sensor_.ReadTemperature(frame_data.upper_battery_temperature)) {
-//       frame_data.upper_battery_temperature = execute::GetMaxHeaterTemp();
-//     }
-//
-//     if (!lower_battery_temperature_sensor_.ReadTemperature(frame_data.lower_battery_temperature)) {
-//       frame_data.lower_battery_temperature = execute::GetMaxHeaterTemp();
-//     }
-//
-//     if (!storage_temperature_sensor_.ReadTemperature(frame_data.storage_temperature)) {
-//       frame_data.storage_temperature = execute::GetMaxHeaterTemp();
-//     }
-//
-//     if (!rpi_temperature_sensor_.ReadTemperature(frame_data.rpi_temperature)) {
-//       frame_data.rpi_temperature = execute::GetMaxHeaterTemp();
-//     }
-//
-//     if (!external_temperature_sensor_.ReadTemperature(frame_data.external_temperature)) {
-//       frame_data.external_temperature = 0;
-//     }
-//
-//     if (!humidity_sensor_.ReadHumidity(frame_data.humidity)) {
-//       frame_data.humidity = 0;
-//     }
-//
-//     for(int i = 0; i < 4; ++i){
-//     	frame_data.attitude_values[i] = radiance_ads.ads_read(i+1);
-//     }
-//
-//   }
-
-  // Writes the frame data to a csv file
-  void handler::call_to_write()
+  void handler::write_to_flash(char const* file, char* ts, char* sd, float* ad)
   {
-    // Make sure at least one data file can be written to
-    // If not, restart the system
-    if (/*!slc_data_file.good() && */!mlc_data_file.good()) {
-      //throw SystemHaltException();
-    }
-
-    // Writes the data(measurements) to all three drives every second
-    //write_to_flash(slc_data_file);
-    write_to_flash(mlc_data_file);
-  }
-
-  void handler::write_to_flash(std::ofstream& file)
-  {
-    // Check that the data file is OK
-    // If not OK, do nothing
-    if (file.good()) {
-
-      // Write timestamp of measurement
-      handler::binarywrite(file,frame_data.time_stamp);
-
-      // Write the spectrometer measurements
-      // for (auto& i : frame_data.spectrum) {
-      //   handler::binarywrite(file,i);
-      // }
-      // Write the engineering/housekeeping measurements to the given file
-      // Write the Sensor Data
-      for (auto& i : frame_data.sensor_datas) {
-        handler::binarywrite(file,i);
+      // STORE THE EMCS DATA -----------------------------------------------------
+      char* EMCS_file;
+      strcat(EMCS_file, file);
+      strcat(EMCS_file,"EMCS_Date/EMCS_Date.txt");
+      FILE *f1 = fopen(EMCS_file, "a");
+      if (f1==NULL)
+      {
+        printf("Error opening EMCS file!\n");
+        exit(1);
+        throw SystemHaltException();
       }
-      // Write the attitude measurements
-      for (auto& i : frame_data.ADS_datas) {
-        handler::binarywrite(file,i);
+      else
+      {
+        fprintf(f1,"%s\t%i\t%i\t%i\t%i\t%i\t%i\t%i\t%li\t%i\t%i\t%i\t%i\n",ts, sd[0] | sd[1] << 8,sd[2] | sd[3] << 8,sd[4] | sd[5] << 8,sd[6] | sd[7] << 8,
+        sd[8] | sd[9] << 8,sd[10] | sd[11] << 8,sd[12] | sd[13] << 8,(long)(sd[14] | sd[15] << 8 | sd[16] << 16 | sd[17] << 24),
+        sd[18] | sd[19] << 8,sd[20] | sd[21] << 8,sd[22] | sd[23] << 8,sd[24] | sd[25] << 8);
+        fclose(f1);
       }
 
-      file.flush();
+      // STORE THE ADS DATA ------------------------------------------------------
+      char* ADS_file;
+      strcat(ADS_file, file);
+      strcat(ADS_file,"ADS_Data/ADS_Data.txt");
+      FILE *f2 = fopen(ADS_file, "a");
+      if (f2==NULL)
+      {
+        printf("Error opening ADS file!\n");
+        exit(1);
+        throw SystemHaltException();
+      }
+      else
+      {
+        for(int i = 0; i < 10; i++)
+        {
+          fprintf(f2,"%s\t%f\t%f\t%f\t%f\t%x\n",ad[i*5],ad[i*5+1],ad[i*5+2],ad[i*5+3],ad[i*5+4]);
+        }
+        fclose(f2);
+      }
+    }
+
+  void write_spectrum(char const* file, char* ts, std::array<float, 2048> spect)
+  {
+    char* spec_file;
+    strcat(spec_file, file);
+    strcat(spec_file, ts);
+    strcat(spec_file, ".txt");
+
+    FILE *f = fopen(spec_file,"w");
+    if(f==NULL)
+    {
+      printf("Error opening SPECTROMETER file!\n");
+      exit(1);
+      throw SystemHaltException();
+    }
+    else
+    {
+      for(int i = 0; i < sizeof(spect); i++)
+      {
+        fprintf(f,"%f ", spect[i]);
+      }
+      fprintf(f, "\n");
+      fclose(f);
     }
   }
-
-  // Gets the frame_data struct for other routines
-  // handler::data_frame handler::get_frame_data() {return frame_data;}
-
-  // Takes a value and writes the binary information to given stream
-  template <class T> std::ostream& handler::binarywrite(std::ostream& stream, const T& value) {
-    return stream.write(reinterpret_cast<const char*>(&value), sizeof(T));
-  }
-
 }

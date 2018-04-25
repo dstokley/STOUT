@@ -1,3 +1,6 @@
+#ifndef SHE_H
+#define SHE_H
+
 #define LINUX_REBOOT_CMD_RESTART 0x4321fedc
 #include <exception>
 
@@ -11,3 +14,4 @@ namespace STOUT {
   };
 
 }
+#endif

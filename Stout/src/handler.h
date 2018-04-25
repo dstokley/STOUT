@@ -37,24 +37,20 @@ namespace STOUT
   public:
     char* receive_arduino_data();
     void UART_transmit(char* data);
-    void take_pic();
-    Camera camera;
-
-
 
     // void read_sensor_data();
     // void call_to_write();
 
-    struct data_frame
-    {
-      milliseconds timestamp;
-      std::array<float,Spectrometer::kNumPixels> spectrum;
-      char* sensor_datas;
-      float* ADS_datas;
-    };
-
     //data_frame get_frame_data();
 
+    // Storage data objects for regular data
+    // These are kept open for performance
+    char const* slc_file = "/mnt/slcdrive/";
+    char const* mlc_file = "/mnt/mlcdrive/";
+
+    // Writes a data hanlder to appropriate files
+    void write_to_flash(char const* file, char* ts, char* sd, float* ad);
+    void write_spectrum(char const* file, char* ts, std::array<float, 2048> spectrum);
 
   private:
     // Sensor objects
@@ -67,14 +63,9 @@ namespace STOUT
     //heater_control Heater_obj;
     //void take_pic();
 
-    // Storage data objects for regular data
-    // These are kept open for performance
-    // std::ofstream slc_data_file{"/mnt/slcdrive/datafile",std::ios::binary|std::ios::app};
-    // std::ofstream mlc1_data_file{"/mnt/mlcdrive1/datafile",std::ios::binary|std::ios::app};
     //
     // // Data storage objects here
     //
-    // void write_to_flash(std::ofstream& file);
     //
     // template <class T> std::ostream& binarywrite(std::ostream& stream, const T& value);
     //
