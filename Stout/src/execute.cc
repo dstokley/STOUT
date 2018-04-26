@@ -6,7 +6,7 @@ namespace STOUT
   int execute::start_loop()
   {
 
-    handler handler_obj;
+    //handler handler_obj;
     //heater_control heater_obj;
     ADS ADS_obj;
     Spectrometer spec_obj;
@@ -28,23 +28,23 @@ namespace STOUT
     while(true)
     {
       float x = 0, y = 0;
-      //float* ADS_data;
+      float* ADS_data;
       float* lengths;
       //char* sensor_data;
-      float temp_float;
+      //float temp_float;
 
       // Read the spectrometer themistor voltage
-      bool status = spec_obj.ReadSpectrometerTemperature(temp_float);
-      if (status != true)
-      {
-        continue;
-      }
+      //bool status = spec_obj.ReadSpectrometerTemperature(temp_float);
+      // if (status != true)
+      // {
+      //   continue;
+      // }
 
-      int spec_temp = (int)round(temp_float);
-      printf("Temp Spec = %i\n",spec_temp);
+      // int spec_temp = (int)round(temp_float);
+      // printf("Temp Spec = %i\n",spec_temp);
 
       // Read the ADS data
-      // ADS_data = ADS_obj.ADS_read();
+      ADS_data = ADS_obj.ADS_read();
 
       // Grab ADS temperature value from data
       // float temp0 = ADS_data[0];
@@ -52,10 +52,10 @@ namespace STOUT
       // printf("ADS Temp = %i\n",ADS_temp);
 
       // Grab filtered angle values from data
-      // x = ADS_data[1];
-      // y = ADS_data[2];
-      x = 0.00;
-      y = 0.00;
+      x = ADS_data[1];
+      y = ADS_data[2];
+      // x = 0.00;
+      // y = 0.00;
 
       // Compute required actuation distances
       lengths = optics_obj.optics_compute(x,y);
@@ -102,7 +102,7 @@ namespace STOUT
       //handler_obj.UART_transmit(sensor_data);
 
       // Free dynamically allocated variable memory
-      //free(ADS_data);
+      free(ADS_data);
       free(lengths);
       //free(sensor_data);
 
