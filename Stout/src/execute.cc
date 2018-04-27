@@ -9,7 +9,7 @@ namespace STOUT
     //handler handler_obj;
     //heater_control heater_obj;
     ADS ADS_obj;
-    Spectrometer spec_obj;
+    //Spectrometer spec_obj;
     optics_control optics_obj;
 
     //char location = 0, home = 0;
@@ -64,7 +64,7 @@ namespace STOUT
       //printf("X Angle = %f deg\nY Angle = %f deg\n",x,y);
 
       // Trasmit required actuation distances to the Arduino via serial line
-      optics_obj.optics_transmit(lengths);
+      //optics_obj.optics_transmit(lengths);
 
       // Print lengths to screen
       printf("X Length = %f mm\nY Length = %f mm\n",(float)*(lengths + 0),(float)*(lengths + 1));
@@ -106,7 +106,7 @@ namespace STOUT
       free(lengths);
       //free(sensor_data);
 
-      sleep(1); // Sleep for 1 second (only for TVAC testing)
+      usleep(100000); // Sleep for 1 second (only for TVAC testing)
     }
   }
 }
