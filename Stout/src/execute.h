@@ -13,9 +13,9 @@ namespace STOUT
     int start_loop();
 
     // Functions used for interrupts and main loop
-    // static gboolean GPIO_event(GIOChannel *channel, GIOCondition condition, gpointer user_data);
-    // static gboolean timeout_event(gpointer user_data);
-    // static gboolean ext_main(gpointer user_data);
+    static gboolean GPIO_event(GIOChannel *channel, GIOCondition condition, gpointer user_data);
+    static gboolean timeout_event(gpointer user_data);
+    static gboolean ext_main(gpointer user_data);
 
   private:
 

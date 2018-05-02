@@ -15,9 +15,10 @@
 #include <fcntl.h>
 #include <math.h>
 #include <signal.h>
-//#include <glib.h>
 #include <stdlib.h>
-#include <fcntl.h>
+#include <unistd.h>
+#include </usr/include/glib-2.0/glib.h>
+
 #include "serial_comm.h"
 #include "sensors/spectrometer/spectrometer.h"
 #include "sensors/camera/camera.h"
