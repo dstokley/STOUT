@@ -12,19 +12,17 @@ namespace STOUT
     // Setup save locations for all data
 
     // EMCS sensors and heaters
-    // FILE *f = fopen("TVAC_Data.txt", "a");
-    // if (f == NULL)
-    //   {
-    // printf("Error opening file!\n");
-    // exit(1);
-    //   }
-    // fprintf(f,"\nInt Temp 1\tInt Temp 2\tInt Temp 3\tInt Temp 4\tInt Temp 5\tExt Temp 1\tExt Temp 2\tPressure\tHumidity\tUDOO Temo\tSpec Temp\tADS Temp\tTime\n");
-    //
-    // fclose(f);
+    FILE *f = fopen("TVAC_Data.txt", "a");
+    if (f == NULL)
+      {
+    printf("Error opening file!\n");
+    exit(1);
+      }
+    fprintf(f,"\nInt Temp 1\tInt Temp 2\tInt Temp 3\tInt Temp 4\tInt Temp 5\tExt Temp 1\tExt Temp 2\tPressure\tHumidity\tUDOO Temo\tSpec Temp\tADS Temp\tTime\n");
 
-    // Spectrometers
+    fclose(f);
 
-    // ADS angles and motor actuations
+    // ADS angles
 
 
     // Set up main loop
@@ -220,6 +218,7 @@ namespace STOUT
       optics_obj.optics_transmit(lengths);
 
       // Save ADS and actuation data to USB drive
+      handler_obj.save_ADS_data();
 
       // Free dynamically allocated variable memory
       free(ADS_data);
