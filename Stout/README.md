@@ -1,99 +1,289 @@
-# RADIANCE-main
-Software repository for the RADIANCE senior project.
+# STOUT-main
+Software repository for the STOUT senior project.
 
-# Configuration
-- Ensure the heater and sensor pin numbers are correct
+# File Descriptions
+All files located in /Documents/STOUT/Stout/src unless otherwise noted
 
-# Requirements
-- Install the pigpio, avaspec, and raspicam packages.
+execute.cc
+  start_loop
 
-  To install pigpio: http://abyz.co.uk/rpi/pigpio/download.html (after following instructions you can remove master.zip from the Pi)
-  
-  To install avaspec: anywhere in the directory structure (on the Pi), run: 
-  
-  ```
-  pi@raspberrypi:~ $ wget http://www.jennykampmeier.com/libavs_2.0.1.0_armhf.deb
-  pi@raspberrypi:~ $ sudo dpkg -i libavs_2.0.1.0_armhf.deb
-  pi@raspberrypi:~ $ rm libavs_2.0.1.0_armhf.deb
-  ```
-  To install raspicam, download file from Sourceforge: https://downloads.sourceforge.net/project/raspicam/raspicam-0.1.6.zip, then follow instructions here: http://www.uco.es/investiga/grupos/ava/node/40
+    Description:
+    This function initiates all of the interrupts and the main loop through the
+    glib library. One interrupt is on GPIO 349, which is triggered by a change in
+    the input on this pin. The second interrupt is timer based, and it occurs
+    every 100 ms. Additionally, the save location and header for the EMCS data
+    is setup.
 
-- Enable access to I2C, SPI, and 1-Wire via `sudo raspi-config`:
-  ```
-  pi@raspberrypi:~ $ sudo raspi-config
-  ```
-  Arrow-down and choose `5 Interfacing Options`. Arrow-down and choose `P1 Camera`. Choose `Yes` when prompted. Repeat for `P4 SPI`, `P5 I2C` and `P7 1-Wire`. When it asks you to reboot, say `Yes`.
-  
-- Edit the crontab and add the following two lines beneath the comments (note if you've done a fresh install the crontab won't exist, but it will make one automatically):
-  ```
-  pi@raspberrypi:~ $ crontab -e
-  ```
-  ```
-  @reboot sh /home/pi/RADIANCE-main/util/startup.sh
-  */1 * * * * /home/pi/RADIANCE-main/util/restart.sh radiance
-  ```
-  Note: The second line will cause the RPi to restart every minute if the RADIANCE software is not running.
-  
-- Mount, format, and configure the USB drives as ext4 and data=journal: 
-  ```
-  pi@raspberrypi:~ $ sudo nano /etc/fstab
-  ```
-  Then add the following lines at the end of the document:
-  ```
-  UUID=3f7681a4-bed7-4bbf-b1fd-966d3cc6f79f    /mnt/slcdrive  ext4  data=journal  0  0
-  UUID=5c0d5816-9b30-4041-a98d-71844d1dd6b9    /mnt/mlcdrive1 ext4  data=journal  0  0
-  UUID=8f7a6e96-8b9a-428c-bb17-ddd595607f23    /mnt/mlcdrive2 ext4  data=journal  0  0
-  ```
-  Exit and save the `fstab` file by doing a Ctrl+X, type "Y" to save, then press Enter.  Restart the pi and make sure the folders are all mounted properly. Create an "images" folder in each mlc drive:
+    What Works:
+    Interrupt triggering, interrupt priorities (the timed interrupt has a
+    higher priority than the GPIO interrupt), main loop running when no interrupts
+    are triggered, setting up save location for temperature, pressure, and
+    humidity data.
 
-  ```
-  mkdir /mnt/mlcdrive1/images
-  mkdir /mnt/mlcdrive2/images
-  ```
-  
-- Enable the hardware watchdog: https://www.domoticz.com/wiki/Setting_up_the_raspberry_pi_watchdog
-  ```
-  pi@raspberrypi:~ $ sudo modprobe bcm2835-wdt
-  pi@raspberrypi:~ $ echo "bcm2835-wdt" | sudo tee -a /etc/modules
-  pi@raspberrypi:~ $ sudo apt-get install watchdog
-  pi@raspberrypi:~ $ sudo update-rc.d watchdog defaults
-  pi@raspberrypi:~ $ sudo nano /etc/watchdog.conf
-  ```
-  In the text editor, uncomment the line (delete the `#`) that starts with `#max-load-1` and uncomment the line that starts with `#watchdog-device`. Exit and save the file by doing a Ctrl+X, type "Y" to save, then press Enter. Finally, start the watchdog service:
-  ```
-  pi@raspberrypi:~ $ sudo service watchdog start
-  ```
-- Create the log pipe:
-```
-  pi@raspberrypi:~ $ sudo mkfifo radiance_log
-  ```
-# Sync with Git and Compile
-To download/compile:
-```
-pi@raspberrypi:~ $ git clone https://github.com/JamesPavek/RADIANCE-main.git
-pi@raspberrypi:~ $ cd RADIANCE-main
-pi@raspberrypi:~ $ sudo make
-```
+    What Doesn't:
+    Setting up save location for ADS/Controls data and spectrometer data.
 
-# If needed, update RADIANCE software
-- Do the following on the Pi:
-```
-pi@raspberrypi:~ $ cd ~/RADIANCE-main/
-pi@raspberrypi:~ $ git reset --hard
-pi@raspberrypi:~ $ git pull
-```
-This will update the software and grab the header files for the `include` folder.
+  ext_main
 
+    Description:
+    This function is the main loop which occurs whenever interrupts are not
+    triggered. It gets current temperatures from the spectrometer, ADS, and
+    receives the temperature, pressure, and humidity sensor data from the
+    Arduino. Additionally, the temperatures are evaluated to determine to turn
+    on or off the heating pads. The temperature data is then saved to a text
+    file.
 
-# Execution
+    What Works:
+    Collecting and saving temperature, pressure, and humidity from all sensors
+    attached to the Arduino, the UV spectrometer, and the ADS.
 
-To run:
-```
-sudo ./radiance
-```
+    What Doesn't:
+    Collecting and saving temperature data from the UV-Visible spectrometer and
+    setting up timing so temperature measurements are only received every 1 s.
 
-# Restarting the Pi
-To restart the Pi (if you made configuration changes and want to be sure that they are reflected, for example), type this anywhere in the directory structure on the Pi:
-```
-pi@raspberrypi:~ $ /home/pi/RADIANCE-main/util/restart.sh
-```
+  GPIO_event
+
+    Description:
+    This function is the GPIO interrupt service routine (ISR) which is used to
+    trigger UV spectrometer measurements. Upon a change in the state of the GPIO
+    (GPIO 349), the spectrometer beings its integration period. Additionally, the
+    polarizer is rotated 22.3 degrees if all 8 polarization angles have not been
+    scanning yet, otherwise it is rotated back to 0 degrees.
+
+    What Works:
+    Reading UV spectrum data when actuations are done and rotating the polarizer
+    to the correct angle.
+
+    What Doesn't:
+    Reading UV-Visbile spectrum data and saving the data from both spectrometers.
+    Selecting a new scan location when measurements have been taken at all 8
+    polarization angles for the current scan location.
+
+  timeout_event
+
+    Description:
+    This function is the timed ISR which is used to take new ADS sensor data every
+    100 ms. This data is used to compute the required actuations of the horizontal
+    and vertical motors which are then sent to the Arduino. Additionally, the ADS
+    data is save to a file.
+
+    What Works:
+    Collecting ADS angles, computing required actuations, saving ADS data, and
+    sending the actuations to the Arduino.
+
+    What Doesn't
+    Saving actuation lengths to the same file as the ADS data.
+
+handler.cc
+  receive_arduino_data
+
+    Description:
+    Used to receive environmental data from the Arduino (20 bytes), read UDOO
+    processor temperature, and place this data into a char buffer.
+
+    What Works:
+    Receiving environmental data from the Arduino and reading UDOO temperature.
+
+    What Doesn't:
+    Receiving GPS data from the Arduino.
+
+  UART_transmit
+
+    Description:
+    Used to send environmental data to an external microcontroller through a
+    serial connection.
+
+    What Works:
+    Transmitting environmental data to an external device.
+
+    What Doesn't:
+    N/A
+
+  save_EMCS_data
+
+    Description:
+    Saves environmental data to a text file.
+
+    What Works:
+    Saving environmental data to a file.
+
+    What Doesn't:
+    Saving the data to the USB drives.
+
+  save_ADS_data
+
+    Description:
+    Saves ADS angles and additional info to a text file.
+
+    What Works:
+    Saving ADS data to a file.
+
+    What Doesn't:
+    Saving the data to the USB drives.
+
+serial_comm.cc
+
+  set_arduino_comm, set_ADS_comm, set_UART_comm
+
+    Description:
+    Used to setup serial communication for the embedded Arduino, the ADS, and
+    an external microcontroller, respectively.
+
+    What Works:
+    Setting up all serial communications.
+
+    What Doesn't:
+    N/A
+
+  instructions.txt
+
+    Description:
+    Contains compilation instructions for compiling necessary files.
+
+    What Works:
+    Commands for compiling relevant files into an executable called full_test.
+
+    What Doesn't:
+    Putting this functionality into a makefile.
+
+/sensors/ADS/ADS_read.cc
+
+  ADS_read
+
+    Description:
+    Transmits bytes to ADS sensor to request data, waits, receives response
+    (19 bytes), and saves this data.
+
+    What Works:
+    Requesting ADS data, receiving it, and saving it.
+
+    What Doesn't:
+    There are some issues with the angles jumping from 0 to 0.26 degrees when a
+    sign change from a negative off-angle occurs. This is likely due to a sign
+    issue someone in the receiving process.
+
+/sensors/spectrometer/spectrometer.cc
+
+  Spectrometer
+
+    Description:
+    Initializing spectrometer and configuring settings.
+
+    What Works:
+    Setting up the UV spectrometer.
+
+    What Doesn't:
+    The functionality for using two spectrometers is unknown, this needs to be
+    tested.
+
+  ReadSpectrum
+
+    Description:
+    Begins spectrometer integration and polls the data line until the spectra is
+    ready.
+
+    What Works:
+    N/A
+
+    What Doesn't:
+    This function has not been tested, so it is not known whether or not it works,
+    although I am sure that it does. A simple call of the function with the
+    spectrometer attached should suffice for testing the functionality.
+
+  ReadSpectrometerTemperature, ConvertVoltageToTemperature
+
+    Description:
+    Reads spectrometer thermistor voltage and converts this to temperature.
+
+    What Works:
+    Reading spectrometer temperature.
+
+    What Doesn't:
+    N/A
+
+/controls/heater_control.cc
+
+  heater_eval
+
+    Description:
+    Turns on/off the two heating pads if the evaluated temperatures are less than
+    5 degrees C.
+
+    What Works:
+    Turning off/on heaters based on input temperatures.
+
+    What Doesn't:
+    Sending a PWM signal to the heaters without using a delay (possibly using
+    interrupts).
+
+/controls/optics_control.cc
+
+  optics_compute
+
+    Description:
+    Calculates the required motor actuations (horizontal and vertical stepper
+    motors) based on inputted off-Sun azimuth and elevation angles.
+
+    What Works:
+    Calculating motor actuations in terms of relative actuation length from a
+    zero location.
+
+    What Doesn't:
+    Calculating actuations based on current actuation lengths and saving
+    calculated lengths along with ADS data. Refining the algorithm may be
+    necessary.
+
+  optics_transmit
+
+    Description:
+    Sends calculated actuation lengths to the embedded Arduino via a serial
+    connection.
+
+    What Works:
+    Sending data from UDOO processor to Arduino processor.
+
+    What Doesn't:
+    N/A
+
+  polarizer_rotate
+
+    Description:
+    Used to rotate the polarizer based on whether or not a home position is
+    desired.
+
+    What Works:
+    Rotating 22.5 degrees when the home input is set to 0, rotating back to 0
+    degrees when the home input is set to 1.
+
+    What Doesn't:
+    There is an FTDI function to return to home which is more accurate than what
+    is currently being used. It may be good to explore this option.
+
+  /arduino_main/arduino_main.ino
+
+    Description:
+    Arduino function that controls everything the microcontroller needs to do.
+    The main loop collects all of the environmental sensor and GPS data and
+    transmits it to the UDOO processor. There is a GPIO based interrupt on pin
+    14 which is triggered when new actuation lengths are sent from the UDOO. This
+    ISR calculates the necessary number of steps to take for both of the motors
+    and actuates them at the same time until all actuations are complete. The
+    encoders are checked each step and the final values are compared to the
+    commanded number of steps. The number of steps is changed if the values
+    don't match up. The state of pin 15 is then changed to signal the UDOO that
+    motor actuations are complete.
+
+    What Works:
+    Taking environmental sensor measurements, receiving actuation lengths from
+    the UDOO, stepping the calculated number of steps, signaling end of motor
+    actuations.
+
+    What Doesn't:
+    Some issues with the encoders were encountered, mainly that the pulse widths
+    of the signals were no consistent. The time between steps was changed since
+    testing the encoders, so this problem may have resolved itself. Otherwise it
+    could be an issue with the encoders themselves. The actuation distance from the zero position for both motors need to be saved in EEPROM to keep track
+    of them. Additionally, limits need to be applied for both motors to ensure
+    that the motors do not try to actuate too far. The total number of steps that
+    could be taken by the vertical motor was 13500 in testing, and it was 4000
+    for the horizontal motor.

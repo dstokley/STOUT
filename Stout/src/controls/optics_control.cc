@@ -231,5 +231,9 @@ void optics_control::polarizer_rotate(char home)
   ftStatus = FT_Close(ftHandle);
   assert(ftStatus == FT_OK);
 
+  // Re-enable mods
+  system("modprobe ftdi_sio");
+  system("modprobe usbserial");
+
 }
 }

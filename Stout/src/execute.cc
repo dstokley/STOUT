@@ -12,7 +12,7 @@ namespace STOUT
     // Setup save locations for all data
 
     // EMCS sensors and heaters
-    FILE *f = fopen("TVAC_Data.txt", "a");
+    FILE *f = fopen("EMCS_Data.txt", "a");
     if (f == NULL)
       {
     printf("Error opening file!\n");
